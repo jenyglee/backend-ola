@@ -28,11 +28,11 @@ public class CommentServiceTest {
   @Test
   public void createCommunityComment() {
 
-//    Long boardId = 1L;
-//    CommunityRequestDto communityRequestDto = new CommunityRequestDto(boardId,"등린이","하이");
-//    CommunityComment communityComment = commentService.createComments(boardId, communityRequestDto);
+    Long boardId = 1L;
+    CommunityRequestDto communityRequestDto = new CommunityRequestDto(boardId,"등린이","하이");
+    CommunityComment communityComment = commentService.createComments(boardId, communityRequestDto);
 
-//    assertThat(communityComment.getUserName()).isEqualTo("등린이");
+    assertThat(communityComment.getUserName()).isEqualTo("등린이");
   }
 
 }

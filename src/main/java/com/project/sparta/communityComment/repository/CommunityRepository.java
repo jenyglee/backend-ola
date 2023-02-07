@@ -5,6 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommunityRepository extends JpaRepository<CommunityComment, Long> {
-  Optional<CommunityComment> findByUsername(String userName);
+  Optional<CommunityComment> findByUserName(String userName);
 
 }
