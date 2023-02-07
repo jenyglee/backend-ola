@@ -1,10 +1,16 @@
 package com.project.sparta;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityManager;
 
 @SpringBootApplication
 @EnableJpaAuditing
