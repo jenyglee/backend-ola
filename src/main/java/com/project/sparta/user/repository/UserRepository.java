@@ -1,9 +1,12 @@
 package com.project.sparta.user.repository;
 
 
-import com.project.sparta.user.dto.UserResponseDto;
+import com.project.sparta.user.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository {
+import java.util.Optional;
 
-    UserResponseDto findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, Long>, UserCustomerRepository {
+
+    Optional<User> findByUsername(String username);
 }
