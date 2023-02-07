@@ -7,5 +7,5 @@ public interface FriendService {
 
     void addFriend(Long userId, String targetUsername); //친구 추가
     void deleteFriend(String targetUsername);    // 친구 삭제
-
+    UserResponseDto searchFriend(String targetUsername);    //친구 검색
 }
