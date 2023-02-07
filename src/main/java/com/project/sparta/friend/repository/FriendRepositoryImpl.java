@@ -13,8 +13,4 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
 
     QUser user = new QUser("user");
 
-    @Override
-    public UserResponseDto serachFriend() {
-        return null;
-    }
 }
