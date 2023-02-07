@@ -27,4 +27,29 @@ public class FriendServiceImpl implements FriendService{
         }
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
     }
+
+    @Override
+    public void deleteFriend(String targetUsername) {
+
+        //삭제할 친구 정보 조회
+        UserResponseDto targetUser = userRepository.findByUsername(targetUsername);
+
+        if(targetUser.equals(null)){
+            throw new IllegalArgumentException("회원정보를 찾을 수 없습니다.");
+        }
+        friendRepository.deleteById(targetUser.getId());
+    }
+
+    @Override
+    public UserResponseDto searchFriend(String targetUsername) {
+
+        //친구 이름으로 검색
+        friendRepository.serachFriend();
+
+        //검색한 친구 list pageing 처리 해야함
+
+        //리스트 반환
+
+        return null;
+    }
 }
