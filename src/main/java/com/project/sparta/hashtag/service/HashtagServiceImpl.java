@@ -1,5 +1,7 @@
 package com.project.sparta.hashtag.service;
 
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.project.sparta.exception.api.Status.*;
+
 @Service
 @RequiredArgsConstructor
 public class HashtagServiceImpl implements HashtagService {
@@ -19,7 +23,7 @@ public class HashtagServiceImpl implements HashtagService {
     @Override
     public Hashtag createHashtag(String value, User user) {
         if(value.isBlank()){
-            throw new IllegalArgumentException("해시태그 이름을 입력해주세요.");
+            throw new CustomException(INVALID_HASHTAG_NAME);
         }
         Hashtag hashtag = new Hashtag(value);
         hashtagRepository.save(hashtag);
@@ -29,8 +33,8 @@ public class HashtagServiceImpl implements HashtagService {
     //해시태그 삭제
     @Override
     public void deleteHashtag(Long id, User user) {
-        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(
-                ()-> new IllegalArgumentException("해시태그를 찾을 수 없습니다.")
+        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(()->
+                new CustomException(NOT_FOUND_HASHTAG)
         );
         hashtagRepository.delete(hashtag);
     }
