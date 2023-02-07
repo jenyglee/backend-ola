@@ -51,9 +51,9 @@ class UserServiceImplTest {
     public void findMemberQueryDsl() {
         User findUser = queryFactory
                                 .selectFrom(user)
-                                .where(user.username.eq("member1"))
+                                .where(user.username.eq("user1"))
                                 .fetchOne();
 
-        assertThat(findUser.getUsername()).isEqualTo("member1");
+        assertThat(findUser.getUsername()).isEqualTo("user1");
     }
 }
