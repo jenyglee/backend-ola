@@ -1,11 +1,11 @@
-package com.project.sparta.member.dto;
+package com.project.sparta.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MemberLoginDto {
+public class UserLoginDto {
 
     private String username;
 

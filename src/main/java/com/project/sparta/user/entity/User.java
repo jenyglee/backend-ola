@@ -1,14 +1,13 @@
-package com.project.sparta.member.entity;
+package com.project.sparta.user.entity;
 
-import com.project.sparta.entity.Timestamped;
 import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Member extends Timestamped {
+public class User extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +30,10 @@ public class Member extends Timestamped {
     private String email;
 
     @Enumerated(value=EnumType.STRING)
-    private MemberRoleEnum role;
+    private UserRoleEnum role;
 
     @Builder
-    public Member(String password, String username, int age, String phoneNumber, String email, MemberRoleEnum role) {
+    public User(String password, String username, int age, String phoneNumber, String email, UserRoleEnum role) {
         this.password = password;
         this.username = username;
         this.age = age;

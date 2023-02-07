@@ -1,6 +1,6 @@
 package com.project.sparta.security.jwt;
 
-import com.project.sparta.member.entity.MemberRoleEnum;
+import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.security.UserDetailServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
@@ -46,7 +46,7 @@ public class JwtUtil {
     }
 
     //{header BASE64 인코딩}.{JSON Claim set BASE64 인코딩}.{signature BASE64 인코딩}
-    public String createToken(String username, MemberRoleEnum role) {
+    public String createToken(String username, UserRoleEnum role) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + Duration.ofHours(1).toMillis()); //만료시간 1시간
 
