@@ -43,4 +43,13 @@ class HashtagServiceImplTest {
 
         assertThat(saved.getName()).isEqualTo("등린이");
     }
+
+    @Test
+    public void getHashtagList(){
+        User user = new User("1234", "이재원", 20, "01010101", "wodnj@naver.com", UserRoleEnum.USER);
+        hashtagService.createHashtag("등린이", user);
+
+        List<Hashtag> allHashtag = hashtagRepository.findAll();
+        assertThat(allHashtag.size()).isEqualTo(1);
+    }
 }
