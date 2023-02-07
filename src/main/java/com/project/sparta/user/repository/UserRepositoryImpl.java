@@ -5,17 +5,12 @@ import com.project.sparta.user.dto.QUserResponseDto;
 import com.project.sparta.user.dto.UserResponseDto;
 import com.project.sparta.user.entity.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
 
-@Repository
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-
-    public UserRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
-        this.jpaQueryFactory = jpaQueryFactory;
-    }
-
     private QUser user = new QUser("user");
 
     @Override
