@@ -1,5 +1,6 @@
 package com.project.sparta.hashtag.repository;
 
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
@@ -25,6 +26,6 @@ class HashtagRepositoryTest {
 
         // than
         // 내가 예상한 익센셥이 잘 나왔으면 테스트 성공
-        assertThrows(IllegalArgumentException.class, ()-> hashtagService.createHashtag("", user));
+        assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user));
     }
 }
