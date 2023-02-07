@@ -20,4 +20,12 @@ public class HashtagServiceImpl implements HashtagService {
         hashtagRepository.save(hashtag);
         return hashtag;
     }
+
+    @Override
+    public void deleteHashtag(Long id, User user) {
+        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("해시태그를 찾을 수 없습니다.")
+        );
+        hashtagRepository.delete(hashtag);
+    }
 }

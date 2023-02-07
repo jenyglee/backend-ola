@@ -40,4 +40,16 @@ public class FriendServiceImpl implements FriendService{
         friendRepository.deleteById(targetUser.getId());
     }
 
+    @Override
+    public UserResponseDto searchFriend(String targetUsername) {
+
+        //친구 이름으로 검색
+        friendRepository.serachFriend();
+
+        //검색한 친구 list pageing 처리 해야함
+
+        //리스트 반환
+
+        return null;
+    }
 }

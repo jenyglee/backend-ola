@@ -5,4 +5,5 @@ import com.project.sparta.user.entity.User;
 
 public interface HashtagService {
     Hashtag createHashtag(String value, User user);
+    void deleteHashtag(Long id, User user);
 }
