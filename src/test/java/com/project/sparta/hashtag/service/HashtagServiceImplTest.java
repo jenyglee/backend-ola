@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,14 +25,14 @@ class HashtagServiceImplTest {
     HashtagRepository hashtagRepository; // 방금추가
     @Test
     public void createHashtag() {
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         Hashtag saved = hashtagService.createHashtag("등린이", user);
         assertThat(saved.getName()).isEqualTo("등린이");
     }
 
     @Test
     public void deleteHashtag() {
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         Hashtag saved = hashtagService.createHashtag("등린이", user);
         hashtagService.deleteHashtag(saved.getId(), user);
 
@@ -45,7 +46,7 @@ class HashtagServiceImplTest {
 
     @Test
     public void getHashtagList(){
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         hashtagService.createHashtag("등린이", user);
 
         List<Hashtag> allHashtag = hashtagRepository.findAll();
