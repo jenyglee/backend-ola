@@ -1,4 +1,4 @@
-package com.project.sparta.user.entity;
+package com.project.sparta.admin.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,15 +9,12 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
 @Getter
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Timestamped {
-
     @CreatedDate
     private LocalDateTime createAt;
-
     @LastModifiedDate
     private LocalDateTime modifiedAt;
-
 }

@@ -1,6 +1,5 @@
 package com.project.sparta.admin.entity;
 
-import com.project.sparta.user.entity.Timestamped;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +22,7 @@ public class OfferCoursePost extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
-    @OneToMany( mappedBy = )
+    @OneToMany()
     private List<OfferCourseImg> images = new ArrayList<>();
 
 }

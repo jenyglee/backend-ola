@@ -22,7 +22,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
         List<User> userList = queryFactory.select(user)
                                 .from(user)
-                                .where(user.userName.eq(targetUserName))
+                                .where(user.name.eq(targetUserName))
                                 .offset(pageable.getOffset())
                                 .limit(pageable.getPageSize())
                                 .fetch();
