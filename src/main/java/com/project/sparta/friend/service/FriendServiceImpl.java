@@ -1,6 +1,7 @@
 package com.project.sparta.friend.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.FriendSearchReponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
+import static com.project.sparta.exception.api.Status.INVALID_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class FriendServiceImpl implements FriendService{
     public void addFriend(Long userId, String targetName) {
 
         //요청한 친구 정보 유무 확인
-        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED).orElseThrow(()-> new CustomException(INVALID_USER));
 
         //이미 친구로 등록되어있는지 확인
         Friend check = friendRepository.findByUserIdAndTargetId(userId, targetUser.getId());
@@ -41,7 +44,7 @@ public class FriendServiceImpl implements FriendService{
         if(check==null){
             friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
         }else{
-            throw new DataIntegrityViolationException("현재 친구로 등록된 회원입니다.");
+            throw new CustomException(CONFLICT_FRIEND);
         }
     }
 
@@ -49,10 +52,10 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void deleteFriend(String targetName) {
-        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED).orElseThrow(()->new CustomException(INVALID_USER));
 
         if(targetUser.equals(null)){
-            throw new IllegalArgumentException("회원정보를 찾을 수 없습니다.");
+            throw new CustomException(INVALID_USER);
         }
         friendRepository.deleteById(targetUser.getId());
     }
