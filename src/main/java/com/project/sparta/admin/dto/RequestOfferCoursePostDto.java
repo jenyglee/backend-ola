@@ -11,6 +11,5 @@ public class RequestOfferCoursePostDto {
 
     private String title;
     private String contents;
-    private List<String>images = new ArrayList<>();
 
 }

@@ -32,12 +32,13 @@ class HashtagRepositoryTest {
         // 내가 예상한 익센셥이 잘 나왔으면 테스트 성공
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user));
     }
+
     @Test
     @DisplayName("중복된 이름이 있는경우 에러")
     public void createHashTagError02(){
         hashtagRepository.save(new Hashtag("야호"));
 
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
 
         // than
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("야호", user));

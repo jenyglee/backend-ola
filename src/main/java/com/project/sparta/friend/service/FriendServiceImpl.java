@@ -28,7 +28,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void addFriend(Long userId, String targetUsername) {
-        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
     }
@@ -37,7 +37,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void deleteFriend(String targetUsername) {
-        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         if(targetUser.equals(null)){
             throw new IllegalArgumentException("회원정보를 찾을 수 없습니다.");
