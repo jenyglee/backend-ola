@@ -22,9 +22,11 @@ public class User extends Admin {
     @Column(nullable = false)
     private String userImageUrl;
 
-    //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Tag> tags = new ArrayList<>();
 
-    public User(String password, String nickName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, StatusEnum status) {
+
+    public User(String password, String nickName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, StatusEnum status, List<Tag> tags) {
         this.password = password;
         this.nickName = nickName;
         this.age = age;
@@ -33,5 +35,10 @@ public class User extends Admin {
         this.role = role;
         this.userImageUrl = userImageUrl;
         this.status = status;
+        this.tags = tags;
+    }
+
+    public void addTag(Tag tag){
+        this.tags.add(tag);
     }
 }

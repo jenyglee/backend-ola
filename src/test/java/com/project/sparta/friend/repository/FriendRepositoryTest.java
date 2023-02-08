@@ -35,7 +35,7 @@ class FriendRepositoryTest {
     @Test
     @DisplayName("회원정보를 찾을 수 없는 경우")
     public void deleteFriend(){
-        assertThrows(CustomException.class, ()-> friendService.deleteFriend(" "));
+        assertThrows(CustomException.class, ()-> friendService.deleteFriend(50L));
     }
 
     @Test
