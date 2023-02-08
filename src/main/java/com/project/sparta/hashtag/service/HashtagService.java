@@ -11,4 +11,5 @@ public interface HashtagService {
     Hashtag createHashtag(String value, User user);
     void deleteHashtag(Long id, User user);
     PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, User user);
+    List<HashtagResponseDto> getFixedHashtagList();
 }

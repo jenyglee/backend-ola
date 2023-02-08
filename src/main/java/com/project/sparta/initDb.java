@@ -2,6 +2,7 @@ package com.project.sparta;
 
 import com.project.sparta.hashtag.entity.Hashtag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Profile("local")
 @Component
 @RequiredArgsConstructor
 public class initDb {

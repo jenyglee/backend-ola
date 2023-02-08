@@ -66,5 +66,18 @@ public class HashtagServiceImpl implements HashtagService {
         return new PageResponseDto<>(offset, totalElements, hashtagResponseDtoList);
     }
 
+    @Override
+    public List<HashtagResponseDto> getFixedHashtagList() {
+        List<Hashtag> hashtagList = hashtagRepository.findAll();
+
+        List<HashtagResponseDto> hashtagResponseDtoList = new ArrayList<>();
+        for (Hashtag hashtag : hashtagList) {
+            HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtag.getId(), hashtag.getName());
+            hashtagResponseDtoList.add(hashtagResponseDto);
+        }
+
+        return hashtagResponseDtoList;
+    }
+
 
 }
