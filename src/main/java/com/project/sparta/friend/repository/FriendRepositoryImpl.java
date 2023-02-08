@@ -5,7 +5,10 @@ import com.project.sparta.user.entity.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class FriendRepositoryImpl implements FriendCustomRepository {
@@ -15,26 +18,14 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
 
     QUser user = new QUser("user");
 
-
-    /*
-    * @Override
-    public PageImpl<Board> getAll(Pageable pageable) {
-        List<Board> boardList = queryFactory.select(board)
-                .from(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-        return new PageImpl<>(boardList, pageable, boardList.size());
-    }
-    */
-
     @Override
-    public Page<User> serachFriend(String targetUserName, Pageable pageRequest) {
-//        return queryFactory.select(user)
-//                .from(user)
-//                .where(user.userName.eq(targetUserName))
-//                .offset()
-
-        return null;
+    public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
+        List<User> userList = queryFactory.select(user)
+                                .from(user)
+                                .where(user.name.eq(targetUserName))
+                                .offset(pageable.getOffset())
+                                .limit(pageable.getPageSize())
+                                .fetch();
+        return new PageImpl<>(userList, pageable, userList.size());
     }
 }
