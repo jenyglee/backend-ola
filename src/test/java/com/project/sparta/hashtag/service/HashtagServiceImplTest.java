@@ -26,7 +26,6 @@ class HashtagServiceImplTest {
     public void createHashtag() {
         User user = new User("1234", "이재원", 20, "01010101", "wodnj@naver.com", UserRoleEnum.USER);
         Hashtag saved = hashtagService.createHashtag("등린이", user);
-
         assertThat(saved.getName()).isEqualTo("등린이");
     }
 
