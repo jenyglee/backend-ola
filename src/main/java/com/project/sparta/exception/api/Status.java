@@ -17,7 +17,10 @@ public enum Status {
 
 
     // 404 ->  NOT_FOUND : 잘못된 리소스 접근 (ex. 존재하지 않는 객체)
-    NOT_FOUND_HASHTAG(HttpStatus.NOT_FOUND, "해시태그를 찾을 수 없습니다.");
+    NOT_FOUND_HASHTAG(HttpStatus.NOT_FOUND, "해시태그를 찾을 수 없습니다."),
+
+    // 409 ->  CONFLICT : 중복 데이터 (ex. 이미 중복된 값)
+    CONFLICT_HASHTAG(HttpStatus.CONFLICT, "이미 존재하는 해시태그입니다"),;
     
 
 

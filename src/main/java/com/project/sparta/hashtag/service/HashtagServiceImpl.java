@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.border.Border;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.project.sparta.exception.api.Status.*;
 
@@ -30,7 +31,11 @@ public class HashtagServiceImpl implements HashtagService {
         if(value.isBlank()){
             throw new CustomException(INVALID_HASHTAG_NAME);
         }
-        // 에러2: 중복된 이름이 있는경우🔥
+        // 에러2: 중복된 이름이 있는경우
+        Optional<Hashtag> findHashtag = hashtagRepository.findByName(value);
+        if(findHashtag.isPresent()){
+            throw new CustomException(INVALID_HASHTAG_NAME);
+        }
 
         Hashtag hashtag = new Hashtag(value);
         hashtagRepository.save(hashtag);
@@ -78,6 +83,4 @@ public class HashtagServiceImpl implements HashtagService {
 
         return hashtagResponseDtoList;
     }
-
-
 }

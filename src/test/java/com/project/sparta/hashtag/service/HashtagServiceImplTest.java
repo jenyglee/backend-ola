@@ -23,7 +23,7 @@ class HashtagServiceImplTest {
 
     @Autowired HashtagService hashtagService;
     @Autowired
-    HashtagRepository hashtagRepository; // 방금추가
+    HashtagRepository hashtagRepository;
     @Test
     public void createHashtag() {
         User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
