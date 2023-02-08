@@ -1,7 +1,5 @@
 package com.project.sparta;
 
-import com.project.sparta.entity.Hello;
-import com.project.sparta.entity.QHello;
 import com.querydsl.jpa.JPQLQueryFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
@@ -29,8 +27,8 @@ class FinalApplicationTests {
         // Assertions.assertThat(hello).isEqualTo(hello1);
 
         //querydsl 세팅 테스트
-        Hello hello = new Hello();
-        em.persist(hello);
+//        Hello hello = new Hello();
+//        em.persist(hello);
 //        JPQLQueryFactory queryFactory = new JPAQueryFactory(em);
 //
 //        Hello hello1 = queryFactory.selectFrom(QHello.hello)
