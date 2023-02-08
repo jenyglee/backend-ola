@@ -1,6 +1,5 @@
 package com.project.sparta.admin.entity;
 
-import com.project.sparta.user.entity.Timestamped;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

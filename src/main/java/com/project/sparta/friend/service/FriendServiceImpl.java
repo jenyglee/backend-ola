@@ -8,6 +8,7 @@ import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void addFriend(Long userId, String targetUsername) {
-
-        //친구 추가
-        User targetUser = userRepository.findByUserName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
     }
@@ -39,9 +38,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void deleteFriend(String targetUsername) {
-
-        //삭제할 친구 정보 조회
-        User targetUser = userRepository.findByUserName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         if(targetUser.equals(null)){
             throw new IllegalArgumentException("회원정보를 찾을 수 없습니다.");
@@ -50,24 +47,24 @@ public class FriendServiceImpl implements FriendService{
     }
 
     //친구 검색
-//    @Override
-//    @Transactional(readOnly = true)
-//    public FriendSearchResultDto searchFriend(int offset, int limit, String targetUserName) {
-//
-//        //offset , limit 값 임의로 넣기
-//        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
-//
-//        //친구 이름으로 검색(+with paging 처리)
-//        Page<User> user = friendRepository.searchFriend(targetUserName, pageRequest);
-//
-//        //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
-//        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getUserName()));
-//        List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
-//        long totalCount = searchFriendsMap.getTotalElements();
-//
-//        //리스트 반환(UserDto)로 반환 -> 제너럴 사용하여
-//        FriendSearchResultDto result = new FriendSearchResultDto(0, totalCount, content);
-//
-//        return result;
-//    }
+    @Override
+    @Transactional(readOnly = true)
+    public FriendSearchResultDto searchFriend(int offset, int limit, String targetUserName) {
+
+        //offset , limit 값 임의로 넣기
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
+
+        //친구 이름으로 검색(+with paging 처리)
+        Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
+
+        //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
+        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getName()));
+        List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
+        long totalCount = searchFriendsMap.getTotalElements();
+
+        //리스트 반환(UserDto)로 반환 -> 제너럴 사용하여
+        FriendSearchResultDto result = new FriendSearchResultDto(0, totalCount, content);
+
+        return result;
+    }
 }
