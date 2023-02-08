@@ -1,5 +1,6 @@
 package com.project.sparta.hashtag.service;
 
+import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.User;

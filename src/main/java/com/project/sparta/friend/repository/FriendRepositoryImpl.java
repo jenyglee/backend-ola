@@ -4,7 +4,6 @@ import com.project.sparta.user.entity.QUser;
 import com.project.sparta.user.entity.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
@@ -22,7 +21,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
         List<User> userList = queryFactory.select(user)
                                 .from(user)
-                                .where(user.name.eq(targetUserName))
+                                .where(user.nickName.eq(targetUserName))
                                 .offset(pageable.getOffset())
                                 .limit(pageable.getPageSize())
                                 .fetch();

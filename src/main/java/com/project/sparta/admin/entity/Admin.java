@@ -25,7 +25,7 @@ public class Admin extends Timestamped {
     protected String password;
 
     @Column(nullable = false)
-    protected String name;
+    protected String nickName;
 
     @Enumerated(value=EnumType.STRING)
     protected UserRoleEnum role;
@@ -34,10 +34,10 @@ public class Admin extends Timestamped {
     protected StatusEnum status;
 
     @Builder
-    public Admin(String email, String password, String name, UserRoleEnum role, StatusEnum status) {
+    public Admin(String email, String password, String nickName, UserRoleEnum role, StatusEnum status) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.nickName = nickName;
         this.role = role;
         this.status = status;
     }
