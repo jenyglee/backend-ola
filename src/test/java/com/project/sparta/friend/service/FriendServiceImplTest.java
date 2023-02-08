@@ -79,7 +79,4 @@ class FriendServiceImplTest {
 
         Assertions.assertThat(friend.size()).isEqualTo(1);
     }
-
-    
-
 }

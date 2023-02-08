@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/login")
     public HttpStatus login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
         UserRoleEnum role = userService.login(userLoginDto);
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(userLoginDto.getUserName(), role));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(userLoginDto.getNickName(), role));
         return HttpStatus.OK;
     }
 }

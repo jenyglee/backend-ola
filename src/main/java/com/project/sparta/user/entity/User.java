@@ -24,9 +24,9 @@ public class User extends Admin {
 
     //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
 
-    public User(String password, String userName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, StatusEnum status) {
+    public User(String password, String nickName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, StatusEnum status) {
         this.password = password;
-        this.name = userName;
+        this.nickName = nickName;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.email = email;

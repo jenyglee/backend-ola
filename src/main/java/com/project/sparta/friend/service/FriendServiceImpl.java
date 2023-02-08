@@ -29,7 +29,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void addFriend(Long userId, String targetUsername) {
-        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
     }
@@ -38,7 +38,7 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void deleteFriend(String targetUsername) {
-        User targetUser = userRepository.findByName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
+        User targetUser = userRepository.findByNickName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         if(targetUser.equals(null)){
             throw new IllegalArgumentException("회원정보를 찾을 수 없습니다.");
@@ -58,7 +58,7 @@ public class FriendServiceImpl implements FriendService{
         Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
 
         //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
-        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getName()));
+        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getNickName()));
         List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
         long totalCount = searchFriendsMap.getTotalElements();
 
