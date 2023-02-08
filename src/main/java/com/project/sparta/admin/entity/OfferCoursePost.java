@@ -23,7 +23,6 @@ public class OfferCoursePost extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
-
     @OneToMany( mappedBy = )
     private List<OfferCourseImg> images = new ArrayList<>();
 
