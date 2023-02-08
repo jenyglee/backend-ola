@@ -21,6 +21,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         User user = userRepository.findByNickNameAndStatus(username, USER_REGISTERED).orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        return new UserDetailImpl(user, user.getId(), user.getNickName(), user.getPassword());
+        return new UserDetailImpl(user);
     }
 }

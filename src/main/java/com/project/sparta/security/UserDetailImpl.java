@@ -19,11 +19,11 @@ public class UserDetailImpl implements UserDetails {
 
     private final String password;
 
-    public UserDetailImpl(User user, Long userId, String nickName, String password) {
+    public UserDetailImpl(User user) {
         this.user = user;
-        this.userId = userId;
-        this.nickName = nickName;
-        this.password = password;
+        this.userId = user.getId();
+        this.nickName = user.getNickName();
+        this.password = user.getPassword();
     }
 
     @Override
