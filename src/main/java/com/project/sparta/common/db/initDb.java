@@ -1,4 +1,4 @@
-package com.project.sparta;
+package com.project.sparta.common.db;
 
 import com.project.sparta.hashtag.entity.Hashtag;
 import lombok.RequiredArgsConstructor;
