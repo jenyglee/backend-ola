@@ -37,6 +37,10 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+    // JSON을 키값으로 가져오기 위한 세팅
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20220320'
+
     compileOnly 'org.projectlombok:lombok'
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
@@ -44,9 +48,10 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    
     // 다중이미지 업로드
     implementation 'commons-io:commons-io:2.6'
+
 }
 
 tasks.named('test') {
