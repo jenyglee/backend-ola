@@ -25,6 +25,7 @@ public class OfferCourseImg {
     
 
     public OfferCourseImg(String imgRoute) {
+
         this.imgRoute = imgRoute;
     }
 }

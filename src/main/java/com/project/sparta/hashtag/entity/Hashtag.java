@@ -15,6 +15,7 @@ public class Hashtag {
     private String name;
 
     public Hashtag(String name) {
+
         this.name = name;
     }
 }
