@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FriendRepository extends JpaRepository<Friend, Long>, FriendCustomRepository{
 
+    Friend findByUserIdAndTargetId(Long userId, Long targetId);
 
-    List<Friend> findByUserId(Long userId);
+    List<Friend> findByUserId(Long userId);     //테스트용
 }

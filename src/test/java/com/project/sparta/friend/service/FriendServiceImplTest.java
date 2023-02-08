@@ -1,5 +1,6 @@
 package com.project.sparta.friend.service;
 
+import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
 import com.project.sparta.user.entity.QUser;
@@ -19,7 +20,6 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -29,7 +29,6 @@ class FriendServiceImplTest {
     @Autowired
     EntityManager em;
     JPAQueryFactory queryFactory;
-    QUser user = new QUser("user");
     @BeforeEach
     public void before() {
         queryFactory = new JPAQueryFactory(em);
@@ -73,10 +72,18 @@ class FriendServiceImplTest {
 
     @Test
     public void deleteFriend(){
-        addFriend();
+        friendService.addFriend(1L, "한세인");
+        friendService.addFriend(1L, "김민선");
+
         friendService.deleteFriend("한세인");
         List<Friend> friend = friendRepository.findByUserId(1L);
 
         Assertions.assertThat(friend.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void searchFriend(){
+        PageResponseDto result = friendService.searchFriend(0, 5, "한세인");
+        Assertions.assertThat(result.getTotalCount()).isEqualTo(1);
     }
 }
