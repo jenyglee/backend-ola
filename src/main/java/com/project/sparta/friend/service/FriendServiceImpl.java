@@ -50,24 +50,24 @@ public class FriendServiceImpl implements FriendService{
     }
 
     //친구 검색
-    @Override
-    @Transactional(readOnly = true)
-    public FriendSearchResultDto searchFriend(int offset, int limit, String targetUsername) {
-
-        //offset , limit 값 임의로 넣기
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
-
-        //친구 이름으로 검색(+with paging 처리)
-        Page<User> user = friendRepository.findUserByUsernameStartWith(targetUsername, pageRequest);
-
-        //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
-        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getUserName()));
-        List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
-        long totalCount = searchFriendsMap.getTotalElements();
-
-        //리스트 반환(UserDto)로 반환 -> 제너럴 사용하여
-        FriendSearchResultDto result = new FriendSearchResultDto(0, totalCount, content);
-
-        return result;
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public FriendSearchResultDto searchFriend(int offset, int limit, String targetUserName) {
+//
+//        //offset , limit 값 임의로 넣기
+//        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
+//
+//        //친구 이름으로 검색(+with paging 처리)
+//        Page<User> user = friendRepository.searchFriend(targetUserName, pageRequest);
+//
+//        //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
+//        Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getUserName()));
+//        List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
+//        long totalCount = searchFriendsMap.getTotalElements();
+//
+//        //리스트 반환(UserDto)로 반환 -> 제너럴 사용하여
+//        FriendSearchResultDto result = new FriendSearchResultDto(0, totalCount, content);
+//
+//        return result;
+//    }
 }
