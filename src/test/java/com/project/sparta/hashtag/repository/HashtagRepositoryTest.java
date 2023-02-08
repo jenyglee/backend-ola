@@ -22,7 +22,7 @@ class HashtagRepositoryTest {
     @Test
     @DisplayName("빈 값 전달 에러")
     public void createHashTagError01(){
-        User user = new User("1234", "이재원", 20, "01010101", "wodnj@naver.com", UserRoleEnum.USER);
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg","Y");
 
         // than
         // 내가 예상한 익센셥이 잘 나왔으면 테스트 성공
