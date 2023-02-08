@@ -5,8 +5,6 @@ import com.project.sparta.admin.entity.StatusEnum;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,7 +24,7 @@ public class User extends Admin {
 
     public User(String password, String userName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, StatusEnum status) {
         this.password = password;
-        this.name = userName;
+        this.nickName = userName;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.email = email;

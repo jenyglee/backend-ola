@@ -1,6 +1,5 @@
 package com.project.sparta.security;
 
-import com.project.sparta.user.dto.UserResponseDto;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         User user = userRepository.findByName(username).orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        return new UserDetailImpl(user, user.getId(), user.getName(), user.getPassword());
+        return new UserDetailImpl(user, user.getId(), user.getNickName(), user.getPassword());
     }
 }

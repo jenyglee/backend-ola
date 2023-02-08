@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static com.project.sparta.user.entity.UserRoleEnum.ADMIN;
-import static com.project.sparta.user.entity.UserRoleEnum.USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
@@ -58,6 +56,6 @@ class UserServiceImplTest {
                                 .where(user.name.eq("이재원"))
                                 .fetchOne();
 
-        assertThat(findUser.getName()).isEqualTo("이재원");
+        assertThat(findUser.getNickName()).isEqualTo("이재원");
     }
 }
