@@ -15,14 +15,14 @@ public class UserDetailImpl implements UserDetails {
 
     private final Long userId;
 
-    private final String username;
+    private final String nickName;
 
     private final String password;
 
-    public UserDetailImpl(User user, Long userId, String username, String password){
+    public UserDetailImpl(User user, Long userId, String nickName, String password) {
         this.user = user;
         this.userId = userId;
-        this.username = username;
+        this.nickName = nickName;
         this.password = password;
     }
 
@@ -45,7 +45,7 @@ public class UserDetailImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.nickName;
     }
 
     @Override

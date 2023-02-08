@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class UserResponseDto {
     private Long id;
 
-    private String userName;
+    private String nickName;
 
     private String password;
 
@@ -23,9 +23,9 @@ public class UserResponseDto {
     private UserRoleEnum userRoleEnum;
 
     @QueryProjection
-    public UserResponseDto(Long id, String userName, String password, int age, String email, String phoneNumber, UserRoleEnum userRoleEnum){
+    public UserResponseDto(Long id, String nickName, String password, int age, String email, String phoneNumber, UserRoleEnum userRoleEnum){
         this.id = id;
-        this.userName = userName;
+        this.nickName = nickName;
         this.password = password;
         this.age = age;
         this.email = email;
