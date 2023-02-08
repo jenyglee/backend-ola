@@ -22,8 +22,11 @@ public class FriendServiceImpl implements FriendService{
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    //내 친구목록 조회
 
+    //친구 추가
     @Override
+    @Transactional
     public void addFriend(Long userId, String targetUsername) {
 
         //친구 추가
@@ -32,7 +35,9 @@ public class FriendServiceImpl implements FriendService{
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
     }
 
+    //친구 삭제
     @Override
+    @Transactional
     public void deleteFriend(String targetUsername) {
 
         //삭제할 친구 정보 조회
@@ -44,7 +49,9 @@ public class FriendServiceImpl implements FriendService{
         friendRepository.deleteById(targetUser.getId());
     }
 
+    //친구 검색
     @Override
+    @Transactional(readOnly = true)
     public FriendSearchResultDto searchFriend(int offset, int limit, String targetUsername) {
 
         //offset , limit 값 임의로 넣기
@@ -53,7 +60,7 @@ public class FriendServiceImpl implements FriendService{
         //친구 이름으로 검색(+with paging 처리)
         Page<User> user = friendRepository.findUserByUsernameStartWith(targetUsername, pageRequest);
 
-        //검색했을 경우에 프로필, 이름정도만 뽑아서 보여주기
+        //검색했을 경우에 프로필 사진, 이름 뽑아서 보여주기
         Page<FriendSearchReponseDto> searchFriendsMap = user.map(u -> new FriendSearchReponseDto(u.getUserImageUrl(), u.getUserName()));
         List<FriendSearchReponseDto> content = searchFriendsMap.getContent();
         long totalCount = searchFriendsMap.getTotalElements();
@@ -63,5 +70,6 @@ public class FriendServiceImpl implements FriendService{
 
         return result;
     }
+
 
 }

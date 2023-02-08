@@ -42,8 +42,7 @@ public class User extends Timestamped {
     private String status;
 
     @Builder
-    public User(Long id, String password, String userName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, String status) {
-        this.id = id;
+    public User(String password, String userName, int age, String phoneNumber, String email, UserRoleEnum role, String userImageUrl, String status) {
         this.password = password;
         this.userName = userName;
         this.age = age;
