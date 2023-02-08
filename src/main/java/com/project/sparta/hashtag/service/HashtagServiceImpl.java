@@ -26,9 +26,12 @@ public class HashtagServiceImpl implements HashtagService {
     //해시태그 추가
     @Override
     public Hashtag createHashtag(String value, User user) {
+        // 에러1: 이름이 ""인 경우
         if(value.isBlank()){
             throw new CustomException(INVALID_HASHTAG_NAME);
         }
+        // 에러2: 중복된 이름이 있는경우🔥
+
         Hashtag hashtag = new Hashtag(value);
         hashtagRepository.save(hashtag);
         return hashtag;
