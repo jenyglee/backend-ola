@@ -20,9 +20,10 @@ public class OfferCourseImg {
     private OfferCoursePost offerCoursePost;
 
 
+    //이미지 파일경로
     @Column(nullable = false)
     private String imgRoute;
-    
+
 
     public OfferCourseImg(String imgRoute) {
         this.imgRoute = imgRoute;
