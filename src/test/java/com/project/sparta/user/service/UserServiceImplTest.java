@@ -1,4 +1,4 @@
-package com.project.sparta.member.service;
+package com.project.sparta.user.service;
 
 import com.project.sparta.user.entity.QUser;
 import com.project.sparta.user.entity.User;
@@ -43,6 +43,7 @@ class UserServiceImplTest {
         em.persist(user2);
         em.persist(user3);
         em.persist(user4);
+        em.persist(user5);
 
         //초기화
         em.flush();

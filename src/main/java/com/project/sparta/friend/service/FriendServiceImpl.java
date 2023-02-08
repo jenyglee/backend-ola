@@ -8,6 +8,7 @@ import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,6 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void addFriend(Long userId, String targetUsername) {
-
-        //친구 추가
         User targetUser = userRepository.findByUserName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         friendRepository.saveAndFlush(new Friend(userId, targetUser.getId()));
@@ -39,8 +38,6 @@ public class FriendServiceImpl implements FriendService{
     @Override
     @Transactional
     public void deleteFriend(String targetUsername) {
-
-        //삭제할 친구 정보 조회
         User targetUser = userRepository.findByUserName(targetUsername).orElseThrow(()->new IllegalArgumentException("회원정보를 찾을 수 없습니다."));
 
         if(targetUser.equals(null)){
