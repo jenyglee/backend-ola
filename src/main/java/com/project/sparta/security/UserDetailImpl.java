@@ -1,7 +1,7 @@
 package com.project.sparta.security;
 
-import com.project.sparta.member.dto.MemberResponseDto;
-import com.project.sparta.member.entity.MemberRoleEnum;
+import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,24 +11,19 @@ import java.util.Collection;
 
 public class UserDetailImpl implements UserDetails {
 
-    private final MemberResponseDto member;
+    private final User user;
 
-    private final Long userId;
+    public User getUser() {
+        return user;
+    }
 
-    private final String username;
-
-    private final String password;
-
-    public UserDetailImpl(MemberResponseDto member, Long userId, String username, String password){
-        this.member = member;
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
+    public UserDetailImpl(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        MemberRoleEnum role = member.getMemberRoleEnum();
+        UserRoleEnum role = user.getRole();
         String authority = role.getAuthority();
 
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
@@ -40,12 +35,12 @@ public class UserDetailImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.password;
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return null;
     }
 
     @Override
