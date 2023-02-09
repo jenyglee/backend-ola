@@ -1,6 +1,5 @@
 package com.project.sparta.security;
 
-import com.project.sparta.user.dto.UserResponseDto;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

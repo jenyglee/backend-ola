@@ -1,15 +1,11 @@
 package com.project.sparta.friend.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.exception.CustomException;
-import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
-import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.user.entity.QUser;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
-import com.project.sparta.user.entity.UserTag;
-import com.project.sparta.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static com.project.sparta.exception.api.Status.INVALID_USER;
 
 @SpringBootTest
 @Transactional
@@ -44,13 +39,10 @@ class FriendServiceImplTest {
 
     @Autowired
     FriendRepository friendRepository;
-    @Autowired
-    private UserRepository userRepository;
 
 
     @BeforeEach
     public void Befor() {
-
         Hashtag tag1 = new Hashtag("등린이");
         Hashtag tag2 = new Hashtag("절경");
         Hashtag tag3 = new Hashtag("등산용품");
@@ -147,7 +139,6 @@ class FriendServiceImplTest {
 
         Assertions.assertThat(friend.size()).isEqualTo(1);
     }
-
 
     @Test
     public void searchFriend(){

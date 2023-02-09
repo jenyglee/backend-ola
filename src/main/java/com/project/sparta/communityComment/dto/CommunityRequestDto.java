@@ -9,13 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CommunityRequestDto {
-  Long userId;
-  String userName;
-  String contents;
 
-  public CommunityRequestDto(Long userId, String userName, String contents) {
-    this.userId = userId;
-    this.userName = userName;
+  private String contents;
+
+  public CommunityRequestDto(String contents) {
+
     this.contents = contents;
   }
 

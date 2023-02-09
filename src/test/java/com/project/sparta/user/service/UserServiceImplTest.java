@@ -2,6 +2,7 @@ package com.project.sparta.user.service;
 
 import com.project.sparta.user.entity.QUser;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import static com.project.sparta.user.entity.UserRoleEnum.ADMIN;
+import static com.project.sparta.user.entity.UserRoleEnum.USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
