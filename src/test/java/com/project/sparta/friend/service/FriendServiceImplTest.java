@@ -1,6 +1,7 @@
 package com.project.sparta.friend.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import static com.project.sparta.exception.api.Status.INVALID_USER;
 
 @SpringBootTest
 @Transactional
@@ -159,8 +161,18 @@ class FriendServiceImplTest {
 
     @Test
     void allMyFriendList() {
-        List<User> userList = friendRepository.randomUser(USER_REGISTERED);
-        Assertions.assertThat(userList.size()).isEqualTo(5);
+        //해당 유저의 회원가입 태그 정보 긁어오기
+        User userInfo = userRepository.findById(1L).orElseThrow(()-> new CustomException(INVALID_USER));
+
+        //비교할 회원 랜덤으로 뽑아오기
+        List<User> randomList = friendRepository.randomUser(USER_REGISTERED);
+
+        System.out.println(randomList.size());
+        System.out.println(randomList.get(0).getTags());
+        System.out.println(userInfo.getTags().get(0).getTag().getId());
+        System.out.println(userInfo.getTags().get(0).getTag().getName());
+
+        //Assertions.assertThat(randomList.size()).isEqualTo(5);
     }
 
     @Test

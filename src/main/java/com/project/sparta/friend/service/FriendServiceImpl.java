@@ -65,21 +65,23 @@ public class FriendServiceImpl implements FriendService{
         //같은 태그를 가지고 있는 회원 저장하기
         List<RecommentFriendResponseDto> recommentFriend = new ArrayList<>();
         List<Hashtag> tags = new ArrayList<>();
+        List<Hashtag> tags2;
         int matchingSize = 0;
 
         //뽑아온 회원과 함께 태그 매칭 해보기 => UserTag 엔티티에서 해당 회원들의 태그 리스트 가져오기
         for (int i = 0; i < randomList.size(); i++) {
-            tags.clear();
-            matchingSize = 0;
-
             for (int j = 0; j<5; j++) {
-                if(randomList.get(i).getTags().get(i).getTag().getId()==userInfo.getTags().get(j).getTag().getId()){
+                if(randomList.get(i).getTags().get(i).getId()==userInfo.getTags().get(j).getTag().getId()){
                     tags.add(randomList.get(i).getTags().get(i).getTag());
                     matchingSize++;
                 }
             }
             FriendInfoReponseDto info = new FriendInfoReponseDto(randomList.get(i).getUserImageUrl(), randomList.get(i).getNickName());
-            recommentFriend.add(new RecommentFriendResponseDto(info, tags, matchingSize));
+            tags2 = tags;
+            recommentFriend.add(new RecommentFriendResponseDto(info, tags2, matchingSize));
+
+            tags.clear();
+            matchingSize = 0;
         }
 
         Collections.sort(recommentFriend, Collections.reverseOrder());

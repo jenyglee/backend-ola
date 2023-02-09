@@ -21,11 +21,10 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public List<User> randomUser(StatusEnum statusEnum) {
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
         // => 랜덤으로 100명 잘라서 그 안에서 매칭할 수 있도록 성능개선해야 함.
-        return queryFactory.select(user)
-                .from(user)
+        return queryFactory.selectFrom(user)
                 .where(user.status.eq(statusEnum))
                 .orderBy(NumberExpression.random().asc())
-                .limit(100)
+                .limit(5)
                 .fetch();
     }
 
