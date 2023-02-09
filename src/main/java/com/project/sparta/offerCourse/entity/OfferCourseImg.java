@@ -46,10 +46,6 @@ public class OfferCourseImg {
 
     public void addPost(OfferCoursePost offerCoursePost){
         //사진이 게시글에 존재하지 않는다면
-        if(!offerCoursePost.getImages().contains(this)){
-            //지금사진 추가
-            offerCoursePost.getImages().add(this);
-        }
         this.offerCoursePost = offerCoursePost;
 
     }

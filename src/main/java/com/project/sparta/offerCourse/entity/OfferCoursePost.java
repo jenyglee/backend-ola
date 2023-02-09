@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -27,13 +25,12 @@ public class OfferCoursePost extends Timestamped {
     private String contents;
 
 
-    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
-    private List<OfferCourseImg> images = new ArrayList<>();
+//    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
+//    private List<OfferCourseImg> images = new ArrayList<>();
 
     @Builder
-    public OfferCoursePost(String title, String contents, List<OfferCourseImg> images) {
+    public OfferCoursePost(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.images = images;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface OfferCoursePostService {
 
     //코스 등록
-    void creatOfferCoursePost(List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException;
+    List<String> creatOfferCoursePost(List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException;
 
     //코스 수정
     void modifyOfferCoursePost();
