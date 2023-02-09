@@ -1,7 +1,7 @@
-package com.project.sparta.admin.service;
+package com.project.sparta.offerCourse.service;
 
 
-import com.project.sparta.admin.dto.RequestOfferCoursePostDto;
+import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

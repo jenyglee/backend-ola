@@ -1,5 +1,6 @@
-package com.project.sparta.admin.entity;
+package com.project.sparta.offerCourse.entity;
 
+import com.project.sparta.admin.entity.Timestamped;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.project.sparta.admin.entity;
+package com.project.sparta.offerCourse.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;

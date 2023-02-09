@@ -1,4 +1,4 @@
-package com.project.sparta.admin.dto;
+package com.project.sparta.offerCourse.dto;
 
 import lombok.Getter;
 

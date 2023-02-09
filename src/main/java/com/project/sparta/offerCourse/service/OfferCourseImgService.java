@@ -1,7 +1,7 @@
-package com.project.sparta.admin.service;
+package com.project.sparta.offerCourse.service;
 
 
-import com.project.sparta.admin.entity.OfferCourseImg;
+import com.project.sparta.offerCourse.entity.OfferCourseImg;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

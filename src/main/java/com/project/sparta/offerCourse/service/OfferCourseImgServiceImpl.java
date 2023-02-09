@@ -1,11 +1,9 @@
-package com.project.sparta.admin.service;
+package com.project.sparta.offerCourse.service;
 
-import com.project.sparta.admin.entity.OfferCourseImg;
-import com.project.sparta.admin.repository.OfferCoursePostImgRepository;
+import com.project.sparta.offerCourse.entity.OfferCourseImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -12,33 +12,15 @@ import javax.persistence.*;
 @Table(name = "USERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Admin extends Timestamped {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long Id;
-
-    @Column(nullable = false, unique = true)
-    protected String email;
+public class Admin extends Root {
 
     @Column(nullable = false)
-    protected String password;
+    private String adminPassword = "07B4925039BE4219C76865C5CCB87466";
 
-    @Column(nullable = false)
-    protected String nickName;
-
-    @Enumerated(value=EnumType.STRING)
-    protected UserRoleEnum role;
-
-    @Enumerated(value=EnumType.STRING)
-    protected StatusEnum status;
 
     @Builder
-    public Admin(String email, String password, String nickName, UserRoleEnum role, StatusEnum status) {
-        this.email = email;
-        this.password = password;
-        this.nickName = nickName;
-        this.role = role;
-        this.status = status;
+    public Admin(String email, String password, String nickName, UserRoleEnum role, StatusEnum status, String adminPassword) {
+        super(email, password, nickName, role, status);
+        this.adminPassword = adminPassword;
     }
 }

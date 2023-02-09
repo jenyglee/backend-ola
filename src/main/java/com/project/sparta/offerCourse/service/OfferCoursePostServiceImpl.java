@@ -1,10 +1,10 @@
-package com.project.sparta.admin.service;
+package com.project.sparta.offerCourse.service;
 
 
-import com.project.sparta.admin.dto.RequestOfferCoursePostDto;
-import com.project.sparta.admin.entity.OfferCourseImg;
-import com.project.sparta.admin.entity.OfferCoursePost;
-import com.project.sparta.admin.repository.OfferCoursePostRepository;
+import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
+import com.project.sparta.offerCourse.entity.OfferCourseImg;
+import com.project.sparta.offerCourse.entity.OfferCoursePost;
+import com.project.sparta.offerCourse.repository.OfferCoursePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
