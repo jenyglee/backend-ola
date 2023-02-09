@@ -1,5 +1,6 @@
 package com.project.sparta.hashtag.service;
 
+import com.project.sparta.hashtag.dto.HashtagRequestDto;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
@@ -27,6 +28,7 @@ class HashtagServiceImplTest {
     @Test
     public void createHashtag() {
         User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+
         Hashtag saved = hashtagService.createHashtag("등린이", user);
 
         assertThat(saved.getName()).isEqualTo("등린이");
