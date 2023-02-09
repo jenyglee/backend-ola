@@ -83,7 +83,6 @@ class FriendServiceImplTest {
         User user9 = new User("user9@naver.com","1234", "한효주", UserRoleEnum.USER, USER_REGISTERED, 9,"010-1234-1242","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user10 = new User("user10@naver.com","1234", "한등산", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1243","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user11 = new User("user11@naver.com","1234", "한마리", UserRoleEnum.USER, USER_REGISTERED, 11,"010-1234-1244","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user12 = new User("user12@naver.com","1234", "한현주", UserRoleEnum.USER, USER_REGISTERED, 12,"010-1234-1245","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
 
 
         em.persist(user1);
@@ -129,7 +128,7 @@ class FriendServiceImplTest {
     @Test
     public void addFriend(){
         friendService.addFriend(1L, "한세인");
-        friendService.addFriend(1L, "김민선");
+        friendService.addFriend(1L, "김주성");
         List<Friend> friend= friendRepository.findByUserId(1L);
 
         Assertions.assertThat(friend.get(0).getTargetId()).isEqualTo(2L);
@@ -170,7 +169,6 @@ class FriendServiceImplTest {
         System.out.println(randomList.get(0).getTags());
         System.out.println(userInfo.getTags().get(0).getTag().getId());
         System.out.println(userInfo.getTags().get(0).getTag().getName());
-
         //Assertions.assertThat(randomList.size()).isEqualTo(5);
     }
 
