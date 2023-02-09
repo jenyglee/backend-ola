@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class HashtagServiceImplTest {
 
-    @Autowired HashtagService hashtagService;
+    @Autowired
+    HashtagService hashtagService;
     @Autowired
     HashtagRepository hashtagRepository;
     @Test

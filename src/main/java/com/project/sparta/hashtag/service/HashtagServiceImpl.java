@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import javax.swing.border.Border;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +44,8 @@ public class HashtagServiceImpl implements HashtagService {
     //해시태그 삭제
     @Override
     public void deleteHashtag(Long id, User user) {
-        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(()-> new CustomException(NOT_FOUND_HASHTAG));
+        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(
+                ()-> new CustomException(NOT_FOUND_HASHTAG));
         hashtagRepository.delete(hashtag);
     }
 
