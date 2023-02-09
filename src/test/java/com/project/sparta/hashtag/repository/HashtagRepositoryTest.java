@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +40,7 @@ class HashtagRepositoryTest {
     @Test
     @DisplayName("중복된 이름이 있는경우 에러")
     public void createHashTagError02(){
+
         hashtagRepository.save(new Hashtag("야호"));
 
         User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",

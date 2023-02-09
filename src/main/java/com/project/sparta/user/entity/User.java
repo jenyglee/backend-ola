@@ -10,6 +10,8 @@ import lombok.*;
 import org.springframework.context.annotation.Bean;
 import java.util.List;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,13 +34,14 @@ public class User extends Root {
     @Enumerated(value=EnumType.STRING)
     protected UserGradeEnum gradeEnum;
 
-    //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserTag> tags = new ArrayList<>();
+
 
     @Builder(builderMethodName = "userBuilder")
 
     public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
                 int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum) {
-
         this.password = password;
         this.nickName = nickName;
         this.email = email;
@@ -49,5 +52,4 @@ public class User extends Root {
         this.gradeEnum = gradeEnum;
         this.status = status;
     }
-
 }

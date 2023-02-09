@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FriendSearchReponseDto {
+public class FriendInfoReponseDto {
 
     private String friendImage;
 
     private String friendName;
 
     @Builder
-    public FriendSearchReponseDto(String friendImage, String friendName) {
+    public FriendInfoReponseDto(String friendImage, String friendName) {
         this.friendImage = friendImage;
         this.friendName = friendName;
     }

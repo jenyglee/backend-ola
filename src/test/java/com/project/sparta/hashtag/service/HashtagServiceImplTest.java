@@ -1,6 +1,5 @@
 package com.project.sparta.hashtag.service;
 
-import com.project.sparta.hashtag.dto.HashtagRequestDto;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
