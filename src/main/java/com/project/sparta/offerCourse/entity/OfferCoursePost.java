@@ -24,12 +24,15 @@ public class OfferCoursePost extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
-
-//    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
-//    private List<OfferCourseImg> images = new ArrayList<>();
-
     @Builder
     public OfferCoursePost(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+
+
+    public void modifyOfferCousePost(String title,String contents) {
         this.title = title;
         this.contents = contents;
     }

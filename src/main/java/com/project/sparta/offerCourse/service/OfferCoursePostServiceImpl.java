@@ -1,6 +1,8 @@
 package com.project.sparta.offerCourse.service;
 
 
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
 import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
 import com.project.sparta.offerCourse.entity.OfferCourseImg;
 import com.project.sparta.offerCourse.entity.OfferCoursePost;
@@ -51,14 +53,25 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
 
     //코스 수정
     @Override
-    public void modifyOfferCoursePost(){
+    public List<String> modifyOfferCoursePost(Long id, List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException {
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
-        // 포스트 아이디가 있는 값인지 찾은 다음에 없으면 예외처리
-        // 얘를 포스트 값으로 넣어주고 변경 메서드 하나 만든다음에
+        OfferCoursePost post = offerCoursePostRepository.findById(id)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+        // 변경 메서드 하나 만든다음에
+        post.modifyOfferCousePost(requestPostDto.getTitle(), requestPostDto.getContents());
         // 받아온 이미지 파일을 다시 리스트로 변경하고
-        //이미지 파일 for문 돌려서 이미지파일값 안에 포스트 넣어주고
-        //포스트 다시 세이브 하면 수정 로직 완료
+        List<OfferCourseImg> imgList = offerCourseImgService.createImgList(imges);
 
+        for (OfferCourseImg image:imgList) {
+            image.addPost(post);
+        }
+
+        List<String> imgRouteList = imgList.stream().map(OfferCourseImg::getImgRoute).collect(Collectors.toList());
+
+        //포스트 다시 세이브 하면 수정 로직 완료
+        offerCoursePostRepository.save(post);
+
+        return imgRouteList;
     }
 
     //코스 삭제

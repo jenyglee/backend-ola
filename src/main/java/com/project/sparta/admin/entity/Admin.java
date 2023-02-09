@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Admin extends Root {
 
-    @Column(nullable = false)
+    @Column
     private String adminPassword = "07B4925039BE4219C76865C5CCB87466";
 
 

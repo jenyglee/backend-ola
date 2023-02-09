@@ -7,10 +7,7 @@ import com.project.sparta.offerCourse.service.OfferCoursePostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -33,4 +30,17 @@ public class OfferCourseContoroller {
 
         return new OfferCourseResponseDto(imgRouteList);
     }
+
+
+    @PutMapping("admin/api/creatOfferCourse/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public OfferCourseResponseDto modifyOfferCourse(@PathVariable Long id,@RequestPart(value="image", required=false) List<MultipartFile> imges,
+                                                   @RequestPart(value = "requestDto") RequestOfferCoursePostDto requestDto) throws IOException {
+
+        List<String> imgRouteList = offerCoursePostService.modifyOfferCoursePost(id,imges, requestDto);
+
+
+        return new OfferCourseResponseDto(imgRouteList);
+    }
+
 }

@@ -13,7 +13,7 @@ public interface OfferCoursePostService {
     List<String> creatOfferCoursePost(List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException;
 
     //코스 수정
-    void modifyOfferCoursePost();
+    List<String> modifyOfferCoursePost(Long id, List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException;
 
     //코스 삭제
     void deleteOfferCoursePost();
