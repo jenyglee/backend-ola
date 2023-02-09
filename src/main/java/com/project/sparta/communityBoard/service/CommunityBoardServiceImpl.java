@@ -46,12 +46,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     CommunityBoard communityBoard = boardRepository.findById(user.getId())
         .orElseThrow(() -> new IllegalArgumentException("수정 할 보드가 없습니다."));
     communityBoard.updateBoard(communityRequestDto.getContents());
-
-    if(user.getId() != communityBoard.getId())
-    {
-      throw new IllegalArgumentException("내보드를 수정하지 않았습니다.");
-    }
-
     CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
         communityBoard);
     return communityBoardResponseDto;
@@ -82,8 +76,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,
       User user) {
-
-    //내보드 조회
     Sort sort = Sort.by(Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());

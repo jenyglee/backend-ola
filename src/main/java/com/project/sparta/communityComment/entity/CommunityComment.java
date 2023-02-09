@@ -32,9 +32,7 @@ public class CommunityComment extends Timestamped {
   private String nickName;
   private String contents;
 
-  @ManyToOne
-  @JoinColumn(name = "communityBoardId_Id", nullable = false)
-  private CommunityBoard communityBoard;
+
 
   //one to many 연관관계
 //  Board board;

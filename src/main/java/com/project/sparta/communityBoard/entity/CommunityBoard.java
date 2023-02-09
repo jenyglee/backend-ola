@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,11 +33,15 @@ public class CommunityBoard {
   @OneToMany(mappedBy = "communityBoardId",cascade = CascadeType.REMOVE)
   private List<CommunityComment> communityComment = new ArrayList<>();
 
+  @ManyToOne
+  @JoinColumn(name = "USER_ID", nullable = false)
+  private User user;
+
   public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
     this.nickName = user.getNickName();
     this.contents = communityBoardRequestDto.getContents();
     this.title = communityBoardRequestDto.getTitle();
-
+    this.user = user;
   }
 
   public void updateBoard(String contents) {

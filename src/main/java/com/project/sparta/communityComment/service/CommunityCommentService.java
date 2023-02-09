@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface CommunityCommentService {
 
-  public CommunityComment createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
       User user);
 
   public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,

@@ -15,6 +15,7 @@ import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.security.UserDetailImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.user.repository.UserRepository;
 import jdk.jfr.Name;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,41 +36,40 @@ public class CommentServiceTest {
   CommunityBoardService communityBoardService;
   @Autowired
   BoardRepository boardRepository; // 방금추가
-//  @Test
-//  @Name("보드 생성 테스트")
-//  public void createCommunityBoard() {
-//
-//    Long userId = 1L;
-//    Long boardId = 1L;
-//    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-//    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
-//
-//    CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
-//
-//    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
-//
-//    assertThat(communityBoardResponseDto.getNickName()).isEqualTo("이재원");
-//    System.out.println(communityBoardResponseDto);
-//  }
+  @Autowired
+  UserRepository userRepository;
+
+  @Test
+  @Name("보드 생성 테스트")
+  public void createCommunityBoard() {
+    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
+    userRepository.saveAndFlush(user1);
+
+    CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
+    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
+
+    assertThat(communityBoardResponseDto.getNickName()).isEqualTo("이재원");
+    System.out.println(communityBoardResponseDto);
+  }
 
 
   @Test
+  @Name("댓글 생성 테스트")
   public void createCommunityComment() {
-
-    Long userId = 1L;
-    Long boardId = 1L;
     User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
-
+//    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
+    userRepository.saveAndFlush(user1);
     CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
-
     CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
 
     CommunityRequestDto communityRequestDto = new CommunityRequestDto("하이");
-    CommunityComment communityComment = commentService.createCommunityComments(communityBoardResponseDto.getId(), communityRequestDto,
+    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardResponseDto.getId(), communityRequestDto,
         user1);
-    assertThat(communityComment.getNickName()).isEqualTo("이재원");
-    System.out.println(communityComment);
+
+
+    assertThat(communityResponseDto.getNickName()).isEqualTo("이재원");
+    System.out.println(communityResponseDto);
   }
 
 }

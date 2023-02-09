@@ -20,16 +20,16 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   @Override
   @Transactional
-  public CommunityComment createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
       User user) {
     CommunityBoard communityBoard = boardRepository.findById(boardId)
         .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
-    CommunityComment save = commentRepository.save(communityComment);
-//    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
+    commentRepository.saveAndFlush(communityComment);
+    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
 
-    return save;
+    return communityResponseDto;
   }
 
   @Override
