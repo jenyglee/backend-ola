@@ -2,6 +2,7 @@ package com.project.sparta.offerCourse.service;
 
 
 import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
+import com.project.sparta.offerCourse.dto.ResponseOnePostDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,6 +18,9 @@ public interface OfferCoursePostService {
 
     //코스 삭제
     void deleteOfferCoursePost(Long id);
+
+    //단건 코스 조회
+    ResponseOnePostDto oneSelectOfferCoursePost(Long id);
 
     //전체 코스 조회
     //단건 코스 조회

@@ -3,8 +3,8 @@ package com.project.sparta.offerCourse.service;
 
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.offerCourse.dto.OfferCourseResponseDto;
 import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
+import com.project.sparta.offerCourse.dto.ResponseOnePostDto;
 import com.project.sparta.offerCourse.entity.OfferCourseImg;
 import com.project.sparta.offerCourse.entity.OfferCoursePost;
 import com.project.sparta.offerCourse.entity.PostStatusEnum;
@@ -41,10 +41,11 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
                 .postStatus(PostStatusEnum.VAILABLE)
                         .build();
 
+        //이미지에 포스트 담아주고
         for (OfferCourseImg image:imgList) {
             image.addPost(post);
         }
-
+        // 스트림으로 이미지 각각의 경로를 뽑아내서
         List<String> imgRouteList = imgList.stream().map(OfferCourseImg::getImgRoute).collect(Collectors.toList());
 
         //레파지토리에 저장하기.
@@ -64,11 +65,12 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
         post.modifyOfferCousePost(requestPostDto.getTitle(), requestPostDto.getContents());
         // 받아온 이미지 파일을 다시 리스트로 변경하고
         List<OfferCourseImg> imgList = offerCourseImgService.createImgList(imges);
-
+        //이미지에 포스트 담아주고
         for (OfferCourseImg image:imgList) {
             image.addPost(post);
         }
 
+        // 스트림으로 이미지 각각의 경로를 뽑아내서
         List<String> imgRouteList = imgList.stream().map(OfferCourseImg::getImgRoute).collect(Collectors.toList());
 
         //포스트 다시 세이브 하면 수정 로직 완료
@@ -90,8 +92,33 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
     }
 
     //단건 코스 조회
+    @Override
+    public ResponseOnePostDto oneSelectOfferCoursePost(Long id){
+        //1. 아이디값으로 포스트 찾아서 포스트 만들고
+        OfferCoursePost offerCoursePost = offerCoursePostRepository.findById(id).orElseThrow();
+
+        //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌
+        List<String> imgRouteList = offerCoursePost.getImages().stream()
+                .map(OfferCourseImg::getImgRoute).collect(Collectors.toList());
+
+        //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
+        return new ResponseOnePostDto(offerCoursePost,imgRouteList);
+
+    }
+
+
+    //전체 코스 조회(페이징)
+
+    public void allOfferCousePost(int ogset-1, int limit,String userName){
+        
+
+
+    }
+
     //코스 등록
+
     //코스 수정
+
     //코스 삭제
     // 필터링 도전
 
