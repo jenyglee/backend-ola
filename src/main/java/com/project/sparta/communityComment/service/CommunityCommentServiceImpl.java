@@ -1,16 +1,13 @@
 package com.project.sparta.communityComment.service;
 
-import static com.project.sparta.communityComment.entity.QCommunityComment.communityComment;
-
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,27 +21,30 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
   @Override
   @Transactional
   public CommunityComment createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
-      String nickName) {
-    boardRepository.findById(boardId)
+      User user) {
+    CommunityBoard communityBoard = boardRepository.findById(boardId)
         .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
-    CommunityComment communityComment = new CommunityComment(boardId, communityRequestDto,
-        nickName);
-    commentRepository.save(communityComment);
-    return communityComment;
+    CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
+       user);
+    CommunityComment save = commentRepository.save(communityComment);
+//    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
+
+    return save;
   }
 
   @Override
   @Transactional
-  public CommunityComment updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
-      String nickName) {
+  public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+      User user) {
 
     boardRepository.findById(boardId)
         .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
-    CommunityComment communityComment = commentRepository.findByNickName(nickName)
+    CommunityComment communityComment = commentRepository.findById(boardId)
         .orElseThrow(() -> new IllegalArgumentException("수정 할 댓글이 없습니다."));
     communityComment.updateComment(communityRequestDto.getContents());
     commentRepository.save(communityComment);
-    return communityComment;
+    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
+    return communityResponseDto;
   }
 
   @Override

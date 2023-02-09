@@ -39,9 +39,9 @@ public class CommunityComment extends Timestamped {
   //one to many 연관관계
 //  Board board;
   public CommunityComment(Long boardId, CommunityRequestDto communityRequestDto,
-      String nickName) {
+     User user) {
     this.communityBoardId = boardId;
-    this.nickName = nickName;
+    this.nickName = user.getNickName();
     this.contents = communityRequestDto.getContents();
   }
 

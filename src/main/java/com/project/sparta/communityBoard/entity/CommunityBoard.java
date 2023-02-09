@@ -2,6 +2,7 @@ package com.project.sparta.communityBoard.entity;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.user.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -30,8 +31,8 @@ public class CommunityBoard {
   @OneToMany(mappedBy = "communityBoardId",cascade = CascadeType.REMOVE)
   private List<CommunityComment> communityComment = new ArrayList<>();
 
-  public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, UserDetailImpl userDetail) {
-    this.nickName = userDetail.getUsername();
+  public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
+    this.nickName = user.getNickName();
     this.contents = communityBoardRequestDto.getContents();
     this.title = communityBoardRequestDto.getTitle();
 
@@ -40,7 +41,4 @@ public class CommunityBoard {
   public void updateBoard(String contents) {
     this.contents = contents;
   }
-
-
-
 }
