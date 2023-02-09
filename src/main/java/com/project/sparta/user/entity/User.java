@@ -27,18 +27,23 @@ public class User extends Root {
     @Column(nullable = false)
     private String userImageUrl;
 
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<CommunityBoard> communityBoards = new ArrayList<>();
+
+    @Enumerated(value=EnumType.STRING)
+    protected UserGradeEnum gradeEnum;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
+
 
     @Builder(builderMethodName = "userBuilder")
 
     public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
                 int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum) {
-
         this.password = password;
         this.nickName = nickName;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
         this.email = email;
         this.role = role;
         this.age = age;
