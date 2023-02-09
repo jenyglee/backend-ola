@@ -39,8 +39,13 @@ public class OfferCourseContoroller {
 
         List<String> imgRouteList = offerCoursePostService.modifyOfferCoursePost(id,imges, requestDto);
 
-
         return new OfferCourseResponseDto(imgRouteList);
+    }
+
+    @DeleteMapping("admin/api/creatOfferCourse/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteOfferCourse(@PathVariable Long id){
+        offerCoursePostService.deleteOfferCoursePost(id);
     }
 
 }

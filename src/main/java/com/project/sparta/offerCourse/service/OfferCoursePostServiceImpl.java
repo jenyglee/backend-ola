@@ -3,9 +3,11 @@ package com.project.sparta.offerCourse.service;
 
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.offerCourse.dto.OfferCourseResponseDto;
 import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
 import com.project.sparta.offerCourse.entity.OfferCourseImg;
 import com.project.sparta.offerCourse.entity.OfferCoursePost;
+import com.project.sparta.offerCourse.entity.PostStatusEnum;
 import com.project.sparta.offerCourse.repository.OfferCoursePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,7 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
         OfferCoursePost post = OfferCoursePost.builder()
                 .title(requestPostDto.getTitle())
                 .contents(requestPostDto.getContents())
+                .postStatus(PostStatusEnum.VAILABLE)
                         .build();
 
         for (OfferCourseImg image:imgList) {
@@ -74,11 +77,15 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
         return imgRouteList;
     }
 
-    //코스 삭제
+    //코스추천 삭제
     @Override
-    public void deleteOfferCoursePost(){
+    public void deleteOfferCoursePost(Long id){
         //포스트 아이디 조회해서 포스트 아이디 있는지 검증
-        //딜리트
+        OfferCoursePost post = offerCoursePostRepository.findById(id)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+        //포스트의 스테이터스 값 변경하고 다시 저장
+        post.statusModifyOfferCousePost(PostStatusEnum.UNVAILABLE);
+        offerCoursePostRepository.save(post);
 
     }
 

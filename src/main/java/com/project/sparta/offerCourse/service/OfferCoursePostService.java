@@ -16,7 +16,7 @@ public interface OfferCoursePostService {
     List<String> modifyOfferCoursePost(Long id, List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException;
 
     //코스 삭제
-    void deleteOfferCoursePost();
+    void deleteOfferCoursePost(Long id);
 
     //전체 코스 조회
     //단건 코스 조회

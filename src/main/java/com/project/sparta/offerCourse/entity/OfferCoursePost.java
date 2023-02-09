@@ -24,10 +24,15 @@ public class OfferCoursePost extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+    @Column(nullable = false)
+    @Enumerated(value=EnumType.STRING)
+    private PostStatusEnum postStatus;
+
     @Builder
-    public OfferCoursePost(String title, String contents) {
+    public OfferCoursePost(String title, String contents ,PostStatusEnum postStatus) {
         this.title = title;
         this.contents = contents;
+        this.postStatus = postStatus;
     }
 
 
@@ -35,5 +40,9 @@ public class OfferCoursePost extends Timestamped {
     public void modifyOfferCousePost(String title,String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public void statusModifyOfferCousePost(PostStatusEnum postStatus){
+        this.postStatus = postStatus;
     }
 }
