@@ -31,6 +31,7 @@ class HashtagRepositoryTest {
 
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user));
     }
+
     @Test
     @DisplayName("중복된 이름이 있는경우 에러")
     public void createHashTagError02(){

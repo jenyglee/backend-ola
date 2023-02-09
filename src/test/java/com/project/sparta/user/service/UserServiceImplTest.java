@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static com.project.sparta.user.entity.UserRoleEnum.ADMIN;
-import static com.project.sparta.user.entity.UserRoleEnum.USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
