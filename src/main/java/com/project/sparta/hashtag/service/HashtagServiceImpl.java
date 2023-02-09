@@ -43,7 +43,8 @@ public class HashtagServiceImpl implements HashtagService {
     //해시태그 삭제
     @Override
     public void deleteHashtag(Long id, User user) {
-        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(()-> new CustomException(NOT_FOUND_HASHTAG));
+        Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(
+                ()-> new CustomException(NOT_FOUND_HASHTAG));
         hashtagRepository.delete(hashtag);
     }
 

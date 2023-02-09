@@ -37,7 +37,8 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
   @Transactional
   public ResponseEntity deleteComments(Long commentsId) {
     communityRepository.findById(commentsId)
-        .orElseThrow(()->new IllegalArgumentException("삭제할 댓글이 없습니다."));
+        .orElseThrow(
+                ()->new IllegalArgumentException("삭제할 댓글이 없습니다."));
     communityRepository.deleteById(commentsId);
     return new ResponseEntity("댓글 삭제 완료", HttpStatus.OK);
   }

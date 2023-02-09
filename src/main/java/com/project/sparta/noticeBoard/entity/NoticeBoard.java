@@ -1,20 +1,23 @@
 package com.project.sparta.noticeBoard.entity;
 
+import com.project.sparta.admin.entity.Timestamped;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
-import com.project.sparta.user.entity.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class NoticeBoard  {
+public class NoticeBoard extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="NoticeBoard_ID")
     private Long id;
+
+    private String username;
 
     @Column(nullable = false)
     private String title;
@@ -22,15 +25,17 @@ public class NoticeBoard  {
     private String contents;
 
 
-    @Builder
-    public NoticeBoard( String title, String contents){
 
-        this.title = title;
-        this.contents = contents;
+    public NoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto){
+
+        this.title = noticeBoardRequestDto.getTitle();
+        this.contents = noticeBoardRequestDto.getTitle();
+
     }
-    public void update(NoticeBoardRequestDto requestDto){
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
+
+    public void update(NoticeBoardRequestDto noticeBoardRequestDto){
+        this.title = noticeBoardRequestDto.getTitle();
+        this.contents = noticeBoardRequestDto.getContents();
     }
 
 
