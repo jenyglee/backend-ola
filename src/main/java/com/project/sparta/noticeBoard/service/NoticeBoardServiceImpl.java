@@ -1,11 +1,13 @@
 package com.project.sparta.noticeBoard.service;
 
+import com.project.sparta.admin.entity.Admin;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.dto.NoticeBoardResponseDto;
 import com.project.sparta.noticeBoard.entity.NoticeBoard;
 import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
+import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,25 +18,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class NoticeBoardServiceImpl implements NoticeBoardService {
     private final NoticeBoardRepository noticeBoardRepository;
 
-
-
     @Override
-    @Transactional
-    public NoticeBoard createNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto) {
+    public NoticeBoard createNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto, Admin admin) {
         NoticeBoard noticeBoard = new NoticeBoard(noticeBoardRequestDto);
         noticeBoardRepository.save(noticeBoard);
         return noticeBoard;
-
-
-
     }
 
     @Override
-    @Transactional
-    public void deleteNoticeBoard(Long id) {
+    public void deleteNoticeBoard(Long id, Admin admin) {
        NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(
                () -> new IllegalArgumentException("공지사항을 찾을 수 없습니다")
        );
@@ -46,9 +42,8 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     }
 
     @Override
-    @Transactional
-    public NoticeBoardResponseDto updateNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto,Long id) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(
+    public NoticeBoardResponseDto updateNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto, Long boardId, Admin admin) {
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(boardId).orElseThrow(
                 ()-> new IllegalArgumentException("공지사항을 찾을 수 없습니다")
         );
         noticeBoard.update(noticeBoardRequestDto);
@@ -59,8 +54,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public NoticeBoardResponseDto getNoticeBoard(Long id) {
+    public NoticeBoardResponseDto getNoticeBoard(Long id, User user) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(
                 ()-> new IllegalArgumentException("공지사항을 찾을 수 없습니다")
         );
@@ -71,8 +65,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
 
     @Override
-    @Transactional(readOnly = true)
-    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int offset, int limit) {
+    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int offset, int limit, User user) {
         // 1. 페이징으로 요청해서 조회
         PageRequest pageRequest = PageRequest.of(offset, limit);
         Page<NoticeBoard> results = noticeBoardRepository.findAll(pageRequest);
