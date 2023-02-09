@@ -37,7 +37,7 @@ public class OfferCourseImgServiceImpl implements OfferCourseImgService {
         String path = System.getProperty("user.dir")+"/src/main/resources/static/files";
         File file = new File(path);
 
-        // 저장할 위치의 디렉토리가 존지하지 않을 경우
+        // 저장할 위치의 디렉토리가 존재하지 않을 경우
         if (!file.exists()) {
             // mkdir() 함수와 다른 점은 상위 디렉토리가 존재하지 않을 때 그것까지 생성
             file.mkdirs();

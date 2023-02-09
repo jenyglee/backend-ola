@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  //상속을 위한 어노테이션
 @Table(name = "USERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,6 +32,7 @@ public class Root extends Timestamped {
 
     @Enumerated(value=EnumType.STRING)
     protected StatusEnum status;
+
 
     @Builder
     public Root(String email, String password, String nickName, UserRoleEnum role, StatusEnum status) {

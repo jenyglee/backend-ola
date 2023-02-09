@@ -28,7 +28,8 @@ public class User extends Root {
 
     //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
 
-    @Builder
+    @Builder(builderMethodName = "userBuilder")
+
     public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
                 int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum) {
 

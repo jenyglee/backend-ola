@@ -18,7 +18,7 @@ public class Admin extends Root {
     private String adminPassword = "07B4925039BE4219C76865C5CCB87466";
 
 
-    @Builder
+    @Builder(builderMethodName = "aminBuilder")
     public Admin(String email, String password, String nickName, UserRoleEnum role, StatusEnum status, String adminPassword) {
         super(email, password, nickName, role, status);
         this.adminPassword = adminPassword;
