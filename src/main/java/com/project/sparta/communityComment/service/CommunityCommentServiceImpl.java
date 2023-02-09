@@ -46,7 +46,6 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
     return communityResponseDto;
   }
-
   @Override
   @Transactional
   public void deleteCommunityComments(Long commentsId) {

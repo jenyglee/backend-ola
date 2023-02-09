@@ -1,4 +1,4 @@
-package com.project.sparta.admin.controller;
+package com.project.sparta.offerCourse.controller;
 
 import com.project.sparta.offerCourse.dto.RequestOfferCoursePostDto;
 import com.project.sparta.offerCourse.service.OfferCoursePostService;
@@ -13,6 +13,16 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class AdminController {
+public class OfferCourseContoroller {
 
+
+    private final OfferCoursePostService offerCoursePostService;
+
+    @PostMapping("admin/api/creatOfferCourse")
+    public void creatOfferCourse( @RequestPart(value="image", required=false) List<MultipartFile> imges,
+                                  @RequestPart(value = "requestDto") RequestOfferCoursePostDto requestDto) throws IOException {
+
+        offerCoursePostService.creatOfferCoursePost(imges,requestDto);
+
+    }
 }

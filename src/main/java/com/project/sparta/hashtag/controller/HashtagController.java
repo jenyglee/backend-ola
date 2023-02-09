@@ -6,6 +6,7 @@ import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,8 @@ public class HashtagController {
     public ResponseEntity createHashtag(@RequestBody String value
                                         // @AuthenticationPrincipal UserDetailImpl userDetail
     ){
-        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
         Hashtag hashtag = hashtagService.createHashtag(value, user1);
         HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtag.getId(), hashtag.getName());
         return new ResponseEntity(hashtagResponseDto, HttpStatus.OK);
@@ -41,7 +43,8 @@ public class HashtagController {
     public ResponseEntity deleteHashtag(@RequestBody Long id
                                         // @AuthenticationPrincipal UserDetailImpl userDetail
     ){
-        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
         hashtagService.deleteHashtag(id, user1);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -51,7 +54,8 @@ public class HashtagController {
     public ResponseEntity getHashtagList(@RequestBody int offset, int limit
                                         // @AuthenticationPrincipal UserDetailImpl userDetail
     ){
-        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
         hashtagService.getHashtagList(offset, limit, user1);
         return new ResponseEntity(HttpStatus.OK);
     }
