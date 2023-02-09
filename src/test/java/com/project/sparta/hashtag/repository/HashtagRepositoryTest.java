@@ -1,6 +1,7 @@
 package com.project.sparta.hashtag.repository;
 
 import com.project.sparta.exception.CustomException;
+import com.project.sparta.hashtag.dto.HashtagRequestDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.user.entity.User;
@@ -28,8 +29,6 @@ class HashtagRepositoryTest {
     public void createHashTagError01(){
         User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
 
-        // than
-        // 내가 예상한 익센셥이 잘 나왔으면 테스트 성공
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user));
     }
 
@@ -40,7 +39,6 @@ class HashtagRepositoryTest {
 
         User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
 
-        // than
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("야호", user));
     }
 }
