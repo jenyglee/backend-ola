@@ -32,7 +32,8 @@ public class User extends Root {
     @Enumerated(value=EnumType.STRING)
     protected UserGradeEnum gradeEnum;
 
-    //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserTag> tags = new ArrayList<>();
 
     @Builder(builderMethodName = "userBuilder")
 
