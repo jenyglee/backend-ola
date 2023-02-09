@@ -8,7 +8,6 @@ import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.TupleElement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.List;
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
 import static com.project.sparta.exception.api.Status.INVALID_USER;
-import static org.springframework.data.support.PageableExecutionUtils.getPage;
 
 @Service
 @RequiredArgsConstructor
@@ -71,7 +68,7 @@ public class FriendServiceImpl implements FriendService{
         //뽑아온 회원과 함께 태그 매칭 해보기 => UserTag 엔티티에서 해당 회원들의 태그 리스트 가져오기
         for (int i = 0; i < randomList.size(); i++) {
             for (int j = 0; j<5; j++) {
-                if(randomList.get(i).getTags().get(i).getId()==userInfo.getTags().get(j).getTag().getId()){
+                if(randomList.get(i).getTags().get(i).getTag().getId()==userInfo.getTags().get(j).getTag().getId()){
                     tags.add(randomList.get(i).getTags().get(i).getTag());
                     matchingSize++;
                 }

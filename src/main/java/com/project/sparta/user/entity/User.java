@@ -34,12 +34,11 @@ public class User extends Root {
     @Enumerated(value=EnumType.STRING)
     protected UserGradeEnum gradeEnum;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserTag> tags = new ArrayList<>();
 
 
     @Builder(builderMethodName = "userBuilder")
-
     public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
                 int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum) {
         this.password = password;

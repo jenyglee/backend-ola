@@ -1,11 +1,13 @@
 package com.project.sparta.friend.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
-import com.project.sparta.user.entity.QUser;
-import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.user.entity.*;
+import com.project.sparta.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import static com.project.sparta.exception.api.Status.INVALID_USER;
 
 @SpringBootTest
 @Transactional
@@ -36,9 +39,10 @@ class FriendServiceImplTest {
 
     @Autowired
     FriendService friendService;
-
     @Autowired
     FriendRepository friendRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @BeforeEach
@@ -65,18 +69,18 @@ class FriendServiceImplTest {
         em.persist(tag9);
         em.persist(tag10);
 
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user2 = new User("user2@naver.com","1234", "한세인", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1235","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user3 = new User("user3@naver.com","1234", "김민선", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1236","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user4 = new User("user4@naver.com","1234", "김주성", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1237","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user5 = new User("user5@naver.com","1234", "김두영", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1238","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user6 = new User("user6@naver.com","1234", "한병두", UserRoleEnum.USER, USER_REGISTERED, 40,"010-1234-1239","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user7 = new User("user7@naver.com","1234", "한효주", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1240","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user8 = new User("user8@naver.com","1234", "한지민", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1241","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user9 = new User("user9@naver.com","1234", "한예슬", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1242","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user10 = new User("user10@naver.com","1234", "한미란", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1243","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user11 = new User("user11@naver.com","1234", "한영두", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1244","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
 
-        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-        User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
-        User user3 = new User("1234", "김민선", 30, "010-1234-1236", "user3@naver.com", UserRoleEnum.USER, "user3.jpg",USER_REGISTERED);
-        User user4 = new User("1234", "김주성", 20, "010-1234-1237", "user4@naver.com", UserRoleEnum.USER, "user4.jpg",USER_REGISTERED);
-        User user5 = new User("1234", "김두영", 30, "010-1234-1238", "user5@naver.com", UserRoleEnum.USER, "user5.jpg",USER_REGISTERED);
-        User user6 = new User("1234", "한병두", 20, "010-1234-1239", "user6@naver.com", UserRoleEnum.USER, "user6.jpg",USER_REGISTERED);
-        User user7 = new User("1234", "한지민", 10, "010-1234-1222", "user7@naver.com", UserRoleEnum.USER, "user7.jpg",USER_REGISTERED);
-        User user8 = new User("1234", "한예슬", 20, "010-1234-1213", "user8@naver.com", UserRoleEnum.USER, "user8.jpg",USER_REGISTERED);
-        User user9 = new User("1234", "한예리", 30, "010-1234-1255", "user9@naver.com", UserRoleEnum.USER, "user9.jpg",USER_REGISTERED);
-        User user10 = new User("1234", "한호영", 20, "010-1234-1227", "user10@naver.com", UserRoleEnum.USER, "user10.jpg",USER_REGISTERED);
-        User user11 = new User("1234", "한민선", 30, "010-1234-1211", "user11@naver.com", UserRoleEnum.USER, "user11.jpg",USER_REGISTERED);
 
         em.persist(user1);
         em.persist(user2);
@@ -157,11 +161,7 @@ class FriendServiceImplTest {
 
         //비교할 회원 랜덤으로 뽑아오기
         List<User> randomList = friendRepository.randomUser(USER_REGISTERED);
-
-        System.out.println(randomList.size());
-        System.out.println(randomList.get(0).getTags());
-        System.out.println(userInfo.getTags().get(0).getTag().getId());
-        System.out.println(userInfo.getTags().get(0).getTag().getName());
+        System.out.println(randomList.get(0).getTags().get(0).getTag().getName());
 
         //Assertions.assertThat(randomList.size()).isEqualTo(5);
     }

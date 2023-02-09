@@ -1,10 +1,8 @@
 package com.project.sparta.hashtag.controller;
 
 
-import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
-import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;

@@ -1,6 +1,10 @@
 package com.project.sparta.common.db;
 
 import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
+import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.user.entity.UserTag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -9,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 
 @Profile("local")
 @Component
