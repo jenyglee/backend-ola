@@ -3,6 +3,7 @@ package com.project.sparta.hashtag.service;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.hashtag.dto.HashtagRequestDto;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
@@ -36,9 +37,9 @@ public class HashtagServiceImpl implements HashtagService {
         }
 
         Hashtag hashtag = new Hashtag(value);
-        hashtagRepository.save(hashtag);
-        return hashtag;
+        return hashtagRepository.save(hashtag);
     }
+
 
     //해시태그 삭제
     @Override
@@ -70,6 +71,7 @@ public class HashtagServiceImpl implements HashtagService {
         return new PageResponseDto<>(offset, totalElements, hashtagResponseDtoList);
     }
 
+    //디폴트 해시태그 전체 조회
     @Override
     public List<HashtagResponseDto> getFixedHashtagList() {
         List<Hashtag> hashtagList = hashtagRepository.findAll();
