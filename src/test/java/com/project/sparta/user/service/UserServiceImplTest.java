@@ -1,7 +1,6 @@
 package com.project.sparta.user.service;
 
 import com.project.sparta.user.entity.QUser;
-import com.project.sparta.user.entity.Tag;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,12 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static com.project.sparta.user.entity.UserRoleEnum.ADMIN;
-import static com.project.sparta.user.entity.UserRoleEnum.USER;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
@@ -39,26 +33,12 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void Befor() {
-        Tag tag1 = new Tag("#등린이");
-        Tag tag2 = new Tag("#절경");
-        Tag tag3 = new Tag("#등산용품");
-        Tag tag4 = new Tag("#산악회");
-        Tag tag5 = new Tag("#정복");
-        Tag tag6 = new Tag("#고급코스");
 
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(tag1);
-        tags.add(tag2);
-        tags.add(tag3);
-        tags.add(tag4);
-        tags.add(tag5);
-        tags.add(tag6);
-
-        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED, tags);
-        User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED, tags);
-        User user3 = new User("1234", "김민선", 30, "010-1234-1236", "user3@naver.com", UserRoleEnum.USER, "user3.jpg",USER_REGISTERED, tags);
-        User user4 = new User("1234", "김주성", 20, "010-1234-1237", "user4@naver.com", UserRoleEnum.USER, "user4.jpg",USER_REGISTERED, tags);
-        User user5 = new User("1234", "김두영", 30, "010-1234-1238", "user5@naver.com", UserRoleEnum.USER, "user5.jpg",USER_REGISTERED, tags);
+        User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+        User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
+        User user3 = new User("1234", "김민선", 30, "010-1234-1236", "user3@naver.com", UserRoleEnum.USER, "user3.jpg",USER_REGISTERED);
+        User user4 = new User("1234", "김주성", 20, "010-1234-1237", "user4@naver.com", UserRoleEnum.USER, "user4.jpg",USER_REGISTERED);
+        User user5 = new User("1234", "김두영", 30, "010-1234-1238", "user5@naver.com", UserRoleEnum.USER, "user5.jpg",USER_REGISTERED);
         em.persist(user1);
         em.persist(user2);
         em.persist(user3);

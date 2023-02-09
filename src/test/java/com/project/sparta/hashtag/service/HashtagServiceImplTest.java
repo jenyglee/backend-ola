@@ -3,12 +3,8 @@ package com.project.sparta.hashtag.service;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.user.entity.Tag;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
-import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +15,6 @@ import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -31,22 +26,7 @@ class HashtagServiceImplTest {
 
     @Test
     public void createHashtag() {
-        Tag tag1 = new Tag("#등린이");
-        Tag tag2 = new Tag("#절경");
-        Tag tag3 = new Tag("#등산용품");
-        Tag tag4 = new Tag("#산악회");
-        Tag tag5 = new Tag("#정복");
-        Tag tag6 = new Tag("#고급코스");
-
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(tag1);
-        tags.add(tag2);
-        tags.add(tag3);
-        tags.add(tag4);
-        tags.add(tag5);
-        tags.add(tag6);
-
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED, tags);
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         Hashtag saved = hashtagService.createHashtag("등린이", user);
 
         assertThat(saved.getName()).isEqualTo("등린이");
@@ -54,20 +34,7 @@ class HashtagServiceImplTest {
 
     @Test
     public void deleteHashtag() {
-        Tag tag1 = new Tag("#등린이");
-        Tag tag2 = new Tag("#절경");
-        Tag tag3 = new Tag("#등산용품");
-        Tag tag4 = new Tag("#산악회");
-        Tag tag5 = new Tag("#정복");
-
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(tag1);
-        tags.add(tag2);
-        tags.add(tag3);
-        tags.add(tag4);
-        tags.add(tag5);
-
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED, tags);
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         Hashtag saved = hashtagService.createHashtag("등린이", user);
         hashtagService.deleteHashtag(saved.getId(), user);
 
@@ -81,20 +48,8 @@ class HashtagServiceImplTest {
 
     @Test
     public void getHashtagList(){
-        Tag tag1 = new Tag("#등린이");
-        Tag tag2 = new Tag("#절경");
-        Tag tag3 = new Tag("#등산용품");
-        Tag tag4 = new Tag("#산악회");
-        Tag tag5 = new Tag("#정복");
 
-        List<Tag> tags = new ArrayList<Tag>();
-        tags.add(tag1);
-        tags.add(tag2);
-        tags.add(tag3);
-        tags.add(tag4);
-        tags.add(tag5);
-
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED, tags);
+        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
         hashtagService.createHashtag("등린이", user);
 
         List<Hashtag> allHashtag = hashtagRepository.findAll();

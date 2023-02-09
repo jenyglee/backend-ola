@@ -1,15 +1,14 @@
 package com.project.sparta.friend.service;
 
-import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
+import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
-import com.project.sparta.user.dto.UserResponseDto;
-import com.project.sparta.user.entity.Tag;
+import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,13 +17,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.TupleElement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
 import static com.project.sparta.exception.api.Status.INVALID_USER;
+import static org.springframework.data.support.PageableExecutionUtils.getPage;
 
 @Service
 @RequiredArgsConstructor
@@ -50,30 +51,40 @@ public class FriendServiceImpl implements FriendService{
 
         return new PageResponseDto(offset, totalCount, friendInfoList);
     }
+
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
-    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int offset, int limit, Long userId) {
+    public List<RecommentFriendResponseDto> AllRecomentFriendList(Long userId) {
 
         //해당 유저의 회원가입 태그 정보 긁어오기
-        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
         User userInfo = userRepository.findById(userId).orElseThrow(()-> new CustomException(INVALID_USER));
-        List<Tag> tagList = userInfo.getTags();
 
-        //태그 5개이하 동일한 유저들 정보 보여주기(탈퇴하지 않은 회원으로 필터링)
-        Page<User> recommentFriend = friendRepository.recommentFriendSearch(tagList, pageRequest, USER_REGISTERED);
+        //비교할 회원 랜덤으로 뽑아오기
+        List<User> randomList = friendRepository.randomUser(USER_REGISTERED);
 
-        Page<UserResponseDto> friendList = recommentFriend.map(user -> new UserResponseDto(user.getId(),
-                                                        user.getNickName(),
-                                                        user.getPassword(),
-                                                        user.getAge(),
-                                                        user.getEmail(),
-                                                        user.getPhoneNumber()));
-        List<UserResponseDto> content = friendList.getContent();
-        Long totalCount = friendList.getTotalElements();
+        //같은 태그를 가지고 있는 회원 저장하기
+        List<RecommentFriendResponseDto> recommentFriend = new ArrayList<>();
+        List<Hashtag> tags = new ArrayList<>();
+        int matchingSize = 0;
 
-        PageResponseDto result = new PageResponseDto<>(offset, totalCount, content);
+        //뽑아온 회원과 함께 태그 매칭 해보기 => UserTag 엔티티에서 해당 회원들의 태그 리스트 가져오기
+        for (int i = 0; i < randomList.size(); i++) {
+            tags.clear();
+            matchingSize = 0;
 
-        return result;
+            for (int j = 0; j<5; j++) {
+                if(randomList.get(i).getTags().get(i).getTag().getId()==userInfo.getTags().get(j).getTag().getId()){
+                    tags.add(randomList.get(i).getTags().get(i).getTag());
+                    matchingSize++;
+                }
+            }
+            FriendInfoReponseDto info = new FriendInfoReponseDto(randomList.get(i).getUserImageUrl(), randomList.get(i).getNickName());
+            recommentFriend.add(new RecommentFriendResponseDto(info, tags, matchingSize));
+        }
+
+        Collections.sort(recommentFriend, Collections.reverseOrder());
+
+        return recommentFriend;
     }
 
     //친구 추가
