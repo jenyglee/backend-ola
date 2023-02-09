@@ -5,6 +5,7 @@ import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,18 +29,20 @@ class HashtagServiceImplTest {
     HashtagRepository hashtagRepository;
     @Test
     public void createHashtag() {
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
 
-        Hashtag saved = hashtagService.createHashtag("등린이", user);
+        Hashtag saved = hashtagService.createHashtag("등린이", user1);
 
         assertThat(saved.getName()).isEqualTo("등린이");
     }
 
     @Test
     public void deleteHashtag() {
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-        Hashtag saved = hashtagService.createHashtag("등린이", user);
-        hashtagService.deleteHashtag(saved.getId(), user);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
+        Hashtag saved = hashtagService.createHashtag("등린이", user1);
+        hashtagService.deleteHashtag(saved.getId(), user1);
 
         List<Hashtag> allHashtag = hashtagRepository.findAll();
 
@@ -51,8 +54,9 @@ class HashtagServiceImplTest {
 
     @Test
     public void getHashtagList(){
-        User user = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-        hashtagService.createHashtag("등린이", user);
+        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
+            UserGradeEnum.MOUNTAIN_GOD);
+        hashtagService.createHashtag("등린이", user1);
 
         List<Hashtag> allHashtag = hashtagRepository.findAll();
         assertThat(allHashtag.size()).isEqualTo(1);

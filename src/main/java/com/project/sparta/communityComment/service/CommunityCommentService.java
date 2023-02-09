@@ -1,12 +1,22 @@
 package com.project.sparta.communityComment.service;
 
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
+import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.user.entity.User;
 import org.springframework.http.ResponseEntity;
 
 public interface CommunityCommentService {
-  public CommunityComment createComments(Long boardId, CommunityRequestDto communityRequestDto);
-  public ResponseEntity deleteComments(Long commentsId);
-  public ResponseEntity allDeleteComments();
-  public ResponseEntity updateComments(Long boardId, CommunityRequestDto communityRequestDto);
+
+  public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+      User user);
+
+  public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+      User user);
+
+  public void deleteCommunityComments(Long commentsId);
+
+  public void allDeleteCommunityComments();
+
 }

@@ -3,9 +3,12 @@ package com.project.sparta.user.entity;
 import com.project.sparta.admin.entity.Admin;
 import com.project.sparta.admin.entity.Root;
 import com.project.sparta.admin.entity.StatusEnum;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
+import com.project.sparta.communityComment.entity.CommunityComment;
+import java.util.ArrayList;
 import lombok.*;
 import org.springframework.context.annotation.Bean;
-
+import java.util.List;
 import javax.persistence.*;
 
 @Entity(name = "USERS")
@@ -22,9 +25,12 @@ public class User extends Root {
     @Column(nullable = false)
     private String userImageUrl;
 
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<CommunityBoard> communityBoards = new ArrayList<>();
+
     @Enumerated(value=EnumType.STRING)
     protected UserGradeEnum gradeEnum;
-
 
     //private List<Tag> tags = new ArrayList<>(); -> Tag 엔티티 나오면 살리기
 
