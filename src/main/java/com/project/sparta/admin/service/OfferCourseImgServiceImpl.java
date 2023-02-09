@@ -33,11 +33,10 @@ public class OfferCourseImgServiceImpl implements OfferCourseImgService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMdd");
 
         // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
-        String imgRoute = new File("").getAbsolutePath() + File.separator;
+//        String imgRoute = new File("").getAbsolutePath() + File.separator;
 
-        //파일 세부경로 지정 -> images/20230209/;
-//        String path = "images" + File.separator + dateTimeFormatter;
-        String path = System.getProperty("user.dir")+"/src/main/resources/static/files"+File.separator + dateTimeFormatter;
+        //파일 세부경로 지정
+        String path = System.getProperty("user.dir")+"/src/main/resources/static/files";
         File file = new File(path);
 
         // 저장할 위치의 디렉토리가 존지하지 않을 경우
@@ -59,46 +58,38 @@ public class OfferCourseImgServiceImpl implements OfferCourseImgService {
                     originalFileExtension = ".jpg";
                 } else if (contentType.contains("image/png")) {
                     originalFileExtension = ".png";
-
+                } else if (contentType.contains("image/gif")) {
+                    originalFileExtension = ".gif";
                 } else {
                     // 다른 확장자일 경우 처리 x
                     break;
                 }
 
             }
+
+            //UUID로 랜덤값을 지정해줘도 되지만 나노타임으로 사용했다.
             String newImgName = System.nanoTime() + originalFileExtension;
             OfferCourseImg courseImg = OfferCourseImg.builder()
                     .imgSize(multipartFile.getSize())
-                    .imgRoute(path + "/" + multipartFile.getName() + newImgName)
+                    .imgRoute(path + File.separator + newImgName) // File.separator는 슬래시 방언 통합해주는 것이다.
                     .originalImgName(multipartFile.getName())
                     .build();
 
             //이미지 리스트에 추가
             imgList.add(courseImg);
 
+
             // 업로드 한 파일 데이터를 지정한 파일에 저장
-            file = new File(imgRoute + path + File.separator + newImgName);
+            file = new File(path + File.separator + newImgName);
             multipartFile.transferTo(file);
 
             // 파일 권한 설정(쓰기, 읽기)
             file.setWritable(true);
             file.setReadable(true);
-
         }
+
         return imgList;
     }
-
-
-        //이미지리스트에 추가
-
-
-    //이미지 삭제
-    @Override
-    public void deleteOfferCourseImg() {
-
-    }
-
-    //이미지 조회
 
 
 }

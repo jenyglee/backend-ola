@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,6 +35,10 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
                 .contents(requestPostDto.getContents())
                 .images(imgList)
                         .build();
+
+        for (OfferCourseImg image:imgList) {
+            image.addPost(post);
+        }
 
         //레파지토리에 저장하기.
         offerCoursePostRepository.save(post);
