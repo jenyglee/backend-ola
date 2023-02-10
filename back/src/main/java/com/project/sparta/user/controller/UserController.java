@@ -1,6 +1,9 @@
 package com.project.sparta.user.controller;
 
+import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.user.dto.UserLoginDto;
+import com.project.sparta.user.dto.UserSignupDto;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.service.UserService;
 import com.project.sparta.security.jwt.JwtUtil;
@@ -19,6 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
+
+    @PostMapping("/signup")
+    public HttpStatus signup(@RequestBody UserSignupDto signupDto){
+        userService.signup(signupDto);
+        return HttpStatus.OK;
+    }
 
     @PostMapping("/login")
     public HttpStatus login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){

@@ -1,8 +1,11 @@
 package com.project.sparta.user.service;
 
+import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.user.dto.UserLoginDto;
 import com.project.sparta.user.dto.UserResponseDto;
+import com.project.sparta.user.dto.UserSignupDto;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserRepositoryImpl;
@@ -21,6 +24,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public void signup(UserSignupDto signupDto) {
+        // new User(signupDto.getEmail(), signupDto.getPassword(), signupDto.getNickName(), Use)
+        // String email, String password, String nickName, UserRoleEnum role(), StatusEnum status(),
+        // int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum()
+        // userRepository.save()
+    }
+
+    @Override
     public UserRoleEnum login(UserLoginDto userLoginDto) {
         User user = userRepository.findByNickNameAndStatus(userLoginDto.getNickName(), USER_REGISTERED).orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다.")); //나중에 exception 처리 다시 해야함
 
@@ -29,4 +40,6 @@ public class UserServiceImpl implements UserService {
         }
         return user.getRole();
     }
+
+
 }

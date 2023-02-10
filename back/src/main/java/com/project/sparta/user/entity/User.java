@@ -52,17 +52,16 @@ public class User extends Root {
         this.status = status;
     }
     @Builder(builderMethodName = "userBuilder")
-    public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
-                int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum, List<UserTag> tags) {
+    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl, List<UserTag> tags) {
         this.password = password;
         this.nickName = nickName;
         this.email = email;
-        this.role = role;
+        this.role = UserRoleEnum.USER;
         this.age = age;
         this.phoneNumber = phoneNumber;
         this.userImageUrl = userImageUrl;
-        this.gradeEnum = gradeEnum;
-        this.status = status;
+        this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
+        this.status = StatusEnum.USER_REGISTERED;
         this.tags = tags;
     }
 }
