@@ -23,7 +23,7 @@ public class User extends Root {
     @Column(nullable = false)
     private int age;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)

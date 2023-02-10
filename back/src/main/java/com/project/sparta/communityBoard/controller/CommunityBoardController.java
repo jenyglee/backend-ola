@@ -9,7 +9,7 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class CommunityBoardController {
   private final CommunityBoardService communityBoardService;
   @PostMapping("/board")
   public ResponseEntity createCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
-      , @AuthenticationPrincipal UserDetailImpl userDetail) {
+      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(
         communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class CommunityBoardController {
 
   @PatchMapping("/board")
   public ResponseEntity updateCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
-      , @AuthenticationPrincipal UserDetailImpl userDetail) {
+      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(
         communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class CommunityBoardController {
 
   //선택한 게시글 삭제
   @DeleteMapping("/board/{boardId}")
-  public ResponseEntity deleteCommunityComment(@AuthenticationPrincipal UserDetailImpl userDetail) {
+  public ResponseEntity deleteCommunityComment(@AuthenticationPrincipal UserDetailsImpl userDetail) {
 
     communityBoardService.deleteCommunityBoard(userDetail.getUser());
     return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);

@@ -35,6 +35,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                                         userinfo.getTags().get(2).getId(),
                                         userinfo.getTags().get(3).getId(),
                                         userinfo.getTags().get(4).getId()))
+
                 .orderBy(NumberExpression.random().asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
