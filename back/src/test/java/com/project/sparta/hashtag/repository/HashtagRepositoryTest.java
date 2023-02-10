@@ -31,8 +31,7 @@ class HashtagRepositoryTest {
     @Test
     @DisplayName("빈 값 전달 에러")
     public void createHashTagError01(){
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-            UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
 
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user1));
     }
@@ -43,8 +42,7 @@ class HashtagRepositoryTest {
 
         hashtagRepository.save(new Hashtag("야호"));
 
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-            UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
         assertThrows(CustomException.class, ()-> hashtagService.createHashtag("야호", user1));
     }
 }

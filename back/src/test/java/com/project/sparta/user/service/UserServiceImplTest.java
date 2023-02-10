@@ -36,12 +36,12 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void Befor() {
-
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user2 = new User("user2@naver.com","1234", "한세인", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1235","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user3 = new User("user3@naver.com","1234", "김민선", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1236","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user4 = new User("user4@naver.com","1234", "김주성", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1237","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user5 = new User("user5@naver.com","1234", "김두영", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1238","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10, "010-1234-1235","sdf.jpg");
+        User user2 = new User("user2@naver.com","1234", "한세인", 30, "010-1234-1236","sdf.jpg");
+        User user3 = new User("user3@naver.com","1234", "김민선", 30, "010-1234-1237","sdf.jpg");
+        User user4 = new User("user4@naver.com","1234", "김주성", 20, "010-1234-1238","sdf.jpg");
+        User user5 = new User("user5@naver.com","1234", "김두영", 20, "010-1234-1239","sdf.jpg");
+        User user6 = new User("user6@naver.com","1234", "한병두", 30, "010-1234-1210","sdf.jpg");
         em.persist(user1);
         em.persist(user2);
         em.persist(user3);
