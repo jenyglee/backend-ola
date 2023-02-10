@@ -70,7 +70,7 @@ class NoticeBoardServiceImplTest {
         Admin admin = new Admin("email", "1234", "관리자", UserRoleEnum.ADMIN, StatusEnum.ADMIN_REGISTERED, "07B4925039BE4219C76865C5CCB87466");
         NoticeBoard save = noticeBoardService.createNoticeBoard(requestDto, admin);
 
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
         NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(save.getId(), user1);
 
         assertThat(noticeBoard.getTitle()).isEqualTo("타이틀");
@@ -78,7 +78,7 @@ class NoticeBoardServiceImplTest {
 
     @Test
     void getAllNoticeBoard() {
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
         PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(0, 10, user1);
 
         List<NoticeBoardResponseDto> data = allNoticeBoard.getData();

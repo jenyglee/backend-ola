@@ -27,19 +27,21 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
         // 현재 회원의 태그와 맞는 회원 추출
         List<User> userList = queryFactory
                 .selectFrom(user)
-                .join(user).on(userTag.userId.eq(user.Id))
+                .join(user, userTag.user)
                 .where(user.status.eq(statusEnum),
                         user.Id.ne(userinfo.getId()),
-                        userTag.hashTagId.in(userinfo.getTags().get(0).getId(),
-                                userinfo.getTags().get(1).getId(),
-                                userinfo.getTags().get(2).getId(),
-                                userinfo.getTags().get(3).getId(),
-                                userinfo.getTags().get(4).getId()))
+                        userTag.tag.id.in(userinfo.getTags().get(0).getId(),
+                                        userinfo.getTags().get(1).getId(),
+                                        userinfo.getTags().get(2).getId(),
+                                        userinfo.getTags().get(3).getId(),
+                                        userinfo.getTags().get(4).getId()))
+
                 .orderBy(NumberExpression.random().asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
+        ////.join(user).on(userTag.userId.eq(user.Id))
         return new PageImpl<>(userList, pageable, userList.size());
     }
 

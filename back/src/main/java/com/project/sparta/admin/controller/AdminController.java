@@ -20,8 +20,8 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService;
 
-    @PostMapping("/signup/admin")
-    public ResponseEntity signup(@RequestBody AdminSignupDto signupDto){
-        adminService.signup()
-    }
+    // @PostMapping("/signup/admin")
+    // public ResponseEntity signup(@RequestBody AdminSignupDto signupDto){
+    //     // adminService.signup()
+    // }
 }
