@@ -52,13 +52,14 @@ public class FriendServiceImpl implements FriendService {
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
     @Transactional(readOnly = true)
-    public List<RecommentFriendResponseDto> AllRecomentFriendList(Long userId) {
+    public List<RecommentFriendResponseDto> AllRecomentFriendList(int offset, int limit, Long userId) {
 
+        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
         //해당 유저의 회원가입 태그 정보 긁어오기
         User userInfo = userRepository.findById(userId).orElseThrow(() -> new CustomException(INVALID_USER));
 
         //매칭 회원 랜덤으로 뽑아오기
-        List<User> randomList = friendRepository.randomUser(userInfo, USER_REGISTERED);
+        Page<User> randomList = friendRepository.randomUser(userInfo, USER_REGISTERED, pageRequest);
 
         List<RecommentFriendResponseDto> list = new ArrayList<>();
         //같은 태그를 가지고 있는 회원 저장하기
