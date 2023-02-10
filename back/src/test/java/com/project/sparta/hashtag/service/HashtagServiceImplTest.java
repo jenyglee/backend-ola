@@ -27,8 +27,7 @@ class HashtagServiceImplTest {
     HashtagRepository hashtagRepository;
     @Test
     public void createHashtag() {
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-            UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
 
         Hashtag saved = hashtagService.createHashtag("등린이", user1);
 
@@ -37,8 +36,7 @@ class HashtagServiceImplTest {
 
     @Test
     public void deleteHashtag() {
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-            UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
         Hashtag saved = hashtagService.createHashtag("등린이", user1);
         hashtagService.deleteHashtag(saved.getId(), user1);
 
@@ -52,8 +50,7 @@ class HashtagServiceImplTest {
 
     @Test
     public void getHashtagList(){
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-            UserGradeEnum.MOUNTAIN_GOD);
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
         hashtagService.createHashtag("등린이", user1);
 
         List<Hashtag> allHashtag = hashtagRepository.findAll();

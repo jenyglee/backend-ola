@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
@@ -52,19 +53,25 @@ public class FriendServiceImpl implements FriendService {
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
     @Transactional(readOnly = true)
-    public List<RecommentFriendResponseDto> AllRecomentFriendList(Long userId) {
+    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int offset, int limit, Long userId) {
+
+        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
 
         //해당 유저의 회원가입 태그 정보 긁어오기
         User userInfo = userRepository.findById(userId).orElseThrow(() -> new CustomException(INVALID_USER));
 
         //매칭 회원 랜덤으로 뽑아오기
-        List<User> randomList = friendRepository.randomUser(userInfo, USER_REGISTERED);
+        Page<User> randomList = friendRepository.randomUser(userInfo, pageRequest, USER_REGISTERED);
 
-        List<RecommentFriendResponseDto> list = new ArrayList<>();
-        //같은 태그를 가지고 있는 회원 저장하기
-        Collections.sort(list, Collections.reverseOrder());
+        //매칭 회원의 프로필 사진, 이름 정보 뽑기
+        Page<FriendInfoReponseDto> searchFriendsMap = randomList.map(u -> new FriendInfoReponseDto(u.getUserImageUrl(), u.getNickName()));
 
-        return list;
+        List<FriendInfoReponseDto> content = searchFriendsMap.getContent();
+
+        long totalCount = searchFriendsMap.getTotalElements();
+
+        //리스트 반환
+        return new PageResponseDto(offset, totalCount, content.stream().distinct().collect(Collectors.toList()));
     }
 
     //친구 추가

@@ -13,7 +13,7 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
@@ -44,8 +44,7 @@ public class CommentServiceTest {
   @Test
   @Name("보드 생성 테스트")
   public void createCommunityBoard() {
-    User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-        UserGradeEnum.MOUNTAIN_GOD);
+    User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
     userRepository.saveAndFlush(user1);
 
     CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
@@ -59,9 +58,8 @@ public class CommentServiceTest {
   @Test
   @Name("댓글 생성 테스트")
   public void createCommunityComment() {
-//    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-    User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-        UserGradeEnum.MOUNTAIN_GOD);
+    //    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+    User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
     //    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
     userRepository.saveAndFlush(user1);
     CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");

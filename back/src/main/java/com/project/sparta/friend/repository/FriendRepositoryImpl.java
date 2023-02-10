@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,20 +18,31 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
 
     QUser user = new QUser("user");
 
+    QUserTag userTag = new QUserTag("userTag");
+
     @Override
-    public List<User> randomUser(User userinfo, StatusEnum statusEnum) {
+    public PageImpl<User> randomUser(User userinfo, Pageable pageable, StatusEnum statusEnum) {
 
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
         // 현재 회원의 태그와 맞는 회원 추출
-        List<User> userList = queryFactory.selectFrom(user)
+        List<User> userList = queryFactory
+                .selectFrom(user)
+                .join(user, userTag.user)
                 .where(user.status.eq(statusEnum),
                         user.Id.ne(userinfo.getId()),
-                        user.tags.contains((UserTag) userinfo.getTags()))
+                        userTag.tag.id.in(userinfo.getTags().get(0).getId(),
+                                        userinfo.getTags().get(1).getId(),
+                                        userinfo.getTags().get(2).getId(),
+                                        userinfo.getTags().get(3).getId(),
+                                        userinfo.getTags().get(4).getId()))
+
                 .orderBy(NumberExpression.random().asc())
-                .limit(100)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
-        return userList;
+        ////.join(user).on(userTag.userId.eq(user.Id))
+        return new PageImpl<>(userList, pageable, userList.size());
     }
 
     @Override

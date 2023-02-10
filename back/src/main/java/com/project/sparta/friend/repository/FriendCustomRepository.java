@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface FriendCustomRepository {
 
-    List<User> randomUser(User userInfo, StatusEnum statusEnum);
+    Page<User> randomUser(User userInfo, Pageable pageRequest, StatusEnum statusEnum);
     Page<User> serachFriend(String targetUserName, Pageable pageRequest);
 }

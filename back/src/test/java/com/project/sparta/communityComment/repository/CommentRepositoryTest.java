@@ -8,7 +8,7 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
 import org.junit.jupiter.api.DisplayName;
@@ -37,9 +37,9 @@ public class CommentRepositoryTest {
 //    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
 //
 //    CommunityRequestDto communityRequestDto = new CommunityRequestDto("하이");
-//    UserDetailImpl UserDetailImpl = new UserDetailImpl(user1);
+//    UserDetailsImpl UserDetailsImpl = new UserDetailsImpl(user1);
 //    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(boardId, communityRequestDto,
-//        UserDetailImpl.getUser());
+//        UserDetailsImpl.getUser());
 //    assertThat(communityResponseDto.getNickName()).isEqualTo("이재원");
 //    System.out.println(communityResponseDto);
 //  }

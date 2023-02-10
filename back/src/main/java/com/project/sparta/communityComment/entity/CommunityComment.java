@@ -3,7 +3,7 @@ package com.project.sparta.communityComment.entity;
 import com.project.sparta.admin.entity.Timestamped;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
