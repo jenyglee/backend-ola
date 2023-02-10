@@ -5,7 +5,7 @@ import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import java.util.List;
 

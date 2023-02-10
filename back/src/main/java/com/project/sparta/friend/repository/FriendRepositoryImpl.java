@@ -40,6 +40,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
+        ////.join(user).on(userTag.userId.eq(user.Id))
         return new PageImpl<>(userList, pageable, userList.size());
     }
 

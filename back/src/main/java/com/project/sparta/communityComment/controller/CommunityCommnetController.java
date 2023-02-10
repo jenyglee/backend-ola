@@ -2,7 +2,7 @@ package com.project.sparta.communityComment.controller;
 
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.service.CommunityCommentService;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class CommunityCommnetController {
   @PostMapping("/comments/{communityBoardId}")
   public ResponseEntity createCommunityComment(@PathVariable Long communityBoardId
       , @RequestBody CommunityRequestDto communityRequestDto
-      , @AuthenticationPrincipal UserDetailImpl userDetail) {
+      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardId,
         communityRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class CommunityCommnetController {
   @PatchMapping("/comments/{communityBoardId}")
   public ResponseEntity updateCommunityComment(@PathVariable Long communityBoardId
       , @RequestBody CommunityRequestDto communityRequestDto
-      , @AuthenticationPrincipal UserDetailImpl userDetail) {
+      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardId,
         communityRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);

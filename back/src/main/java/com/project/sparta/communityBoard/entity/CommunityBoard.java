@@ -1,7 +1,7 @@
 package com.project.sparta.communityBoard.entity;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import java.util.ArrayList;
 import java.util.List;
