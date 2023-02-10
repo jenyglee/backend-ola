@@ -1,7 +1,5 @@
 package com.project.sparta.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.sparta.hashtag.entity.Hashtag;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,19 +16,15 @@ public class UserTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+    @Column(nullable = false)
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_id")
-    private Hashtag tag;
+    @Column(nullable = false)
+    private Long hashTagId;
 
     @Builder
-    public UserTag(User user, Hashtag tag) {
-        this.user = user;
-        this.tag = tag;
+    public UserTag(Long userId, Long hashTagId) {
+        this.userId = userId;
+        this.hashTagId = hashTagId;
     }
-
 }

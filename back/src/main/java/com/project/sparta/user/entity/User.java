@@ -6,6 +6,8 @@ import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import java.util.ArrayList;
+
+import com.project.sparta.hashtag.entity.Hashtag;
 import lombok.*;
 import org.springframework.context.annotation.Bean;
 import java.util.List;
@@ -35,8 +37,22 @@ public class User extends Root {
     protected UserGradeEnum gradeEnum;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<UserTag> tags = new ArrayList<>();
+    private List<Hashtag> tags = new ArrayList<>();
 
+
+    @Builder(builderMethodName = "userBuilder")
+    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl, List<Hashtag> tags) {
+        this.password = password;
+        this.nickName = nickName;
+        this.email = email;
+        this.role = UserRoleEnum.USER;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.userImageUrl = userImageUrl;
+        this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
+        this.status = StatusEnum.USER_REGISTERED;
+        this.tags = tags;
+    }
 
     @Builder(builderMethodName = "userBuilder")
     public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
@@ -51,18 +67,5 @@ public class User extends Root {
         this.gradeEnum = gradeEnum;
         this.status = status;
     }
-    @Builder(builderMethodName = "userBuilder")
-    public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
-                int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum, List<UserTag> tags) {
-        this.password = password;
-        this.nickName = nickName;
-        this.email = email;
-        this.role = role;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.userImageUrl = userImageUrl;
-        this.gradeEnum = gradeEnum;
-        this.status = status;
-        this.tags = tags;
-    }
+
 }
