@@ -1,6 +1,6 @@
 package com.project.sparta.offerCourse.dto;
 
-import com.project.sparta.offerCourse.entity.OfferCoursePost;
+import com.project.sparta.offerCourse.entity.RecommandCoursePost;
 import lombok.Getter;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class ResponseOnePostDto{
 
     private List<String> imgRoute;
 
-    public ResponseOnePostDto(OfferCoursePost post, List<String> imgList) {
+    public ResponseOnePostDto(RecommandCoursePost post, List<String> imgList) {
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.imgRoute = imgList;
