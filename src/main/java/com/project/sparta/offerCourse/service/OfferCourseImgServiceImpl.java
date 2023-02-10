@@ -1,6 +1,7 @@
 package com.project.sparta.offerCourse.service;
 
 import com.project.sparta.offerCourse.entity.OfferCourseImg;
+import com.project.sparta.offerCourse.repository.OfferCoursePostImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class OfferCourseImgServiceImpl implements OfferCourseImgService {
+
+    private final OfferCoursePostImgRepository offerCoursePostImgRepository;
 
     //이미지 리스트 변환
     @Override
@@ -68,12 +71,14 @@ public class OfferCourseImgServiceImpl implements OfferCourseImgService {
                 OfferCourseImg courseImg = OfferCourseImg.builder()
                         .imgSize(multipartFile.getSize())
                         .imgRoute(path + File.separator + newImgName) // File.separator는 슬래시 방언 통합해주는 것이다.
-                        .originalImgName(multipartFile.getName())
+                        .originalImgName(multipartFile.getOriginalFilename().toString())
                         .build();
 
                 //이미지 리스트에 추가
                 imgList.add(courseImg);
 
+                //디비에 저장
+                offerCoursePostImgRepository.save(courseImg);
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 file = new File(path + File.separator + newImgName);

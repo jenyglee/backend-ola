@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,13 +26,26 @@ public class OfferCoursePost extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+    @Column(nullable = false)
+    @Enumerated(value=EnumType.STRING)
+    private PostStatusEnum postStatus;
 
-//    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
-//    private List<OfferCourseImg> images = new ArrayList<>();
+    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
+    private List<OfferCourseImg> images = new ArrayList<>();
 
     @Builder
-    public OfferCoursePost(String title, String contents) {
+    public OfferCoursePost(String title, String contents ,PostStatusEnum postStatus) {
         this.title = title;
         this.contents = contents;
+        this.postStatus = postStatus;
+    }
+
+    public void modifyOfferCousePost(String title,String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+    public void statusModifyOfferCousePost(PostStatusEnum postStatus){
+        this.postStatus = postStatus;
     }
 }

@@ -57,6 +57,5 @@ public class OfferCourseImg {
                 .collect(StringBuilder::new,StringBuilder::appendCodePoint,StringBuilder::append)
                 .toString();
         return stringCode;
-
     }
 }
