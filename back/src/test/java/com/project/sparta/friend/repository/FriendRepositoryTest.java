@@ -44,4 +44,5 @@ class FriendRepositoryTest {
         friendRepository.saveAndFlush(new Friend(1L, 2L));
         assertThrows(CustomException.class, ()-> friendService.addFriend(1L, "한세인"));
     }
+
 }
