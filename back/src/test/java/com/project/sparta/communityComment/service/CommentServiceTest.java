@@ -44,8 +44,7 @@ public class CommentServiceTest {
   @Test
   @Name("보드 생성 테스트")
   public void createCommunityBoard() {
-    User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-        UserGradeEnum.MOUNTAIN_GOD);
+    User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
     userRepository.saveAndFlush(user1);
 
     CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
@@ -59,9 +58,8 @@ public class CommentServiceTest {
   @Test
   @Name("댓글 생성 테스트")
   public void createCommunityComment() {
-//    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-    User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
-        UserGradeEnum.MOUNTAIN_GOD);
+    //    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
+    User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
     //    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
     userRepository.saveAndFlush(user1);
     CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");

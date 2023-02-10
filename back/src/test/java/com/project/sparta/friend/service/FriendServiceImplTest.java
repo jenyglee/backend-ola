@@ -3,10 +3,10 @@ package com.project.sparta.friend.service;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
-import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
 import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.*;
 import com.project.sparta.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,14 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
@@ -48,6 +46,9 @@ class FriendServiceImplTest {
     FriendRepository friendRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private  HashtagRepository hashtagRepository;
 
 
     @BeforeEach
@@ -75,17 +76,30 @@ class FriendServiceImplTest {
         em.persist(tag10);
 
 
-        User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user2 = new User("user2@naver.com","1234", "한세인", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1235","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user3 = new User("user3@naver.com","1234", "김민선", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1236","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user4 = new User("user4@naver.com","1234", "김주성", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1237","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user5 = new User("user5@naver.com","1234", "김두영", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1238","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user6 = new User("user6@naver.com","1234", "한병두", UserRoleEnum.USER, USER_REGISTERED, 40,"010-1234-1239","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user7 = new User("user7@naver.com","1234", "한효주", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1240","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user8 = new User("user8@naver.com","1234", "한지민", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1241","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user9 = new User("user9@naver.com","1234", "한예슬", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1242","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user10 = new User("user10@naver.com","1234", "한미란", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1243","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
-        User user11 = new User("user11@naver.com","1234", "한영두", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1244","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+        List<Hashtag> tagList = new ArrayList<>();
+        tagList.add(tag1);
+        tagList.add(tag2);
+        tagList.add(tag3);
+        tagList.add(tag4);
+        tagList.add(tag5);
+
+        List<Hashtag> tagList2 = new ArrayList<>();
+        tagList2.add(tag1);
+        tagList2.add(tag6);
+        tagList2.add(tag7);
+        tagList2.add(tag8);
+        tagList2.add(tag9);
+
+        User user1 = new User("user1@naver.com","1234", "이재원", 10, "010-1234-1235","sdf.jpg");
+        User user2 = new User("user2@naver.com","1234", "한세인", 30, "010-1234-1236","sdf.jpg");
+        User user3 = new User("user3@naver.com","1234", "김민선", 30, "010-1234-1237","sdf.jpg");
+        User user4 = new User("user4@naver.com","1234", "김주성", 20, "010-1234-1238","sdf.jpg");
+        User user5 = new User("user5@naver.com","1234", "김두영", 20, "010-1234-1239","sdf.jpg");
+        User user6 = new User("user6@naver.com","1234", "한병두", 30, "010-1234-1210","sdf.jpg");
+        User user7 = new User("user7@naver.com","1234", "한지민", 40, "010-1234-1211","sdf.jpg");
+        User user8 = new User("user8@naver.com","1234", "한예슬", 20, "010-1234-1212","sdf.jpg");
+        User user9 = new User("user9@naver.com","1234", "한효주", 10, "010-1234-1213","sdf.jpg");
+        User user10 = new User("user10@naver.com","1234", "조정석", 30, "010-1234-1214","sdf.jpg");
 
 
         em.persist(user1);
@@ -98,18 +112,18 @@ class FriendServiceImplTest {
         em.persist(user8);
         em.persist(user9);
         em.persist(user10);
-        em.persist(user11);
 
-        UserTag userTag1 = new UserTag(1L, 1L);
-        UserTag userTag2 = new UserTag(1L, 2L);
-        UserTag userTag3 = new UserTag(1L, 3L);
-        UserTag userTag4 = new UserTag(1L, 4L);
-        UserTag userTag5 = new UserTag(1L, 5L);
-        UserTag userTag6 = new UserTag(1L, 1L);
-        UserTag userTag7 = new UserTag(1L, 2L);
-        UserTag userTag8 = new UserTag(1L, 6L);
-        UserTag userTag9 = new UserTag(1L, 7L);
-        UserTag userTag10 = new UserTag(1L, 8L);
+        UserTag userTag1 = new UserTag(user1, tag1);
+        UserTag userTag2 = new UserTag(user1, tag2);
+        UserTag userTag3 = new UserTag(user1, tag3);
+        UserTag userTag4 = new UserTag(user1, tag4);
+        UserTag userTag5 = new UserTag(user1, tag5);
+
+        UserTag userTag6 = new UserTag(user2, tag1);
+        UserTag userTag7 = new UserTag(user2, tag6);
+        UserTag userTag8 = new UserTag(user2, tag7);
+        UserTag userTag9 = new UserTag(user3, tag1);
+        UserTag userTag10 = new UserTag(user3, tag8);
 
         em.persist(userTag1);
         em.persist(userTag2);
@@ -121,7 +135,6 @@ class FriendServiceImplTest {
         em.persist(userTag8);
         em.persist(userTag9);
         em.persist(userTag10);
-
 
         //초기화
         em.flush();
@@ -162,12 +175,34 @@ class FriendServiceImplTest {
 
     @Test
     void allMyFriendList() {
+//        Hashtag tag1 = new Hashtag("등린이");
+//        Hashtag tag6 = new Hashtag("고급코스");
+//        Hashtag tag7 = new Hashtag("짧은코스");
+//        Hashtag tag8 = new Hashtag("휴양등산");
+//
+//        hashtagRepository.saveAndFlush(tag1);
+//        hashtagRepository.saveAndFlush(tag6);
+//        hashtagRepository.saveAndFlush(tag7);
+//        hashtagRepository.saveAndFlush(tag8);
+//
+//        List<Hashtag> tagList2 = new ArrayList<>();
+//        tagList2.add(tag1);
+//        tagList2.add(tag6);
+//        tagList2.add(tag7);
+//        tagList2.add(tag8);
+//
+//
+//        User user11 = new User("user11@naver.com","1234", "조정", 30, "010-1234-1216","sdf.jpg");
+//        user11.addTags(tagList2);
+//        userRepository.saveAndFlush(user11);
 
+        User targetUser = userRepository.findByNickNameAndStatus("이재원", USER_REGISTERED).orElseThrow(() -> new CustomException(INVALID_USER));
+        System.out.println(targetUser.getTags());
     }
 
     @Test
     void allRecomentFriendList() {
         PageResponseDto<List<FriendInfoReponseDto>> result = friendService.AllRecomentFriendList(0, 3, 1L);
-        Assertions.assertThat(result.getTotalCount()).isEqualTo(1);
+        Assertions.assertThat(result.getTotalCount()).isEqualTo(3);
     }
 }
