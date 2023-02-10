@@ -1,7 +1,13 @@
 package com.project.sparta.user.dto;
 
+import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.user.entity.UserTag;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class UserSignupDto {
@@ -11,6 +17,18 @@ public class UserSignupDto {
     private int age;
     private String phoneNumber;
     private String imageUrl;
+    private List<Hashtag> tagList;
+
+    public User toEntity(String password){
+        return User.userBuilder()
+                .email(email)
+                .password(password)
+                .nickName(nickName)
+                .age(age)
+                .phoneNumber(phoneNumber)
+                .userImageUrl(imageUrl)
+                .tags(null)
+                .hashtags(tagList)
+                .build();
+    }
 }
-// String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
-// int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum
