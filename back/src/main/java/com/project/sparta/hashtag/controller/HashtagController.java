@@ -4,7 +4,7 @@ package com.project.sparta.hashtag.controller;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.service.HashtagService;
-import com.project.sparta.security.UserDetailImpl;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
@@ -31,7 +31,7 @@ public class HashtagController {
 
    // 해시태그 추가
    @PostMapping("/hashtags")
-   public ResponseEntity createHashtag(@RequestBody String value, @AuthenticationPrincipal UserDetailImpl userDetail) {
+   public ResponseEntity createHashtag(@RequestBody String value, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        Hashtag hashtag = hashtagService.createHashtag(value, userDetail.getUser());
        HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtag.getId(), hashtag.getName());
        return new ResponseEntity(hashtagResponseDto, HttpStatus.OK);
@@ -39,14 +39,14 @@ public class HashtagController {
 
    //해시태그 삭제
    @DeleteMapping("/hashtags/{id}")
-   public ResponseEntity deleteHashtag(@RequestBody Long id, @AuthenticationPrincipal UserDetailImpl userDetail) {
+   public ResponseEntity deleteHashtag(@RequestBody Long id, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        hashtagService.deleteHashtag(id, userDetail.getUser());
        return new ResponseEntity(HttpStatus.OK);
    }
 
    //해시태그 전체 조회
    @GetMapping("/hashtags")
-   public ResponseEntity getHashtagList(@RequestBody int offset, int limit, @AuthenticationPrincipal UserDetailImpl userDetail) {
+   public ResponseEntity getHashtagList(@RequestBody int offset, int limit, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        hashtagService.getHashtagList(offset, limit, userDetail.getUser());
        return new ResponseEntity(HttpStatus.OK);
    }
