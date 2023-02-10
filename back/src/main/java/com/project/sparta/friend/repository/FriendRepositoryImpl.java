@@ -25,17 +25,16 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
 
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
         // 현재 회원의 태그와 맞는 회원 추출
-        List<User> userList = queryFactory
-                .selectFrom(user)
-                .join(user, userTag.user)
+        List<User> userList = queryFactory.select(user)
+                .from(userTag)
+                .join(userTag.user, user)
                 .where(user.status.eq(statusEnum),
                         user.Id.ne(userinfo.getId()),
-                        userTag.tag.id.in(userinfo.getTags().get(0).getId(),
-                                        userinfo.getTags().get(1).getId(),
-                                        userinfo.getTags().get(2).getId(),
-                                        userinfo.getTags().get(3).getId(),
-                                        userinfo.getTags().get(4).getId()))
-
+                        userTag.tag.in(userinfo.getTags().get(0).getTag(),
+                                userinfo.getTags().get(1).getTag(),
+                                userinfo.getTags().get(2).getTag(),
+                                userinfo.getTags().get(3).getTag(),
+                                userinfo.getTags().get(4).getTag()))
                 .orderBy(NumberExpression.random().asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
