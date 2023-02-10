@@ -17,9 +17,9 @@ public class UserSignupDto {
     private int age;
     private String phoneNumber;
     private String imageUrl;
-    private List<Hashtag> tagList;
+    private List<Long> tagList;
 
-    public User toEntity(String password){
+    public User toEntity(String password, List<Hashtag> hashtagList){
         return User.userBuilder()
                 .email(email)
                 .password(password)
@@ -27,8 +27,7 @@ public class UserSignupDto {
                 .age(age)
                 .phoneNumber(phoneNumber)
                 .userImageUrl(imageUrl)
-                .tags(null)
-                .hashtags(tagList)
+                .tags(hashtagList)
                 .build();
     }
 }

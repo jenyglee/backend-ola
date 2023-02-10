@@ -46,11 +46,11 @@ public class JwtUtil {
     }
 
     //{header BASE64 인코딩}.{JSON Claim set BASE64 인코딩}.{signature BASE64 인코딩}
-    public String createToken(String nickName, UserRoleEnum role) {
+    public String createToken(String email, UserRoleEnum role) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + Duration.ofHours(1).toMillis()); //만료시간 1시간
 
-        Claims claims = Jwts.claims().setSubject(nickName);
+        Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
 
         return BEARER_PREFIX +

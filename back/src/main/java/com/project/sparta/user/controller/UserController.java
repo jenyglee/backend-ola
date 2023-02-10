@@ -9,6 +9,7 @@ import com.project.sparta.user.service.UserService;
 import com.project.sparta.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,18 +22,16 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    private final JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public HttpStatus signup(@RequestBody UserSignupDto signupDto){
+    public ResponseEntity signup(@RequestBody UserSignupDto signupDto){
         userService.signup(signupDto);
-        return HttpStatus.OK;
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public HttpStatus login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
-        UserRoleEnum role = userService.login(userLoginDto);
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(userLoginDto.getNickName(), role));
-        return HttpStatus.OK;
+    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
+        userService.login(userLoginDto, response);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
