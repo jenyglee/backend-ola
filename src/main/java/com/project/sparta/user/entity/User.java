@@ -51,4 +51,18 @@ public class User extends Root {
         this.gradeEnum = gradeEnum;
         this.status = status;
     }
+    @Builder(builderMethodName = "userBuilder")
+    public User(String email, String password, String nickName, UserRoleEnum role, StatusEnum status,
+                int age, String phoneNumber, String userImageUrl, UserGradeEnum gradeEnum, List<UserTag> tags) {
+        this.password = password;
+        this.nickName = nickName;
+        this.email = email;
+        this.role = role;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.userImageUrl = userImageUrl;
+        this.gradeEnum = gradeEnum;
+        this.status = status;
+        this.tags = tags;
+    }
 }
