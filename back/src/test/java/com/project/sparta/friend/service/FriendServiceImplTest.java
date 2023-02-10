@@ -2,6 +2,7 @@ package com.project.sparta.friend.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
+import com.project.sparta.friend.dto.FriendInfoReponseDto;
 import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
@@ -14,6 +15,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,16 +100,16 @@ class FriendServiceImplTest {
         em.persist(user10);
         em.persist(user11);
 
-        UserTag userTag1 = new UserTag(user1, tag1);
-        UserTag userTag2 = new UserTag(user1, tag2);
-        UserTag userTag3 = new UserTag(user1, tag3);
-        UserTag userTag4 = new UserTag(user1, tag4);
-        UserTag userTag5 = new UserTag(user1, tag5);
-        UserTag userTag6 = new UserTag(user2, tag6);
-        UserTag userTag7 = new UserTag(user2, tag7);
-        UserTag userTag8 = new UserTag(user2, tag3);
-        UserTag userTag9 = new UserTag(user2, tag4);
-        UserTag userTag10 = new UserTag(user2, tag5);
+        UserTag userTag1 = new UserTag(1L, 1L);
+        UserTag userTag2 = new UserTag(1L, 2L);
+        UserTag userTag3 = new UserTag(1L, 3L);
+        UserTag userTag4 = new UserTag(1L, 4L);
+        UserTag userTag5 = new UserTag(1L, 5L);
+        UserTag userTag6 = new UserTag(1L, 1L);
+        UserTag userTag7 = new UserTag(1L, 2L);
+        UserTag userTag8 = new UserTag(1L, 6L);
+        UserTag userTag9 = new UserTag(1L, 7L);
+        UserTag userTag10 = new UserTag(1L, 8L);
 
         em.persist(userTag1);
         em.persist(userTag2);
@@ -158,23 +162,12 @@ class FriendServiceImplTest {
 
     @Test
     void allMyFriendList() {
-        //해당 유저의 회원가입 태그 정보 긁어오기
-        User userInfo = userRepository.findById(1L).orElseThrow(()-> new CustomException(INVALID_USER));
 
-        //비교할 회원 랜덤으로 뽑아오기
-        List<User> randomList = friendRepository.randomUser(userInfo, USER_REGISTERED);
-
-        System.out.println(randomList.size());
-        System.out.println(randomList.get(0).getTags().get(0).getTag().getName());
-        System.out.println(userInfo.getTags().get(0).getTag().getId());
-        System.out.println(userInfo.getTags().get(0).getTag().getName());
-
-        //Assertions.assertThat(randomList.size()).isEqualTo(5);
     }
 
     @Test
     void allRecomentFriendList() {
-        List<RecommentFriendResponseDto> result = friendService.AllRecomentFriendList(1L);
-        Assertions.assertThat(result.get(0).getMatchingSize()).isEqualTo(3);
+        PageResponseDto<List<FriendInfoReponseDto>> result = friendService.AllRecomentFriendList(0, 3, 1L);
+        Assertions.assertThat(result.getTotalCount()).isEqualTo(1);
     }
 }
