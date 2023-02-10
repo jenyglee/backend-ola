@@ -15,6 +15,7 @@ import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserRepositoryImpl;
+import com.project.sparta.user.repository.UserTagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,23 +35,23 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final HashtagRepository hashtagRepository;
+    private final UserTagRepository userTagRepository;
     private final JwtUtil jwtUtil;
 
     //회원가입
     @Override
     public void signup(UserSignupDto signupDto) {
-        // User user1 = new User(signupDto.getEmail(), signupDto.getPassword(), signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
-        // User saveUser = userRepository.save(user1);
-        //
-        // // List<Long>을 List<Hashtag>로 바꿔준다.
-        // List<Long> longList = signupDto.getTagList(); //List<Long> [1, 2]
-        //
-        // // List<UserTag> userTagList = new ArrayList<>();
-        // for (Long along : longList) {
-        //     userTagRepository.save(new UserTag(saveUser.getId(), along));
-        //
-        //     // userTagList.add();
-        // }
+        // 1. User를 생성해서 repository에 저장한다.
+        String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
+        User user1 = new User(signupDto.getEmail(), encodedPassword, signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
+        User saveUser = userRepository.save(user1);
+
+        // 2. 선택한 hashtag를 각각 Usertag로 테이블에 저장한다.
+        List<Long> longList = signupDto.getTagList();
+        for (Long along : longList) {
+            Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+            userTagRepository.save(new UserTag(saveUser, hashtag));
+        }
     }
     //로그인
     @Override

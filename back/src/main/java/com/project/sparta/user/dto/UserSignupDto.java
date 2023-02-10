@@ -18,16 +18,4 @@ public class UserSignupDto {
     private String phoneNumber;
     private String imageUrl;
     private List<Long> tagList;
-
-    public User toEntity(String password, List<Hashtag> hashtagList){
-        return User.userBuilder()
-                .email(email)
-                .password(password)
-                .nickName(nickName)
-                .age(age)
-                .phoneNumber(phoneNumber)
-                .userImageUrl(imageUrl)
-                .tags(hashtagList)
-                .build();
-    }
 }

@@ -22,6 +22,6 @@ public class AdminController {
 
     // @PostMapping("/signup/admin")
     // public ResponseEntity signup(@RequestBody AdminSignupDto signupDto){
-    //     // adminService.signup()
+    //     adminService.signup()
     // }
 }
