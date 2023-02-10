@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -92,6 +93,21 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
         }
         return imgList;
 
+    }
+
+
+    //이미지 파일 삭제
+
+    @Override
+    public void deleteImgList(Long id){
+        //포스트 아이디값으로 들어있는 이미지들을 찾아서
+        List<RecommandCourseImg> byRecommandCoursePostImg = recommandCoursePostImgRepository.findByRecommandCoursePost_Id(id).stream().toList();
+        //이미지 리스트에서 이미지들의 아이디 리스트를 뽑아서
+        List<Long> collect = byRecommandCoursePostImg.stream().map(RecommandCourseImg::getId).collect(Collectors.toList());
+        //그 아이디들을 삭제한다. (한방쿼리 쓰면 좋을 것 같은데)
+        for (Long imgId:collect) {
+            recommandCoursePostImgRepository.deleteById(imgId);
+        }
     }
 
 }

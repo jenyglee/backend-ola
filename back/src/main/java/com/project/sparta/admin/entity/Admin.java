@@ -23,4 +23,5 @@ public class Admin extends Root {
         super(email, password, nickName, role, status);
         this.adminPassword = adminPassword;
     }
+
 }

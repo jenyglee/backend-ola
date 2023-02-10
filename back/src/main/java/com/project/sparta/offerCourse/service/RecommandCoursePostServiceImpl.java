@@ -82,10 +82,17 @@ public class RecommandCoursePostServiceImpl implements RecommandCoursePostServic
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
         RecommandCoursePost post = recommandCoursePostRepository.findById(id)
                 .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+        //수정되기전의 데이터를 삭제해줘야한다. 레파지토리에서 postId값으로 이미지들을 찾아서 리스트로 넘겨준다음에 삭제해준다.
+
         // 변경 메서드 하나 만든다음에
         post.modifyOfferCousePost(requestPostDto.getTitle(), requestPostDto.getContents());
+
+        // 기존에 있던 이미지파일을 디비에서 삭제한다.
+//        recommandCourseImgService.deleteImgList();
+
         // 받아온 이미지 파일을 다시 리스트로 변경하고
         List<RecommandCourseImg> imgList = recommandCourseImgService.createImgList(imges);
+
         //이미지에 포스트 담아주고
         for (RecommandCourseImg image:imgList) {
             image.addPost(post);
@@ -162,7 +169,6 @@ public class RecommandCoursePostServiceImpl implements RecommandCoursePostServic
 
         //4. 클라이언트에 응답.
         return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
-
 
 
     }
