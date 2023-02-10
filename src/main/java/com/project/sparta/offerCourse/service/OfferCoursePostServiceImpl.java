@@ -10,6 +10,8 @@ import com.project.sparta.offerCourse.entity.OfferCoursePost;
 import com.project.sparta.offerCourse.entity.PostStatusEnum;
 import com.project.sparta.offerCourse.repository.OfferCoursePostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +28,14 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
     private final OfferCoursePostRepository offerCoursePostRepository;
 
     private final OfferCourseImgService offerCourseImgService;
-    //코스 등록
+
+    /**
+     * 추천코스 게시글 등록 메서드
+     * @param imges: 글쓸때 입력한 이미지들
+     * @param requestPostDto:타이틀, 컨텐츠
+     * @return 이미지경로 URL 리턴
+     * @throws IOException
+     */
     @Override
     public List<String> creatOfferCoursePost(List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException {
         //Dto에서 데이터 빼기
@@ -55,6 +64,15 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
         return imgRouteList;
     }
 
+    /**
+     * 코스추천 글수정 메서드
+     * @param id : 선택한 게시글 id값
+     * @param imges : 입력한 이미지 리스트
+     * @param requestPostDto : 타이틀, 컨텐츠
+     * @return 이미지 리스트 URL 리턴함
+     * @throws IOException
+     */
+
     //코스 수정
     @Override
     public List<String> modifyOfferCoursePost(Long id, List<MultipartFile> imges, RequestOfferCoursePostDto requestPostDto) throws IOException {
@@ -78,6 +96,12 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
 
         return imgRouteList;
     }
+
+    /**
+     * 코스추천 삭제 메서드
+     * @param id : 삭제할 게시글 아이디
+     *
+     */
 
     //코스추천 삭제
     @Override
@@ -109,17 +133,19 @@ public class OfferCoursePostServiceImpl implements OfferCoursePostService{
 
     //전체 코스 조회(페이징)
 
-    public void allOfferCousePost(int ogset-1, int limit,String userName){
-        
-
+    public void allOfferCousePost(int offset, int limit,String userName){
+        //1.페이징으로 요청해서
+        PageRequest pageRequest = PageRequest.of(offset, limit);
+        Page<OfferCoursePost> all = offerCoursePostRepository.findAll(pageRequest);
+        //2.전체 데이터 뽑아서
+        List<OfferCoursePost> content = all.getContent();
+        long totalElements = all.getTotalElements();
+        //3. 엔티티로 만들어서
+        // 필요한 데이터가.. 총 갯수, 타이틀, 이미지, 좋아요 갯수 (잠시만 이미지는 어떻게 하지..? 이미지없으면 디폴트 이미지를 어떻게 설정해주지..?(프엔영역인가..))
+        //4. 클라이언트에 응답.
 
     }
 
-    //코스 등록
-
-    //코스 수정
-
-    //코스 삭제
     // 필터링 도전
 
 
