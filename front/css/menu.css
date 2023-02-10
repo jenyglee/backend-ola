@@ -1,0 +1,91 @@
+.menu{
+  width: 100%;
+  height: 80px;
+  display: flex;
+  background-color: #ffffff;
+  padding: 0;
+  position: relative;
+
+}
+.menu .line{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #F46B3F;
+}
+
+.menu .logo-wrap{
+  width: 180px;
+  height: 70px;
+  margin-left: 50px;
+}
+
+.menu .logo-wrap .img{
+  width: 100%;
+  height: 100%;
+}
+
+.menu .item-list{
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 58px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu .item-list a{
+  color: #000000;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.menu .right{
+  position: absolute;
+  top: 5px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+}
+.menu .right .icon-friend{
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  cursor: pointer;
+
+}
+.menu .right .icon-friend .img{
+  width: 100%;
+  height: 100%;
+}
+.menu .right .my-profile-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.menu .right .my-profile-wrap .img-wrap{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.menu .right .my-profile-wrap .img-wrap .img{
+  width: 100%;
+  height: 100%;
+}
+
+.menu .right .my-profile-wrap .text{
+  font-size: 20px;
+  padding-top: 16px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  color: #666666;
+}

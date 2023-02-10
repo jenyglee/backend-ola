@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+로그인 페이지입니다.
+<script>
+  function handleCreateGuestBook() {
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+      data: {
+        name: "sasas",
+      },
+      success: function (response) {
+        console.log(response)
+        alert(response.msc)
+        window.location.reload();
+      },
+    })
+  }
+</script>
+</body>
+
+</html>
