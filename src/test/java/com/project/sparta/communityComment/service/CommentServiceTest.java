@@ -43,7 +43,6 @@ public class CommentServiceTest {
 
   @Test
   @Name("보드 생성 테스트")
-  @Transactional
   public void createCommunityBoard() {
     User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg",
         UserGradeEnum.MOUNTAIN_GOD);
