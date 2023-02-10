@@ -18,14 +18,19 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     QUser user = new QUser("user");
 
     @Override
-    public List<User> randomUser(StatusEnum statusEnum) {
+    public List<User> randomUser(User userinfo, StatusEnum statusEnum) {
+
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
-        // => 랜덤으로 100명 잘라서 그 안에서 매칭할 수 있도록 성능개선해야 함.
-        return queryFactory.selectFrom(user)
-                .where(user.status.eq(statusEnum))
+        // 현재 회원의 태그와 맞는 회원 추출
+        List<User> userList = queryFactory.selectFrom(user)
+                .where(user.status.eq(statusEnum),
+                        user.Id.ne(userinfo.getId()),
+                        user.tags.contains((UserTag) userinfo.getTags()))
                 .orderBy(NumberExpression.random().asc())
-                .limit(5)
+                .limit(100)
                 .fetch();
+
+        return userList;
     }
 
     @Override

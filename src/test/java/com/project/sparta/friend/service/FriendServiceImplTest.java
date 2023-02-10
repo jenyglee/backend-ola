@@ -42,9 +42,8 @@ class FriendServiceImplTest {
 
     @Autowired
     FriendRepository friendRepository;
-
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
 
     @BeforeEach
@@ -71,6 +70,7 @@ class FriendServiceImplTest {
         em.persist(tag9);
         em.persist(tag10);
 
+
         User user1 = new User("user1@naver.com","1234", "이재원", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1234","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user2 = new User("user2@naver.com","1234", "한세인", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1235","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user3 = new User("user3@naver.com","1234", "김민선", UserRoleEnum.USER, USER_REGISTERED, 30,"010-1234-1236","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
@@ -82,6 +82,7 @@ class FriendServiceImplTest {
         User user9 = new User("user9@naver.com","1234", "한예슬", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1242","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user10 = new User("user10@naver.com","1234", "한미란", UserRoleEnum.USER, USER_REGISTERED, 20,"010-1234-1243","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
         User user11 = new User("user11@naver.com","1234", "한영두", UserRoleEnum.USER, USER_REGISTERED, 10,"010-1234-1244","sdf.jpg", UserGradeEnum.MOUNTAIN_GOD);
+
 
         em.persist(user1);
         em.persist(user2);
@@ -161,10 +162,10 @@ class FriendServiceImplTest {
         User userInfo = userRepository.findById(1L).orElseThrow(()-> new CustomException(INVALID_USER));
 
         //비교할 회원 랜덤으로 뽑아오기
-        List<User> randomList = friendRepository.randomUser(USER_REGISTERED);
+        List<User> randomList = friendRepository.randomUser(userInfo, USER_REGISTERED);
 
         System.out.println(randomList.size());
-        System.out.println(randomList.get(0).getTags());
+        System.out.println(randomList.get(0).getTags().get(0).getTag().getName());
         System.out.println(userInfo.getTags().get(0).getTag().getId());
         System.out.println(userInfo.getTags().get(0).getTag().getName());
 
