@@ -19,19 +19,23 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/auth")
 public class UserController {
     private final UserService userService;
 
+    //회원가입
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody UserSignupDto signupDto){
         userService.signup(signupDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //로그인
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
         userService.login(userLoginDto, response);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
 }

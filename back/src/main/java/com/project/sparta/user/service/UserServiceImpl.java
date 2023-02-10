@@ -31,29 +31,28 @@ import static com.project.sparta.exception.api.Status.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
     private final HashtagRepository hashtagRepository;
     private final JwtUtil jwtUtil;
 
+    //회원가입
     @Override
     public void signup(UserSignupDto signupDto) {
-
-        // List<Long>을 List<Hashtag>로 바꿔준다.
-        List<Long> longList = signupDto.getTagList();
-        List<Hashtag> hashtagList = new ArrayList<>();
-        for (Long along : longList) {
-            Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-            hashtagList.add(hashtag);
-        }
-
-        User user = signupDto.toEntity(passwordEncoder.encode(signupDto.getPassword()), hashtagList);
-        
-        userRepository.save(user);
+        // User user1 = new User(signupDto.getEmail(), signupDto.getPassword(), signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
+        // User saveUser = userRepository.save(user1);
+        //
+        // // List<Long>을 List<Hashtag>로 바꿔준다.
+        // List<Long> longList = signupDto.getTagList(); //List<Long> [1, 2]
+        //
+        // // List<UserTag> userTagList = new ArrayList<>();
+        // for (Long along : longList) {
+        //     userTagRepository.save(new UserTag(saveUser.getId(), along));
+        //
+        //     // userTagList.add();
+        // }
     }
-
+    //로그인
     @Override
     public void login(UserLoginDto userLoginDto, HttpServletResponse response) {
         User user = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
@@ -61,9 +60,6 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getRole()));
-        // if(!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword())){
-        //     throw new IllegalArgumentException("비밀번호가 일치하지 않습니다."); //나중에 exception 처리 다시 해야함
-        // }
     }
 
 
