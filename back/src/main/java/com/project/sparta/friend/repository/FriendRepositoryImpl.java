@@ -31,11 +31,11 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 .join(user.tags, userTag)
                 .where(user.status.eq(statusEnum),
                         user.Id.ne(userinfo.getId()),
-                        userTag.tag.in(userinfo.getTags().get(0).getTag(),
-                                        userinfo.getTags().get(1).getTag(),
-                                        userinfo.getTags().get(2).getTag(),
-                                        userinfo.getTags().get(3).getTag(),
-                                        userinfo.getTags().get(4).getTag()))
+                        userTag.tag.in(userinfo.getTags().get(0),
+                                        userinfo.getTags().get(1),
+                                        userinfo.getTags().get(2),
+                                        userinfo.getTags().get(3),
+                                        userinfo.getTags().get(4)))
                 .orderBy(NumberExpression.random().asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
