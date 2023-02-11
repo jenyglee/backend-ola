@@ -1,41 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-
+    <meta charset="UTF-8">
     <link rel="manifest" href="site.webmanifest">
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/menu.css">
-
-    <meta name="theme-color" content="#fafafa">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <title>Title</title>
     <style>
-        .container{
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .container {
             width: 1200px;
-            height: 1000px;
+            height: 1100px;
             padding: 0;
             background-color: #FFFBF4;
         }
+
+        .w_1 {
+            width: 1200px;
+            height: 200px;
+        }
+
+        .w_2 {
+            width: 1200px;
+            height: 550px;
+        }
+
+        .w_3 {
+            width: 1200px;
+            height: 240px;
+        }
+
+        .w_4 {
+            width: 1200px;
+            height: 50px;
+            display: inline-block;
+        }
+
+        .score, .title, .above, .season, .address {
+            width: 1200px;
+            height: 33px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        .w_1_1 {
+            width: 1200px;
+            height: 33px;
+        }
+
+        .w_2 img {
+            height: 550px;
+            object-fit: cover;
+            position: center;
+            margin-left: 230px;
+        }
+        .w_4 .b_1{
+            width: 800px;
+            height: 50px;
+            display: inline-block;
+        }
+        .w_4 .b_2, .w_4 .b_3, .w_4 .b_4{
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            float: right;
+            margin-right: 10px;
+        }
+        #btn_1{
+            width: 100px;
+            height : 40px;
+            border: 1px solid #F46B3F;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        #btn_1:hover{
+            width: 100px;
+            height : 40px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+        }
+        #btn_2{
+            width: 100px;
+            height : 40px;
+            border: 1px solid #F46B3F;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        #btn_2:hover{
+            width: 100px;
+            height : 40px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+        }
+       #btn_3{
+            width: 100px;
+            height : 40px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+        }
+        #btn_3:hover{
+            width: 100px;
+            height : 40px;
+            border: 1px solid #F46B3F;
+            background-color: white;
+            border-radius: 5px;
+            color : black;
+        }
     </style>
 </head>
+<body>
 <header class="menu">
     <div class="logo-wrap">
-        <img class="img" src="static/img/logo_main.png" alt="로고" />
+        <img class="img" src="../static/img/logo_main.png" alt="로고"/>
     </div>
     <div class="item-list">
         <a href="#">코스추천</a>
@@ -45,11 +141,11 @@
     </div>
     <div class="right">
         <div class="icon-friend">
-            <img class="img" src="static/img/icon_friends.png" />
+            <img class="img" src="../static/img/icon_friends.png"/>
         </div>
         <div class="my-profile-wrap">
             <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png " />
+                <img class="img" src="../static/img/icon_profile_default.png "/>
             </div>
             <p class="text">나와바리나와바님</p>
         </div>
@@ -59,10 +155,57 @@
 <main class="container">
     <section class="">
         <!--   작업공간   -->
-        여기서 작업을
-        <a href="template/b-1_login.html"> 로그인 페이지로</a>
-        <div class="test">
-            <div class="box1"></div>
+        <div class="wrap">
+            <div class="w_1">
+                <div class="w_1_1"></div>
+                <div class="score">
+                    <b style="color : #F46B3F">4.0</b>
+                </div>
+                <div class="title">
+                    <h3>북한산 최정상 코스!</h3>
+                </div>
+                <div class="season">
+                    <b style="color : #F46B3F">가을</b>
+                    <b>이 최고의 계절</b>
+                </div>
+                <div class="above">
+                    <b>해발 500m</b>
+                </div>
+                <div class="w_1_1"></div>
+            </div>
+            <div class="w_2">
+                <img src="../static/img/bestshot3.jpg">
+            </div>
+
+            <hr>
+            <div class="w_3">
+                <div class="address">
+                    <b>주소 : &nbsp;</b>
+                    <span>경기 고양시 덕양구 북한동 산1-1, 서울시 강북구 우이동 </span>
+                </div>
+                <br>
+                <div>
+                    <span>
+                        [코스 : 북한산성탐방지원센터~대서문, 대서문~보리사, 보리사~백운대] <br>
+                        북한산성지구의 대표적 산행코스인 북한산성코스는 북한산성탐방지원센터 입구에서 시작된다. 산성탐방지원센터 바로 옆에는 탐방 전 가장 먼저 이용 할 수 있는 화장실이 있으며, 다양한 브랜드의 아웃도어 상점을 끼고 곧장 직진하면 첫 번째 갈림길이 나온다.
+                        우측을 따라 도로 쪽으로 대남문 코스가 이어지고, 좌측으로는 북한산둘레길 10구간인 내시묘역길을 갈 수 있는 둘레교와 쉼터가 나온다. 우측 길을 가다 보면 북한산성분소가 보이고, 계속해서 도로 길을 따라 올라가면 북한산성의 13개성문 중에 하나인 ‘대서문’이 나온다. 대서문은 의상봉 서북쪽 해발 150m높이의 낮은 구릉지에 위치한 성문으로 북한산성 성문 중 동서남북, 4개 방위 중 서쪽을 대표하고 있는 성문인 동시에 북한산성의 정문이다.
+                    </span>
+                </div>
+            </div>
+            <br>
+            <div class="w_4">
+                <div class="b_1"></div>
+
+                <div class="b_4">
+                    <button type="button" id="btn_3">목록</button>
+                </div>
+                <div class="b_2">
+                    <button type="button" id="btn_1">수정</button>
+                </div>
+                <div class="b_3">
+                    <button type="button"  id="btn_2">삭제</button>
+                </div>
+            </div>
         </div>
     </section>
 </main>
@@ -74,10 +217,16 @@
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+    window.ga = function () {
+        ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('set', 'transport', 'beacon');
+    ga('send', 'pageview')
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async></script>
 </body>
-
 </html>

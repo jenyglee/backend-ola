@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-
+    <meta charset="UTF-8">
     <link rel="manifest" href="site.webmanifest">
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/menu.css">
-
-    <meta name="theme-color" content="#fafafa">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <title>Title</title>
     <style>
+        *{
+            font-family: 'Noto Sans KR', sans-serif;
+        }
         .container{
             width: 1200px;
             height: 1000px;
             padding: 0;
             background-color: #FFFBF4;
         }
+
     </style>
 </head>
+<body>
 <header class="menu">
     <div class="logo-wrap">
-        <img class="img" src="static/img/logo_main.png" alt="로고" />
+        <img class="img" src="../static/img/logo_main.png" alt="로고"/>
     </div>
     <div class="item-list">
         <a href="#">코스추천</a>
@@ -45,11 +41,11 @@
     </div>
     <div class="right">
         <div class="icon-friend">
-            <img class="img" src="static/img/icon_friends.png" />
+            <img class="img" src="../static/img/icon_friends.png" />
         </div>
         <div class="my-profile-wrap">
             <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png " />
+                <img class="img" src="../static/img/icon_profile_default.png " />
             </div>
             <p class="text">나와바리나와바님</p>
         </div>
@@ -59,11 +55,6 @@
 <main class="container">
     <section class="">
         <!--   작업공간   -->
-        여기서 작업을
-        <a href="template/b-1_login.html"> 로그인 페이지로</a>
-        <div class="test">
-            <div class="box1"></div>
-        </div>
     </section>
 </main>
 <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
@@ -79,5 +70,4 @@
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async></script>
 </body>
-
 </html>
