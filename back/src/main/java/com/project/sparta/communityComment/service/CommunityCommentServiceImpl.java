@@ -6,6 +6,8 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
   public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
       User user) {
     CommunityBoard communityBoard = boardRepository.findById(boardId)
-        .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
     commentRepository.saveAndFlush(communityComment);
@@ -33,29 +35,26 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   @Override
   @Transactional
-  public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  public CommunityResponseDto updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
       User user) {
     boardRepository.findById(boardId)
-        .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
-    CommunityComment communityComment = commentRepository.findById(boardId)
-        .orElseThrow(() -> new IllegalArgumentException("수정 할 댓글이 없습니다."));
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+    CommunityComment communityComment = commentRepository.findById(communityCommentId)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
     communityComment.updateComment(communityRequestDto.getContents());
-    commentRepository.save(communityComment);
+    commentRepository.saveAndFlush(communityComment);
     CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
     return communityResponseDto;
-  }
-  @Override
-  @Transactional
-  public void deleteCommunityComments(Long commentsId) {
-    commentRepository.findById(commentsId)
-        .orElseThrow(() -> new IllegalArgumentException("삭제할 댓글이 없습니다."));
-    commentRepository.deleteById(commentsId);
   }
 
   @Override
   @Transactional
-  public void allDeleteCommunityComments() {
-    commentRepository.deleteAll();
+  public void deleteCommunityComments(Long boardId, Long commentsId) {
+    boardRepository.findById(boardId)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+    commentRepository.findById(commentsId)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+    commentRepository.deleteById(commentsId);
   }
 
 }

@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 public class CommunityBoard {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "communityBoard_Id")
-  private Long Id;
+//  @Column(name = "community_board_id")
+  private Long id;
   private String nickName;
   private String contents;
   private String title;
@@ -44,7 +44,8 @@ public class CommunityBoard {
     this.user = user;
   }
 
-  public void updateBoard(String contents) {
-    this.contents = contents;
+  public void updateBoard(CommunityBoardRequestDto communityBoardRequestDto) {
+    this.title = communityBoardRequestDto.getTitle();
+    this.contents = communityBoardRequestDto.getContents();
   }
 }

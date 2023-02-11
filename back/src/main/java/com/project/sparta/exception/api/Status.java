@@ -24,7 +24,13 @@ public enum Status {
 
     // 409 ->  CONFLICT : 중복 데이터 (ex. 이미 중복된 값)
     CONFLICT_HASHTAG(HttpStatus.CONFLICT, "이미 존재하는 해시태그입니다"),
-    CONFLICT_FRIEND(HttpStatus.CONFLICT, "이미 친구 관계입니다."),;
+    CONFLICT_FRIEND(HttpStatus.CONFLICT, "이미 친구 관계입니다."),
+
+
+    NOT_FOUND_COMMUNITY_BOARD(HttpStatus.NOT_FOUND,"커뮤니티 게시글을 찾을수 없습니다."),
+    NOT_FOUND_COMMUNITY_COMMENT(HttpStatus.NOT_FOUND,"변경할 커뮤니티 댓글을 찾을수 없습니다.");
+
+
 
 
     private HttpStatus httpStatus;

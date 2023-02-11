@@ -19,13 +19,12 @@ import com.project.sparta.communityComment.dto.CommunityResponseDto;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class CommunityCommnetController {
 
   private final CommunityCommentService commentService;
 
   //댓글 생성
-  @PostMapping("/comments/{communityBoardId}")
+  @PostMapping("/community_comments/{communityBoardId}")
   public ResponseEntity createCommunityComment(@PathVariable Long communityBoardId
       , @RequestBody CommunityRequestDto communityRequestDto
       , @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -35,29 +34,22 @@ public class CommunityCommnetController {
   }
 
   //선택한 댓글 수정
-  @PatchMapping("/comments/{communityBoardId}")
-  public ResponseEntity updateCommunityComment(@PathVariable Long communityBoardId
-      , @RequestBody CommunityRequestDto communityRequestDto
-      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardId,
+  @PatchMapping("/community_comments/{communityBoardId}/{communityCommentId}")
+  public ResponseEntity updateCommunityComment(
+      @PathVariable Long communityBoardId,
+      @PathVariable Long communityCommentId,
+      @RequestBody CommunityRequestDto communityRequestDto,
+      @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    CommunityResponseDto communityResponseDto = commentService.updateCommunityComments(communityBoardId,communityCommentId,
         communityRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);
   }
 
   //선택한 댓글 삭제
-  @DeleteMapping("/comments/{boardId}")
-  public ResponseEntity deleteCommunityComment(@PathVariable Long boardId) {
-
-    commentService.deleteCommunityComments(boardId);
+  @DeleteMapping("/community_comments/{communityBoardId}/{communityCommentId}")
+  public ResponseEntity deleteCommunityComment(@PathVariable Long communityBoardId, @PathVariable Long communityCommentId) {
+    commentService.deleteCommunityComments(communityBoardId, communityCommentId);
     return new ResponseEntity("댓글 삭제 완료", HttpStatus.OK);
-  }
-
-  //댓글 전부 삭제 (운영자권한)
-  @DeleteMapping("/comments/delete")
-  public ResponseEntity allDeleteCommunityComments() {
-
-    commentService.allDeleteCommunityComments();
-    return new ResponseEntity("댓글 전부 삭제 완료", HttpStatus.OK);
   }
 
 }
