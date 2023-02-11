@@ -20,14 +20,14 @@
     <style>
       .container {
         width: 1200px;
-        height: 1000px;
+        height: 1200px;
         padding: 0;
-        background-color: #fffbf4;
+        /* background-color: #fffbf4; */
       }
 
       .header {
         height: 450px;
-        padding: 80px;
+        padding: 150px 0 0 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -64,6 +64,7 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        background-color: aquamarine;
       }
 
       .btn-tag {
@@ -102,22 +103,42 @@
         height: 550px;
         position: relative;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         flex-wrap: wrap;
       }
       .article-wrap {
-        position: absolute;
-        margin: 10px;
-        width: 300px;
+        margin: 10px 0 0 0;
+        width: 350px;
         height: 250px;
       }
 
       .article-wrap > img {
-        width: 300px;
+        width: 350px;
       }
 
       .post-like > img {
         width: 20px;
+      }
+
+      .paging-box {
+        width: 1200px;
+        position: relative;
+      }
+
+      .pageing {
+        display: flex;
+        justify-content: center;
+      }
+      .pageing > span {
+        font-size: 20px;
+        margin: 0 5px;
+      }
+
+      .btn-creat-post {
+        position: absolute;
+        right: 5px;
+        background-color: #f46b3f;
+        border: 1px solid #f46b3f;
       }
     </style>
   </head>
@@ -278,6 +299,36 @@
               </div>
             </div>
           </div>
+          <div class="article-wrap">
+            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            <div class="post-div-title-box">
+              <div class="post-title"><p>같이 등산해요~</p></div>
+              <div class="post-like">
+                <img src="/static/img/heart.png" alt="좋아요 하트" />
+                <span>5421</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="paging-box">
+        <div class="pageing">
+          <span><<</span>
+          <span>1,</span>
+          <span>2,</span>
+          <span>3,</span>
+          <span>4,</span>
+          <span>5,</span>
+          <span>9,</span>
+          <span>7,</span>
+          <span>8,</span>
+          <span>9</span>
+          <span>>></span>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary btn-creat-post">
+            글쓰기
+          </button>
         </div>
       </section>
     </main>
