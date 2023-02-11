@@ -45,7 +45,7 @@ public class CommunityBoardController {
 
   //선택한 게시글 삭제
   @DeleteMapping("/board/{boardId}")
-  public ResponseEntity deleteCommunityComment(@AuthenticationPrincipal UserDetailImpl userDetail) {
+  public ResponseEntity deleteCommunityComment(@AuthenticationPrincipal UserDetailsImpl userDetail) {
 
     communityBoardService.deleteCommunityBoard(userDetail.getUser());
     return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
