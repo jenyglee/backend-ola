@@ -21,6 +21,62 @@
       padding: 0;
       background-color: #FFFBF4;
     }
+    .main{
+      width: 1200px;
+      height: 1000px;
+      background-color: #FFFBF4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .main .midmain{
+      width: 600px;
+      height: 500px;
+      justify-content: center;
+    }
+    .main .midmain .lastmain{
+      width: 600px;
+      height: 500px;
+      justify-content: flex-end;
+    }
+    .loginbtn
+    {
+      width: 100% !important;
+      height: 10%;
+      background-color: #F46B3F !important;
+    }
+    .kakaologinbtn
+    {
+      width: 100% !important;
+      height: 10%;
+      /*color: YELLOW !important;*/
+    }
+    .googleloginbtn
+    {
+      width: 100% !important;
+      height: 10%;
+      color: ;
+    }
+    .naverloginbtn
+    {
+      width: 100% !important;
+      height: 10%;
+    }
+    .signuploginbtn
+    {
+      width: 100% !important;
+      height: 10%;
+      background-color: #F46B3F !important;
+    }
+    .findpwd
+    {
+      color: #F46B3F;
+      text-align : center;
+      /*background-color: YELLOW;*/
+      /*align-items: center;*/
+      /*display:inline;*/
+      /*margin: 0 auto;*/
+    }
   </style>
 </head>
 <body>
@@ -50,7 +106,53 @@
   <main class="container">
     <section class="">
       <!--   작업공간   -->
-      여기서 작업을
+      <div class="main">
+        <div class="midmain">
+
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <br>
+          <div class="d-grid gap-2 col-6 mx-auto loginbtn">
+            <button class="btn btn-primary" type="button">로그인</button>
+          </div>
+
+          <br>
+          <div class="findpwd" >
+            비밀번호 찾기
+
+          </div>
+
+          <br>
+          <div class=lastmain">
+            <div class="d-grid gap-2 col-4 mx-auto kakaologinbtn ">
+              <button class="btn-warning" type="button">카카오 로그인</button>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-4 mx-auto googleloginbtn">
+              <button class="btn btn-danger" type="button">구글 로그인</button>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-3 mx-auto naverloginbtn">
+              <button class="btn btn-success" type="button">네이버 로그인</button>
+            </div>
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto signuploginbtn">
+              <button class="btn btn-primary" type="button">회원가입</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
     </section>
   </main>
 <!--<script>-->

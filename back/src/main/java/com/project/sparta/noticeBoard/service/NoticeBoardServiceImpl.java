@@ -8,6 +8,7 @@ import com.project.sparta.noticeBoard.dto.NoticeBoardResponseDto;
 import com.project.sparta.noticeBoard.entity.NoticeBoard;
 import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
 import com.project.sparta.user.entity.User;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,10 +77,11 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
         // 3. 엔티티를 DTO로 변환
         List<NoticeBoardResponseDto> noticeBoardResponseDtoList = new ArrayList<>();
-        for (NoticeBoard noticeBoard : noticeBoardList) {
-            NoticeBoardResponseDto noticeBoardResponseDto = new NoticeBoardResponseDto(noticeBoard);
-            noticeBoardResponseDtoList.add(noticeBoardResponseDto);
-        }
+        noticeBoardResponseDtoList = noticeBoardList
+            .stream()
+            .map(NoticeBoardResponseDto::new)
+            .collect(Collectors.toList());
+
 
         //4. 클라이언트에 응답(현재페이지, 전체 건수, 데이터 포함)
         return new PageResponseDto<>(offset, totalElements, noticeBoardResponseDtoList);
