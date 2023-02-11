@@ -24,6 +24,13 @@
         padding: 0;
         /* background-color: #fffbf4; */
       }
+        /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+        .btn:active,.btn:focus ,.btn:hover {
+        outline:none !important;
+        /* box-shadow:none !important; */
+        background-color: #F46B3F;
+        border: 1px solid #F46B3F;
+      }
 
 
       /* 제목 및 컨텐츠박스 css */
@@ -115,7 +122,6 @@
       }
 /* 게시글 작성 버튼 css */
       .create-post{
-        background-color: yellowgreen;
         position: relative;
       }
       .btn-create-post{
@@ -198,13 +204,13 @@
 
             />
             <!-- 태그추천 display none -->
-          <div class="reccomend-tag">
-            <select class="form-select" multiple aria-label="multiple select example">
-              <option value="0">#산악회</option>
-              <option value="1">#산속캠핑</option>
-              <option value="2">#산장</option>
-            </select>
-          </div>
+            <div class="reccomend-tag">
+              <select class="form-select" multiple aria-label="multiple select example">
+                <option value="0">#산악회</option>
+                <option value="1">#산속캠핑</option>
+                <option value="2">#산장</option>
+              </select>
+            </div>
           </div>
         </div>
         <!-- 크루원 구하기 라디오 박스 -->

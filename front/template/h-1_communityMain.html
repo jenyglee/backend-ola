@@ -25,6 +25,16 @@
         /* background-color: #fffbf4; */
       }
 
+      /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+      .btn:active,
+      .btn:focus,
+      .btn:hover {
+        outline: none !important;
+        /* box-shadow:none !important; */
+        background-color: #f46b3f;
+        border: 1px solid #f46b3f;
+      }
+
       .header {
         height: 450px;
         padding: 150px 0 0 0;
@@ -97,6 +107,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
       }
+
       .article-box {
         width: 1200px;
         height: 550px;
@@ -105,6 +116,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
       }
+
       .article-wrap {
         margin: 10px 0 0 0;
         width: 350px;
@@ -128,6 +140,7 @@
         display: flex;
         justify-content: center;
       }
+
       .pageing > span {
         font-size: 20px;
         margin: 0 5px;
@@ -175,6 +188,7 @@
     </header>
     <!-- 메인 컨테이너 -->
     <main class="container">
+      <!-- 헤더 -->
       <section class="header">
         <div class="search-box">
           <select
@@ -185,16 +199,17 @@
             <option value="1">내용</option>
             <option value="2">작성자</option>
           </select>
-
+          <!-- 검색어 입력창 -->
           <input
             type="text"
             class="form-control"
             id="textFormControlInput1"
             placeholder="검색어를 입력해주세요"
           />
-
+          <!-- 검색버튼 -->
           <button type="button" class="btn btn-primary btn-search">검색</button>
         </div>
+        <!-- 태그 모음 -->
         <div class="tag-box">
           <div>
             <button type="button" class="btn btn-warning btn-tag">#등산</button>
@@ -245,8 +260,10 @@
           <div><a class="more">더보기</a></div>
         </div>
       </section>
+      <!-- 메인 컨텐츠 -->
       <section class="content">
         <div class="select-like-div">
+          <!-- 좋아요 셀렉트박스 -->
           <select
             class="select-like form-serch-select form-select"
             aria-label="Default select example"
@@ -255,6 +272,7 @@
             <option value="1">날짜 순</option>
           </select>
         </div>
+        <!-- 카드 -->
         <div class="article-box">
           <div class="article-wrap">
             <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
@@ -266,6 +284,7 @@
               </div>
             </div>
           </div>
+          <!-- 카드1 끝 -->
           <div class="article-wrap">
             <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
             <div class="post-div-title-box">
@@ -318,6 +337,7 @@
           </div>
         </div>
       </section>
+      <!-- 페이징 박스 -->
       <section class="paging-box">
         <div class="pageing">
           <span><<</span>
@@ -332,6 +352,7 @@
           <span>9</span>
           <span>>></span>
         </div>
+        <!-- 게시글 작성 버튼 -->
         <div>
           <button type="button" class="btn btn-primary btn-creat-post">
             글쓰기
