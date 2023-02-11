@@ -125,6 +125,12 @@ class FriendServiceImplTest {
         UserTag userTag9 = new UserTag(user3, tag1);
         UserTag userTag10 = new UserTag(user3, tag8);
 
+        UserTag userTag11 = new UserTag(user4, tag1);
+        UserTag userTag12 = new UserTag(user4, tag6);
+        UserTag userTag13 = new UserTag(user5, tag7);
+        UserTag userTag14 = new UserTag(user5, tag1);
+        UserTag userTag15 = new UserTag(user5, tag8);
+
         em.persist(userTag1);
         em.persist(userTag2);
         em.persist(userTag3);
@@ -135,6 +141,11 @@ class FriendServiceImplTest {
         em.persist(userTag8);
         em.persist(userTag9);
         em.persist(userTag10);
+        em.persist(userTag11);
+        em.persist(userTag12);
+        em.persist(userTag13);
+        em.persist(userTag14);
+        em.persist(userTag15);
 
         //초기화
         em.flush();
@@ -175,34 +186,16 @@ class FriendServiceImplTest {
 
     @Test
     void allMyFriendList() {
-//        Hashtag tag1 = new Hashtag("등린이");
-//        Hashtag tag6 = new Hashtag("고급코스");
-//        Hashtag tag7 = new Hashtag("짧은코스");
-//        Hashtag tag8 = new Hashtag("휴양등산");
-//
-//        hashtagRepository.saveAndFlush(tag1);
-//        hashtagRepository.saveAndFlush(tag6);
-//        hashtagRepository.saveAndFlush(tag7);
-//        hashtagRepository.saveAndFlush(tag8);
-//
-//        List<Hashtag> tagList2 = new ArrayList<>();
-//        tagList2.add(tag1);
-//        tagList2.add(tag6);
-//        tagList2.add(tag7);
-//        tagList2.add(tag8);
-//
-//
-//        User user11 = new User("user11@naver.com","1234", "조정", 30, "010-1234-1216","sdf.jpg");
-//        user11.addTags(tagList2);
-//        userRepository.saveAndFlush(user11);
-
-        User targetUser = userRepository.findByNickNameAndStatus("이재원", USER_REGISTERED).orElseThrow(() -> new CustomException(INVALID_USER));
-        System.out.println(targetUser.getTags());
+        //내 친구 목록 전체 조회
+        friendService.addFriend(1L, "한세인");
+        friendService.addFriend(1L, "김민선");
+        PageResponseDto result = friendService.AllMyFriendList(0, 5, 1L);
+        Assertions.assertThat(result.getTotalCount()).isEqualTo(2);
     }
 
     @Test
     void allRecomentFriendList() {
-        PageResponseDto<List<FriendInfoReponseDto>> result = friendService.AllRecomentFriendList(0, 3, 1L);
-        Assertions.assertThat(result.getTotalCount()).isEqualTo(3);
+        PageResponseDto<List<FriendInfoReponseDto>> result = friendService.AllRecomentFriendList(0, 5, 1L);
+        Assertions.assertThat(result.getTotalCount()).isEqualTo(4);
     }
 }

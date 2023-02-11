@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class NoticeBoardRequestDto {
+
     private String title;
     private String contents;
 
@@ -13,8 +14,4 @@ public class NoticeBoardRequestDto {
         this.title = title;
         this.contents = contents;
     }
-
-
-
-
 }

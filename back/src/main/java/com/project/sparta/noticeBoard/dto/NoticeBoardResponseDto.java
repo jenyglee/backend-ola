@@ -16,14 +16,12 @@ public class NoticeBoardResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public NoticeBoardResponseDto(NoticeBoard notice){
-        this.id = notice.getId();
-        this.username = notice.getUsername();
-        this.title = notice.getTitle();
-        this.contents = notice.getContents();
-        this.modifiedAt = getModifiedAt();
-        this.createdAt = getCreatedAt();
+    public NoticeBoardResponseDto(Long id, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+        this.id = id;
+        this.username = username;
+        this.title = title;
+        this.contents = contents;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
-
-
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>메인페이지</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,9 +18,9 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/menu.css">
-
+  <link rel="stylesheet" href="css/reset.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="theme-color" content="#fafafa">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -36,48 +36,184 @@
 </head>
 
 <body>
-  <header class="menu">
-    <div class="logo-wrap">
-      <img class="img" src="static/img/logo_main.png" alt="로고" />
-    </div>
-    <div class="item-list">
-      <a href="#">코스추천</a>
-      <a href="#">커뮤니티</a>
-      <a href="#">쇼핑몰</a>
-      <a href="#">공지사항</a>
-    </div>
-    <div class="right">
-      <div class="icon-friend">
+<header class="menu">
+  <div class="bg-line"></div>
+  <div class="logo-wrap">
+    <img class="img" src="static/img/logo_main.png" alt="로고" />
+  </div>
+  <div class="item-list">
+    <a href="#">코스추천</a>
+    <a href="#">커뮤니티</a>
+    <a href="#">쇼핑몰</a>
+    <a href="#">공지사항</a>
+  </div>
+  <div class="right">
+    <div class="friend">
+      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
         <img class="img" src="static/img/icon_friends.png" />
       </div>
-      <div class="my-profile-wrap">
-        <div class="img-wrap">
-          <img class="img" src="static/img/icon_profile_default.png " />
+      <div class="friend-dropbox">
+        <div class="search-area">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
+          </div>
+          <div class="btn-wrap">
+            <button type="button" class="btn btn-primary search-btn">검색</button>
+          </div>
         </div>
-        <p class="text">나와바리나와바님</p>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+        </ul>
+        <div class="line"></div>
+        <p class="recommend-title">추천 친구</p>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="static/img/icon_profile_default.png" />
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="line"></div>
-  </header>
-  <main class="container">
-    <section class="">
-      <!--   작업공간   -->
-      여기서 작업을
-      <a href="template/b-1_login.html"> 로그인 페이지로</a>
-    </section>
-  </main>
+    <div class="bell">
+      <div class="icon-bell" onclick="handleToggleBellDropBox()">
+        <img class="img" src="static/img/icon_bell.png" />
+      </div>
+      <div class="bell-dropbox">
+        <p>알람</p>
+        <ul>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="my-profile-wrap">
+      <div class="img-wrap">
+        <img class="img" src="static/img/icon_profile_default.png " />
+      </div>
+      <p class="text">나와바리나와바님</p>
+    </div>
+  </div>
+
+</header>
+<main class="container">
+  <section class="">
+    <!--   작업공간   -->
+    여기서 작업
+    <a href="template/b-1_login.html"> 로그인 페이지로</a>
+    <div class="test">
+      <div class="box1"></div>
+    </div>
+  </section>
+</main>
 <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
 
-  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
 
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+  $(document).ready(function () {
+    $(".friend-dropbox").hide();
+    $(".bell-dropbox").hide();
+  });
+  function handleToggleBellDropBox() {
+    $(".bell-dropbox").toggle();
+    $(".friend-dropbox").hide();
+  }
+
+  function handleToggleFriendDropBox() {
+    $(".friend-dropbox").toggle();
+    $(".bell-dropbox").hide();
+  }
+
+  window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+  ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async></script>
 </body>
 
 </html>
+

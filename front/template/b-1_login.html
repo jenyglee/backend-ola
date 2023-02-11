@@ -1,58 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+    <meta charset="UTF-8">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/reset.css">
-  <link rel="stylesheet" href="../css/menu.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <title>Title</title>
-  <style>
-    .container{
-      width: 1200px;
-      height: 1000px;
-      padding: 0;
-      background-color: #FFFBF4;
-    }
-  </style>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+
+    <title>Title</title>
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .container {
+            width: 1200px;
+            height: 1000px;
+            padding: 0;
+            background-color: #FFFBF4;
+        }
+
+        .main {
+            width: 1200px;
+            height: 1000px;
+            background-color: #FFFBF4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main .midmain {
+            width: 600px;
+            height: 500px;
+            justify-content: center;
+        }
+
+        .main_line{
+            width: 800px;
+            height: 800px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            padding-top: 100px;
+            padding-left: 100px;
+        }
+
+        .midmain{
+            width: 600px;
+            height: 500px;
+            justify-content: flex-end;
+        }
+
+        #loginbtn, #kakaologinbtn, #googleloginbtn, #naverloginbtn, #signuploginbtn {
+            width: 100%;
+            height: 50px;
+        }
+
+        .btn_1 {
+            color: white;
+            border: none;
+            background-color: #F46B3F;
+        }
+
+        .btn_2 {
+            color: black;
+            border: none;
+            background-color: #F9E54D;
+        }
+
+        .btn_3 {
+            color: white;
+            border: none;
+            background-color: #FF422F;
+        }
+
+        .btn_4 {
+            color: white;
+            border: none;
+            background-color: #2FB403;
+        }
+
+        .findpwd {
+            color: #F46B3F;
+            text-align: center;
+            /*background-color: YELLOW;*/
+            /*align-items: center;*/
+            /*display:inline;*/
+            /*margin: 0 auto;*/
+        }
+    </style>
 </head>
 <body>
-  <header class="menu">
+<header class="menu">
     <div class="logo-wrap">
-      <img class="img" src="../static/img/logo_main.png" alt="로고" />
+        <img class="img" src="../static/img/logo_main.png" alt="로고"/>
     </div>
     <div class="item-list">
-      <a href="#">코스추천</a>
-      <a href="#">커뮤니티</a>
-      <a href="#">쇼핑몰</a>
-      <a href="#">공지사항</a>
+        <a href="#">코스추천</a>
+        <a href="#">커뮤니티</a>
+        <a href="#">쇼핑몰</a>
+        <a href="#">공지사항</a>
     </div>
     <div class="right">
-      <div class="icon-friend">
-        <img class="img" src="../static/img/icon_friends.png" />
-      </div>
-      <div class="my-profile-wrap">
-        <div class="img-wrap">
-          <img class="img" src="../static/img/icon_profile_default.png " />
+        <div class="icon-friend">
+            <img class="img" src="../static/img/icon_friends.png"/>
         </div>
-        <p class="text">나와바리나와바님</p>
-      </div>
+        <div class="my-profile-wrap">
+            <div class="img-wrap">
+                <img class="img" src="../static/img/icon_profile_default.png "/>
+            </div>
+            <p class="text">나와바리나와바님</p>
+        </div>
     </div>
     <div class="line"></div>
-  </header>
-  <main class="container">
+</header>
+<main class="container">
     <section class="">
-      <!--   작업공간   -->
-      여기서 작업을
+        <!--   작업공간   -->
+        <div class="main">
+            <div class="main_line">
+            <div class="midmain">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">이메일</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">비밀번호</label>
+                </div>
+
+                <br>
+                <div class="d-grid gap-2 col-6 mx-auto" id="loginbtn">
+                    <button class="btn_1" type="button" style="border-radius: 5px;"><b>로그인</b></button>
+                </div>
+
+                <br>
+                <div class="findpwd"><a href="#" style="text-decoration: none; color : #F46B3F; font-weight: bolder;">비밀번호
+                    찾기</a></div>
+
+                <br><br><br>
+                <div class=lastmain">
+                    <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn">
+                        <button class="btn_2" type="button" style="border-radius: 5px;"><b>카카오 로그인</b></button>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-2 col-6 mx-auto" id="googleloginbtn">
+                        <button class="btn_3" type="button" style="border-radius: 5px;"><b>구글 로그인</b></button>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-2 col-6 mx-auto" id="naverloginbtn">
+                        <button class="btn_4" type="button" style="border-radius: 5px;"><b>네이버 로그인</b></button>
+                    </div>
+                    <br>
+                    <div class="d-grid gap-2 col-6 mx-auto" id="signuploginbtn">
+                        <button class="btn_1" type="button" style="border-radius: 5px;"><b>회원가입</b></button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+
     </section>
-  </main>
+</main>
 <!--<script>-->
 <!--  function handleCreateGuestBook() {-->
 <!--    $.ajax({-->
