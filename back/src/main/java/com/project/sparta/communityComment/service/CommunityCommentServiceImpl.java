@@ -28,7 +28,6 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
        user);
     commentRepository.saveAndFlush(communityComment);
     CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
-
     return communityResponseDto;
   }
 
@@ -36,7 +35,6 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
   @Transactional
   public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
       User user) {
-
     boardRepository.findById(boardId)
         .orElseThrow(() -> new IllegalArgumentException("댓글 달 보드가 없습니다."));
     CommunityComment communityComment = commentRepository.findById(boardId)
