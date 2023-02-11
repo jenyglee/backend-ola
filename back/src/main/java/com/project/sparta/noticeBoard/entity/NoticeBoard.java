@@ -14,10 +14,10 @@ import javax.persistence.*;
 public class NoticeBoard extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="NoticeBoard_ID")
+    @Column(name ="noticeBoard_id")
     private Long id;
 
-    private String username;
+    private String nickName;
 
     @Column(nullable = false)
     private String title;
@@ -25,19 +25,15 @@ public class NoticeBoard extends Timestamped {
     private String contents;
 
 
-
-    public NoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto){
-
-        this.title = noticeBoardRequestDto.getTitle();
-        this.contents = noticeBoardRequestDto.getTitle();
-
+    public NoticeBoard(String nickName, String title, String contents) {
+        this.nickName = nickName;
+        this.title = title;
+        this.contents = contents;
     }
 
-    public void update(NoticeBoardRequestDto noticeBoardRequestDto){
-        this.title = noticeBoardRequestDto.getTitle();
-        this.contents = noticeBoardRequestDto.getContents();
+    public void update(String title, String contents){
+        this.title = title;
+        this.contents = contents;
     }
-
-
 
 }
