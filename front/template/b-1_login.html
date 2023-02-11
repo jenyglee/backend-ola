@@ -43,7 +43,16 @@
             justify-content: center;
         }
 
-        .main .midmain .lastmain {
+        .main_line{
+            width: 800px;
+            height: 800px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            padding-top: 100px;
+            padding-left: 100px;
+        }
+
+        .midmain{
             width: 600px;
             height: 500px;
             justify-content: flex-end;
@@ -116,8 +125,8 @@
     <section class="">
         <!--   작업공간   -->
         <div class="main">
+            <div class="main_line">
             <div class="midmain">
-
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">이메일</label>
@@ -157,8 +166,8 @@
                 </div>
 
             </div>
+            </div>
         </div>
-
 
     </section>
 </main>
