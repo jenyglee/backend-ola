@@ -25,6 +25,8 @@
         /* background-color: #fffbf4; */
       }
 
+
+      /* 제목 및 컨텐츠박스 css */
       .create-post-box{
         padding: 100px 0 0 0;
       }
@@ -58,7 +60,7 @@
 			font-size: 16px;
       color: gray;
       }
-
+/* 태그 업로드 css */
       .tag-upload-box{
         display: flex;
         justify-content: space-between;
@@ -89,7 +91,7 @@
         height: 50px;
       }
 
-      
+/* 업로드 파일 css */
       .filebox input[type="file"] {
           position: absolute;
           width: 0;
@@ -111,7 +113,7 @@
       .upload-label{
         color:#F46B3F
       }
-
+/* 게시글 작성 버튼 css */
       .create-post{
         background-color: yellowgreen;
         position: relative;
@@ -122,6 +124,10 @@
         border: 1px solid #F46B3F;
         position: absolute;
         right: 10px;
+      }
+/* 태크 셀렉트박스 */
+      .reccomend-tag{
+        display: none;
       }
 
     </style>
@@ -171,6 +177,7 @@
             />
           </div>
         </div>
+        <!-- 이미지업로드 쪽 레이아웃 -->
         <div class="img-upload-box">
           <div class="mb-3">
             <div class="filebox">
@@ -179,6 +186,7 @@
               <input type="file" id="file">
           </div>
         </div>
+        <!-- 태그 레이아웃 -->
         <div class="tag-upload-box">
           <span>태그</span>
           <div class="mb-3 creat-tag">
@@ -189,8 +197,17 @@
               id="tagFormControlInput1"
 
             />
+            <!-- 태그추천 display none -->
+          <div class="reccomend-tag">
+            <select class="form-select" multiple aria-label="multiple select example">
+              <option value="0">#산악회</option>
+              <option value="1">#산속캠핑</option>
+              <option value="2">#산장</option>
+            </select>
+          </div>
           </div>
         </div>
+        <!-- 크루원 구하기 라디오 박스 -->
         <div class="creat-post-box">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -198,6 +215,7 @@
               크루원 구하기
             </label>
           </div>
+          <!-- 게시글 작성 버튼 -->
           <div class="create-post">
             <button type="button" class="btn btn-primary btn-create-post">
              게시글 작성
@@ -207,6 +225,7 @@
       </section>
     </main>
     <script>
+      // 파일 업로드 스크립트 설정
       $("#file").on('change',function(){
         var fileName = $("#file").val();
         $(".upload-name").val(fileName);
