@@ -7,7 +7,7 @@
   position: relative;
 
 }
-.menu .line{
+.menu .bg-line{
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -50,16 +50,131 @@
   display: flex;
   align-items: center;
 }
-.menu .right .icon-friend{
+.menu .right .icon-friend,
+.menu .right .icon-bell{
   width: 40px;
   height: 40px;
   margin-right: 20px;
   cursor: pointer;
 
 }
-.menu .right .icon-friend .img{
+.menu .right .icon-friend .img,
+.menu .right .icon-bell .img{
   width: 100%;
   height: 100%;
+}
+.menu .right .friend{
+  position: relative;
+}
+.menu .right .friend .friend-dropbox{
+  width: 330px;
+  height: 570px;
+  background-color: #ffffff;
+  box-shadow: 3px 3px 10px #cbcbcb;
+  padding: 20px;
+  position: absolute;
+  overflow: scroll;
+  top: 50px;
+  right: 0;
+}
+
+.menu .right .friend .friend-dropbox .search-area{
+  display: flex;
+  justify-content: space-between;
+
+}
+.menu .right .friend .friend-dropbox .search-area .btn-wrap{
+  width: 100px;
+  margin-left: 10px;
+}
+.menu .right .friend .friend-dropbox .search-area .btn-wrap .search-btn{
+  height: 37px;
+  width: 100%;
+  background-color: #F46B3F;
+  border: none;
+}
+
+.friend-list{
+  padding: 0;
+
+}
+
+.friend-list li{
+  display: flex;
+  margin-bottom: 10px;
+}
+.friend-list li .left{
+  display: flex;
+  /*justify-content: space-between;*/
+  align-items: center;
+  width: 100%;
+}
+.friend-list li .left .img-wrap{
+  width: 40px;
+  height: 40px;
+  background-color: yellow;
+  margin-right: 10px;
+  overflow: hidden;
+  border-radius: 100%;
+}
+.friend-list li .left .img-wrap .img{
+  width: 100%;
+}
+.friend-list li .left .name{
+  margin-bottom: 0;
+}
+
+.friend-list li .left .btn-link{
+  text-decoration: none;
+  color: #F46B3F;
+}
+.friend-list li .right{
+  /*background-color: #2FB403;*/
+}
+.menu .right .friend .friend-dropbox .line{
+  width: 100%;
+  height: 1px;
+  background-color: #D2D2D2;
+}
+
+.friend-dropbox .recommend-title{
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.menu .right .bell{
+  position: relative;
+}
+.menu .right .bell .bell-dropbox{
+  width: 330px;
+  height: 500px;
+  padding: 30px 20px;
+  background-color: #ffffff;
+  box-shadow: 3px 3px 10px #cbcbcb;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  overflow: scroll;
+  display: none;
+}
+.menu .right .bell .bell-dropbox p{
+  font-size: 18px;
+}
+
+.menu .right .bell .bell-dropbox ul{
+  margin: 0;
+  padding: 0;
+}
+.menu .right .bell .bell-dropbox ul li{
+  margin-bottom: 20px;
+}
+.menu .right .bell .bell-dropbox ul li a{
+  font-size: 16px;
+  text-decoration: none;
+  color: #000000;
+}
+.menu .right .bell .bell-dropbox ul li a:hover{
+  text-decoration: underline;
 }
 .menu .right .my-profile-wrap{
   display: flex;

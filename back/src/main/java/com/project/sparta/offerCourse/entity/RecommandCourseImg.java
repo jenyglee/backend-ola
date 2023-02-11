@@ -12,17 +12,17 @@ import java.util.Random;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OfferCourseImg {
+public class RecommandCourseImg {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "offercourse_img_id" )
+    @Column(name = "recommandCourse_img_id" )
     private Long id;
 
     //파일 저장 게시글
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "offercourse_post_id")
-    private OfferCoursePost offerCoursePost;
+    @JoinColumn(name = "recommandCourse_post_id")
+    private RecommandCoursePost recommandCoursePost;
 
     //파일 원본명
     @Column(nullable = false)
@@ -37,16 +37,16 @@ public class OfferCourseImg {
 
 
     @Builder
-    public OfferCourseImg(OfferCoursePost offerCoursePost, String originalImgName, String imgRoute, Long imgSize) {
-        this.offerCoursePost = offerCoursePost;
+    public RecommandCourseImg(RecommandCoursePost recommandCoursePost, String originalImgName, String imgRoute, Long imgSize) {
+        this.recommandCoursePost = recommandCoursePost;
         this.originalImgName = originalImgName;
         this.imgRoute = imgRoute;
         this.imgSize = imgSize;
     }
 
-    public void addPost(OfferCoursePost offerCoursePost){
+    public void addPost(RecommandCoursePost recommandCoursePost){
         //사진이 게시글에 존재하지 않는다면
-        this.offerCoursePost = offerCoursePost;
+        this.recommandCoursePost = recommandCoursePost;
 
     }
 

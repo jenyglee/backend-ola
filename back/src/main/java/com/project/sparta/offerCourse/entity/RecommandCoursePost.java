@@ -13,11 +13,11 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OfferCoursePost extends Timestamped {
+public class RecommandCoursePost extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "offercourse_post_id")
+    @Column(name = "recommandCourse_post_id")
     private Long Id;
 
     @Column(nullable = false)
@@ -30,11 +30,11 @@ public class OfferCoursePost extends Timestamped {
     @Enumerated(value=EnumType.STRING)
     private PostStatusEnum postStatus;
 
-    @OneToMany(mappedBy = "offerCoursePost",cascade = CascadeType.PERSIST)
-    private List<OfferCourseImg> images = new ArrayList<>();
+    @OneToMany(mappedBy = "recommandCoursePost",cascade = CascadeType.PERSIST)
+    private List<RecommandCourseImg> images = new ArrayList<>();
 
     @Builder
-    public OfferCoursePost(String title, String contents ,PostStatusEnum postStatus) {
+    public RecommandCoursePost(String title, String contents , PostStatusEnum postStatus) {
         this.title = title;
         this.contents = contents;
         this.postStatus = postStatus;
