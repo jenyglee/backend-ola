@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/sing-up.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <title>Title</title>
+    <style>
+        .container{
+            width: 1200px;
+            height: 1000px;
+            padding: 0;
+            background-color: #FFFBF4;
+        }
+        .sing_up-header{
+            margin: 50px 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tag-box {
+            width: 700px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-tag {
+            background-color: #ffffff;
+            color: #000;
+            border-radius: 50px;
+            margin: 5px 2px;
+        }
+        #nextbtn{
+            width: 100%;
+            height: 70px;
+            margin: 50px;
+        }
+        .btn1{
+            color: white;
+            border: none;
+            background-color: #F46B3F;
+        }
+        .sing_up-header__text,.sing_up-header__text3{
+            color: #F46B3F;
+        }
+    </style>
+</head>
+<body>
+<header class="menu">
+    <div class="logo-wrap">
+        <img class="img" src="../static/img/logo_main.png" alt="로고" />
+    </div>
+    <div class="item-list">
+        <a href="#">코스추천</a>
+        <a href="#">커뮤니티</a>
+        <a href="#">쇼핑몰</a>
+        <a href="#">공지사항</a>
+    </div>
+    <div class="right">
+        <div class="icon-friend">
+            <img class="img" src="../static/img/icon_friends.png" />
+        </div>
+        <div class="my-profile-wrap">
+            <div class="img-wrap">
+                <img class="img" src="../static/img/icon_profile_default.png " />
+            </div>
+            <p class="text">나와바리나와바님</p>
+        </div>
+    </div>
+    <div class="line"></div>
+</header>
+<main class="container">
+    <section class="">
+        <header class="sing_up-header">
+            <h1 class="sing_up-header__title">회원가입</h1>
+            <h1><p class=" sing_up-header__text">STEP 02</p></h1>
+            <br><br>
+            <h3><p class=" sing_up-header__text1">비슷한 관심사를 가진 친구를 추천해드릴게요</p></h3>
+            <h4><p class=" sing_up-header__text2">관심사를 골라주세요!</p></h4>
+            <h5><p class=" sing_up-header__text3">(중복 1~5개 선택)</p></h5>
+        </header>
+
+        <div class="tag-box">
+            <div>
+                <button type="button" class="btn btn-warning btn-tag">#등산</button>
+                <button type="button" class="btn btn-warning btn-tag">#파전</button>
+                <button type="button" class="btn btn-warning btn-tag">#정상</button>
+                <button type="button" class="btn btn-warning btn-tag">#야호</button>
+                <button type="button" class="btn btn-warning btn-tag">#맛집</button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #막걸리
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #등린이
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #등산복
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #겨울산
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #산악회
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #등산용품
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #등산코스
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #금강산
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #등산데이트코스
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #계절별등산추천
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #가을산추천
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #금강산도식후경
+                </button>
+                <button type="button" class="btn btn-warning btn-tag">
+                    #야간등산
+                </button>
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto" id="nextbtn">
+                <button class="btn1" type="button" style="border-radius: 5px;"><b>다음으로</b></button>
+            </div>
+        </div>
+
+    </section>
+</main>
+<!--<script>-->
+<!--  function handleCreateGuestBook() {-->
+<!--    $.ajax({-->
+<!--      type: "GET",-->
+<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
+<!--      data: {-->
+<!--        name: "sasas",-->
+<!--      },-->
+<!--      success: function (response) {-->
+<!--        console.log(response)-->
+<!--        alert(response.msc)-->
+<!--        window.location.reload();-->
+<!--      },-->
+<!--    })-->
+<!--  }-->
+</script>
+</body>
+
+</html>
