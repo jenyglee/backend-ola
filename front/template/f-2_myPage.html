@@ -13,8 +13,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
     <title>Title</title>
     <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
         .container{
             width: 1200px;
             height: 1000px;
@@ -22,7 +26,7 @@
             background-color: #FFFBF4;
         }
         .w_1{
-            height: 100px;
+            height: 80px;
             width: 1200px;
         }
         .w_2{
@@ -59,7 +63,7 @@
         }
         .w_3 .b_3{
             margin-left: 10px;
-            background-color: coral;
+            background-color: #F46B3F;
             border-radius: 50px;
             padding-top: 40px;
             padding-left: 30px;
@@ -77,24 +81,35 @@
         }
 
         .w_3 .b_4{
-            background-color: green;
+            background-color: #93961E;
             border-radius: 50px;
             padding-top: 40px;
             padding-left: 30px;
         }
         .w_3 .b_5{
-            background-color: #FF422F;
+            background-color: #F4553F;
             border-radius: 50px;
             padding-top: 40px;
             padding-left: 30px;
         }
         .w_3 .b_6{
-            background-color: chocolate;
+            background-color: #EB984C;
             border-radius: 50px;
             padding-top: 40px;
             padding-left: 30px;
         }
 
+        .w_4{
+            height: 10px;
+            width: 1200px;
+            line-height: 50px;
+        }
+
+        .w_5, .w_6{
+            height: 60px;
+            width: 1200px;
+            line-height: 50px;
+        }
 
         .w_5{
             height: 60px;
@@ -117,16 +132,202 @@
             float: right;
         }
 
+        .w_6 .b_9{
+            height: 60px;
+            width: 200px;
+            display: inline-block;
+            float: left;
+        }
+        .w_6 .b_15{
+            height: 60px;
+            width: 180px;
+            display: inline-block;
+            float: right;
+        }
 
-        .w_4, .w_5, .w_6, .w_7{
+        .w_6 .b_10, .w_6 .b_11, .w_6 .b_12, .w_6 .b_13, .w_6 .b_14{
+            height: 50px;
+            width: 150px;
+            display: inline-block;
+            border-radius: 30px;
+            background-color: #F46B3F;
+            color : white;
+            text-align: center;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+        .w_7{
+            height: 30px;
+            width: 1200px;
+            line-height: 50px;
+        }
+
+        .w_8{
+            height: 310px;
+            width: 1200px;
+            background-color: antiquewhite;
+        }
+
+        .w_8 .b_16{
             height: 60px;
             width: 1200px;
-            border: 1px solid black;
+            display: inline-block;
         }
-        .w_8{
-            height: 290px;
+        .w_8 .b_16 .b_16_1{
+            padding-top: 20px;
+            height: 40px;
+            width: 900px;
+            display: inline-block;
+            float: left;
+        }
+
+        .w_8 .b_16 .b_16_2{
+            padding-top: 20px;
+            height: 40px;
+            width: 290px;
+            display: inline-block;
+        }
+        .w_8 .b_16 p{
+            padding-top: 10px;
+            text-decoration: none;
+            font-weight: bolder;
+            padding-left: 30px;
+        }
+        .w_8 .b_17{
+            height: 240px;
             width: 1200px;
-            border: 1px solid black;
+            display: inline-block;
+        }
+
+
+        .w_8 .b_17 .b_17_1, .w_8 .b_17 .b_17_2, .w_8 .b_17 .b_17_3{
+            height: 240px;
+            width: 395px;
+            display: inline-block;
+        }
+        /*-1-*/
+        .w_8 .b_17 .b_17_1 .b_17_1_1{
+            width: 395px;
+            height: 55px;
+            display: inline-block;
+        }
+
+        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_profile{
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border-radius: 100%;
+            margin-left: 30px;
+            display: inline-block;
+            overflow: hidden;
+            justify-content: center;
+            float: left;
+        }
+        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_nickName{
+            width: 230px;
+            height: 55px;
+            display: inline-block;
+            line-height: 40px;
+            padding-left: 10px;
+            float: left;
+            color: black;
+            font-weight: bolder;
+        }
+        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn{
+            width: 80px;
+            height: 55px;
+            display: inline-block;
+            line-height: 40px;
+        }
+        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn a{
+            float: right;
+            text-decoration: none;
+            color: #666666;
+            display: inline-block;
+            margin-right: 20px;
+        }
+        /*-2-*/
+        .w_8 .b_17 .b_17_2 {
+            width: 395px;
+            height: 55px;
+            display: inline-block;
+        }
+
+        .w_8 .b_17 .b_17_2 .b_17_1_profile{
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border-radius: 100%;
+            margin-left: 30px;
+            display: inline-block;
+            overflow: hidden;
+            justify-content: center;
+            float: left;
+        }
+        .w_8 .b_17 .b_17_2 .b_17_1_nickName{
+            width: 230px;
+            height: 55px;
+            display: inline-block;
+            padding-left: 10px;
+            line-height: 40px;
+            float: left;
+            color: black;
+            font-weight: bolder;
+        }
+        .w_8 .b_17 .b_17_2 .b_17_1_addBtn{
+            width: 80px;
+            height: 55px;
+            display: inline-block;
+            line-height: 40px;
+        }
+        .w_8 .b_17 .b_17_2 .b_17_1_addBtn a{
+            float: right;
+            text-decoration: none;
+            color: #666666;
+            display: inline-block;
+            margin-right: 20px;
+        }
+        /*-3-*/
+
+        .w_8 .b_17 .b_17_3 .b_17_1_1{
+            width: 395px;
+            height: 55px;
+            display: inline-block;
+        }
+
+        .w_8 .b_17 .b_17_3 .b_17_1_profile{
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border-radius: 100%;
+            margin-left: 30px;
+            display: inline-block;
+            overflow: hidden;
+            justify-content: center;
+            float: left;
+        }
+        .w_8 .b_17 .b_17_3 .b_17_1_nickName{
+            width: 230px;
+            height: 55px;
+            display: inline-block;
+            padding-left: 10px;
+            line-height: 40px;
+            float: left;
+            color: black;
+            font-weight: bolder;
+        }
+        .w_8 .b_17 .b_17_3 .b_17_1_addBtn{
+            width: 80px;
+            height: 55px;
+            display: inline-block;
+            line-height: 40px;
+        }
+        .w_8 .b_17 .b_17_3 .b_17_1_addBtn a{
+            float: right;
+            text-decoration: none;
+            color: #666666;
+            display: inline-block;
+            margin-right: 20px;
         }
         #btn_1{
             width: 180px;
@@ -137,6 +338,7 @@
             color: #F46B3F;
             line-height: 40px;
             float: right;
+            font-weight: bolder;
         }
         #btn_2{
             width: 180px;
@@ -147,6 +349,7 @@
             color: #F46B3F;
             line-height: 40px;
             float: right;
+            font-weight: bolder;
         }
     </style>
 </head>
@@ -215,11 +418,132 @@
                 <button type="button" id="btn_2">변경하기</button>
             </div>
         </div>
+        <div class="w_7"></div>
         <div class="w_6">
-
+            <div class="b_9"></div>
+            <div class="b_10">
+                <p>#등산데이트</p>
+            </div>
+            <div class="b_11">
+                <p>#등산입문자</p>
+            </div>
+            <div class="b_12">
+                <p>#가을산</p>
+            </div>
+            <div class="b_13">
+                <p>#30대40대</p>
+            </div>
+            <div class="b_14">
+                #주변맛집
+            </div>
+            <div class="b_15"></div>
         </div>
         <div class="w_7"></div>
-        <div class="w_8"></div>
+        <div class="w_8">
+            <div class="b_16">
+                <div class="b_16_1">
+                    <p>추천친구</p>
+                </div>
+                <div class="b_16_2">
+                    <a href="#"><p style="float: right; color: #F46B3F; padding-right: 30px">새로고침</p></a>
+                </div>
+            </div>
+            <div class="b_17">
+                <div class="b_17_1">
+                    <div class="b_17_1_1">
+                        <div class="b_17_1_profile">
+                            <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                        </div>
+                        <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                        <div class="b_17_1_addBtn">
+                            <a href="#">친구추가</a>
+                        </div>
+                        <div class="b_17_1_profile">
+                            <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                        </div>
+                        <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                        <div class="b_17_1_addBtn">
+                            <a href="#">친구추가</a>
+                        </div>
+                        <div class="b_17_1_profile">
+                            <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                        </div>
+                        <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                        <div class="b_17_1_addBtn">
+                            <a href="#">친구추가</a>
+                        </div>
+                        <div class="b_17_1_profile">
+                            <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                        </div>
+                        <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                        <div class="b_17_1_addBtn">
+                            <a href="#">친구추가</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="b_17_2">
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                </div>
+                <div class="b_17_3">
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                    <div class="b_17_1_profile">
+                        <img src="../static/img/profile.png" height="100%" width="100%" style="object-fit: cover; text-align: center;"/>
+                    </div>
+                    <div class="b_17_1_nickName">내가 바로 등산왕</div>
+                    <div class="b_17_1_addBtn">
+                        <a href="#">친구추가</a>
+                    </div>
+                </div>
+            </div>
+            <div class="b_18"></div>
+        </div>
     </section>
 </main>
 <!--<script>-->
