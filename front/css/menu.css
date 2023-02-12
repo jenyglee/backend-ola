@@ -184,6 +184,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none;
 }
 .menu .right .my-profile-wrap .img-wrap{
   width: 32px;
