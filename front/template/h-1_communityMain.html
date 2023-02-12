@@ -10,19 +10,16 @@
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/menu.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="theme-color" content="#fafafa">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <title>올라 커뮤니티</title>
     <style>
       .container {
         width: 1200px;
-        height: 1200px;
         padding: 0;
-        /* background-color: #fffbf4; */
       }
 
       /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
@@ -35,9 +32,15 @@
         border: 1px solid #f46b3f;
       }
 
+      .btn-link:active,
+      .btn-link:focus,
+      .btn-link:hover {
+        background-color: #ffffff;
+        border: none;
+      }
+
       .header {
-        height: 450px;
-        padding: 150px 0 0 0;
+        padding: 100px 0 30px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -81,64 +84,19 @@
         color: #000;
         border-radius: 50px;
         margin: 5px 2px;
+        border-color: #d2d2d2;
       }
 
-      .more {
-        font-size: 17px;
-        color: #f46b3f;
-        margin: 20px;
-        text-decoration: none;
+      .btn-tag:hover,
+      .btn-tag:checked{
+        color:#ffffff;
+      }
+      .article-wrap a > div > img {
+        width: 100%;
       }
 
-      .select-like-div {
-        height: 50px;
-        padding: 5px;
-        position: relative;
-      }
-
-      .select-like {
-        position: absolute;
-        right: 10px;
-      }
-
-      .post-div-title-box {
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .article-box {
-        width: 1200px;
-        height: 550px;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .article-wrap {
-        margin: 10px 0 0 0;
-        width: 350px;
-        height: 250px;
-      }
-
-      .article-wrap > img {
-        width: 350px;
-      }
-
-      .post-like > img {
+      .post-like > img{
         width: 20px;
-      }
-
-      .paging-box {
-        width: 1200px;
-        position: relative;
-      }
-
-      .pageing {
-        display: flex;
-        justify-content: center;
       }
 
       .pageing > span {
@@ -146,46 +104,176 @@
         margin: 0 5px;
       }
 
-      .btn-creat-post {
-        position: absolute;
-        right: 5px;
-        background-color: #f46b3f;
-        border: 1px solid #f46b3f;
+      .wrap_4{
+        margin-top: 40px;
+        height: 50px;
+        width: 1200px;
+      }
+      .page-link,
+      .page-link:hover,
+      .page-link:active,
+      .page-link:focus{
+        color: #F46B3F;
+      }
+      #btn_1{
+        width: 200px;
+        height : 50px;
+        border: 1px solid white;
+        background-color: #F46B3F;
+        border-radius: 5px;
+        color: white;
+        float: right;
       }
 
-      .reccomend-tag {
-        display: none;
-      }
 
-      .form-selec {
-        display: none;
-      }
+
     </style>
   </head>
   <body>
-    <header class="menu">
-      <div class="logo-wrap">
-        <img class="img" src="../static/img/logo_main.png" alt="로고" />
-      </div>
-      <div class="item-list">
-        <a href="#">코스추천</a>
-        <a href="#">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
-      </div>
-      <div class="right">
-        <div class="icon-friend">
-          <img class="img" src="../static/img/icon_friends.png" />
+  <!-- ############# 네비게이션 #############-->
+  <header class="menu">
+    <div class="bg-line"></div>
+    <div class="logo-wrap">
+      <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+    </div>
+    <div class="item-list">
+      <a href="./g-1_recommend.html">코스추천</a>
+      <a href="./h-1_communityMain.html" style="font-weight: bold; color: #F46B3F">커뮤니티</a>
+      <a href="./i-1_shopMain.html">쇼핑몰</a>
+      <a href="./j-1_noticeMain.html">공지사항</a>
+    </div>
+    <div class="right">
+      <div class="friend">
+        <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+          <img class="img" src="./../static/img/icon_friends.png" />
         </div>
-        <div class="my-profile-wrap">
-          <div class="img-wrap">
-            <img class="img" src="../static/img/icon_profile_default.png " />
+        <div class="friend-dropbox">
+          <div class="search-area">
+            <div class="mb-3">
+              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
+            </div>
+            <div class="btn-wrap">
+              <button type="button" class="btn btn-primary search-btn">검색</button>
+            </div>
           </div>
-          <p class="text">나와바리나와바님</p>
+          <ul class="friend-list">
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">1:1 채팅</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">1:1 채팅</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">1:1 채팅</button>
+              </div>
+            </li>
+          </ul>
+          <div class="line"></div>
+          <p class="recommend-title">추천 친구</p>
+          <ul class="friend-list">
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+            <li>
+              <div class="left">
+                <div class="img-wrap">
+                  <img class="img" src="./../static/img/icon_profile_default.png" />
+                </div>
+                <p class="name">오메가오메오메</p>
+                <button type="button" class="btn btn-link">친구 추가</button>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="line"></div>
-    </header>
+      <div class="bell">
+        <div class="icon-bell" onclick="handleToggleBellDropBox()">
+          <img class="img" src="./../static/img/icon_bell.png" />
+        </div>
+        <div class="bell-dropbox">
+          <p>알람</p>
+          <ul>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+            <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          </ul>
+        </div>
+      </div>
+      <a class="my-profile-wrap" href="./f-1_myPage.html">
+        <div class="img-wrap">
+          <img class="img" src="./../static/img/icon_profile_default.png "/>
+        </div>
+        <p class="text">나와바리나와바님</p>
+      </a>
+    </div>
+
+  </header>
+
+  <!-- ############# 작업공간 #############-->
     <!-- 메인 컨테이너 -->
     <main class="container">
       <!-- 헤더 -->
@@ -211,59 +299,62 @@
         </div>
         <!-- 태그 모음 -->
         <div class="tag-box">
-          <div>
-            <button type="button" class="btn btn-warning btn-tag">#등산</button>
-            <button type="button" class="btn btn-warning btn-tag">#파전</button>
-            <button type="button" class="btn btn-warning btn-tag">#정상</button>
-            <button type="button" class="btn btn-warning btn-tag">#야호</button>
-            <button type="button" class="btn btn-warning btn-tag">#맛집</button>
-            <button type="button" class="btn btn-warning btn-tag">
+          <div style="text-align: center">
+            <button type="button" class="btn btn-tag">#등산</button>
+            <button type="button" class="btn btn-tag">#파전</button>
+            <button type="button" class="btn btn-tag">#정상</button>
+            <button type="button" class="btn btn-tag">#야호</button>
+            <button type="button" class="btn btn-tag">#맛집</button>
+            <button type="button" class="btn btn-tag">
               #막걸리
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #등린이
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #등산복
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #겨울산
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #산악회
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #등산용품
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #등산코스
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #금강산
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #등산데이트코스
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #계절별등산추천
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #가을산추천
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #금강산도식후경
             </button>
-            <button type="button" class="btn btn-warning btn-tag">
+            <button type="button" class="btn btn-tag">
               #야간등산
             </button>
           </div>
-          <div><a class="more">더보기</a></div>
+          <button type="button" class="btn btn-link" style="color: #F46B3F; text-decoration: none;">더보기</button>
         </div>
       </section>
       <!-- 메인 컨텐츠 -->
       <section class="content">
-        <div class="select-like-div">
+        <div class="select-like-div" style="display: flex; justify-content: space-between;">
           <!-- 좋아요 셀렉트박스 -->
+          <div>
+            <b>총 <span style="color: #F46B3F">100</span> 건&nbsp;</b>
+          </div>
           <select
             class="select-like form-serch-select form-select"
             aria-label="Default select example"
@@ -273,73 +364,124 @@
           </select>
         </div>
         <!-- 카드 -->
-        <div class="article-box">
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+        <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
-          <!-- 카드1 끝 -->
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
-          <div class="article-wrap">
-            <img src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            <div class="post-div-title-box">
-              <div class="post-title"><p>같이 등산해요~</p></div>
-              <div class="post-like">
-                <img src="/static/img/heart.png" alt="좋아요 하트" />
-                <span>5421</span>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
               </div>
             </div>
-          </div>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
+              </div>
+            </div>
+          </a>
+          <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
+            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
+            </div>
+            <div class="text-wrap" style="font-size: 14px;">
+              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
+              <div style="display: flex;">
+                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                </div>
+                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
+              </div>
+            </div>
+          </a>
+
         </div>
       </section>
-      <!-- 페이징 박스 -->
-      <br><br>
-      <div class="wrap_3">
+      <!--   페이지네이션/작성버튼     -->
+      <div class="wrap_4" style="position: relative; margin-bottom: 100px">
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <li class="page-item">
@@ -357,31 +499,41 @@
             </li>
           </ul>
         </nav>
+        <a href="g-3_recommendPostBoard.html" style="text-decoration: none; color : black; position: absolute; bottom: 0; right: 0;">
+          <button type="button" id="btn_1">게시글 작성</button>
+        </a>
       </div>
-        <!-- 게시글 작성 버튼 -->
-        <div>
-          <button type="button" class="btn btn-primary btn-creat-post">
-            글쓰기
-          </button>
-        </div>
+      </div>
       </section>
     </main>
-    <!-- <script>
-      -->
-    <!--  function handleCreateGuestBook() {-->
-    <!--    $.ajax({-->
-    <!--      type: "GET",-->
-    <!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
-    <!--      data: {-->
-    <!--        name: "sasas",-->
-    <!--      },-->
-    <!--      success: function (response) {-->
-    <!--        console.log(response)-->
-    <!--        alert(response.msc)-->
-    <!--        window.location.reload();-->
-    <!--      },-->
-    <!--    })-->
-    <!--  }
-    </script> -->
+    <script>
+      $(document).ready(function () {
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
+      });
+      function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+      }
+
+      function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+      }
+      function handleCreateGuestBook() {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+          data: {
+            name: "sasas",
+          },
+          success: function (response) {
+            console.log(response)
+            alert(response.msc)
+            window.location.reload();
+          },
+        })
+      }
+    </script>
   </body>
 </html>
