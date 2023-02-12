@@ -1,5 +1,6 @@
 package com.project.sparta.common.dto;
 
+import java.util.List;
 import lombok.Getter;
 
 @Getter
