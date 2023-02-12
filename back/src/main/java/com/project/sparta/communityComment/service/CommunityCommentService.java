@@ -8,15 +8,9 @@ import com.project.sparta.user.entity.User;
 import org.springframework.http.ResponseEntity;
 
 public interface CommunityCommentService {
-
-  public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  CommunityResponseDto createCommunityComments(Long boardId,CommunityRequestDto communityRequestDto,
       User user);
-
-  public CommunityResponseDto updateCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  CommunityResponseDto updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
       User user);
-
-  public void deleteCommunityComments(Long commentsId);
-
-  public void allDeleteCommunityComments();
-
+  void deleteCommunityComments(Long boardId, Long commentsId);
 }

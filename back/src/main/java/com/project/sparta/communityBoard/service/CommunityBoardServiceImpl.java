@@ -7,6 +7,8 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import java.util.List;
@@ -28,11 +30,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public CommunityBoardResponseDto createCommunityBoard(
-      CommunityBoardRequestDto communityBoardRequestDto,
+  public CommunityBoardResponseDto createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto,
       User user) {
     CommunityBoard communityBoard = new CommunityBoard(communityBoardRequestDto, user);
-    boardRepository.save(communityBoard);
+    boardRepository.saveAndFlush(communityBoard);
     CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
         communityBoard);
     return communityBoardResponseDto;
@@ -40,12 +41,12 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public CommunityBoardResponseDto updateCommunityBoard(
-      CommunityRequestDto communityRequestDto,
+  public CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto,
       User user) {
-    CommunityBoard communityBoard = boardRepository.findById(user.getId())
-        .orElseThrow(() -> new IllegalArgumentException("수정 할 보드가 없습니다."));
-    communityBoard.updateBoard(communityRequestDto.getContents());
+    CommunityBoard communityBoard = boardRepository.findById(community_board_id)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+    communityBoard.updateBoard(communityBoardRequestDto);
+    boardRepository.saveAndFlush(communityBoard);
     CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
         communityBoard);
     return communityBoardResponseDto;
@@ -53,9 +54,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public CommunityBoardResponseDto getCommunityBoard(User user) {
-    CommunityBoard communityBoard = boardRepository.findById(user.getId())
-        .orElseThrow(() -> new IllegalArgumentException("수정 할 보드가 없습니다."));
+  public CommunityBoardResponseDto getCommunityBoard(Long communityBoardId) {
+    CommunityBoard communityBoard = boardRepository.findById(communityBoardId)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
         communityBoard);
     return communityBoardResponseDto;
@@ -63,40 +64,50 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size) {
+  public List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size) {
     Sort sort = Sort.by(Sort.Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
+
     Page<CommunityBoard> boards = boardRepository.findAll(pageable);
     List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
         .stream()
         .map(CommunityBoardResponseDto::new)
         .collect(Collectors.toList());
-    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
+    return CommunityBoardResponseDtoList;
   }
-
-  public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,
-      User user) {
+  @Override
+  @Transactional
+  public List<CommunityBoardResponseDto> getMyCommunityBoard(int page, int size, User user) {
     Sort sort = Sort.by(Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
-    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
+    Page<CommunityBoard> boards = boardRepository.findAllById(pageable,user.getId());
     List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
         .stream()
         .map(CommunityBoardResponseDto::new)
         .collect(Collectors.toList());
-    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
+    return CommunityBoardResponseDtoList;
   }
+
+//  @Override
+//  @Transactional
+//  public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,
+//      User user) {
+//    Sort sort = Sort.by(Direction.ASC, "id");
+//    Pageable pageable = PageRequest.of(page, size, sort);
+//    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
+//    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+//        .stream()
+//        .map(CommunityBoardResponseDto::new)
+//        .collect(Collectors.toList());
+//    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
+//  }
 
   @Override
   @Transactional
-  public void deleteCommunityBoard(User user) {
-    boardRepository.findById(user.getId())
-        .orElseThrow(() -> new IllegalArgumentException("삭제할 보드가 없습니다."));
-    boardRepository.deleteById(user.getId());
+  public void deleteCommunityBoard(Long community_board_id) {
+    boardRepository.findById(community_board_id)
+        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+    boardRepository.deleteById(community_board_id);
   }
 
-  @Override
-  @Transactional
-  public void deleteAllCommunityBoard() {
-    boardRepository.deleteAll();
-  }
 }
