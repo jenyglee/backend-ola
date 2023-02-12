@@ -19,7 +19,7 @@
     <style>
       .container {
         width: 1200px;
-        height: 1000px;
+        /*height: 1000px;*/
         padding: 0;
       }
 
@@ -139,6 +139,27 @@
       /* 페이징 */
       .paging-box{
         margin: 20px 0 0 0;
+      }
+
+      .wrap_4{
+          margin-top: 40px;
+          height: 50px;
+          width: 1200px;
+      }
+      .page-link,
+      .page-link:hover,
+      .page-link:active,
+      .page-link:focus{
+          color: #F46B3F;
+      }
+      #btn_1{
+          width: 200px;
+          height : 50px;
+          border: 1px solid white;
+          background-color: #F46B3F;
+          border-radius: 5px;
+          color: white;
+          float: right;
       }
     </style>
   </head>
@@ -288,313 +309,196 @@
 
   <!-- ############# 작업공간 #############-->
     <main class="container">
-        <section class="search-header">
+        <section>
             <!--   라디오박스 헤더   -->
-            <div class="sherch-header-wrap">
-                <div class="search-category-wrap">
-                    <span>카테고리</span>
-                    <div class="category-box">
-                        <div class="form-check category-radio">
-                            <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                            전체
-                            </label>
-                        </div>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            등산화
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            등산복
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            등산배낭
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            등산용품
-                        </label>
-                        </div>
-                    </div>
-                    <div class="brand-box-wrap">
-                        <span>브랜드</span>
-                        <div class="brand-box">
-                        <div class="form-check category-radio">
-                            <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                            전체
-                            </label>
-                        </div>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            네파
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            블랙야크
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            노스페이스
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            밀레
-                        </label>
-                        </div>
-
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            데상트
-                        </label>
-                        </div>
-                    </div>
-                    <div class="price-box-wrap">
-                        <span>가격순</span>
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            최고가순
-                        </label>
-                        </div>
-                        <div class="form-check category-radio">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="flexRadioDefault"
-                            id="flexRadioDefault1"
-                        />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            최저가순
-                        </label>
-                        </div>
-                    </div>
-                    <div class="registration-wrap">
-                        <span>등록순</span>
-                        <div class="form-check category-radio">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id="flexRadioDefault1"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                최신순
-                            </label>
-                        </div>
-                        <div class="form-check category-radio">
-                            <input
-                                class="form-check-input"
-                                type="radio"
-                                name="flexRadioDefault"
-                                id="flexRadioDefault1"
-                            />
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                오래된순
-                            </label>
-                        </div>
-                    </div>
-                    <!-- 검색창 -->
-                    <div class="sherch-wrap">
-                        <div class="sherch-input-box">
-                            <input
-                            type="text"
-                            class="form-control"
-                            id="textFormControlInput1"
-                            placeholder="검색어를 입력해주세요"
-                        />
-
-                        </div>
-                        <div class="sherch-btn-box">
-                            <button type="button" class="btn btn-primary btn-search">검색</button>
-                        </div>
-                    </div>
+            <div class="wrap_1_2" style="margin-top: 100px">
+                <span><b>카테고리</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory1"
+                           value="all" checked>
+                    <label class="form-check-label" for="inlineRadioCategory1">전체</label>
                 </div>
-            </div>    
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                           id="inlineRadioCategory1-1" value="shoes">
+                    <label class="form-check-label" for="inlineRadioCategory1-1">등산화</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory2"
+                           value="clothes">
+                    <label class="form-check-label" for="inlineRadioCategory2">등산복</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory3"
+                           value="bag">
+                    <label class="form-check-label" for="inlineRadioCategory3">등산배낭</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory4"
+                           value="product">
+                    <label class="form-check-label" for="inlineRadioCategory4">등산용품</label>
+                </div>
+            </div>
+            <div class="wrap_1_2">
+                <span><b>브랜드</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions" id="inlineRadioBrand5"
+                           value="all" checked>
+                    <label class="form-check-label" for="inlineRadioBrand5">전체</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                           id="inlineRadioBrand6" value="nepa">
+                    <label class="form-check-label" for="inlineRadioBrand6">네파</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions" id="inlineRadioBrand7"
+                           value="blackyak">
+                    <label class="form-check-label" for="inlineRadioBrand7">블랙야크</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions" id="inlineRadioBrand8"
+                           value="northpace">
+                    <label class="form-check-label" for="inlineRadioBrand8">노스페이스</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions" id="inlineRadioBrand9"
+                           value="millet">
+                    <label class="form-check-label" for="inlineRadioBrand9">밀레</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioBrandOptions" id="inlineRadioBrand10"
+                           value="descente">
+                    <label class="form-check-label" for="inlineRadioBrand10">데상트</label>
+                </div>
+            </div>
+            <div class="wrap_1_2">
+                <span><b>가격순</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioPriceOptions" id="inlineRadioPrice11"
+                           value="asc" checked>
+                    <label class="form-check-label" for="inlineRadioPrice11">최고가순</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
+                           id="inlineRadioPrice12" value="desc">
+                    <label class="form-check-label" for="inlineRadioPrice12">최저가순</label>
+                </div>
+            </div>
+            <div class="wrap_1_2">
+                <span><b>등록순</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioRegistOptions" id="inlineRadioRegist13"
+                           value="asc" checked>
+                    <label class="form-check-label" for="inlineRadioRegist13">최신순</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
+                           id="inlineRadioRegist14" value="desc">
+                    <label class="form-check-label" for="inlineRadioRegist14">마지막순</label>
+                </div>
+            </div>
+            <div style="display: flex; margin-top: 20px; margin-bottom: 50px;">
+                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="입력" />
+                <button type="button" class="btn search-btn" style="width: 170px; background-color: #F46B3F; color:#ffffff">검색</button>
+            </div>
         </section>
         <section class="card-wrap">
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                      <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                      <p class="card-text"><small class="text-muted">199,000원</small></p>
+            <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
-            </div>
-            <div class="card card-box">
-                <a href="./i-2_shopDetails.html" style="text-decoration: none; color : black;">
-                    <img src="/static/img/7JC7606_J00_01.jpg" class="card-img-top" alt="등산화">
-                    <div class="card-body">
-                        <h6 class="card-title">네파에서 나온 등산할때 신는 신발</h6>
-                        <p class="card-text"><small class="text-muted">199,000원</small></p>
+                <a href="./i-2_shopDetails.html" class="article" style="text-decoration: none; color: #000000">
+                    <div class="img-wrap" style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>
+                        <p style="margin-bottom: 10px; width: 90%">109,000원</p>
                     </div>
                 </a>
             </div>
         </section>
-        <section class="paging-box">
-            <div class="wrap_3">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
+        <!--   페이지네이션/작성버튼     -->
+        <div class="wrap_4" style="position: relative; margin-bottom: 100px;">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
                     <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
                     </li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
                     </li>
-                  </ul>
-                </nav>
-              </div>
-
-        </section>
+                </ul>
+            </nav>
+        </div>
     </main>
     <script>
         $(document).ready(function () {
