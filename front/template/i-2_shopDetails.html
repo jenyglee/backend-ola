@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <title>Title</title>
+    <style>
+
+    
+        .container{
+            width: 1200px;
+            height: 700px;
+            padding: 0;
+            position: relative;
+        }
+
+        .shop-details-wrap{
+            
+        }
+        .shop-content-wrap{
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 0 0;
+            padding: 100px 0 50px 0;
+        }
+
+        .item-img{
+            width: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+
+        }
+        .item-img > img {
+            width: 400px;
+            height: 400px;
+        }
+        .item-taxt{
+            width: 450px;
+            height: 550px;
+            border: 1px solid #dddddd;
+            margin-left: 50px;
+        }
+        .item-title{
+            margin:30px;
+        }
+        .item-price-box{
+            margin: 30px;
+            display: flex;
+        }
+
+        /* 구매버튼 */
+        .btn-buy {
+        width: 130px;
+        background-color: #f46b3f;
+        border: 1px solid #f46b3f;
+        margin-right: 20px;
+        margin-left: 15px;
+      }
+
+      .item-details-text{
+        margin: 30px;
+        height: 300px;
+        overflow-y: scroll;
+
+      }
+      
+      /* 스크롤바 숨기기 */
+
+      .item-details-text::-webkit-scrollbar{
+        display: none;
+      }
+ /* 댓글작성 호버, 포커스 기능빼기 */
+      .list-btn> .btn:hover,
+      .btn:focus {
+        background-color: white !important;
+        color: #f46b3f;
+      }
+
+      .list-btn > .btn {
+        width: 100px;
+        height: 50px;
+        border: 1px solid #f46b3f;
+        color: #f46b3f;
+        position: absolute;
+        right: 80px;
+      }
+
+
+    </style>
+</head>
+<body>
+<header class="menu">
+    <div class="logo-wrap">
+        <img class="img" src="../static/img/logo_main.png" alt="로고" />
+    </div>
+    <div class="item-list">
+        <a href="#">코스추천</a>
+        <a href="#">커뮤니티</a>
+        <a href="#">쇼핑몰</a>
+        <a href="#">공지사항</a>
+    </div>
+    <div class="right">
+        <div class="icon-friend">
+            <img class="img" src="../static/img/icon_friends.png" />
+        </div>
+        <div class="my-profile-wrap">
+            <div class="img-wrap">
+                <img class="img" src="../static/img/icon_profile_default.png " />
+            </div>
+            <p class="text">나와바리나와바님</p>
+        </div>
+    </div>
+    <div class="line"></div>
+</header>
+<main class="container">
+    <section class="shop-details-wrap">
+        <div class="shop-content-wrap">
+            <div class="item-img">
+                <img src="/static/img/7JC7606_J00_01.jpg" alt="운동화 이미지">
+            </div>
+            <div class="item-taxt">
+                <div class="item-title">
+                    <h5>네파에서 나온 바로 그 등산화 아주 가벼워요</h5>
+                </div>
+                <div class="item-price-box">
+                    <div class="price">
+                        <h5>199,000원</h5>
+                    </div>
+                    <div class="buy-btn">
+                        <button type="button" class="btn btn-primary btn-buy">
+                            구매하러 가기
+                          </button>
+                       
+                    </div>
+                </div>
+                <div class="item-details-text">
+                    <p>
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="fouter">
+            <div class="list-btn">
+                 <button
+                        type="button"
+                        class="btn create-comment btn-outline-warning"
+                        >
+                            목록
+                        </button>
+            </div>
+        </div>
+    </section>
+</main>
+<!--<script>-->
+<!--  function handleCreateGuestBook() {-->
+<!--    $.ajax({-->
+<!--      type: "GET",-->
+<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
+<!--      data: {-->
+<!--        name: "sasas",-->
+<!--      },-->
+<!--      success: function (response) {-->
+<!--        console.log(response)-->
+<!--        alert(response.msc)-->
+<!--        window.location.reload();-->
+<!--      },-->
+<!--    })-->
+<!--  }-->
+</script>
+</body>
+
+</html>
