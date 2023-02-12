@@ -44,6 +44,9 @@
         overflow-y: scroll;
         overflow-x: hidden;
       }
+      .post-card-body::-webkit-scrollbar {
+        display: none;
+      }
       .post-card-body > img {
         width: 100%;
       }
@@ -282,10 +285,13 @@
               </div>
             </div>
             <div class="chating-btn-wrap">
-              <a href="./h-4_chat.html" onClick="window.open(this.href, '', 'width=500, height=700'); return false;">
-              <button type="button" class="btn btn-primary btn-chating-post">
-                채팅방 참여하기
-              </button>
+              <a
+                href="./h-4_chat.html"
+                onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
+              >
+                <button type="button" class="btn btn-primary btn-chating-post">
+                  채팅방 참여하기
+                </button>
               </a>
             </div>
           </div>

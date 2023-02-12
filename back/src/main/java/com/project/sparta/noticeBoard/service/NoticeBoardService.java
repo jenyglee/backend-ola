@@ -12,15 +12,15 @@ import java.util.List;
 public interface NoticeBoardService {
 
 
-     NoticeBoardResponseDto createNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto, String nickName);   //공지글 작성
+     void createNoticeBoard(NoticeBoardRequestDto requestDto, User user);   //공지글 작성
 
-     void deleteNoticeBoard(Long noticeId);   //공지글 삭제
+     void deleteNoticeBoard(Long id, User user);   //공지글 삭제
 
-     void updateNoticeBoard(NoticeBoardRequestDto noticeBoardRequestDto, Long noticeId);  //공지글 수정
+     void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user);  //공지글 수정
 
-     NoticeBoardResponseDto getNoticeBoard(Long noticeId);       //공지글 단건조회
+     NoticeBoardResponseDto getNoticeBoard(Long id, User user);       //공지글 단건조회
 
-     PageResponseDto<List<NoticeBoardResponseDto>>getAllNoticeBoard(int offset, int limit, User user);        //공지글 전체조회
+     PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int offset, int limit, User user);        //공지글 전체조회
 
 
 }
