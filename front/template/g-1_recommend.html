@@ -23,18 +23,17 @@
         }
         .container{
             width: 1200px;
-            height: 1100px;
             padding: 0;
-            background-color: #FFFBF4;
         }
         .wrap_1{
             width: 1200px;
-            height: 250px;
+            margin-bottom: 10px;
+            /*height: 250px;*/
             /*border: 1px solid blue;*/
         }
         .wrap_1 div{
             width: 1200px;
-            height: 50px;
+            height: 38px;
             /*border: 1px solid red;*/
         }
         .wrap_1_2 div{
@@ -74,6 +73,15 @@
             border-radius: 5px;
             color: white;
             float: right;
+        }
+
+        .form-check-inline{
+            margin: 0;
+        }
+
+        .form-check-input:checked{
+            background-color: #F46B3F;
+            border-color: #F46B3F;
         }
     </style>
 </head>
@@ -225,119 +233,130 @@
 <main class="container">
     <section class="">
         <div class="wrap_1">
-            <div class="wrap_1_1" style="height: 30px"></div>
-            <div class="wrap_1_2">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span><b>높이별 :</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="all" checked>
-                    <label class="form-check-label" for="inlineRadio1">전체</label>
+            <div class="wrap_1_2" style="margin-top: 100px">
+                <span><b>높이별</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline" style="width: 65px">
+                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight1" value="all" checked>
+                    <label class="form-check-label" for="inlineRadioHeight1">전체</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="200">
-                    <label class="form-check-label" for="inlineRadio2">200m</label>
+                <div class="form-check form-check-inline" style="width: 115px">
+                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight1-1" value="all" checked>
+                    <label class="form-check-label" for="inlineRadioHeight1-1">100m 이상</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="300">
-                    <label class="form-check-label" for="inlineRadio3">300m</label>
+                <div class="form-check form-check-inline" style="width: 115px">
+                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight2" value="200">
+                    <label class="form-check-label" for="inlineRadioHeight2">200m 이상</label>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="400">
-                    <label class="form-check-label" for="inlineRadio4">400m</label>
+                <div class="form-check form-check-inline" style="width: 115px">
+                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight3" value="300">
+                    <label class="form-check-label" for="inlineRadioHeight3">300m 이상</label>
                 </div>
-            </div>
-            <div class="wrap_1_2">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span><b>별점순 :</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="1">
-                    <label class="form-check-label" for="inlineRadio5">1점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="2">
-                    <label class="form-check-label" for="inlineRadio6">2점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="3">
-                    <label class="form-check-label" for="inlineRadio7">3점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="4">
-                    <label class="form-check-label" for="inlineRadio8">4점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="5">
-                    <label class="form-check-label" for="inlineRadio9">5점</label>
+                <div class="form-check form-check-inline" style="width: 115px">
+                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight4" value="400">
+                    <label class="form-check-label" for="inlineRadioHeight4">400m 이상</label>
                 </div>
             </div>
             <div class="wrap_1_2">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span><b>지역별 :</b> &nbsp;&nbsp;</span>
+                <span><b>별점순</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline" style="width: 65px">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadio5" value="all" checked>
+                    <label class="form-check-label" for="inlineRadio5">전체</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore5-1" value="1">
+                    <label class="form-check-label" for="inlineRadioScore5-1">1점</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore6" value="2">
+                    <label class="form-check-label" for="inlineRadioScore6">2점</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore7" value="3">
+                    <label class="form-check-label" for="inlineRadioScore7">3점</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore8" value="4">
+                    <label class="form-check-label" for="inlineRadioScore8">4점</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore9" value="5">
+                    <label class="form-check-label" for="inlineRadioScore9">5점</label>
+                </div>
+            </div>
+            <div class="wrap_1_2">
+                <span><b>지역별</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline" style="width: 65px">
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation10" value="all" checked>
+                    <label class="form-check-label" for="inlineRadioLocation10">전체</label>
+                </div>
                 <div class="form-check form-check-inline" style="width: 110px">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="서울특별시">
-                    <label class="form-check-label" for="inlineRadio10">서울특별시</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation10-1" value="서울특별시">
+                    <label class="form-check-label" for="inlineRadioLocation10-1">서울특별시</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio11" value="경기도">
-                    <label class="form-check-label" for="inlineRadio11">경기도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation11" value="경기도">
+                    <label class="form-check-label" for="inlineRadioLocation11">경기도</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio12" value="강원도">
-                    <label class="form-check-label" for="inlineRadio12">강원도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation12" value="강원도">
+                    <label class="form-check-label" for="inlineRadioLocation12">강원도</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio13" value="충청도">
-                    <label class="form-check-label" for="inlineRadio13">충청도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation13" value="충청도">
+                    <label class="form-check-label" for="inlineRadioLocation13">충청도</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio14" value="전라도">
-                    <label class="form-check-label" for="inlineRadio14">전라도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation14" value="전라도">
+                    <label class="form-check-label" for="inlineRadioLocation14">전라도</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio15" value="경상도">
-                    <label class="form-check-label" for="inlineRadio15">경상도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation15" value="경상도">
+                    <label class="form-check-label" for="inlineRadioLocation15">경상도</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio16" value="제주도">
-                    <label class="form-check-label" for="inlineRadio16">제주도</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions" id="inlineRadioLocation16" value="제주도">
+                    <label class="form-check-label" for="inlineRadioLocation16">제주도</label>
                 </div>
             </div>
             <div class="wrap_1_2">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span><b>계절별 :</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio17" value="봄">
-                    <label class="form-check-label" for="inlineRadio17">봄</label>
+                <span><b>계절별</b> &nbsp;&nbsp;</span>
+                <div class="form-check form-check-inline" style="width: 65px">
+                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions" id="inlineRadioSeason17" value="all" checked>
+                    <label class="form-check-label" for="inlineRadioSeason17">전체</label>
+                </div>
+
+                <div class="form-check form-check-inline" style="width: 55px">
+                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions" id="inlineRadioSeason17-1" value="봄" >
+                    <label class="form-check-label" for="inlineRadioSeason17-1">봄</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio18" value="여름">
-                    <label class="form-check-label" for="inlineRadio18">여름</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions" id="inlineRadioSeason18" value="여름">
+                    <label class="form-check-label" for="inlineRadioSeason18">여름</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio19" value="가을">
-                    <label class="form-check-label" for="inlineRadio19">가을</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions" id="inlineRadioSeason19" value="가을">
+                    <label class="form-check-label" for="inlineRadioSeason19">가을</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio20" value="겨울">
-                    <label class="form-check-label" for="inlineRadio20">겨울</label>
+                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions" id="inlineRadioSeason20" value="겨울">
+                    <label class="form-check-label" for="inlineRadioSeason20">겨울</label>
                 </div>
             </div>
             </div>
             <div class="wrap_1_5"></div>
         </div>
         <div class="wrap_2">
-            <div class="wrap_2_1_1" style="height: 50px; padding-top: 15px">
+            <div class="wrap_2_1_1" style="height: 50px; padding-top: 15px; display: flex; justify-content: space-between;">
                 <div class="wrap_2_1_1_1">
-                    <div class="">
-                        <b>&nbsp;&nbsp;&nbsp;&nbsp;총 :
-                        <span style="color : #F46B3F">100</span>
-                            건&nbsp;</b></div>
+                    <div style="height: 50px;">
+                        <b>총 <span style="color : #F46B3F">100</span> 건&nbsp;</b></div>
                 </div>
-                <div class="wrap_2_1_1_1">
-                    <div class="like_d" style="text-align: right">
-                        <a id="like" href="#" style="text-decoration: none; color : black;"><b>좋아요 순&nbsp;&nbsp;</b></a>
-                    </div>
-                </div>
+                <!-- 좋아요 셀렉트박스 -->
+                <select class="select-like form-serch-select form-select" aria-label="Default select example" style="width: 130px">
+                    <option value="0">좋아요순</option>
+                    <option value="1">날짜 순</option>
+                </select>
+
             </div>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">
