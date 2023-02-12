@@ -306,5 +306,21 @@
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async></script>
+<script>
+    function handleCreateGuestBook() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+            data: {
+                name: "sasas",
+            },
+            success: function (response) {
+                console.log(response)
+                alert(response.msc)
+                window.location.reload();
+            },
+        })
+    }
+</script>
 </body>
 </html>
