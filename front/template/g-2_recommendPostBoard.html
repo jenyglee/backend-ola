@@ -29,7 +29,36 @@
         }
 
         .w_1{
-
+            width: 1200px;
+            height: 130px;
+        }
+        .w_2, .w_3, .w_4, .w_5, .w_6, .w_8, .w_9{
+            padding: 0px;
+            width: 1200px;
+            height: 55px;
+        }
+        .w_7{
+            width: 1200px;
+            height: 400px;
+        }
+        #btn_1{
+            width: 200px;
+            height : 50px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+            float: right;
+        }
+        .w_3 input, .w_4 input, .w_5 input{
+            width: 350px;
+        }
+        .w_7 textarea{
+            height: 380px;
+            resize: none;
+        }
+        .w_8 input{
+            width: 500px;
         }
     </style>
 </head>
@@ -181,14 +210,32 @@
 <main class="container">
     <section class="">
         <div class="w_1"></div>
-        <div class="w_2"></div>
-        <div class="w_3"></div>
-        <div class="w_4"></div>
-        <div class="w_5"></div>
-        <div class="w_6"></div>
-        <div class="w_7"></div>
-        <div class="w_8"></div>
-        <div class="w_9"></div>
+        <div class="w_2">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요">
+        </div>
+        <div class="w_3">
+            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="점수를 입력하세요">
+        </div>
+        <div class="w_4">
+            <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="계절을 입력하세요">
+        </div>
+        <div class="w_5">
+            <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="해발고도를 입력하세요">
+        </div>
+        <div class="w_6">
+            <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="주소를 입력하세요">
+        </div>
+        <div class="w_7">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
+        </div>
+        <div class="w_8">
+                <input class="form-control" type="file" id="formFileMultiple" multiple>
+        </div>
+        <div class="w_9">
+            <div class="b_1">
+                <button type="button" id="btn_1">게시글 등록</button>
+            </div>
+        </div>
     </section>
 </main>
 <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->

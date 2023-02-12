@@ -23,18 +23,18 @@
         }
         .container{
             width: 1200px;
-            height: 1000px;
+            height: 1100px;
             padding: 0;
             background-color: #FFFBF4;
         }
         .wrap_1{
             width: 1200px;
-            height: 200px;
+            height: 250px;
             /*border: 1px solid blue;*/
         }
         .wrap_1 div{
             width: 1200px;
-            height: 42px;
+            height: 50px;
             /*border: 1px solid red;*/
         }
         .wrap_1_2 div{
@@ -57,10 +57,23 @@
         }
         .wrap_3{
             width: 1200px;
-            height: 70px;
+            height: 80px;
+        }
+        .wrap_4{
+            height: 50px;
+            width: 1200px;
         }
         #like:hover{
             color: red;
+        }
+        #btn_1{
+            width: 200px;
+            height : 50px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+            float: right;
         }
     </style>
 </head>
@@ -395,6 +408,9 @@
                 </div>
             </div>
         </div>
+        <div class="wrap_4">
+            <button type="button" id="btn_1">게시글 작성</button>
+        </div>
         <div class="wrap_3">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
@@ -416,6 +432,22 @@
         </div>
     </section>
 </main>
+<!--<script>-->
+<!--  function handleCreateGuestBook() {-->
+<!--    $.ajax({-->
+<!--      type: "GET",-->
+<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
+<!--      data: {-->
+<!--        name: "sasas",-->
+<!--      },-->
+<!--      success: function (response) {-->
+<!--        console.log(response)-->
+<!--        alert(response.msc)-->
+<!--        window.location.reload();-->
+<!--      },-->
+<!--    })-->
+<!--  }-->
+
 <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
