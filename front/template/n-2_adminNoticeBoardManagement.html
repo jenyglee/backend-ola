@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            width: 1900px;
+            height: 1000px;
+            padding: 0;
+            background-color: WHITE;
+            align-items: center;
+            display: inline-block;
+        }
+
+        .wrap {
+            width: 2000px;
+            height: 1000px;
+            float: left;
+            display: inline-block;
+        }
+
+        .wrap .w_1 {
+            width: 300px;
+            height: 1000px;
+            background-color: #F46B3F;
+            display: inline-block;
+            float: left;
+        }
+
+        .wrap .w_2 {
+            width: 1500px;
+            height: 1000px;
+            background-color: white;
+            display: inline-block;
+            float: left;
+        }
+
+        .w_1 .b_1 {
+            height: 70px;
+        }
+
+        .w_1 .b_2 {
+            text-align: center;
+            font-size: 30px;
+            color: WHITE;
+            width: 300px;
+            height: 150px;
+            display: inline-block;
+        }
+
+        .w_1 .b_2 .b_2_1 {
+            text-align: center;
+            font-size: 30px;
+            color: WHITE;
+            width: 300px;
+            height: 50px;
+            display: inline-block;
+        }
+
+        .w_1 .b_2 .b_2_2 {
+            height: 40px;
+            width: 300px;
+            display: inline-block;
+        }
+
+        .w_1 .b_2 .b_2_2 button {
+            height: 40px;
+            width: 100px;
+            border-radius: 50px;
+            font-size: 15px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            color: white;
+            margin-right: 100px;
+        }
+
+        .w_1 .b_4 {
+            height: 70px;
+            display: inline-block;
+        }
+
+        .w_1 .b_5 {
+            width: 200px;
+            margin-left: 55px;
+            display: inline-block;
+        }
+
+        .w_1 .b_5 a {
+            font-size: 15px;
+            color: WHITE;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .w_1 .b_5 a:hover {
+            font-size: 15px;
+            color: WHITE;
+            text-decoration: underline;
+        }
+
+        .b_6 {
+            width: 1700px;
+            height: 140px;
+        }
+
+        .b_7 {
+            width: 1700px;
+            height: 60px;
+        }
+
+        .b_7 select{
+          width: 200px;
+          height: 40px;
+          border: 1px solid #D2D2D2;
+          border-radius: 5px;
+        }
+
+        .b_7 span, .b_8 span, .b_9_1 {
+            margin-left: 100px;
+        }
+
+        .b_8 {
+            width: 1700px;
+            height: 60px;
+        }
+
+        .b_8 input{
+          width: 1000px;
+          height: 40px;
+          border: 1px solid #D2D2D2;
+          border-radius: 5px;
+        }
+
+        .b_9 {
+            width: 1700px;
+            height: 300px;
+        }
+
+        .b_9_1{
+          display: inline-block;
+          float: left;
+        }
+
+        .b_9_2{
+          display: inline-block;
+          float: left;
+        }
+
+        .b_9_2 textarea{
+          width : 1000px;
+          display: inline-block;
+          float: left;
+          resize: none;
+          height: 250px;
+          border: 1px solid #D2D2D2;
+          border-radius: 5px;
+        }
+
+        .b_10 {
+            width: 1700px;
+            height: 60px;
+        }
+
+        .b_10 .b_10_1, .b_10 .b_10_2, .b_10 .b_10_3 {
+          width: 200px;
+          height: 50px;
+          display: inline-block;
+          float: right;
+          margin-top: 10px;
+        }
+
+        .b_10 .b_10_3 {
+          margin-right: 480px;
+        }
+
+        .b_10 .b_10_2, .b_10 .b_10_3 {
+          margin-left: 10px;
+        }
+
+        #btn_1 {
+          width: 180px;
+          height: 50px;
+          border: 1px solid #F46B3F;
+          background-color: white;
+          border-radius: 5px;
+          color: #F46B3F;
+          font-weight: bolder;
+          font-size: 17px;
+        }
+
+        #btn_2 {
+          width: 180px;
+          height: 50px;
+          border: 1px solid #F46B3F;
+          background-color: white;
+          border-radius: 5px;
+          color: #F46B3F;
+          font-weight: bolder;
+          font-size: 17px;
+        }
+
+        #btn_3 {
+          width: 180px;
+          height: 50px;
+          border: 1px solid white;
+          background-color: #F46B3F;
+          border-radius: 5px;
+          color: white;
+          font-weight: bolder;
+          font-size: 17px;
+        }
+    </style>
+</head>
+<body>
+
+<main class="container">
+    <div class="wrap">
+        <div class="w_1">
+            <div class="b_1"></div>
+            <div class="b_2">
+                <div class="b_2_1">
+                    <span>이재원</span>
+                    <span>매니저</span>
+                </div>
+                <div class="b_2_2">
+                    <button type="button" class="logout" onclick="">로그아웃</button>
+                </div>
+            </div>
+            <div class="b_4"></div>
+            <div class="b_5">
+                <a href="#">회원관리</a><br><br>
+                <a href="#">등산 추천 코스 관리</a><br><br>
+                <a href="#">커뮤니티 관리</a><br><br>
+                <a href="#">공지사항 관리</a>
+            </div>
+        </div>
+        <div class="w_2">
+            <div class="b_6"></div>
+            <div class="b_7">
+                <span>카테고리 : &nbsp;&nbsp;</span>
+                <select class="form-select" aria-label="카테고리">
+                    <option value="1">서비스</option>
+                    <option value="2">업데이트</option>
+                    <option value="3">이벤트</option>
+                </select>
+            </div>
+            <div class="b_8">
+                <span>제목 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="text" class="address" id="address" value="제목 들어갈 자리임">
+            </div>
+            <div class="b_9">
+                <div class="b_9_1">내용 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <div class="b_9_2">
+                    <textarea class="form-control" id="content" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="b_10">
+                <div class="b_10_0"></div>
+                <div class="b_10_3">
+                    <button type="button" id="btn_3">목록</button>
+                </div>
+
+                <div class="b_10_2">
+                    <a href="" style="text-decoration: none; color : black;">
+                        <button type="button" id="btn_2">수정</button>
+                    </a>
+                </div>
+                <div class="b_10_1">
+                    <button type="button" id="btn_1">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
