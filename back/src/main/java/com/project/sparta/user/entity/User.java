@@ -66,18 +66,18 @@ public class User {
         this.tags = tags;
     }
 
-    // @Builder()
-    // public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
-    //     this.password = password;
-    //     this.nickName = nickName;
-    //     this.email = email;
-    //     this.role = UserRoleEnum.USER;
-    //     this.age = age;
-    //     this.phoneNumber = phoneNumber;
-    //     this.userImageUrl = userImageUrl;
-    //     this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
-    //     this.status = StatusEnum.USER_REGISTERED;
-    // }
+     @Builder()
+     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
+         this.password = password;
+         this.nickName = nickName;
+         this.email = email;
+         this.role = UserRoleEnum.USER;
+         this.age = age;
+         this.phoneNumber = phoneNumber;
+         this.userImageUrl = userImageUrl;
+         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
+         this.status = StatusEnum.USER_REGISTERED;
+     }
 
     // //테스트용
     // public User(String email, String password, String nickName, String userImageUrl) {

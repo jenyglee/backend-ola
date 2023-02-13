@@ -51,7 +51,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-devtools'
     // 다중이미지 업로드
     implementation 'commons-io:commons-io:2.6'
-
+    // 웹 소켓
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {

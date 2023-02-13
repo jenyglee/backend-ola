@@ -33,6 +33,7 @@ public class FriendServiceImpl implements FriendService {
     private final UserRepository userRepository;
 
     //내 친구목록 전체조회
+    @Transactional(readOnly = true)
     @Override
     public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int offset, int limit, Long userId) {
 
