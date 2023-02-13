@@ -28,9 +28,10 @@ public enum Status {
 
 
     NOT_FOUND_COMMUNITY_BOARD(HttpStatus.NOT_FOUND,"커뮤니티 게시글을 찾을수 없습니다."),
-    NOT_FOUND_COMMUNITY_COMMENT(HttpStatus.NOT_FOUND,"변경할 커뮤니티 댓글을 찾을수 없습니다.");
+    NOT_FOUND_COMMUNITY_COMMENT(HttpStatus.NOT_FOUND,"변경할 커뮤니티 댓글을 찾을수 없습니다."),
 
-
+    // 401 -> 잘못된 인증 및 인가 정보
+    INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 비밀번호를 잘못 입력했습니다.");
 
 
     private HttpStatus httpStatus;
