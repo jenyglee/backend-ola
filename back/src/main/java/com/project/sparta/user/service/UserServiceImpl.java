@@ -84,12 +84,15 @@ public class UserServiceImpl implements UserService {
     // 내 정보 조회
     @Override
     public void getMyInfo(Long id) {
-        // 내가 쓴 커뮤니티 글
-        // boardRepository.fi
-        // 내가 쓴 코스추천 글
-        // 내가 참여한 크루
-        // 내가 만든 크루
-        // 내 해시태그
+        // 내가 쓴 커뮤니티 글 개수
+        Long aLong = boardRepository.countByUserId(id);
+        System.out.println("aLong = " + aLong);
+        // System.out.println("aLong = " + aLong);
+        // 내가 쓴 코스추천 글 개수
+
+        // 내가 참여한 크루 수
+        // 내가 만든 크루 수
+        // 내 해시태그 리스트
     }
 
 

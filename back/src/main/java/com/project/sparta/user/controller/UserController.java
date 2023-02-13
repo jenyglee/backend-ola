@@ -1,14 +1,13 @@
 package com.project.sparta.user.controller;
 
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,6 +43,12 @@ public class UserController {
     @PostMapping("/check_nicknames")
     public ResponseEntity validateNickName(@RequestBody ValidateNickNameDto nickNameDto){
         userService.validateNickName(nickNameDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/myInfo")
+    public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        userService.getMyInfo(userDetails.getUser().getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 }
