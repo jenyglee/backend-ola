@@ -1,12 +1,9 @@
 package com.project.sparta.user.controller;
 
-import com.project.sparta.admin.entity.StatusEnum;
-import com.project.sparta.user.dto.UserLoginDto;
+import com.project.sparta.user.dto.LoginRequestDto;
+import com.project.sparta.user.dto.LoginResponseDto;
 import com.project.sparta.user.dto.UserSignupDto;
-import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.service.UserService;
-import com.project.sparta.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +29,10 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
+    public ResponseEntity login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
         // 어드민인지 확인하는 로직
-        userService.login(userLoginDto, response);
-        return new ResponseEntity(HttpStatus.OK);
+        LoginResponseDto myRole = userService.login(requestDto, response);
+        return new ResponseEntity(myRole, HttpStatus.OK);
     }
 
 

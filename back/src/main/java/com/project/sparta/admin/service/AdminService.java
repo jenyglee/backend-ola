@@ -6,6 +6,7 @@ import com.project.sparta.exception.api.Status;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class AdminService {
     // ADMIN_TOKEN
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     // 어드민 회원가입
     public void signup(AdminSignupDto signupDto) {
@@ -22,7 +24,7 @@ public class AdminService {
         }
         User admin = User.adminBuilder()
                 .email(signupDto.getEmail())
-                .password(signupDto.getPassword())
+                .password(encoder.encode(signupDto.getPassword()))
                 .nickName(signupDto.getNickName())
                 .build();
         userRepository.save(admin);
