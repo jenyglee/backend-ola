@@ -48,12 +48,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityBoard> communityBoards = new ArrayList<>();
 
-    @Builder
-    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl, List<UserTag> tags) {
+    public void updateUserTags(List<UserTag> userTagList){
+        this.tags = userTagList;
+    }
+
+    @Builder(builderClassName = "user", builderMethodName = "userBuilder")
+    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
         this.password = password;
         this.nickName = nickName;
         this.email = email;
@@ -63,29 +67,14 @@ public class User {
         this.userImageUrl = userImageUrl;
         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
         this.status = StatusEnum.USER_REGISTERED;
-        this.tags = tags;
+        // this.tags = tags;
     }
-
-    // @Builder()
-    // public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
-    //     this.password = password;
-    //     this.nickName = nickName;
-    //     this.email = email;
-    //     this.role = UserRoleEnum.USER;
-    //     this.age = age;
-    //     this.phoneNumber = phoneNumber;
-    //     this.userImageUrl = userImageUrl;
-    //     this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
-    //     this.status = StatusEnum.USER_REGISTERED;
-    // }
-
-    // //테스트용
-    // public User(String email, String password, String nickName, String userImageUrl) {
-    //     this.password = password;
-    //     this.nickName = nickName;
-    //     this.email = email;
-    //     this.role = UserRoleEnum.ADMIN;
-    //     this.userImageUrl = userImageUrl;
-    //     this.status = StatusEnum.ADMIN_REGISTERED;
-    // }
+    @Builder(builderClassName = "admin", builderMethodName = "adminBuilder")
+    public User(String email, String password, String nickName) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.role = UserRoleEnum.ADMIN;
+        this.status = StatusEnum.ADMIN_REGISTERED;
+    }
 }
