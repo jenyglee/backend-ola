@@ -510,6 +510,7 @@
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+        handleDataTest();
       });
       function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
@@ -520,17 +521,26 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
       }
-      function handleCreateGuestBook() {
+      function handleDataTest() {
+        var params = "offset=0&limit=2";
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-          data: {
-            name: "sasas",
+          url: "http://localhost:8080/notice-boards?offset=0&limit=2",
+          beforeSend: function (xlr){
+            xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEyIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNTQzOTMsImlhdCI6MTY3NjI1MDc5M30.T9Wz7j9JnhRA7CxXU1npadUg_2Fp32AWlxBEL7tIp1A")
           },
+          // data: {
+          //   name: "sasas",
+          // },
           success: function (response) {
-            console.log(response)
-            alert(response.msc)
-            window.location.reload();
+            console.log("response.currentPage : ", response.currentPage)
+            console.log("response.totalCount : ", response.totalCount)
+            console.log("response.data : ", response.data)
+
+
+
+            // alert(response.msc)
+            // window.location.reload();
           },
         })
       }
