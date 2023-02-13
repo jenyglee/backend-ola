@@ -228,8 +228,8 @@
                         </a>
                     </li>
                     <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(1)">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(2)">3</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -251,32 +251,37 @@
       $('tbody').empty();
 
       // 2. 통신해서 불러오기
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/notice-boards?offset=" + offset  + "&limit=10",
-      beforeSend: function (xlr){
-        xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNTgyNTksImlhdCI6MTY3NjI1NDY1OX0.l2X1Uz--aYmwESmiUBxX2i2MzDnnRvZxrvzdhQmT5Nc")
-      },
-      // data: {
-      //   name: "sasas",
-      // },
-      success: function (response) {
-          console.log("호출완료");
-          console.log(response.data)
-          for (let i = 0; i < response.data.length; i++) {
-          const temp =
-              `
+      $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/notice-boards?offset=" + offset + "&limit=10",
+          beforeSend: function (xlr) {
+              xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+          },
+          // data: {
+          //   name: "sasas",
+          // },
+          success: function (response) {
+              console.log("호출완료");
+              console.log(response.data)
+              for (let i = 0; i < response.data.length; i++) {
+                  const temp =
+                      `
                 <tr>
                     <td>서비스</td>
-                    <td>22000</td>
+                   <td><a href="j-2_noticeBoardPost.html">22000</a></td>
                     <td>2023-02-11</td>
                 </tr>
                         `
-          $('tbody').append(temp)
-      }
-      },
-    })
+                  $('tbody').append(temp)
+              }
+          },
+      })
+
+
+
+
   }
+
 </script>
 </body>
 
