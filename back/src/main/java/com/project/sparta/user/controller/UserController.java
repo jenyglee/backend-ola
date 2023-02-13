@@ -33,6 +33,7 @@ public class UserController {
     //로그인
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response){
+        // 어드민인지 확인하는 로직
         userService.login(userLoginDto, response);
         return new ResponseEntity(HttpStatus.OK);
     }

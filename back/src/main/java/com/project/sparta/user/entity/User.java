@@ -27,13 +27,13 @@ public class User {
 
     @Column(nullable = false, unique = true)
     protected String email;
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private int age;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String userImageUrl;
 
     @Enumerated(value = EnumType.STRING)
