@@ -17,6 +17,12 @@ public enum Status {
     INVALID_HASHTAG_NAME(HttpStatus.BAD_REQUEST, "해시태그 이름을 입력해주세요."),
     INVALID_USER(HttpStatus.BAD_REQUEST, "회원정보를 찾을 수 없습니다."),
 
+
+    //403 -> Forbidden : 권한에러
+
+    NO_PERMISSIONS_RECOMMENDCOURSE(HttpStatus.FORBIDDEN,"게시글작성 등급권한이 없습니다."),
+    NO_PERMISSIONS_POST(HttpStatus.FORBIDDEN,"내가 작성한 게시글이 아닙니다."),
+
     // 404 ->  NOT_FOUND : 잘못된 리소스 접근 (ex. 존재하지 않는 객체)
     NOT_FOUND_HASHTAG(HttpStatus.NOT_FOUND, "해시태그를 찾을 수 없습니다."),
     NOT_FOUND_POST(HttpStatus.NOT_FOUND,"게시글을 찾을 수 없습니다."),

@@ -1,7 +1,7 @@
-package com.project.sparta.offerCourse.service;
+package com.project.sparta.recommendCourse.service;
 
-import com.project.sparta.offerCourse.entity.RecommandCourseImg;
-import com.project.sparta.offerCourse.repository.RecommandCoursePostImgRepository;
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
+import com.project.sparta.recommendCourse.repository.RecommendCoursePostImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,21 +12,19 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class RecommandCourseImgServiceImpl implements RecommandCourseImgService {
 
-    private final RecommandCoursePostImgRepository recommandCoursePostImgRepository;
+    private final RecommendCoursePostImgRepository recommendCoursePostImgRepository;
 
     //이미지 리스트 변환
     @Override
-    public List<RecommandCourseImg> createImgList(List<MultipartFile> multipartFiles) throws IOException {
-        List<RecommandCourseImg> imgList = new ArrayList<>();
+    public List<RecommendCourseImg> createImgList(List<MultipartFile> multipartFiles) throws IOException {
+        List<RecommendCourseImg> imgList = new ArrayList<>();
         //전달된 파일이 존재할경우
         if (!multipartFiles.isEmpty()) {
 
@@ -70,7 +68,7 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
 
                 //UUID로 랜덤값을 지정해줘도 되지만 나노타임으로 사용했다.
                 String newImgName = System.nanoTime() + originalFileExtension;
-                RecommandCourseImg courseImg = RecommandCourseImg.builder()
+                RecommendCourseImg courseImg = RecommendCourseImg.builder()
                         .imgSize(multipartFile.getSize())
                         .imgRoute(path + File.separator + newImgName) // File.separator는 슬래시 방언 통합해주는 것이다.
                         .originalImgName(multipartFile.getOriginalFilename().toString())
@@ -80,7 +78,7 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
                 imgList.add(courseImg);
 
                 //디비에 저장
-                recommandCoursePostImgRepository.save(courseImg);
+                recommendCoursePostImgRepository.save(courseImg);
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 file = new File(path + File.separator + newImgName);
@@ -101,11 +99,11 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
     @Override
     public void deleteImgList(Long id){
         //포스트 아이디값으로 들어있는 이미지들을 찾아서
-        List<Long> byRecommendCoursePostId = recommandCoursePostImgRepository.findByRecommendCoursePostId(id);
+        List<Long> byRecommendCoursePostId = recommendCoursePostImgRepository.findByRecommendCoursePostId(id);
         //이미지 리스트에서 이미지들의 아이디 리스트를 뽑아서
         //그 아이디들을 삭제한다. (한방쿼리 쓰면 좋을 것 같은데)
         for (Long imgId:byRecommendCoursePostId) {
-            recommandCoursePostImgRepository.deleteById(imgId);
+            recommendCoursePostImgRepository.deleteById(imgId);
         }
     }
 
