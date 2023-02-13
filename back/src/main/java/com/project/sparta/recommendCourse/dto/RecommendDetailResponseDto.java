@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ResponseOnePostDto{
+public class RecommendDetailResponseDto {
 
     private String title;
 
@@ -14,7 +14,7 @@ public class ResponseOnePostDto{
 
     private List<String> imgRoute;
 
-    public ResponseOnePostDto(RecommendCoursePost post, List<String> imgList) {
+    public RecommendDetailResponseDto(RecommendCoursePost post, List<String> imgList) {
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.imgRoute = imgList;

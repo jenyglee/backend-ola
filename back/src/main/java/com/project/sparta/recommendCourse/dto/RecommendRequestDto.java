@@ -3,7 +3,7 @@ package com.project.sparta.recommendCourse.dto;
 import lombok.Getter;
 
 @Getter
-public class RequestRecommendCoursePostDto {
+public class RecommendRequestDto {
 
     private String title;
 

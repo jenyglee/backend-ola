@@ -4,7 +4,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.offerCourse.repository.RecommandCoursePostRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCoursePostRepository;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
     private final BoardRepository boardRepository;
-    private final RecommandCoursePostRepository recommandCoursePostRepository;
+    private final RecommendCoursePostRepository recommandCoursePostRepository;
     private final JwtUtil jwtUtil;
 
     //회원가입
@@ -93,15 +93,15 @@ public class UserServiceImpl implements UserService {
         System.out.println("aLong = " + aLong);
 
         // 내가 쓴 코스추천 글 개수
-        Long aLong1 = recommandCoursePostRepository.countByUser(user);
-        System.out.println("aLong1 = " + aLong1);
+        // Long aLong1 = recommandCoursePostRepository.co(user.getId());
+        // System.out.println("aLong1 = " + aLong1);
 
         // 내가 참여한 크루 수
         System.out.println("user.getEnterCount() = " + user.getEnterCount());
-
+        //
         // 내가 만든 크루 수
         System.out.println("user.getMakeCount() = " + user.getMakeCount());
-
+        //
         // 내 해시태그 리스트
         System.out.println("user.getTags() = " + user.getTags());
     }
