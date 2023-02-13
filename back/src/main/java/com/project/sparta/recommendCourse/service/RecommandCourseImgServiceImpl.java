@@ -1,7 +1,7 @@
 package com.project.sparta.recommendCourse.service;
 
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
-import com.project.sparta.recommendCourse.repository.RecommandCoursePostImgRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCoursePostImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.List;
 @Transactional
 public class RecommandCourseImgServiceImpl implements RecommandCourseImgService {
 
-    private final RecommandCoursePostImgRepository recommandCoursePostImgRepository;
+    private final RecommendCoursePostImgRepository recommendCoursePostImgRepository;
 
     //이미지 리스트 변환
     @Override
@@ -78,7 +78,7 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
                 imgList.add(courseImg);
 
                 //디비에 저장
-                recommandCoursePostImgRepository.save(courseImg);
+                recommendCoursePostImgRepository.save(courseImg);
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 file = new File(path + File.separator + newImgName);
@@ -99,11 +99,11 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
     @Override
     public void deleteImgList(Long id){
         //포스트 아이디값으로 들어있는 이미지들을 찾아서
-        List<Long> byRecommendCoursePostId = recommandCoursePostImgRepository.findByRecommendCoursePostId(id);
+        List<Long> byRecommendCoursePostId = recommendCoursePostImgRepository.findByRecommendCoursePostId(id);
         //이미지 리스트에서 이미지들의 아이디 리스트를 뽑아서
         //그 아이디들을 삭제한다. (한방쿼리 쓰면 좋을 것 같은데)
         for (Long imgId:byRecommendCoursePostId) {
-            recommandCoursePostImgRepository.deleteById(imgId);
+            recommendCoursePostImgRepository.deleteById(imgId);
         }
     }
 

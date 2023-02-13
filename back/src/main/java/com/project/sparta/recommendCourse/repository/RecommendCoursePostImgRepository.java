@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RecommandCoursePostImgRepository extends JpaRepository<RecommendCourseImg,Long> {
+public interface RecommendCoursePostImgRepository extends JpaRepository<RecommendCourseImg,Long> {
 
 
-    @Query("select m.id from RecommendCourseImg m where m.recommandCoursePost.Id=:id ")
+    @Query("select m.id from RecommendCourseImg m where m.recommendCoursePost.Id=:id ")
     List<Long> findByRecommendCoursePostId(@Param("id")Long id );
 
 

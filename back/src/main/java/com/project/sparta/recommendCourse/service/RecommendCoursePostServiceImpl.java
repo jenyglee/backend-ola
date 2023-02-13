@@ -10,8 +10,7 @@ import com.project.sparta.recommendCourse.dto.ResponseOnePostDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.entity.RecommendCoursePost;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
-import com.project.sparta.recommendCourse.repository.RecommandCoursePostRepository;
-import com.project.sparta.user.entity.User;
+import com.project.sparta.recommendCourse.repository.RecommendCoursePostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class RecommendCoursePostServiceImpl implements RecommendCoursePostService {
 
-    private final RecommandCoursePostRepository recommandCoursePostRepository;
+    private final RecommendCoursePostRepository recommendCoursePostRepository;
 
     private final RecommandCourseImgService recommandCourseImgService;
 
@@ -65,7 +64,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
         List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
 
         //레파지토리에 저장하기.
-        recommandCoursePostRepository.save(post);
+        recommendCoursePostRepository.save(post);
 
         //반환값 이미지 리스트 URL
         return imgRouteList;
@@ -85,8 +84,13 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
     @Override
     public List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> imges, RequestRecommendCoursePostDto requestPostDto,Long userId) throws IOException {
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
-        RecommendCoursePost post = recommandCoursePostRepository.findByIdAndUserId(id, userId)
+        System.out.println("id = " + id );
+        System.out.println("userid = " + userId );
+        RecommendCoursePost post = recommendCoursePostRepository.findById(id)
                 .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+
+        if(!post.getUserId().equals(userId)) throw new CustomException(Status.NO_PERMISSIONS_POST);
+
 
         //수정되기전의 데이터를 삭제해줘야한다. 레파지토리에서 postId값으로 이미지들을 찾아서 리스트로 넘겨준다음에 삭제해준다.
         recommandCourseImgService.deleteImgList(id);
@@ -106,7 +110,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
         List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
 
         //포스트 다시 세이브 하면 수정 로직 완료
-        recommandCoursePostRepository.save(post);
+        recommendCoursePostRepository.save(post);
 
         return imgRouteList;
 
@@ -121,11 +125,15 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
     @Override
     public void deleteRecommendCoursePost(Long id,Long userId){
         //포스트 아이디 조회해서 포스트 아이디 있는지 검증
-        RecommendCoursePost post = recommandCoursePostRepository.findByIdAndUserId(id,userId)
+        RecommendCoursePost post = recommendCoursePostRepository.findById(id)
                 .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+
+        if(!post.getUserId().equals(userId)) throw new CustomException(Status.NO_PERMISSIONS_POST);
+
         //포스트의 스테이터스 값 변경하고 다시 저장
         post.statusModifyOfferCousePost(PostStatusEnum.UNVAILABLE);
-        recommandCoursePostRepository.save(post);
+        recommendCoursePostRepository.save(post);
+
 
     }
 
@@ -133,7 +141,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
     @Override
     public ResponseOnePostDto oneSelectRecommendCoursePost(Long id){
         //1. 아이디값으로 포스트 찾아서 포스트 만들고
-        RecommendCoursePost recommendCoursePost = recommandCoursePostRepository.findById(id).orElseThrow();
+        RecommendCoursePost recommendCoursePost = recommendCoursePostRepository.findById(id).orElseThrow();
 
         //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌
         List<String> imgRouteList = recommendCoursePost.getImages().stream()
@@ -150,7 +158,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
     public PageResponseDto<List<ResponseFindAllRecommendCouesePostDto>> allRecommendCousePost(int offset, int limit){
         //1.페이징으로 요청해서
         PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<RecommendCoursePost> all = recommandCoursePostRepository.findAll(pageRequest);
+        Page<RecommendCoursePost> all = recommendCoursePostRepository.findAll(pageRequest);
 
         //2.전체 데이터 뽑아서
         List<RecommendCoursePost> contentList = all.getContent();
