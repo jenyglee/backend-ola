@@ -109,41 +109,59 @@
     <section class="">
         <!--   작업공간   -->
         <div class="w_1"></div>
-        <div class="w_2">
-            <select class="category" aria-label="Default select example">
-                <option selected disabled>카테고리를 선택해주세요</option>
-                <option value="1">서비스</option>
-                <option value="2">업데이트</option>
-                <option value="3">이벤트</option>
-            </select>
-        </div>
-        <div class="w_3">
-            <input type="text" class="title" id="title" placeholder="제목을 입력해주세요">
-        </div>
-        <div class="w_4">
-            <textarea class="content" id="content" rows="12" placeholder="내용을 입력해주세요"></textarea>
-        </div>
+<!--        <div class="w_2">-->
+<!--            <select class="category" aria-label="Default select example">-->
+<!--                <option selected disabled>카테고리를 선택해주세요</option>-->
+<!--                <option value="1">서비스</option>-->
+<!--                <option value="2">업데이트</option>-->
+<!--                <option value="3">이벤트</option>-->
+<!--            </select>-->
+<!--        </div>-->
+<!--        <div class="w_3">-->
+<!--            <input type="text" class="title" id="title" placeholder="제목을 입력해주세요">-->
+<!--        </div>-->
+<!--        <div class="w_4">-->
+<!--            <textarea class="content" id="content" rows="12" placeholder="내용을 입력해주세요"></textarea>-->
+<!--        </div>-->
         <div class="w_5"></div>
         <div class="w_6">
             <button type="button" id="btn_1">목록</button>
         </div>
     </section>
 </main>
-<!--<script>-->
-<!--  function handleCreateGuestBook() {-->
-<!--    $.ajax({-->
-<!--      type: "GET",-->
-<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
-<!--      data: {-->
-<!--        name: "sasas",-->
-<!--      },-->
-<!--      success: function (response) {-->
-<!--        console.log(response)-->
-<!--        alert(response.msc)-->
-<!--        window.location.reload();-->
-<!--      },-->
-<!--    })-->
-<!--  }-->
+<script>
+  function getGuestBook() {
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/notice-boards/1", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+      // data: {
+      //   name: "sasas",
+      // },
+      success: function (response) {
+          const temp =
+              `
+                <div class="w_2">
+                    <select class="category" aria-label="Default select example">
+                        <option selected disabled>${response.cate}</option>
+                        <option value="1">서비스</option>
+                        <option value="2">업데이트</option>
+                        <option value="3">이벤트</option>
+                    </select>
+                </div>
+                <div class="w_3">
+                    <input type="text" class="title" id="title" value=${response.ti}>
+                </div>
+                <div class="w_4">
+                    <textarea class="content" id="content" rows="12" val></textarea>
+                </div>
+                        `
+          $('tbody').append(temp)
+        // console.log(response.cate)
+        // alert(response.msc)
+        // window.location.reload();
+      },
+    })
+  }
 </script>
 </body>
 

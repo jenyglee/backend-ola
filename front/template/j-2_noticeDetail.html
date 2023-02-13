@@ -164,6 +164,24 @@
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+
+        const id = localStorage.getItem("boardId")
+        $.ajax({
+            type: "GET",
+            url: `http://localhost:8080/notice-boards/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+            },
+            data: {
+              name: "sasas",
+            },
+            success: function (response) {
+
+                temp = `
+                <div></div>
+                `
+            },
+        })
     });
     function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
