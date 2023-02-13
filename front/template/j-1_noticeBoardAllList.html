@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
@@ -165,56 +166,56 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>서비스</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>업데이트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>이벤트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>서비스</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>업데이트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>이벤트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>서비스</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>업데이트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>이벤트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <td>이벤트</td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
+<!--                <tr>-->
+<!--                    <td>서비스</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>업데이트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>이벤트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>서비스</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>업데이트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>이벤트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>서비스</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>업데이트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>이벤트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>이벤트</td>-->
+<!--                    <td>22000</td>-->
+<!--                    <td>2023-02-11</td>-->
+<!--                </tr>-->
                 </tbody>
             </table>
         </div>
@@ -226,7 +227,7 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0)">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
@@ -240,21 +241,42 @@
         </div>
     </section>
 </main>
-<!--<script>-->
-<!--  function handleCreateGuestBook() {-->
-<!--    $.ajax({-->
-<!--      type: "GET",-->
-<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
-<!--      data: {-->
-<!--        name: "sasas",-->
-<!--      },-->
-<!--      success: function (response) {-->
-<!--        console.log(response)-->
-<!--        alert(response.msc)-->
-<!--        window.location.reload();-->
-<!--      },-->
-<!--    })-->
-<!--  }-->
+<script>
+    //이 화면 들어올때 자동으로 호출
+    $(document).ready(function () {
+        getNoticeList(0);
+    });
+  function getNoticeList(offset) {
+      // 1. 데이터 초기화를 해야됨.
+      $('tbody').empty();
+
+      // 2. 통신해서 불러오기
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/notice-boards?offset=" + offset  + "&limit=10",
+      beforeSend: function (xlr){
+        xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNTgyNTksImlhdCI6MTY3NjI1NDY1OX0.l2X1Uz--aYmwESmiUBxX2i2MzDnnRvZxrvzdhQmT5Nc")
+      },
+      // data: {
+      //   name: "sasas",
+      // },
+      success: function (response) {
+          console.log("호출완료");
+          console.log(response.data)
+          for (let i = 0; i < response.data.length; i++) {
+          const temp =
+              `
+                <tr>
+                    <td>서비스</td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                        `
+          $('tbody').append(temp)
+      }
+      },
+    })
+  }
 </script>
 </body>
 
