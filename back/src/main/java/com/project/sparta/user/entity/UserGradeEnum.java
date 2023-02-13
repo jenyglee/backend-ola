@@ -17,9 +17,9 @@ public enum UserGradeEnum {
     }
 
     public static class Authority {
-        public static final String CHILDREN = "ROLE_CHILDREN";
-        public static final String MANIA = "ROLE_MANIA";
-        public static final String GOD = "ROLE_GOD";
+        public static final String CHILDREN = "GRADE_CHILDREN";
+        public static final String MANIA = "GRADE_MANIA";
+        public static final String GOD = "GRADE_GOD";
     }
 
 }

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../css/normalize.css"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/reset.css"/>
+  <link rel="stylesheet" href="../css/menu.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <title>관리자 커뮤니티 관리</title>
+<!--  <style>-->
+<!--    .container {-->
+<!--      width: 1900px;-->
+<!--      height: 1000px;-->
+<!--      padding: 0;-->
+<!--      background-color: WHITE;-->
+<!--      align-items: center;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .wrap {-->
+<!--      width: 1900px;-->
+<!--      height: 1000px;-->
+<!--      float: left;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .w_1 {-->
+<!--      width: 300px;-->
+<!--      height: 1000px;-->
+<!--      background-color: #F46B3F;-->
+<!--      display: inline-block;-->
+<!--      float: left;-->
+<!--    }-->
+
+<!--    .w_2 {-->
+<!--      width: 1500px;-->
+<!--      height: 1000px;-->
+<!--      background-color: white;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .w_2 span {-->
+<!--      margin-left: 100px;-->
+<!--    }-->
+
+<!--    .b_1 {-->
+<!--      height: 70px;-->
+<!--    }-->
+
+<!--    .b_2 {-->
+<!--      text-align: center;-->
+<!--      font-size: 30px;-->
+<!--      color: WHITE;-->
+<!--      width: 300px;-->
+<!--      height: 150px;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .b_2 .b_2_1 {-->
+<!--      text-align: center;-->
+<!--      font-size: 30px;-->
+<!--      color: WHITE;-->
+<!--      width: 300px;-->
+<!--      height: 50px;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .b_2 .b_2_2 {-->
+<!--      height: 40px;-->
+<!--      width: 300px;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .b_2 .b_2_2 button {-->
+<!--      height: 40px;-->
+<!--      width: 100px;-->
+<!--      border-radius: 50px;-->
+<!--      font-size: 15px;-->
+<!--      border: 1px solid white;-->
+<!--      background-color: #F46B3F;-->
+<!--      color: white;-->
+<!--      margin-right: 100px;-->
+<!--    }-->
+
+<!--    .b_4 {-->
+<!--      height: 70px;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .b_5 {-->
+<!--      width: 200px;-->
+<!--      margin-left: 55px;-->
+<!--      display: inline-block;-->
+<!--    }-->
+
+<!--    .b_5 a {-->
+<!--      font-size: 15px;-->
+<!--      color: WHITE;-->
+<!--      text-decoration: none;-->
+<!--      font-weight: normal;-->
+<!--    }-->
+
+<!--    .b_5 a:hover {-->
+<!--      font-size: 15px;-->
+<!--      color: WHITE;-->
+<!--      text-decoration: underline;-->
+<!--    }-->
+
+<!--    .b_6 {-->
+<!--      width: 1500px;-->
+<!--      height: 100px;-->
+<!--    }-->
+
+<!--    .b_7 {-->
+<!--      width: 1500px;-->
+<!--      height: 500px;-->
+<!--      margin-left: 100px;-->
+<!--    }-->
+
+<!--    .b_7 table {-->
+<!--      text-align: center;-->
+<!--    }-->
+
+<!--    .b_7 table .td_2{-->
+<!--      text-align: left;-->
+<!--    }-->
+
+<!--    .b_7 table .td_3{-->
+<!--      text-align: left;-->
+<!--    }-->
+
+<!--    .b_8 {-->
+<!--      width: 40px;-->
+<!--      width: 1600px;-->
+<!--      border: 1px solid black;-->
+<!--    }-->
+
+<!--  </style>-->
+</head>
+<body>
+<main>
+  <div style="display: flex">
+    <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
+      <div class="b_2" style="">
+        <div class="b_2_1" style="font-size: 26px; color: white">
+          <span>이재원</span>
+          <span>매니저</span>
+        </div>
+
+        <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
+                type="button" class="logout" onclick="">로그아웃</button>
+
+      </div>
+
+      <div class="b_5" style="margin-top: 100px">
+        <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
+        <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html">등산 추천 코스 관리</a><br><br>
+        <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html">커뮤니티 관리</a><br><br>
+        <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html">공지사항 관리</a>
+      </div>
+    </div>
+    <div class="w_2" style=" width: 100%; padding: 100px;">
+      <div>
+        <div class="b_7">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col" style="width: 200px;">글번호</th>
+              <th scope="col" style="width: 900px; text-align: left">제목</th>
+              <th scope="col" style="width: 400px; text-align: left">작성날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">7</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">8</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">9</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            <tr>
+              <th scope="row">10</th>
+              <td class="td_2"><a href="m-2_manageCommunityDetail.html">글 제목이 들어갈 자리임</a></td>
+              <td class="td_3">2023-02-13</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="b_8" style="margin-top: 40px">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</main>
+</body>
+</html>
