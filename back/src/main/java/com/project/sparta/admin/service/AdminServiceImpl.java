@@ -44,7 +44,6 @@ public class AdminServiceImpl implements AdminService{
     private final RecommandCoursePostRepository recommandCoursePostRepository;
     private final RecommandCourseImgService recommandCourseImgService;
 
-
     // 어드민 회원가입
 // ADMIN_TOKEN
     private final PasswordEncoder encoder;
@@ -56,7 +55,7 @@ public class AdminServiceImpl implements AdminService{
         }
         User admin = User.adminBuilder()
             .email(adminRequestSignupDto.getEmail())
-            .password(adminRequestSignupDto.getPassword())
+            .password(encoder.encode(adminRequestSignupDto.getPassword()))
             .nickName(adminRequestSignupDto.getNickName())
             .build();
         userRepository.save(admin);

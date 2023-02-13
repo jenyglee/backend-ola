@@ -34,7 +34,7 @@ public class CommunityBoard {
   private List<CommunityComment> communityComment = new ArrayList<>();
 
   @ManyToOne
-  @JoinColumn(name = "USER_ID", nullable = false)
+  @JoinColumn(name = "user_id")
   private User user;
 
   public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
