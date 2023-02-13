@@ -27,6 +27,7 @@ public class AdminController {
         adminServiceImpl.signup(signupDto);
         return new ResponseEntity(HttpStatus.OK);
     }
+
     @PatchMapping("/admin_community_boards/{community_board_id}")
     public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
         ,@AuthenticationPrincipal UserDetailsImpl userDetail) {

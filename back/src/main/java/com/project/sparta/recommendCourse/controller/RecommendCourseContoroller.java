@@ -39,7 +39,7 @@ public class RecommendCourseContoroller {
      */
 
     //Todo API명세서 나오면 API URL 수정
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('MOUNTAIN_GOD')")
     @PostMapping("admin/api/OfferCourse")
     public ResponseRecommendCourseImgDto creatOfferCourse(@RequestPart(value = "image", required = false) List<MultipartFile> imges,
                                                           @RequestPart(value = "requestDto") RequestRecommendCoursePostDto requestDto,
@@ -61,7 +61,7 @@ public class RecommendCourseContoroller {
      * @return
      * @throws IOException
      */
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('MOUNTAIN_GOD')")
     @PutMapping("admin/api/OfferCourse/{id}")
     public ResponseRecommendCourseImgDto modifyOfferCourse(@PathVariable Long id, @RequestPart(value = "image", required = false) List<MultipartFile> imges,
                                                            @RequestPart(value = "requestDto") RequestRecommendCoursePostDto requestDto,
@@ -79,7 +79,7 @@ public class RecommendCourseContoroller {
      * @param userDetail : 삭제하는 유저정보
      */
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('MOUNTAIN_GOD')")
     @DeleteMapping("admin/api/OfferCourse/{id}")
     public void deleteOfferCourse(@PathVariable Long id,
                                   @AuthenticationPrincipal UserDetailsImpl userDetail) {
