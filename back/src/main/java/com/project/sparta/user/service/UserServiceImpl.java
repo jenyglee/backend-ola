@@ -93,9 +93,15 @@ public class UserServiceImpl implements UserService {
         // 내가 쓴 코스추천 글 개수
         Long aLong1 = recommandCoursePostRepository.countByUser(user);
         System.out.println("aLong1 = " + aLong1);
+
         // 내가 참여한 크루 수
+        System.out.println("user.getEnterCount() = " + user.getEnterCount());
+
         // 내가 만든 크루 수
+        System.out.println("user.getMakeCount() = " + user.getMakeCount());
+
         // 내 해시태그 리스트
+        System.out.println("user.getTags() = " + user.getTags());
     }
 
 
