@@ -2,10 +2,8 @@ package com.project.sparta.admin.dto;
 
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
-public class AdminSignupDto {
+public class AdminRequestSignupDto {
     private String email;
     private String password;
     private String nickName;
