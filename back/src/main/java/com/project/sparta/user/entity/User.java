@@ -52,6 +52,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityBoard> communityBoards = new ArrayList<>();
 
+    @Column
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<CommunityBoard> recommendBoards = new ArrayList<>();
+
     public void updateUserTags(List<UserTag> userTagList){
         this.tags = userTagList;
     }

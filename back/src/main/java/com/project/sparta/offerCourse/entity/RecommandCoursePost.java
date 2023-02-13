@@ -1,6 +1,7 @@
 package com.project.sparta.offerCourse.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
+import com.project.sparta.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +33,10 @@ public class RecommandCoursePost extends Timestamped {
 
     @OneToMany(mappedBy = "recommandCoursePost",cascade = CascadeType.PERSIST)
     private List<RecommandCourseImg> images = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public RecommandCoursePost(String title, String contents , PostStatusEnum postStatus) {

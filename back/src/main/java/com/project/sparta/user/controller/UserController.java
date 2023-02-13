@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/myInfo")
     public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        userService.getMyInfo(userDetails.getUser().getId());
+        userService.getMyInfo(userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
 }
