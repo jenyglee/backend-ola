@@ -1,13 +1,11 @@
 package com.project.sparta.user.service;
 
+import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.security.jwt.JwtUtil;
-import com.project.sparta.user.dto.LoginRequestDto;
-import com.project.sparta.user.dto.LoginResponseDto;
-import com.project.sparta.user.dto.UserResponseDto;
-import com.project.sparta.user.dto.UserSignupDto;
+import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.project.sparta.exception.api.Status.*;
 
@@ -29,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
+    private final BoardRepository boardRepository;
     private final JwtUtil jwtUtil;
 
     //회원가입
@@ -62,6 +62,36 @@ public class UserServiceImpl implements UserService {
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getRole()));
         return new LoginResponseDto(user.getRole());
     }
+
+    // 이메일 중복확인
+    @Override
+    public void validateEmail(ValidateEmailDto emailDto) {
+        Optional<User> findUser = userRepository.findByEmail(emailDto.getEmail());
+        if(findUser.isPresent()){
+            throw new CustomException(CONFLICT_EMAIL);
+        }
+    }
+
+    // 닉네임 중복확인
+    @Override
+    public void validateNickName(ValidateNickNameDto nickNameDto) {
+        Optional<User> findUser = userRepository.findByNickName(nickNameDto.getNickName());
+        if(findUser.isPresent()){
+            throw new CustomException(CONFLICT_NICKNAME);
+        }
+    }
+
+    // 내 정보 조회
+    @Override
+    public void getMyInfo(Long id) {
+        // 내가 쓴 커뮤니티 글
+        // boardRepository.fi
+        // 내가 쓴 코스추천 글
+        // 내가 참여한 크루
+        // 내가 만든 크루
+        // 내 해시태그
+    }
+
 
 
 }

@@ -1,8 +1,6 @@
 package com.project.sparta.user.controller;
 
-import com.project.sparta.user.dto.LoginRequestDto;
-import com.project.sparta.user.dto.LoginResponseDto;
-import com.project.sparta.user.dto.UserSignupDto;
+import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,5 +33,17 @@ public class UserController {
         return new ResponseEntity(myRole, HttpStatus.OK);
     }
 
+    // 이메일 중복확인
+    @PostMapping("/check_emails")
+    public ResponseEntity validateEmail(@RequestBody ValidateEmailDto emailDto){
+        userService.validateEmail(emailDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
+    // 닉네임 중복확인
+    @PostMapping("/check_nicknames")
+    public ResponseEntity validateNickName(@RequestBody ValidateNickNameDto nickNameDto){
+        userService.validateNickName(nickNameDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
