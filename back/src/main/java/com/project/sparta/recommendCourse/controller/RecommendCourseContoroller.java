@@ -39,7 +39,7 @@ public class RecommendCourseContoroller {
      */
 
     //Todo API명세서 나오면 API URL 수정
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("admin/api/OfferCourse")
     public ResponseRecommendCourseImgDto creatOfferCourse(@RequestPart(value = "image", required = false) List<MultipartFile> imges,
                                                           @RequestPart(value = "requestDto") RequestRecommendCoursePostDto requestDto,
