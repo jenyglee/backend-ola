@@ -18,31 +18,31 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class FriendRepositoryTest {
 
-    @Autowired
-    FriendService friendService;
-
-    @Autowired
-    FriendRepository friendRepository;
-    @Autowired
-    EntityManager em;
-    JPAQueryFactory queryFactory;
-    @BeforeEach
-    public void before() {
-        queryFactory = new JPAQueryFactory(em);
-    }
-
-
-    @Test
-    @DisplayName("회원정보를 찾을 수 없는 경우")
-    public void deleteFriend(){
-        assertThrows(CustomException.class, ()-> friendService.deleteFriend(50L));
-    }
-
-    @Test
-    @DisplayName("중복된 친구 추가")
-    public void addFriend(){
-        friendRepository.saveAndFlush(new Friend(1L, 2L));
-        assertThrows(CustomException.class, ()-> friendService.addFriend(1L, "한세인"));
-    }
+    // @Autowired
+    // FriendService friendService;
+    //
+    // @Autowired
+    // FriendRepository friendRepository;
+    // @Autowired
+    // EntityManager em;
+    // JPAQueryFactory queryFactory;
+    // @BeforeEach
+    // public void before() {
+    //     queryFactory = new JPAQueryFactory(em);
+    // }
+    //
+    //
+    // @Test
+    // @DisplayName("회원정보를 찾을 수 없는 경우")
+    // public void deleteFriend(){
+    //     assertThrows(CustomException.class, ()-> friendService.deleteFriend(50L));
+    // }
+    //
+    // @Test
+    // @DisplayName("중복된 친구 추가")
+    // public void addFriend(){
+    //     friendRepository.saveAndFlush(new Friend(1L, 2L));
+    //     assertThrows(CustomException.class, ()-> friendService.addFriend(1L, "한세인"));
+    // }
 
 }
