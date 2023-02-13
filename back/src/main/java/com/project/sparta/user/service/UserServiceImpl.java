@@ -44,15 +44,17 @@ public class UserServiceImpl implements UserService {
         // 2. 선택한 hashtag를 각각 Usertag로 테이블에 저장한다.
         List<Long> longList = signupDto.getTagList();
         List<UserTag> userTagList = new ArrayList<>();
+
         for (Long along : longList) {
             Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
             UserTag userTag = new UserTag(saveUser, hashtag);
             userTagRepository.save(userTag);
             userTagList.add(userTag);
         }
-
+        
         // 3. User에 List<UserTag>를 넣어준다.
         saveUser.updateUserTags(userTagList);
+
     }
     //로그인
     @Override
@@ -103,6 +105,8 @@ public class UserServiceImpl implements UserService {
         // 내 해시태그 리스트
         System.out.println("user.getTags() = " + user.getTags());
     }
+
+
 
 
 
