@@ -1,4 +1,4 @@
-package com.project.sparta.offerCourse.entity;
+package com.project.sparta.recommendCourse.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.Random;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecommandCourseImg {
+public class RecommendCourseImg {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class RecommandCourseImg {
     //파일 저장 게시글
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recommandCourse_post_id")
-    private RecommandCoursePost recommandCoursePost;
+    private RecommendCoursePost recommendCoursePost;
 
     //파일 원본명
     @Column(nullable = false)
@@ -37,16 +37,16 @@ public class RecommandCourseImg {
 
 
     @Builder
-    public RecommandCourseImg(RecommandCoursePost recommandCoursePost, String originalImgName, String imgRoute, Long imgSize) {
-        this.recommandCoursePost = recommandCoursePost;
+    public RecommendCourseImg(RecommendCoursePost recommendCoursePost, String originalImgName, String imgRoute, Long imgSize) {
+        this.recommendCoursePost = recommendCoursePost;
         this.originalImgName = originalImgName;
         this.imgRoute = imgRoute;
         this.imgSize = imgSize;
     }
 
-    public void addPost(RecommandCoursePost recommandCoursePost){
+    public void addPost(RecommendCoursePost recommendCoursePost){
         //사진이 게시글에 존재하지 않는다면
-        this.recommandCoursePost = recommandCoursePost;
+        this.recommendCoursePost = recommendCoursePost;
 
     }
 

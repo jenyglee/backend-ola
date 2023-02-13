@@ -1,7 +1,7 @@
-package com.project.sparta.offerCourse.service;
+package com.project.sparta.recommendCourse.service;
 
-import com.project.sparta.offerCourse.entity.RecommandCourseImg;
-import com.project.sparta.offerCourse.repository.RecommandCoursePostImgRepository;
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
+import com.project.sparta.recommendCourse.repository.RecommandCoursePostImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +23,8 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
 
     //이미지 리스트 변환
     @Override
-    public List<RecommandCourseImg> createImgList(List<MultipartFile> multipartFiles) throws IOException {
-        List<RecommandCourseImg> imgList = new ArrayList<>();
+    public List<RecommendCourseImg> createImgList(List<MultipartFile> multipartFiles) throws IOException {
+        List<RecommendCourseImg> imgList = new ArrayList<>();
         //전달된 파일이 존재할경우
         if (!multipartFiles.isEmpty()) {
 
@@ -70,7 +68,7 @@ public class RecommandCourseImgServiceImpl implements RecommandCourseImgService 
 
                 //UUID로 랜덤값을 지정해줘도 되지만 나노타임으로 사용했다.
                 String newImgName = System.nanoTime() + originalFileExtension;
-                RecommandCourseImg courseImg = RecommandCourseImg.builder()
+                RecommendCourseImg courseImg = RecommendCourseImg.builder()
                         .imgSize(multipartFile.getSize())
                         .imgRoute(path + File.separator + newImgName) // File.separator는 슬래시 방언 통합해주는 것이다.
                         .originalImgName(multipartFile.getOriginalFilename().toString())

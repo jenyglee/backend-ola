@@ -1,4 +1,4 @@
-package com.project.sparta.offerCourse.entity;
+package com.project.sparta.recommendCourse.entity;
 
 public enum PostStatusEnum {
     VAILABLE,
