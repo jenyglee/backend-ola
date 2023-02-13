@@ -2,208 +2,255 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <link rel="stylesheet" href="../css/normalize.css"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/reset.css"/>
+  <link rel="stylesheet" href="../css/menu.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <title>관리자 추천코스 관리</title>
   <style>
-    .container{
+    .container {
       width: 1900px;
       height: 1000px;
       padding: 0;
       background-color: WHITE;
-      /*align-items: center;*/
-
+      align-items: center;
+      display: inline-block;
     }
-    .container .boxleft{
+
+    .wrap {
+      width: 1900px;
+      height: 1000px;
+      float: left;
+      display: inline-block;
+    }
+
+    .w_1 {
       width: 300px;
       height: 1000px;
       background-color: #F46B3F;
-    }
-    .container .boxright{
-      width: 1600px;
-      height: 1000px;
-      /*border: 1px solid black;*/
-      position: absolute;
-      top: 8px;
-      left: 308px;
+      display: inline-block;
+      float: left;
     }
 
-    .managetext{
-      text-align : center;
+    .w_2 {
+      width: 1500px;
+      height: 1000px;
+      background-color: white;
+      display: inline-block;
+    }
+
+    .w_2 span {
+      margin-left: 100px;
+    }
+
+    .b_1 {
+      height: 70px;
+    }
+
+    .b_2 {
+      text-align: center;
       font-size: 30px;
       color: WHITE;
+      width: 300px;
+      height: 150px;
+      display: inline-block;
     }
-    .w_1{
-      height: 70px;
-      margin-top: 10px;
-    }
-    .w_1 button{
+
+    .b_2 .b_2_1 {
+      text-align: center;
+      font-size: 30px;
+      color: WHITE;
+      width: 300px;
       height: 50px;
+      display: inline-block;
+    }
+
+    .b_2 .b_2_2 {
+      height: 40px;
+      width: 300px;
+      display: inline-block;
+    }
+
+    .b_2 .b_2_2 button {
+      height: 40px;
       width: 100px;
       border-radius: 50px;
-      margin-left: 55px;
       font-size: 15px;
       border: 1px solid white;
       background-color: #F46B3F;
-      color : white;
+      color: white;
+      margin-right: 100px;
     }
 
-    .w_2{
-      height: 100px;
+    .b_4 {
+      height: 70px;
+      display: inline-block;
     }
 
-    .box3{
-      /*text-align : center;*/
-      height: 80px;
-      font-size: 25px;
+    .b_5 {
+      width: 200px;
+      margin-left: 55px;
+      display: inline-block;
+    }
+
+    .b_5 a {
+      font-size: 15px;
       color: WHITE;
       text-decoration: none;
-      margin-left: 50px;
+      font-weight: normal;
     }
-    .box3 a{
-      /*text-align : center;*/
-      font-size: 25px;
-      color: WHITE;
-      text-decoration: none;
-    }
-    .box3 a:hover{
-      /*text-align : center;*/
-      font-size: 25px;
+
+    .b_5 a:hover {
+      font-size: 15px;
       color: WHITE;
       text-decoration: underline;
     }
-    .btn-tag {
-      background-color: #ffffff;
-      color: #000;
-      border-radius: 50px;
-      margin: 5px 2px;
+
+    .b_6 {
+      width: 1500px;
+      height: 100px;
     }
-    .w_4 {
+
+    .b_7 {
+      width: 1500px;
+      height: 500px;
+      margin-left: 100px;
+    }
+
+    .b_7 table {
+      text-align: center;
+    }
+
+    .b_7 table .td_2{
+      text-align: left;
+    }
+
+    .b_7 table .td_3{
+      text-align: left;
+    }
+
+    .b_8 {
+      width: 40px;
       width: 1600px;
-      height: 300px;
-      text-align: center;
-      margin-left : 400px;
-      margin-top: 100px;
+      border: 1px solid black;
     }
-
-
-    ul {
-      list-style:none;
-    }
-
-    li {
-      float: left;
-      margin-right: 10px;
-    }
-
-    .w_5 {
-      width: 200px;
-      height: 40px;
-      /*background-color: YELLOW;*/
-      text-align: center;
-      margin-left: 730px;
-      margin-top: 350px;
-    }
-    table {
-      border-collapse: separate;
-      border-spacing: 150px 30px;
-      text-underline-color: #555555;
-    }
-
 
   </style>
 </head>
 <body>
+
 <main class="container">
-  <div class="boxleft">
-    <br><br><br>
-    <div class ="managetext">이재원 매니저</div>
+  <div class="wrap">
     <div class="w_1">
-      <button type="button" class="logout" onclick="">로그아웃</button>
+      <div class="b_1"></div>
+      <div class="b_2">
+        <div class="b_2_1">
+          <span>이재원</span>
+          <span>매니저</span>
+        </div>
+        <div class="b_2_2">
+          <button type="button" class="logout" onclick="">로그아웃</button>
+        </div>
+      </div>
+      <div class="b_4"></div>
+      <div class="b_5">
+        <a href="#">회원관리</a><br><br>
+        <a href="#">등산 추천 코스 관리</a><br><br>
+        <a href="#">커뮤니티 관리</a><br><br>
+        <a href="#">공지사항 관리</a>
+      </div>
     </div>
-    <div class="w_2"></div>
-    <div class ="box3">
-      <a href="#">회원관리</a><br><br>
-      <a href="#">등산 추천 코스 관리</a><br><br>
-      <a href="#">커뮤니티 관리</a><br><br>
-      <a href="#">공지사항 관리</a>
+    <div class="w_2">
+      <div class="b_6"></div>
+      <div class="b_7">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col" style="width: 200px;">글번호</th>
+            <th scope="col" style="width: 900px; text-align: left">제목</th>
+            <th scope="col" style="width: 400px; text-align: left">작성날짜</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">7</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">8</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">9</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          <tr>
+            <th scope="row">10</th>
+            <td class="td_2">글 제목이 들어갈 자리임</td>
+            <td class="td_3">2023-02-13</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="b_8">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
-
-  <div class="boxright">
-    <div class="w_4">
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">글 번호</th>
-          <th scope="col">제목</th>
-          <th scope="col">날짜</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">7</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">8</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">9</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        <tr>
-          <th scope="row">10</th>
-          <td>정기 업데이트</td>
-          <td>2023-02-07</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="w_5">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-          </li>
-        </ul>
-      </nav>
-    </div>
   </div>
 </main>
 </body>

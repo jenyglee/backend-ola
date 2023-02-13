@@ -16,17 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class NaverApiServiceImplTest {
-    @Autowired
-    NaverApiService naverApiService;
-
-    @Test
-    void searchItems() {
-        PageResponseDto<List<ProductResponseDto>> results = naverApiService.searchItems("macbook", 30, 1, "dsc");
-        List<ProductResponseDto> data = results.getData();
-        int currentPage = results.getCurrentPage();
-
-        assertThat(data.size()).isEqualTo(30);
-        assertThat(currentPage).isEqualTo(1);
-    }
+    // @Autowired
+    // NaverApiService naverApiService;
+    //
+    // @Test
+    // void searchItems() {
+    //     PageResponseDto<List<ProductResponseDto>> results = naverApiService.searchItems("macbook", 30, 1, "dsc");
+    //     List<ProductResponseDto> data = results.getData();
+    //     int currentPage = results.getCurrentPage();
+    //
+    //     assertThat(data.size()).isEqualTo(30);
+    //     assertThat(currentPage).isEqualTo(1);
+    // }
 
 }

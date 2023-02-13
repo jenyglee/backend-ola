@@ -1,7 +1,8 @@
 package com.project.sparta.admin.service;
 
-import org.springframework.stereotype.Service;
+import com.project.sparta.admin.dto.AdminSignupDto;
 
-@Service
-public class AdminService {
+public interface AdminService {
+  void signup(AdminSignupDto signupDto);
+
 }
