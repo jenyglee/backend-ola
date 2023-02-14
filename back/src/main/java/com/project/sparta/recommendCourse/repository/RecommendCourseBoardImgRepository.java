@@ -10,8 +10,8 @@ import java.util.List;
 public interface RecommendCourseBoardImgRepository extends JpaRepository<RecommendCourseImg,Long> {
 
 
-    @Query("select m.id from RecommendCourseImg m where m.recommendCoursePost.Id=:id ")
-    List<Long> findByRecommendCoursePostId(@Param("id")Long id );
+//    @Query("select m.id from RecommendCourseImg m where m.recommendCoursePost.Id=:id ")
+//    List<Long> findByRecommendCoursePostId(@Param("id")Long id );
 
 
 

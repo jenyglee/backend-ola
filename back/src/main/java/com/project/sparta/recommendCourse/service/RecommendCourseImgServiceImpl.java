@@ -96,15 +96,15 @@ public class RecommendCourseImgServiceImpl implements RecommendCourseImgService 
 
     //이미지 파일 삭제
 
-    @Override
-    public void deleteImgList(Long id){
-        //포스트 아이디값으로 들어있는 이미지들을 찾아서
-        List<Long> byRecommendCoursePostId = recommendCourseBoardImgRepository.findByRecommendCoursePostId(id);
-        //이미지 리스트에서 이미지들의 아이디 리스트를 뽑아서
-        //그 아이디들을 삭제한다. (한방쿼리 쓰면 좋을 것 같은데)
-        for (Long imgId:byRecommendCoursePostId) {
-            recommendCourseBoardImgRepository.deleteById(imgId);
-        }
-    }
+//    @Override
+//    public void deleteImgList(Long id){
+//        //포스트 아이디값으로 들어있는 이미지들을 찾아서
+//        List<Long> byRecommendCoursePostId = recommendCourseBoardImgRepository.findByRecommendCoursePostId(id);
+//        //이미지 리스트에서 이미지들의 아이디 리스트를 뽑아서
+//        //그 아이디들을 삭제한다. (한방쿼리 쓰면 좋을 것 같은데)
+//        for (Long imgId:byRecommendCoursePostId) {
+//            recommendCourseBoardImgRepository.deleteById(imgId);
+//        }
+//    }
 
 }

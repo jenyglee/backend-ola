@@ -92,9 +92,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         if(!post.getUserId().equals(userId)) throw new CustomException(Status.NO_PERMISSIONS_POST);
 
-
-        //수정되기전의 데이터를 삭제해줘야한다. 레파지토리에서 postId값으로 이미지들을 찾아서 리스트로 넘겨준다음에 삭제해준다.
-        recommendCourseImgService.deleteImgList(id);
+//
+//        //수정되기전의 데이터를 삭제해줘야한다. 레파지토리에서 postId값으로 이미지들을 찾아서 리스트로 넘겨준다음에 삭제해준다.
+//        recommendCourseImgService.deleteImgList(id);
 
         // 변경 메서드 하나 만든다음에 데이터값을 변경해준다.
         post.modifyRecommendCourseBoard(requestPostDto.getTitle(), requestPostDto.getContents());
