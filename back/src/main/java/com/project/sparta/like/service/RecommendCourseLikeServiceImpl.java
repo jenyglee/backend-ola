@@ -1,12 +1,7 @@
 package com.project.sparta.like.service;
-
-import com.project.sparta.communityComment.entity.CommunityComment;
-import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.like.entity.CommentLike;
 import com.project.sparta.like.entity.CourseLike;
-import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.like.repository.LikeRecommendRepository;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class LikeController {
 
     private final BoardLikeService boardLikeService;
-    private final CommentLikeService commentLikeServiceImpl;
-    private final RecommendCourseLikeService recommendCourseLikeServiceImpl;
+    private final CommentLikeService commentLikeService;
+//    private final RecommendCourseLikeService recommendCourseLikeService;
 
     //보드 라이크
     @PostMapping("/board_like")
@@ -35,24 +35,24 @@ public class LikeController {
     @ResponseStatus(HttpStatus.OK)
     public void likeComment(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        commentLikeServiceImpl.likeComment(id,user);
+        commentLikeService.likeComment(id,user);
     }
     @DeleteMapping("/comment_like")
     public void unLikeComment(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        commentLikeServiceImpl.unLikeComment(id,user);
+        commentLikeService.unLikeComment(id,user);
     }
 
     //코스추천 라이크
-    @PostMapping("/recommend_like")
-    @ResponseStatus(HttpStatus.OK)
-    public void likeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        User user = userDetails.getUser();
-        recommendCourseLikeServiceImpl.likeRecommendCourse(id,user);
-    }
-    @DeleteMapping("/recommend_like")
-    public void unlikeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        User user = userDetails.getUser();
-        recommendCourseLikeServiceImpl.unLikeRecommendCourse(id,user);
-    }
+//    @PostMapping("/recommend_like")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void likeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+//        User user = userDetails.getUser();
+//        recommendCourseLikeService.likeRecommendCourse(id,user);
+//    }
+//    @DeleteMapping("/recommend_like")
+//    public void unlikeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+//        User user = userDetails.getUser();
+//        recommendCourseLikeService.unLikeRecommendCourse(id,user);
+//    }
 }

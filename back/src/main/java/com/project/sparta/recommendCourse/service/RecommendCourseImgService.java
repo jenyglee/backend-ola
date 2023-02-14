@@ -14,5 +14,4 @@ public interface RecommendCourseImgService {
     void deleteImgList(Long id);
 
 //    void saveimage(RecommendCourseImg img);
-//
 }

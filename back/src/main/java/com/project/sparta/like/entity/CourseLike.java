@@ -26,7 +26,7 @@ public class CourseLike {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recommandCourse_post_id")
+    @JoinColumn(name = "RecommendCourseBoard_id")
     private RecommendCourseBoard CourseBoard;
 
 
