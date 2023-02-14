@@ -35,6 +35,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
+
+    // MySql 추가
+    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+//    implementation 'mysql:mysql-connector-java'
+    implementation 'mysql:mysql-connector-java:8.0.32'
+
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     // JSON을 키값으로 가져오기 위한 세팅
