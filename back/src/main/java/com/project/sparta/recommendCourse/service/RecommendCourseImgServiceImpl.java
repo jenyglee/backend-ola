@@ -1,5 +1,6 @@
 package com.project.sparta.recommendCourse.service;
 
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import lombok.RequiredArgsConstructor;
@@ -105,6 +106,11 @@ public class RecommendCourseImgServiceImpl implements RecommendCourseImgService 
         for (Long imgId:byRecommendCoursePostId) {
             recommendCourseBoardImgRepository.deleteById(imgId);
         }
+    }
+
+    @Override
+    public void saveimage(RecommendCourseImg recommendCourseImg){
+        recommendCourseBoardImgRepository.save(recommendCourseImg);
     }
 
 }

@@ -57,13 +57,18 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
 
         //이미지에 포스트 담아주고
-        for (RecommendCourseImg image:requestPostDto.getImgList()) {
-            image.addPost(board);
-        }
+//        for (RecommendCourseImg image:requestPostDto.getImgList()) {
+//            image.addPost(recommendCourseBoard);
+//            recommendCourseImgService.saveimage(image);
+//        }
+
 //        // 스트림으로 이미지 각각의 경로를 뽑아내서
 //        List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
         //레파지토리에 저장하기.
+        
         recommendCourseBoardRepository.save(board);
+
+
     }
 
 

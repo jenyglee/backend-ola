@@ -13,5 +13,5 @@ public interface RecommendCourseImgService {
     void createImgList(List<MultipartFile> MultipartFile) throws IOException;
     void deleteImgList(Long id);
 
-//    void saveimage(RecommendCourseImg img);
+    void saveimage(RecommendCourseImg img);
 }

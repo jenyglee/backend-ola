@@ -1,6 +1,7 @@
 package com.project.sparta.recommendCourse.controller;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.recommendCourse.dto.ImgUrlDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
@@ -30,9 +31,11 @@ public class RecommendCourseController {
     //이미지 업로드 api
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/recommend_image") //todo url 어떤것으로 할지 의논 후 수정
-    public String ImageUpload(@RequestPart(value = "image", required = false) List<MultipartFile> images)throws IOException{
+    public ImgUrlDto ImageUpload(@RequestPart(value = "image", required = false) List<MultipartFile> images)throws IOException{
         recommendCourseImgService.createImgList(images);
-        return "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg";
+        String aa =  "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg";
+        ImgUrlDto dto = new ImgUrlDto(aa);
+        return dto;
         // url 아무거나 일단 리턴하도록 수정하기
     }
 
@@ -60,6 +63,8 @@ public class RecommendCourseController {
         // 클라이언트에서는 이미지업로드API에서 반환받은 이미지의 URL을 코스추천 작성API에 포함해서 요청합니다.
         // 백은 코스추천 API에서 요청받은 타이틀, 컨텐츠, 이미지URL을 코스추천 DB에 저장합니다.
         // 반환할건 없습니다.
+
+
     }
 
     /**
