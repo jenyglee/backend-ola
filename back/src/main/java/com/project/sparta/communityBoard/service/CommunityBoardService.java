@@ -12,7 +12,7 @@ import java.util.List;
 public interface CommunityBoardService {
    CommunityBoardResponseDto createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
    CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
-   void deleteCommunityBoard(Long community_board_id);
+   void deleteCommunityBoard(Long community_board_id,User user);
    CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
 
    PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);

@@ -68,8 +68,8 @@ public class CommunityBoardController {
 
   //선택한 게시글 삭제
   @DeleteMapping("/community_boards/{community_board_id}")
-  public ResponseEntity deleteCommunityBoard(@PathVariable Long community_board_id) {
-    communityBoardService.deleteCommunityBoard(community_board_id);
+  public ResponseEntity deleteCommunityBoard(@PathVariable Long community_board_id,@AuthenticationPrincipal UserDetailsImpl userDetail) {
+    communityBoardService.deleteCommunityBoard(community_board_id,userDetail.getUser());
     return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
   }
 
