@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
+@AllArgsConstructor
+@Builder
 public class CommunityBoard {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +39,7 @@ public class CommunityBoard {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
 
   public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
     this.nickName = user.getNickName();

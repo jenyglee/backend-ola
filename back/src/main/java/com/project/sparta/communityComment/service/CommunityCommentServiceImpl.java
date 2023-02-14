@@ -29,7 +29,12 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
     commentRepository.saveAndFlush(communityComment);
-    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
+    CommunityResponseDto communityResponseDto = new CommunityResponseDto().builder()
+        .contents(communityComment.getContents())
+        .nickName(communityComment.getNickName())
+        .id(communityComment.getId())
+        .communityBoardId(boardId)
+        .build();
     return communityResponseDto;
   }
 
@@ -43,7 +48,9 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
     communityComment.updateComment(communityRequestDto.getContents());
     commentRepository.saveAndFlush(communityComment);
-    CommunityResponseDto communityResponseDto = new CommunityResponseDto(communityComment);
+    CommunityResponseDto communityResponseDto = new CommunityResponseDto().builder()
+        .contents(communityComment.getContents())
+        .build();
     return communityResponseDto;
   }
 
