@@ -12,5 +12,5 @@ public interface CommunityCommentService {
       User user);
   CommunityResponseDto updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
       User user);
-  void deleteCommunityComments(Long boardId, Long commentsId);
+  void deleteCommunityComments(Long boardId, Long commentsId,User user);
 }
