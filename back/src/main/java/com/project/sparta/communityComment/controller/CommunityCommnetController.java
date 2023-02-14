@@ -47,9 +47,12 @@ public class CommunityCommnetController {
 
   //선택한 댓글 삭제
   @DeleteMapping("/community_comments/{communityBoardId}/{communityCommentId}")
-  public ResponseEntity deleteCommunityComment(@PathVariable Long communityBoardId, @PathVariable Long communityCommentId) {
-    commentService.deleteCommunityComments(communityBoardId, communityCommentId);
+  public ResponseEntity deleteCommunityComment(@PathVariable Long communityBoardId,
+      @PathVariable Long communityCommentId
+      ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
+    commentService.deleteCommunityComments(communityBoardId, communityCommentId,userDetail.getUser());
     return new ResponseEntity("댓글 삭제 완료", HttpStatus.OK);
   }
+
 
 }

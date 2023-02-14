@@ -44,7 +44,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
   @Transactional
   public CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto,
       User user) {
-    CommunityBoard communityBoard = boardRepository.findById(community_board_id)
+    CommunityBoard communityBoard = boardRepository.findByIdAndUser_NickName(community_board_id,user.getNickName())
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     communityBoard.updateBoard(communityBoardRequestDto);
     boardRepository.saveAndFlush(communityBoard);
@@ -65,7 +65,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size) {
+  public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size) {
     Sort sort = Sort.by(Sort.Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
 
@@ -74,19 +74,19 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         .stream()
         .map(CommunityBoardResponseDto::new)
         .collect(Collectors.toList());
-    return CommunityBoardResponseDtoList;
+    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
   }
   @Override
   @Transactional
-  public List<CommunityBoardResponseDto> getMyCommunityBoard(int page, int size, User user) {
+  public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size, User user) {
     Sort sort = Sort.by(Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
-    Page<CommunityBoard> boards = boardRepository.findAllById(pageable,user.getId());
+    Page<CommunityBoard> boards = boardRepository.findAllByNickName(pageable,user.getNickName());
     List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
         .stream()
         .map(CommunityBoardResponseDto::new)
         .collect(Collectors.toList());
-    return CommunityBoardResponseDtoList;
+    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
   }
 
 //  @Override
@@ -105,8 +105,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public void deleteCommunityBoard(Long community_board_id) {
-    boardRepository.findById(community_board_id)
+  public void deleteCommunityBoard(Long community_board_id,User user) {
+    boardRepository.findByIdAndUser_NickName(community_board_id,user.getNickName())
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     boardRepository.deleteById(community_board_id);
   }
