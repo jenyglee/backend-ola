@@ -15,9 +15,10 @@ public interface CommunityBoardService {
    void deleteCommunityBoard(Long community_board_id);
    CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
 
-   List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size);
+   PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);
 
-   List<CommunityBoardResponseDto> getMyCommunityBoard(int page, int size,  User user);
+   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+
 
 
 }

@@ -44,13 +44,13 @@ public class AdminController {
         return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/community_boards")
-    public ResponseEntity getAllCommunityBoard(
-            @RequestParam("page") int page,
-            @RequestParam("size") int size) {
-        List<CommunityBoardResponseDto> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-    }
+//    @GetMapping("/community_boards")
+//    public ResponseEntity getAllCommunityBoard(
+//            @RequestParam("page") int page,
+//            @RequestParam("size") int size) {
+//        List<CommunityBoardResponseDto> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
+//        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+//    }
 
     @PatchMapping("/community_boards/{community_board_id}")
     public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto

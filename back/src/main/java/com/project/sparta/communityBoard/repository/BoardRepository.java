@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, BoardRepositoryCustom {
   Page<CommunityBoard> findById(Pageable pageable,Long Id);
   Page<CommunityBoard> findAll(Pageable pageable);
-  Page<CommunityBoard> findAllById(Pageable pageable, Long id);
-  // Long countByUser(Long id);
+  Page<CommunityBoard> findAllByNickName(Pageable pageable, String nickName);
+
+  Optional<CommunityBoard> findByIdAndUser_NickName(Long id, String nickName);
 }

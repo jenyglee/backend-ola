@@ -47,7 +47,7 @@ public class CommunityBoardController {
       @RequestParam("page") int page,
       @RequestParam("size") int size) {
 
-    List<CommunityBoardResponseDto> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
+    PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
   @GetMapping("/community_boards/me_boards")
@@ -55,10 +55,9 @@ public class CommunityBoardController {
       @RequestParam("page") int page,
       @RequestParam("size") int size,
       @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    List<CommunityBoardResponseDto> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page,size,userDetails.getUser());
-  return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
+    PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page,size,userDetails.getUser());
+    return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
-
   @PatchMapping("/community_boards/{community_board_id}")
   public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
