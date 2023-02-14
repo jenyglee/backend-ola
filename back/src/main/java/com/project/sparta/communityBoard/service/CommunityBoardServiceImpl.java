@@ -1,10 +1,13 @@
 package com.project.sparta.communityBoard.service;
 
+import static java.util.Arrays.stream;
+
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.dto.CommunityResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.exception.CustomException;
@@ -12,6 +15,7 @@ import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +39,14 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
       User user) {
     CommunityBoard communityBoard = new CommunityBoard(communityBoardRequestDto, user);
     boardRepository.saveAndFlush(communityBoard);
-    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-        communityBoard);
+    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto().builder()
+        .title(communityBoard.getTitle())
+        .nickName(communityBoard.getNickName())
+        .contents(communityBoard.getContents())
+        .id(communityBoard.getId())
+        .communityComments(new ArrayList<>())
+        .build();
+
     return communityBoardResponseDto;
   }
 
@@ -48,8 +58,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     communityBoard.updateBoard(communityBoardRequestDto);
     boardRepository.saveAndFlush(communityBoard);
-    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-        communityBoard);
+    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto().builder()
+        .title(communityBoard.getTitle())
+        .contents(communityBoard.getContents())
+        .build();
     return communityBoardResponseDto;
   }
 
@@ -58,8 +70,12 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
   public CommunityBoardResponseDto getCommunityBoard(Long communityBoardId) {
     CommunityBoard communityBoard = boardRepository.findById(communityBoardId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-        communityBoard);
+    CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto().builder()
+        .title(communityBoard.getTitle())
+        .nickName(communityBoard.getNickName())
+        .contents(communityBoard.getContents())
+        .id(communityBoard.getId())
+        .build();
     return communityBoardResponseDto;
   }
 
