@@ -21,11 +21,11 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class NoticeBoardServiceImplTest {
 
-    @Autowired
-    NoticeBoardService noticeBoardService;
-    @Autowired
-    NoticeBoardRepository noticeBoardRepository;
-
+    // @Autowired
+    // NoticeBoardService noticeBoardService;
+    // @Autowired
+    // NoticeBoardRepository noticeBoardRepository;
+    //
 
     // @Test
     // void createNoticeBoard() {

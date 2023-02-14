@@ -11,6 +11,7 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserRoleEnum;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
