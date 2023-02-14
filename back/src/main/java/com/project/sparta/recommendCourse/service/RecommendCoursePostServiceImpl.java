@@ -4,9 +4,9 @@ package com.project.sparta.recommendCourse.service;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.recommendCourse.dto.RequestRecommendCoursePostDto;
-import com.project.sparta.recommendCourse.dto.ResponseFindAllRecommendCouesePostDto;
-import com.project.sparta.recommendCourse.dto.ResponseOnePostDto;
+import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
+import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.entity.RecommendCoursePost;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
@@ -35,16 +35,16 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
 
     /**
      * 추천코스 게시글 등록 메서드
-     * @param imges: 글쓸때 입력한 이미지들
+     * @param images: 글쓸때 입력한 이미지들
      * @param requestPostDto:(String title,int score,String season,int altitude,String contents)
      * @return 이미지경로 URL 리턴
      * @throws IOException
      */
     @Override
-    public List<String> creatRecomendCoursePost(List<MultipartFile> imges, RequestRecommendCoursePostDto requestPostDto, Long userId) throws IOException {
+    public List<String> creatRecommendCoursePost(List<MultipartFile> images, RecommendRequestDto requestPostDto, Long userId) throws IOException {
 
         //이미지등록 서비스 활용해서 이미지 리스트 바꾸기
-        List<RecommendCourseImg> imgList = recommandCourseImgService.createImgList(imges);
+        List<RecommendCourseImg> imgList = recommandCourseImgService.createImgList(images);
 
         //post 빌드패턴으로 생성하기 (포스트 부분 빌드패턴 부분에 for문으로 집어넣는거 구현하자)
         RecommendCoursePost post = RecommendCoursePost.builder()
@@ -71,10 +71,11 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
     }
 
 
+
     /**
      * 코스추천 글수정 메서드
      * @param id : 선택한 게시글 id값
-     * @param imges : 입력한 이미지 리스트
+     * @param images : 입력한 이미지 리스트
      * @param requestPostDto : 타이틀, 컨텐츠
      * @return 이미지 리스트 URL 리턴함
      * @throws IOException
@@ -82,7 +83,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
 
     //코스 수정
     @Override
-    public List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> imges, RequestRecommendCoursePostDto requestPostDto,Long userId) throws IOException {
+    public List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto, Long userId) throws IOException {
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
         System.out.println("id = " + id );
         System.out.println("userid = " + userId );
@@ -99,7 +100,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
         post.modifyOfferCousePost(requestPostDto.getTitle(), requestPostDto.getContents());
 
         // 받아온 이미지 파일을 다시 리스트로 변경하고
-        List<RecommendCourseImg> imgList = recommandCourseImgService.createImgList(imges);
+        List<RecommendCourseImg> imgList = recommandCourseImgService.createImgList(images);
 
         //이미지에 포스트 담아주고
         for (RecommendCourseImg image:imgList) {
@@ -139,7 +140,7 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
 
     //단건 코스 조회
     @Override
-    public ResponseOnePostDto oneSelectRecommendCoursePost(Long id){
+    public RecommendDetailResponseDto oneSelectRecommendCoursePost(Long id){
         //1. 아이디값으로 포스트 찾아서 포스트 만들고
         RecommendCoursePost recommendCoursePost = recommendCoursePostRepository.findById(id).orElseThrow();
 
@@ -148,14 +149,14 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
                 .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
 
         //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new ResponseOnePostDto(recommendCoursePost,imgRouteList);
+        return new RecommendDetailResponseDto(recommendCoursePost,imgRouteList);
 
     }
 
     //전체 코스 조회(페이징)
 
     @Override
-    public PageResponseDto<List<ResponseFindAllRecommendCouesePostDto>> allRecommendCousePost(int offset, int limit){
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCousePost(int offset, int limit){
         //1.페이징으로 요청해서
         PageRequest pageRequest = PageRequest.of(offset, limit);
         Page<RecommendCoursePost> all = recommendCoursePostRepository.findAll(pageRequest);
@@ -165,9 +166,9 @@ public class RecommendCoursePostServiceImpl implements RecommendCoursePostServic
         long totalElements = all.getTotalElements();
 
         //3. 엔티티로 만들어서
-        List<ResponseFindAllRecommendCouesePostDto> FindAllPostDtoList= new ArrayList<>();
+        List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
         for (RecommendCoursePost coursePost:contentList) {
-            ResponseFindAllRecommendCouesePostDto responseFindAllPos = ResponseFindAllRecommendCouesePostDto.builder()
+            RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
                     .title(coursePost.getTitle())
                     .imgList(coursePost
                             .getImages()
