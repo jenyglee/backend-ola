@@ -49,11 +49,18 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   @Override
   @Transactional
-  public void deleteCommunityComments(Long boardId, Long commentsId) {
+  public void deleteCommunityComments(Long boardId, Long commentsId,User user) {
     boardRepository.findById(boardId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-    commentRepository.findById(commentsId)
+
+    CommunityComment communityComment = commentRepository.findById(commentsId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+
+    if(communityComment.getNickName() != user.getNickName())
+    {
+      new CustomException(Status.INVALID_USER);
+    }
+
     commentRepository.deleteById(commentsId);
   }
 
