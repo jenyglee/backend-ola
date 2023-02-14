@@ -1,6 +1,6 @@
 package com.project.sparta.recommendCourse.dto;
 
-import com.project.sparta.recommendCourse.entity.RecommendCoursePost;
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import lombok.Getter;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class RecommendDetailResponseDto {
 
     private List<String> imgRoute;
 
-    public RecommendDetailResponseDto(RecommendCoursePost post, List<String> imgList) {
+    public RecommendDetailResponseDto(RecommendCourseBoard post, List<String> imgList) {
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.imgRoute = imgList;

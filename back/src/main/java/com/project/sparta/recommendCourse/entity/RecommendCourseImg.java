@@ -22,7 +22,7 @@ public class RecommendCourseImg {
     //파일 저장 게시글
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recommandCourse_post_id")
-    private RecommendCoursePost recommendCoursePost;
+    private RecommendCourseBoard recommendCourseBoard;
 
     //파일 원본명
     @Column(nullable = false)
@@ -37,16 +37,16 @@ public class RecommendCourseImg {
 
 
     @Builder
-    public RecommendCourseImg(RecommendCoursePost recommendCoursePost, String originalImgName, String imgRoute, Long imgSize) {
-        this.recommendCoursePost = recommendCoursePost;
+    public RecommendCourseImg(RecommendCourseBoard recommendCourseBoard, String originalImgName, String imgRoute, Long imgSize) {
+        this.recommendCourseBoard = recommendCourseBoard;
         this.originalImgName = originalImgName;
         this.imgRoute = imgRoute;
         this.imgSize = imgSize;
     }
 
-    public void addPost(RecommendCoursePost recommendCoursePost){
+    public void addPost(RecommendCourseBoard recommendCourseBoard){
         //사진이 게시글에 존재하지 않는다면
-        this.recommendCoursePost = recommendCoursePost;
+        this.recommendCourseBoard = recommendCourseBoard;
 
     }
 

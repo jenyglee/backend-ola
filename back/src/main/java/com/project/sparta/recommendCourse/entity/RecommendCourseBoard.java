@@ -1,7 +1,6 @@
 package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
-import com.project.sparta.user.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecommendCoursePost extends Timestamped {
+public class RecommendCourseBoard extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +40,7 @@ public class RecommendCoursePost extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    @OneToMany(mappedBy = "recommendCoursePost",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "recommendCourseBoard",cascade = CascadeType.PERSIST)
     private List<RecommendCourseImg> images = new ArrayList<>();
 
     // @ManyToOne
@@ -49,7 +48,7 @@ public class RecommendCoursePost extends Timestamped {
     // private User user;
 
     @Builder
-    public RecommendCoursePost(String title, String contents , int score, String season, int altitude, Long userId) {
+    public RecommendCourseBoard(String title, String contents , int score, String season, int altitude, Long userId ,List<RecommendCourseImg> images) {
         this.title = title;
         this.contents = contents;
         this.season = season;
@@ -57,14 +56,15 @@ public class RecommendCoursePost extends Timestamped {
         this.altitude = altitude;
         this.postStatus = PostStatusEnum.VAILABLE;
         this.userId = userId;
+        this.images = images;
     }
 
-    public void modifyOfferCousePost(String title,String contents) {
+    public void modifyRecommendCourseBoard(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public void statusModifyOfferCousePost(PostStatusEnum postStatus){
+    public void statusModifyRecommendCourse(PostStatusEnum postStatus){
         this.postStatus = postStatus;
     }
 }

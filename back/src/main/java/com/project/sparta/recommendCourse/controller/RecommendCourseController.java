@@ -5,7 +5,9 @@ import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendImgResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
-import com.project.sparta.recommendCourse.service.RecommendCoursePostService;
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
+import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
+import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,21 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class RecommendCourseController {
-    private final RecommendCoursePostService recommendCoursePostService;
+    private final RecommendCourseBoardService recommendCourseBoardService;
+    private final RecommendCourseImgService recommendCourseImgService;
+
+
+    //이미지 업로드 api
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
+    @PostMapping("/recommend_boards") //todo url 어떤것으로 할지 의논 후 수정
+    public List<RecommendCourseImg> ImageUpload(@RequestPart(value = "image", required = false) List<MultipartFile> images)throws IOException{
+        List<RecommendCourseImg> imgList = recommendCourseImgService.createImgList(images);
+        return imgList;
+    }
+
+    
     /**
-     *
+     * 글작성 api
      *
      * @param images:산     이미지
      * @param requestDto: (String title,int score,String season,int altitude,String contents)
@@ -35,12 +49,12 @@ public class RecommendCourseController {
 
     //Todo API명세서 나오면 API URL 수정
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
-    @PostMapping("admin/api/OfferCourse")
-    public ResponseEntity creatOfferCourse(@RequestPart(value = "image", required = false) List<MultipartFile> images,
-                                           @RequestPart(value = "requestDto") RecommendRequestDto requestDto,
-                                           @AuthenticationPrincipal UserDetailsImpl userDetail) throws IOException {
+    @PostMapping("/recommend_boards")
+    public ResponseEntity createRecommendCourse(@RequestPart(value = "image", required = false) List<MultipartFile> images,
+                                                @RequestPart(value = "requestDto") RecommendRequestDto requestDto,
+                                                @AuthenticationPrincipal UserDetailsImpl userDetail) throws IOException {
         Long userId = userDetail.getUser().getId();
-        recommendCoursePostService.creatRecommendCoursePost(images, requestDto, userId);
+        recommendCourseBoardService.creatRecommendCourseBoard(images, requestDto, userId);
         return new ResponseEntity(HttpStatus.OK);
 
         // 이미지업로드 API를 쏴서 이미지를 백에다가 업로드요청을 합니다.
@@ -61,12 +75,12 @@ public class RecommendCourseController {
      */
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
     @PutMapping("admin/api/OfferCourse/{id}")
-    public RecommendImgResponseDto modifyOfferCourse(@PathVariable Long id, @RequestPart(value = "image", required = false) List<MultipartFile> imges,
-                                                     @RequestPart(value = "requestDto") RecommendRequestDto requestDto,
-                                                     @AuthenticationPrincipal UserDetailsImpl userDetail) throws IOException {
+    public RecommendImgResponseDto modifyRecommendCourse(@PathVariable Long id, @RequestPart(value = "image", required = false) List<MultipartFile> imges,
+                                                         @RequestPart(value = "requestDto") RecommendRequestDto requestDto,
+                                                         @AuthenticationPrincipal UserDetailsImpl userDetail) throws IOException {
 
         User user = userDetail.getUser();
-        List<String> imgRouteList = recommendCoursePostService.modifyRecommendCoursePost(id, imges, requestDto, user.getId());
+        List<String> imgRouteList = recommendCourseBoardService.modifyRecommendCourseBoard(id, imges, requestDto, user.getId());
 
         return new RecommendImgResponseDto(imgRouteList);
     }
@@ -79,23 +93,23 @@ public class RecommendCourseController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
     @DeleteMapping("admin/api/OfferCourse/{id}")
-    public void deleteOfferCourse(@PathVariable Long id,
-                                  @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    public void deleteRecommendCourse(@PathVariable Long id,
+                                      @AuthenticationPrincipal UserDetailsImpl userDetail) {
         User user = userDetail.getUser();
-        recommendCoursePostService.deleteRecommendCoursePost(id,user.getId());
+        recommendCourseBoardService.deleteRecommendCourseBoard(id,user.getId());
     }
 
     //단건조회
     @GetMapping("admin/api/OfferCourse/{id}")
-    public RecommendDetailResponseDto oneSelectOfferCoursePost(@PathVariable Long id) {
-        return recommendCoursePostService.oneSelectRecommendCoursePost(id);
+    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long id) {
+        return recommendCourseBoardService.oneSelectRecommendCourseBoard(id);
     }
 
     //전체조회
     @GetMapping("admin/api/OfferCourse")
-    public PageResponseDto<List<RecommendResponseDto>> allOfferCousePost(@RequestParam int offset, @RequestParam int limit) {
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam int offset, @RequestParam int limit) {
 
-        return recommendCoursePostService.allRecommendCousePost(offset - 1, limit);
+        return recommendCourseBoardService.allRecommendCourseBoard(offset - 1, limit);
     }
 
 }

@@ -14,10 +14,10 @@ import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
-import com.project.sparta.recommendCourse.entity.RecommendCoursePost;
-import com.project.sparta.recommendCourse.repository.RecommendCoursePostRepository;
-import com.project.sparta.recommendCourse.service.RecommandCourseImgService;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +43,8 @@ public class AdminServiceImpl implements AdminService{
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
-    private final RecommendCoursePostRepository recommandCoursePostRepository;
-    private final RecommandCourseImgService recommendCourseImgService;
+    private final RecommendCourseBoardRepository recommandCoursePostRepository;
+    private final RecommendCourseImgService recommendCourseImgService;
 
     // 어드민 회원가입
 // ADMIN_TOKEN
@@ -109,13 +109,13 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto) throws IOException {
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
-        RecommendCoursePost post = recommandCoursePostRepository.findById(id)
+        RecommendCourseBoard post = recommandCoursePostRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
         //수정되기전의 데이터를 삭제해줘야한다. 레파지토리에서 postId값으로 이미지들을 찾아서 리스트로 넘겨준다음에 삭제해준다.
         recommendCourseImgService.deleteImgList(id);
 
         // 변경 메서드 하나 만든다음에
-        post.modifyOfferCousePost(requestPostDto.getTitle(), requestPostDto.getContents());
+        post.modifyRecommendCourseBoard(requestPostDto.getTitle(), requestPostDto.getContents());
 
         // 기존에 있던 이미지파일을 디비에서 삭제한다.
         recommendCourseImgService.deleteImgList(id);
@@ -147,10 +147,10 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void deleteRecommendCoursePost(Long id){
         //포스트 아이디 조회해서 포스트 아이디 있는지 검증
-        RecommendCoursePost post = recommandCoursePostRepository.findById(id)
+        RecommendCourseBoard post = recommandCoursePostRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
         //포스트의 스테이터스 값 변경하고 다시 저장
-        post.statusModifyOfferCousePost(PostStatusEnum.UNVAILABLE);
+        post.statusModifyRecommendCourse(PostStatusEnum.UNVAILABLE);
         recommandCoursePostRepository.save(post);
     }
 
@@ -158,14 +158,14 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public RecommendDetailResponseDto oneSelectRecommendCoursePost(Long id){
         //1. 아이디값으로 포스트 찾아서 포스트 만들고
-        RecommendCoursePost recommendCoursePost = recommandCoursePostRepository.findById(id).orElseThrow();
+        RecommendCourseBoard recommendCourseBoard = recommandCoursePostRepository.findById(id).orElseThrow();
 
         //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌
-        List<String> imgRouteList = recommendCoursePost.getImages().stream()
+        List<String> imgRouteList = recommendCourseBoard.getImages().stream()
             .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
 
         //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new RecommendDetailResponseDto(recommendCoursePost,imgRouteList);
+        return new RecommendDetailResponseDto(recommendCourseBoard,imgRouteList);
     }
 
     //전체 코스 조회(페이징)
@@ -173,15 +173,15 @@ public class AdminServiceImpl implements AdminService{
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCoursePost(int offset, int limit){
         //1.페이징으로 요청해서
         PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<RecommendCoursePost> all = recommandCoursePostRepository.findAll(pageRequest);
+        Page<RecommendCourseBoard> all = recommandCoursePostRepository.findAll(pageRequest);
 
         //2.전체 데이터 뽑아서
-        List<RecommendCoursePost> contentList = all.getContent();
+        List<RecommendCourseBoard> contentList = all.getContent();
         long totalElements = all.getTotalElements();
 
         //3. 엔티티로 만들어서
         List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
-        for (RecommendCoursePost coursePost:contentList) {
+        for (RecommendCourseBoard coursePost:contentList) {
             RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
                 .title(coursePost.getTitle())
                 .imgList(coursePost
