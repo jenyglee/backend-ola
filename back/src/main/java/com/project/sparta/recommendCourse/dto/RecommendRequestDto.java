@@ -1,6 +1,9 @@
 package com.project.sparta.recommendCourse.dto;
 
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class RecommendRequestDto {
@@ -14,5 +17,7 @@ public class RecommendRequestDto {
     private int altitude;
 
     private String contents;
+
+    private List<RecommendCourseImg> imgList;
 
 }

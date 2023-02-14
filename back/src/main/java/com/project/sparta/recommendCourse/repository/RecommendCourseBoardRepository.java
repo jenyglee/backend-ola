@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface RecommendCourseBoardRepository extends JpaRepository<RecommendCourseBoard,Long> {
 
-    @Override
-    Optional<RecommendCourseBoard> findById(Long aLong);
 }

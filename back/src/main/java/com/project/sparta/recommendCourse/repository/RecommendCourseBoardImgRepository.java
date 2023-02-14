@@ -11,7 +11,9 @@ public interface RecommendCourseBoardImgRepository extends JpaRepository<Recomme
 
 
 //    @Query("select m.id from RecommendCourseImg m where m.recommendCoursePost.Id=:id ")
-//    List<Long> findByRecommendCoursePostId(@Param("id")Long id );
+
+    @Query("select m.id from RecommendCourseImg m where m.recommendCourseBoard.Id=:id")
+    List<Long> findByRecommendCoursePostId(@Param("id")Long id );
 
 
 

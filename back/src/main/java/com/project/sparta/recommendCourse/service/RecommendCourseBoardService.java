@@ -14,10 +14,10 @@ public interface RecommendCourseBoardService {
 
     //코스 등록
 
-    List<String> creatRecommendCourseBoard(List<MultipartFile> images, RecommendRequestDto requestPostDto, Long userId) throws IOException;
+    void creatRecommendCourseBoard( RecommendRequestDto requestPostDto, Long userId);
 
     //코스 수정
-    List<String> modifyRecommendCourseBoard(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto, Long userId) throws IOException;
+    void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestPostDto, Long userId);
 
     //코스 삭제
     void deleteRecommendCourseBoard(Long id, Long userId);

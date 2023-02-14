@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
 
-    Optional<CommentLike> findByUserEmailAndBoard(String email, CommunityComment comment);
+
+    Optional<CommentLike> findByUserEmailAndComment(String email, CommunityComment comment);
 
 }

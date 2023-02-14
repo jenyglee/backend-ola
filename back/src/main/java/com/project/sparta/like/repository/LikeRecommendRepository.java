@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface LikeRecommendRepository extends JpaRepository<CourseLike,Long> {
 
-    Optional<CourseLike> findByUserEmailAndBoard(String email, RecommendCourseBoard courseBoard);
+    Optional<CourseLike> findByUserEmailAndCourseBoard(String email, RecommendCourseBoard courseBoard);
 
 
 }

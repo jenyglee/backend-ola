@@ -1,6 +1,7 @@
 package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
+import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,9 +60,15 @@ public class RecommendCourseBoard extends Timestamped {
         this.images = images;
     }
 
-    public void modifyRecommendCourseBoard(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto , Long userId) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.season = requestDto.getSeason();
+        this.score = requestDto.getScore();
+        this.altitude = requestDto.getAltitude();
+        this.postStatus = PostStatusEnum.VAILABLE;
+        this.userId = userId;
+        this.images = requestDto.getImgList();
     }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus){
