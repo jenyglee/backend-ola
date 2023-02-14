@@ -2,7 +2,6 @@ package com.project.sparta.admin.service;
 
 import com.project.sparta.admin.dto.ManagerPersonResponseDto;
 import com.project.sparta.admin.dto.AdminRequestSignupDto;
-import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.offerCourse.dto.RequestRecommandCoursePostDto;
