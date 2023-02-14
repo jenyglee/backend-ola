@@ -60,12 +60,12 @@ public class AdminController {
         return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
     }
 
-    //선택한 게시글 삭제
-    @DeleteMapping("/community_boards/{community_board_id}")
-    public ResponseEntity deleteCommunityBoard(@PathVariable Long community_board_id) {
-        communityBoardService.deleteCommunityBoard(community_board_id);
-        return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
-    }
+//    //선택한 게시글 삭제
+//    @DeleteMapping("/community_boards/{community_board_id}")
+//    public ResponseEntity deleteCommunityBoard(@PathVariable Long community_board_id) {
+//        communityBoardService.deleteCommunityBoard(community_board_id);
+//        return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
+//    }
 
    // @PutMapping("admin/api/OfferCourse/{id}")
    // public ResponseRecommendCourseImgDto modifyOfferCourse(@PathVariable Long id, @RequestPart(value="image", required=false) List<MultipartFile> imges,

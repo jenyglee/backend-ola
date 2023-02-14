@@ -44,7 +44,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
   @Transactional
   public CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto,
       User user) {
-    CommunityBoard communityBoard = boardRepository.findById(community_board_id)
+    CommunityBoard communityBoard = boardRepository.findByIdAndUser_NickName(community_board_id,user.getNickName())
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     communityBoard.updateBoard(communityBoardRequestDto);
     boardRepository.saveAndFlush(communityBoard);
@@ -105,8 +105,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   @Override
   @Transactional
-  public void deleteCommunityBoard(Long community_board_id) {
-    boardRepository.findById(community_board_id)
+  public void deleteCommunityBoard(Long community_board_id,User user) {
+    boardRepository.findByIdAndUser_NickName(community_board_id,user.getNickName())
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
     boardRepository.deleteById(community_board_id);
   }
