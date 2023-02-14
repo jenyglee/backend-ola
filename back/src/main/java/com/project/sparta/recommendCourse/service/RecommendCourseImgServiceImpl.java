@@ -23,7 +23,7 @@ public class RecommendCourseImgServiceImpl implements RecommendCourseImgService 
 
     //이미지 리스트 변환
     @Override
-    public List<RecommendCourseImg> createImgList(List<MultipartFile> multipartFiles) throws IOException {
+    public void createImgList(List<MultipartFile> multipartFiles) throws IOException {
         List<RecommendCourseImg> imgList = new ArrayList<>();
         //전달된 파일이 존재할경우
         if (!multipartFiles.isEmpty()) {
@@ -90,7 +90,7 @@ public class RecommendCourseImgServiceImpl implements RecommendCourseImgService 
             }
 
         }
-        return imgList;
+//        return imgList;
 
     }
 
