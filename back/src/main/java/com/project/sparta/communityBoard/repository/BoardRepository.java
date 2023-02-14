@@ -13,5 +13,5 @@ public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, Bo
   Page<CommunityBoard> findById(Pageable pageable,Long Id);
   Page<CommunityBoard> findAll(Pageable pageable);
   Page<CommunityBoard> findAllById(Pageable pageable, Long id);
-  
+  // Long countByUser(Long id);
 }

@@ -44,9 +44,9 @@ public class RecommendCoursePost extends Timestamped {
     @OneToMany(mappedBy = "recommendCoursePost",cascade = CascadeType.PERSIST)
     private List<RecommendCourseImg> images = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    // @ManyToOne
+    // @JoinColumn(name = "user_id")
+    // private User user;
 
     @Builder
     public RecommendCoursePost(String title, String contents , int score, String season, int altitude, Long userId) {
