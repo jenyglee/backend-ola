@@ -9,15 +9,10 @@ import java.util.List;
 public class RecommendRequestDto {
 
     private String title;
-
     private int score;
-
     private String season;
-
     private int altitude;
-
     private String contents;
-
-    private List<RecommendCourseImg> imgList;
+    private List<String> imgList;
 
 }

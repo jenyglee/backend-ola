@@ -41,15 +41,17 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    @OneToMany(mappedBy = "recommendCourseBoard",cascade = CascadeType.PERSIST)
-    private List<RecommendCourseImg> images = new ArrayList<>();
+    // @OneToMany(mappedBy = "recommendCourseBoard",cascade = CascadeType.PERSIST)
+    // private List<RecommendCourseImg> images = new ArrayList<>();
 
     // @ManyToOne
     // @JoinColumn(name = "user_id")
     // private User user;
 
     @Builder
-    public RecommendCourseBoard(String title, String contents , int score, String season, int altitude, Long userId ,List<RecommendCourseImg> images) {
+    public RecommendCourseBoard(String title, String contents , int score, String season, int altitude, Long userId
+                                // List<RecommendCourseImg> images
+    ) {
         this.title = title;
         this.contents = contents;
         this.season = season;
@@ -57,10 +59,11 @@ public class RecommendCourseBoard extends Timestamped {
         this.altitude = altitude;
         this.postStatus = PostStatusEnum.VAILABLE;
         this.userId = userId;
-        this.images = images;
+        // this.images = images;
     }
 
-    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto , Long userId) {
+    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto , Long userId, List<RecommendCourseImg> images
+    ) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.season = requestDto.getSeason();
@@ -68,7 +71,7 @@ public class RecommendCourseBoard extends Timestamped {
         this.altitude = requestDto.getAltitude();
         this.postStatus = PostStatusEnum.VAILABLE;
         this.userId = userId;
-        this.images = requestDto.getImgList();
+        // this.images = images;
     }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus){

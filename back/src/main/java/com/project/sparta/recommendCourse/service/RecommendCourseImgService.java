@@ -11,7 +11,7 @@ public interface RecommendCourseImgService {
 
     //받은 파일 이미지리스트로 변환
     void createImgList(List<MultipartFile> MultipartFile) throws IOException;
-    void deleteImgList(Long id);
+    // void deleteImgList(Long id);
 
-    void saveimage(RecommendCourseImg img);
+    void saveImage(RecommendCourseImg img);
 }

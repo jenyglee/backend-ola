@@ -11,6 +11,8 @@ import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.user.entity.User;
+import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     private final RecommendCourseBoardRepository recommendCourseBoardRepository;
 
     private final RecommendCourseImgService recommendCourseImgService;
+    private final UserRepository userRepository;
 
 
     /**
@@ -40,11 +44,17 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
      */
     @Override
     public void creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId){
-
 //        //이미지등록 서비스 활용해서 이미지 리스트 바꾸기
 //        List<RecommendCourseImg> imgList = recommendCourseImgService.createImgList(images);
 
         //board 빌드패턴으로 생성하기 (포스트 부분 빌드패턴 부분에 for문으로 집어넣는거 구현하자)
+        List<RecommendCourseImg> imgUrlList = new ArrayList<>(); // id, url(string)
+
+        for (String imgUrl : requestPostDto.getImgList()) {
+            RecommendCourseImg recommendCourseImg = new RecommendCourseImg(imgUrl);
+            imgUrlList.add(recommendCourseImg);
+        }
+
         RecommendCourseBoard board = RecommendCourseBoard.builder()
                 .title(requestPostDto.getTitle())
                 .season(requestPostDto.getSeason())
@@ -52,7 +62,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
                 .contents(requestPostDto.getContents())
                 .score(requestPostDto.getScore())
                 .userId(userId)
-                .images(requestPostDto.getImgList())
+                // .images(imgUrlList)
                         .build();
 
 
@@ -65,10 +75,10 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //        // 스트림으로 이미지 각각의 경로를 뽑아내서
 //        List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
         //레파지토리에 저장하기.
-        
+
         recommendCourseBoardRepository.save(board);
 
-
+        // ✨ s3 bucket에 있는 이미지에 Post ID 저장
     }
 
 
@@ -76,14 +86,14 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     /**
      * 코스추천 글수정 메서드
      * @param id : 선택한 게시글 id값
-     * @param recommendRequestDto : 타이틀, 컨텐츠
+     // * @param recommendRequestDto : 타이틀, 컨텐츠
      * @return 이미지 리스트 URL 리턴함
      * @throws IOException
      */
 
     //코스 수정
     @Override
-    public void modifyRecommendCourseBoard(Long id, RecommendRequestDto recommendRequestDto, Long userId) {
+    public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
         // Dto로 수정할 제목이랑 텍스트랑 이미지리스트 받아오고 주소에서 아이디값 받아와서
         RecommendCourseBoard board = recommendCourseBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
@@ -101,19 +111,23 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //        List<RecommendCourseImg> imgList = recommendCourseImgService.createImgList(images);
 //
 //        //이미지에 포스트 담아주고
-        for (RecommendCourseImg image:recommendRequestDto.getImgList()) {
-            image.addPost(board);
+//         for (RecommendCourseImg image:recommendRequestDto.getImgList()) {
+//             image.addPost(board);
+//         }
+        List<RecommendCourseImg> imgUrlList = new ArrayList<>();
+        for (String imgUrl : requestDto.getImgList()) {
+            RecommendCourseImg recommendCourseImg = new RecommendCourseImg(imgUrl);
+            imgUrlList.add(recommendCourseImg);
         }
 
         // 스트림으로 이미지 각각의 경로를 뽑아내서
 //        List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
 
 
-        board.modifyRecommendCourseBoard(recommendRequestDto,userId);
+        board.modifyRecommendCourseBoard(requestDto,userId, imgUrlList);
 
         //포스트 다시 세이브 하면 수정 로직 완료
         recommendCourseBoardRepository.save(board);
-
     }
 
     /**
@@ -133,8 +147,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //포스트의 스테이터스 값 변경하고 다시 저장
         post.statusModifyRecommendCourse(PostStatusEnum.UNVAILABLE);
         recommendCourseBoardRepository.save(post);
-
-
     }
 
     //단건 코스 조회
@@ -144,12 +156,19 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         RecommendCourseBoard recommendCourseBoard = recommendCourseBoardRepository.findById(id).orElseThrow();
 
         //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌
-        List<String> imgRouteList = recommendCourseBoard.getImages().stream()
-                .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
+        List<String> dummyList = new ArrayList<>();
+        // ✨ s3 bucket에서 이미지 가져오기(가져올때 id 전달)
+        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+        // List<String> imgRouteList = recommendCourseBoard.getImages().stream()
+        //         .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
+        Long userId = recommendCourseBoard.getUserId();
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
+        List<String> imgRouteList = dummyList;
 
         //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new RecommendDetailResponseDto(recommendCourseBoard,imgRouteList);
-
+        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName());
     }
 
     //전체 코스 조회(페이징)
@@ -162,18 +181,26 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         //2.전체 데이터 뽑아서
         List<RecommendCourseBoard> contentList = all.getContent();
+        for (RecommendCourseBoard recommendCourseBoard : contentList) {
+            // 도와줘~
+        }
+
         long totalElements = all.getTotalElements();
 
         //3. 엔티티로 만들어서
         List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
+        List<String> dummyList = new ArrayList<>();
+        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
         for (RecommendCourseBoard coursePost:contentList) {
             RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
                     .title(coursePost.getTitle())
-                    .imgList(coursePost
-                            .getImages()
-                            .stream()
-                            .map(RecommendCourseImg::getImgRoute)
-                            .collect(Collectors.toList()))
+                    // .imgList(coursePost
+                    //         .getImages()
+                    //         .stream()
+                    //         .map(RecommendCourseImg::getImgRoute)
+                    //         .collect(Collectors.toList()))
+                    .imgList(dummyList)
+                    .count(1523)
                     .build();
             FindAllPostDtoList.add(responseFindAllPos);
         }
@@ -181,8 +208,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         //4. 클라이언트에 응답.
         return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
-
-
     }
 
     // 필터링 도전

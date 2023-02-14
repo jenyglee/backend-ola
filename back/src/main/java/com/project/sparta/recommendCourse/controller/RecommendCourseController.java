@@ -111,7 +111,7 @@ public class RecommendCourseController {
     @GetMapping("admin/api/OfferCourse")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam int offset, @RequestParam int limit) {
 
-        return recommendCourseBoardService.allRecommendCourseBoard(offset - 1, limit);
+        return recommendCourseBoardService.allRecommendCourseBoard(offset, limit);
     }
 
 }
