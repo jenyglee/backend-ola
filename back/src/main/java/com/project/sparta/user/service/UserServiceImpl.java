@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
         
         // 3. User에 List<UserTag>를 넣어준다.
         saveUser.updateUserTags(userTagList);
-
     }
     //로그인
     @Override

@@ -17,16 +17,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long Id;
+    private Long Id;
 
     @Column(nullable = false)
-    protected String nickName;
+    private String nickName;
 
     @Column(nullable = false)
-    protected String password;
+    private String password;
 
     @Column(nullable = false, unique = true)
-    protected String email;
+    private String email;
     @Column(nullable = false)
     private int age;
 
@@ -37,13 +37,19 @@ public class User {
     private String userImageUrl;
 
     @Enumerated(value = EnumType.STRING)
-    protected UserGradeEnum gradeEnum;
+    private UserGradeEnum gradeEnum;
 
     @Enumerated(value = EnumType.STRING)
-    protected UserRoleEnum role;
+    private UserRoleEnum role;
 
     @Enumerated(value = EnumType.STRING)
-    protected StatusEnum status;
+    private StatusEnum status;
+
+    @Column
+    private Long enterCount;
+
+    @Column
+    private Long makeCount;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
@@ -51,6 +57,10 @@ public class User {
     @Column(nullable = false)
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityBoard> communityBoards = new ArrayList<>();
+
+    public void updateUserTags(List<UserTag> userTagList){
+        this.tags = userTagList;
+    }
 
     @Builder
     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl, List<UserTag> tags) {
@@ -66,18 +76,18 @@ public class User {
         this.tags = tags;
     }
 
-    // @Builder()
-    // public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
-    //     this.password = password;
-    //     this.nickName = nickName;
-    //     this.email = email;
-    //     this.role = UserRoleEnum.USER;
-    //     this.age = age;
-    //     this.phoneNumber = phoneNumber;
-    //     this.userImageUrl = userImageUrl;
-    //     this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
-    //     this.status = StatusEnum.USER_REGISTERED;
-    // }
+     @Builder()
+     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
+         this.password = password;
+         this.nickName = nickName;
+         this.email = email;
+         this.role = UserRoleEnum.USER;
+         this.age = age;
+         this.phoneNumber = phoneNumber;
+         this.userImageUrl = userImageUrl;
+         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
+         this.status = StatusEnum.USER_REGISTERED;
+     }
 
     // //테스트용
     // public User(String email, String password, String nickName, String userImageUrl) {
