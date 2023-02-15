@@ -36,18 +36,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String token = jwtUtil.resolveToken(request);
-        String resultToekn = token.substring(7);
 
         try {
             if (token != null) {
-                if (!jwtUtil.validateToken(resultToekn)) {
+                if (!jwtUtil.validateToken(token)) {
                     //유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
                     // 에러를 보내주고 -> 클라이언트
                     // 클라이언트 -> 갱신된 api호출 -> api
                     //throw new 401에러 발생되게 만들기
                 }
 
-                Authentication auth = jwtUtil.getAuthenticationByAccessToken(resultToekn);
+                Authentication auth = jwtUtil.getAuthenticationByAccessToken(token);
                 String isLogout = redisTemplate.opsForValue().get(auth.getName());
 
                 if (!ObjectUtils.isEmpty(isLogout)) {
