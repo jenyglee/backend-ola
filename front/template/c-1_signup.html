@@ -178,7 +178,8 @@
           "method": "POST",
           "timeout": 0,
           "headers": {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              // "Authurization" :""
           },
           "data": JSON.stringify({
               "email": $('#inputEmail').val(),
@@ -194,6 +195,7 @@
               console.log(response);
               alert("회원가입 완료")
               window.location.href = "b-1_login.html";
+              settings.headers.Authurization = response.toString();
       })
       .fail(function (response){
           console.log(response);
