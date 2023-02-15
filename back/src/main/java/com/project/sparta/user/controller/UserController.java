@@ -1,6 +1,7 @@
 package com.project.sparta.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.*;
@@ -80,7 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/regenerateToken")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated TokenDto tokenDto) {
+    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {
         return userService.regenerateToken(tokenDto);
     }
 }

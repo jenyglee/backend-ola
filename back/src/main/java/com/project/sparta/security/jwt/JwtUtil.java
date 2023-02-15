@@ -126,21 +126,22 @@ public class JwtUtil {
     }
 
     public Authentication getAuthenticationByAccessToken(String access_token) {
-        //String changeToken = access_token.substring(7);
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(access_token).getBody().getSubject();
+        String changeToken = access_token.substring(7);
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public Authentication getAuthenticationByRefreshToken(String access_token) {
-        //String changeToken = access_token.substring(7);
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(access_token).getBody().getSubject();
+        String changeToken = access_token.substring(7);
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(changeToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public Long getExpiration(String accessToken) {
-        Date expiration = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        String changeToken = accessToken.substring(7);
+        Date expiration = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken).getBody().getExpiration();
         long now = new Date().getTime();
         return (expiration.getTime() - now);
     }

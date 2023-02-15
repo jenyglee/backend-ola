@@ -5,6 +5,7 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
@@ -106,21 +107,17 @@ public class UserServiceImpl implements UserService {
 
         String resultToekn = tokenRequestDto.getAccessToken();
 
-        //로그아웃 하고 싶은 토큰이 유효한지 검증하기
         if(!jwtUtil.validateToken(resultToekn)){
             throw new CustomException(INVALID_TOKEN);
         }
-        //Access Token에서 user email을 가져온다.
         Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
-        //redis에서 해당 user email로 저장된 refresh token이 있는지 여부를 확인 한 후 있을 경우에 삭제
         if(redisTemplate.opsForValue().get(authentication.getName())!=null){
             redisTemplate.delete(authentication.getName());
         }
 
         Long expiration = jwtUtil.getExpiration(resultToekn);
 
-        //해당 Access Token 유효시간을 가지고 와서 BlackList에 저장하기
         redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
     }
 
@@ -164,9 +161,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<TokenDto> regenerateToken(TokenDto tokenDto) {
+    public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto tokenDto) {
 
-        String changeToken = tokenDto.getRefreshToken();
+        String changeToken = tokenDto.getRefresh_token();
 
         try {
             if (!jwtUtil.validateRefreshToken(changeToken)) {
@@ -181,7 +178,6 @@ public class UserServiceImpl implements UserService {
                 throw new CustomException(DISCORD_TOKEN);
             }
 
-            // 토큰 재발행
             User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
