@@ -177,15 +177,16 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int offset, int limit){
         //1.페이징으로 요청해서
         PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<RecommendCourseBoard> all = recommendCourseBoardRepository.findAll(pageRequest);
+        Page<RecommendCourseBoard> all = recommendCourseBoardRepository.findAllBySatusIsVailable(pageRequest, PostStatusEnum.VAILABLE);
 
         //2.전체 데이터 뽑아서
         List<RecommendCourseBoard> contentList = all.getContent();
-        for (RecommendCourseBoard recommendCourseBoard : contentList) {
-            if(recommendCourseBoard.getPostStatus().equals(PostStatusEnum.VAILABLE)){
-                contentList.add(recommendCourseBoard);
-            }
-        }
+//        List<RecommendCourseBoard> newContentList = new ArrayList<>();
+//        for (RecommendCourseBoard recommendCourseBoard : contentList) {
+//            if(recommendCourseBoard.getPostStatus().equals(PostStatusEnum.VAILABLE)){
+//                newContentList.add(recommendCourseBoard);
+//            }
+//        }
 
         long totalElements = all.getTotalElements();
 
