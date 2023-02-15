@@ -4,7 +4,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.recommendCourse.repository.RecommendCoursePostRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
     private final BoardRepository boardRepository;
-    private final RecommendCoursePostRepository recommandCoursePostRepository;
+    private final RecommendCourseBoardRepository recommandCoursePostRepository;
     private final JwtUtil jwtUtil;
 
     //회원가입
