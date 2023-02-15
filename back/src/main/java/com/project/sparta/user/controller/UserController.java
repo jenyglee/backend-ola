@@ -45,11 +45,11 @@ public class UserController {
         // code: 카카오 서버로부터 받은 인가 코드
         // new KakaoApi
         System.out.println("code = " + code);
-        // String createToken = kakaoService.kakaoLogin(code, response);
+        String createToken = kakaoService.kakaoLogin(code, response);
         // // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
-        // Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
-        // cookie.setPath("/");
-        // response.addCookie(cookie);
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return "gello";
     }
 
