@@ -1,7 +1,6 @@
 package com.project.sparta.user.service;
 
 
-import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
 import com.project.sparta.refreshToken.dto.TokenDto;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
@@ -14,7 +13,7 @@ public interface UserService {
 
     void logout(TokenDto tokenRequestDto);
 
-    ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto);
+    ResponseEntity<TokenDto> regenerateToken(String refreshToken);
 
     void validateEmail(ValidateEmailDto emailDto);
 
