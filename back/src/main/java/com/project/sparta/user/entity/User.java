@@ -19,6 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    private Long kakaoId;
+
     @Column(nullable = false)
     private String nickName;
 
@@ -54,7 +56,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityBoard> communityBoards = new ArrayList<>();
 
@@ -76,7 +78,22 @@ public class User {
         this.tags = tags;
     }
 
-     @Builder()
+    // 카카오 회원가입 생성자
+    // ❓카카오 회원가입 누르면 회원가입이 바로 되어버릴텐데, tags에 해시태그 등록은 어느 시점에서 해야할까?
+    public User(Long kakaoId, String nickName, String password, String email, int age, String phoneNumber, String userImageUrl) {
+        this.kakaoId = kakaoId;
+        this.nickName = nickName;
+        this.password = password;
+        this.email = email;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
+        this.userImageUrl = userImageUrl;
+        this.role = UserRoleEnum.USER;
+        this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
+        this.status = StatusEnum.USER_REGISTERED;
+    }
+
+    @Builder()
      public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
          this.password = password;
          this.nickName = nickName;
@@ -89,13 +106,8 @@ public class User {
          this.status = StatusEnum.USER_REGISTERED;
      }
 
-    // //테스트용
-    // public User(String email, String password, String nickName, String userImageUrl) {
-    //     this.password = password;
-    //     this.nickName = nickName;
-    //     this.email = email;
-    //     this.role = UserRoleEnum.ADMIN;
-    //     this.userImageUrl = userImageUrl;
-    //     this.status = StatusEnum.ADMIN_REGISTERED;
-    // }
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
+    }
 }
