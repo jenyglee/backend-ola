@@ -13,6 +13,9 @@ import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
@@ -85,7 +88,6 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
 
-
         String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
         TokenDto tokenDto = new TokenDto(
@@ -110,19 +112,22 @@ public class UserServiceImpl implements UserService {
     //로그아웃
     @Transactional
     public void logout(TokenDto tokenRequestDto){
+
+        String resultToekn = tokenRequestDto.getAccessToken().substring(7);
+
         //로그아웃 하고 싶은 토큰이 유효한지 검증하기
-        if(!jwtUtil.validateToken(tokenRequestDto.getAccessToken())){
+        if(!jwtUtil.validateToken(resultToekn)){
             throw new CustomException(INVALID_TOKEN);
         }
         //Access Token에서 user email을 가져온다.
-        Authentication authentication = jwtUtil.getAuthenticationByAccessToken(tokenRequestDto.getAccessToken());
+        Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
         //redis에서 해당 user email로 저장된 refresh token이 있는지 여부를 확인 한 후 있을 경우에 삭제
         if(redisTemplate.opsForValue().get(authentication.getName())!=null){
             redisTemplate.delete(authentication.getName());
         }
 
-        Long expiration = jwtUtil.getExpiration(tokenRequestDto.getAccessToken());
+        Long expiration = jwtUtil.getExpiration(resultToekn);
 
         //해당 Access Token 유효시간을 가지고 와서 BlackList에 저장하기
         redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
@@ -167,10 +172,54 @@ public class UserServiceImpl implements UserService {
         System.out.println("user.getTags() = " + user.getTags());
     }
 
+//    @Override
+//    public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto) {
+//
+//        String refresh_token = refreshTokenDto.getRefresh_token().substring(7);
+//
+//        try {
+//            // Refresh Token 검증
+//            if (!jwtUtil.validateRefreshToken(refresh_token)) {
+//                throw new CustomException(INVALID_TOKEN);
+//            }
+//
+//            Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(refresh_token);
+//
+//            String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
+//
+//
+//            if (!refreshToken.equals(refreshTokenDto.getRefresh_token())) {
+//                throw new CustomException(DISCORD_TOKEN);
+//            }
+//
+//            // 토큰 재발행
+//            User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+//
+//            String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
+//            TokenDto tokenDto = new TokenDto(
+//                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
+//                    new_refresh_token
+//            );
+//
+//            redisTemplate.opsForValue().set(
+//                    authentication.getName(),
+//                    new_refresh_token,
+//                    JwtUtil.REFRESH_TOKEN_TIME,
+//                    TimeUnit.MILLISECONDS
+//            );
+//
+//            HttpHeaders httpHeaders = new HttpHeaders();
+//            httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
+//            return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+//        } catch (AuthenticationException e) {
+//            throw new CustomException(DISCORD_TOKEN);
+//        }
+//
+//    }
     @Override
-    public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto) {
+    public ResponseEntity<TokenDto> regenerateToken(String changeToken) {
 
-        String refresh_token = refreshTokenDto.getRefresh_token().substring(7);
+        String refresh_token = changeToken.substring(7);
 
         try {
             // Refresh Token 검증
@@ -182,8 +231,7 @@ public class UserServiceImpl implements UserService {
 
             String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
 
-
-            if (!refreshToken.equals(refreshTokenDto.getRefresh_token())) {
+            if (!refreshToken.equals(changeToken)) {
                 throw new CustomException(DISCORD_TOKEN);
             }
 
@@ -204,12 +252,12 @@ public class UserServiceImpl implements UserService {
             );
 
             HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
             return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
         } catch (AuthenticationException e) {
             throw new CustomException(DISCORD_TOKEN);
         }
 
     }
-
 
 }

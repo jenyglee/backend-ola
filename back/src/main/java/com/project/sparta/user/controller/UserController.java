@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/regenerateToken")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto refreshTokenDto) {
-        return userService.regenerateToken(refreshTokenDto);
+    public ResponseEntity<TokenDto> regenerateToken(@Validated String refreshToken) {
+        return userService.regenerateToken(refreshToken);
     }
 }
