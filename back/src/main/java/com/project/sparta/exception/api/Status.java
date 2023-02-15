@@ -3,6 +3,8 @@ package com.project.sparta.exception.api;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 // 500 -> INTERNAL SERVER ERROR : 서버에러
 // 400 ->  BAD _ REQUEST : 잘못된 요청 (ex. 파라미터 값을 확인해주세요 )
 // 409 ->  CONFLICT : 중복 데이터 (ex. 이미 중복된 값)
@@ -32,6 +34,8 @@ public enum Status {
     NOT_FOUND_USER(HttpStatus.NOT_FOUND,"회원을 찾을 수 없습니다."),
     NOT_FOUND_COMMUNITY_BOARD(HttpStatus.NOT_FOUND,"커뮤니티 게시글을 찾을수 없습니다."),
     NOT_FOUND_COMMUNITY_COMMENT(HttpStatus.NOT_FOUND,"변경할 커뮤니티 댓글을 찾을수 없습니다."),
+
+    ADMIN_PASSWORD_NOT_FOUND(NOT_FOUND, "관리자 암호가 일치하지 않아 등록이 불가합니다."),
 
     // 409 ->  CONFLICT : 중복 데이터 (ex. 이미 중복된 값)
     CONFLICT_HASHTAG(HttpStatus.CONFLICT, "이미 존재하는 해시태그입니다"),
