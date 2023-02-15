@@ -133,19 +133,19 @@
             </div>
             <br>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputNickName"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="inputNickName" style="resize : none;"></textarea>
                 <label for="inputNickName">닉네임</label>
                 <label  class="check">중복확인</label>
 
             </div>
             <br>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputAge"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="inputAge" style="resize : none;"></textarea>
                 <label for="inputAge">나이</label>
             </div>
             <br>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputPhone"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="inputPhone" style="resize : none;"></textarea>
                 <label for="inputPhone">휴대폰번호</label>
             </div>
             <br>
@@ -153,7 +153,8 @@
                 <div class="mb-3">
                     <div class="filebox">
                         <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">
-                        <label for="file" class="upload-label">파일찾기</label>
+<!--                        <label for="file" class="upload-label">파일찾기</label>-->
+                        <button id="my-button" onclick="onClickUpload();">파일 불러오기</button>
                         <input type="file" id="file">
                     </div>
                 </div>
@@ -166,13 +167,19 @@
     </section>
 </main>
 <script>
+    function onClickUpload() {
+        let myInput = document.getElementById("my-input");
+        myInput.click();
+    }
+
   function handleCreatePeople() {
       var settings = {
           "url": "http://localhost:8080/auth/signup",
           "method": "POST",
           "timeout": 0,
           "headers": {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              // "Authurization" :""
           },
           "data": JSON.stringify({
               "email": $('#inputEmail').val(),
@@ -188,6 +195,7 @@
               console.log(response);
               alert("회원가입 완료")
               window.location.href = "b-1_login.html";
+              settings.headers.Authurization = response.toString();
       })
       .fail(function (response){
           console.log(response);
