@@ -126,6 +126,7 @@ public class JwtUtil{
     }
 
     public Authentication getAuthenticationByAccessToken(String access_token){
+
         String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(access_token).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
