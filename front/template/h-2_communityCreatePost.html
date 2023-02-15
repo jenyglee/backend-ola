@@ -287,19 +287,19 @@
       <section class="header">
         <div class="create-post-box">
           <div class="mb-3 cteate-post">
-            <label for="titleFormControlInput1">제목</label>
+            <label for="titleFormControlInput">제목</label>
             <input
               type="text"
               class="form-control post-title"
-              id="titleFormControlInput1"
+              id="titleFormControlInput"
             />
           </div>
           <div class="mb-3 cteate-content">
-            <label for="contentFormControlInput1">내용</label>
+            <label for="contentFormControlInput">내용</label>
             <input
               type="text"
               class="form-control post-content"
-              id="contentFormControlInput1"
+              id="contentFormControlInput"
             />
           </div>
         </div>
@@ -308,19 +308,19 @@
           <div class="mb-3">
             <div class="filebox">
               <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">
-              <label for="file" class="upload-label">파일찾기</label> 
-              <input type="file" id="file">
+              <label for="fileImg" class="upload-label">파일찾기</label>
+              <input type="file" id="fileImg">
           </div>
         </div>
         <!-- 태그 레이아웃 -->
         <div class="tag-upload-box">
           <span>태그</span>
           <div class="mb-3 creat-tag">
-            <label for="tagFormControlInput1">태그를 입력하세요</label>
+            <label for="tagFormControlInput">태그를 입력하세요</label>
             <input
               type="text"
               class="form-control post-content"
-              id="tagFormControlInput1"
+              id="tagFormControlInput"
 
             />
             <!-- 태그추천 display none -->
@@ -343,10 +343,11 @@
           </div>
           <!-- 게시글 작성 버튼 -->
           <div class="create-post">
-            <button type="button" class="btn btn-primary btn-create-post">
+            <button type="button" class="btn btn-primary btn-create-post" onclick="createPost()">
              게시글 작성
             </button>
           </div>
+        </div>
         </div>
       </section>
     </main>
@@ -385,6 +386,39 @@
           },
         })
       }
+
+      function createPost() {
+        // 1. 데이터 초기화를 해야됨.
+        $('tbody').empty();
+
+        // 2. 통신해서 불러오기
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/community_boards",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWE0IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzODY1NjQsImlhdCI6MTY3NjM4Mjk2NH0.aLtex_d1IDDAuGBSTD89RGBfaMbMfCDP0vhpKtvyhjI")
+          },
+          data: {
+            title: $('#titleFormControlInput').val(),
+            contents: $('#titleFormControlInput').val(),
+            file: $('#fileImg').val(),
+            tag: Number($('#tagFormControlInput').val()),
+          },
+          success: function (response) {
+            console.log(response);
+            window.location.reload()
+          }
+          });
+        }
+        // function donePost(num){
+        // $.ajax({
+        //   type:"POST",
+        //   url: "http://localhost:8080/community_boards",
+        //   data:{numGive :num},
+        // })
+        // }
+
+
     </script>
   </body>
 </html>
