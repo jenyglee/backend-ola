@@ -1,4 +1,4 @@
-package com.project.sparta.refreshToken.entity;
+package com.project.sparta.security.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
 import lombok.*;

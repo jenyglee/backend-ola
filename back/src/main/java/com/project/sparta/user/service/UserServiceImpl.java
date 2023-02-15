@@ -5,32 +5,24 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
-import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
-import com.project.sparta.refreshToken.dto.TokenDto;
+import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +38,6 @@ public class UserServiceImpl implements UserService {
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
     private final BoardRepository boardRepository;
-    private final RecommendCourseBoardRepository recommandCoursePostRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtUtil jwtUtil;
 
@@ -96,7 +87,6 @@ public class UserServiceImpl implements UserService {
                 refresh_token
         );
 
-        // Redis에 저장 - 만료 시간 설정을 통해 자동 삭제 처리
         redisTemplate.opsForValue().set(
                 user.getEmail(),
                 refresh_token,
@@ -114,7 +104,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void logout(TokenDto tokenRequestDto){
 
-        String resultToekn = tokenRequestDto.getAccessToken().substring(7);
+        String resultToekn = tokenRequestDto.getAccessToken();
 
         //로그아웃 하고 싶은 토큰이 유효한지 검증하기
         if(!jwtUtil.validateToken(resultToekn)){
@@ -173,62 +163,17 @@ public class UserServiceImpl implements UserService {
         System.out.println("user.getTags() = " + user.getTags());
     }
 
-//    @Override
-//    public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto) {
-//
-//        String refresh_token = refreshTokenDto.getRefresh_token().substring(7);
-//
-//        try {
-//            // Refresh Token 검증
-//            if (!jwtUtil.validateRefreshToken(refresh_token)) {
-//                throw new CustomException(INVALID_TOKEN);
-//            }
-//
-//            Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(refresh_token);
-//
-//            String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
-//
-//
-//            if (!refreshToken.equals(refreshTokenDto.getRefresh_token())) {
-//                throw new CustomException(DISCORD_TOKEN);
-//            }
-//
-//            // 토큰 재발행
-//            User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-//
-//            String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
-//            TokenDto tokenDto = new TokenDto(
-//                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
-//                    new_refresh_token
-//            );
-//
-//            redisTemplate.opsForValue().set(
-//                    authentication.getName(),
-//                    new_refresh_token,
-//                    JwtUtil.REFRESH_TOKEN_TIME,
-//                    TimeUnit.MILLISECONDS
-//            );
-//
-//            HttpHeaders httpHeaders = new HttpHeaders();
-//            httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
-//            return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
-//        } catch (AuthenticationException e) {
-//            throw new CustomException(DISCORD_TOKEN);
-//        }
-//
-//    }
     @Override
-    public ResponseEntity<TokenDto> regenerateToken(String changeToken) {
+    public ResponseEntity<TokenDto> regenerateToken(TokenDto tokenDto) {
 
-        String refresh_token = changeToken.substring(7);
+        String changeToken = tokenDto.getRefreshToken();
 
         try {
-            // Refresh Token 검증
-            if (!jwtUtil.validateRefreshToken(refresh_token)) {
+            if (!jwtUtil.validateRefreshToken(changeToken)) {
                 throw new CustomException(INVALID_TOKEN);
             }
 
-            Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(refresh_token);
+            Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(changeToken);
 
             String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
 
@@ -240,7 +185,7 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
-            TokenDto tokenDto = new TokenDto(
+            TokenDto new_tokenDto = new TokenDto(
                     jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
                     new_refresh_token
             );
@@ -253,8 +198,8 @@ public class UserServiceImpl implements UserService {
             );
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
-            return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+            httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, new_tokenDto.getAccessToken());
+            return new ResponseEntity<>(new_tokenDto, httpHeaders, HttpStatus.OK);
         } catch (AuthenticationException e) {
             throw new CustomException(DISCORD_TOKEN);
         }
