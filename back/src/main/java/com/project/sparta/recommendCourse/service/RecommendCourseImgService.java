@@ -7,10 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-public interface RecommandCourseImgService {
+public interface RecommendCourseImgService {
 
     //받은 파일 이미지리스트로 변환
-    List<RecommendCourseImg> createImgList(List<MultipartFile> MultipartFile) throws IOException;
+    void createImgList(List<MultipartFile> MultipartFile) throws IOException;
+    // void deleteImgList(Long id);
 
-    void deleteImgList(Long id);
+    void saveImage(RecommendCourseImg img);
 }
