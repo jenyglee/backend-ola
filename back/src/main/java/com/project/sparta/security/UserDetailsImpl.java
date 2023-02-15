@@ -9,13 +9,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
-    public UserDetailsImpl(User user) {
+    private String email;
+
+    public UserDetailsImpl(User user, String email) {
         this.user = user;
+        this.email = email;
     }
 
     public User getUser() {
@@ -43,13 +47,14 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.user.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

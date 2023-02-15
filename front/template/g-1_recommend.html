@@ -131,7 +131,13 @@
                                 <img class="img" src="./../static/img/icon_profile_default.png"/>
                             </div>
                             <p class="name">오메가오메오메</p>
+
+                            <a
+                                    href="./h-4_chat.html"
+                                    onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
+                            >
                             <button type="button" class="btn btn-link">1:1 채팅</button>
+                            </a>
                         </div>
                     </li>
                     <li>
@@ -585,17 +591,15 @@
         $(".bell-dropbox").hide();
     }
 
-    function handleCreateGuestBook() {
+    function chat() {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-            data: {
-                name: "sasas",
-            },
+            url: "http://localhost:8080/chat", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+            data: {},
             success: function (response) {
                 console.log(response)
                 alert(response.msc)
-                window.location.reload();
+                //window.location.reload();
             },
         })
     }
