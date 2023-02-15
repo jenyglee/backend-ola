@@ -8,4 +8,6 @@ public class AdminRequestSignupDto {
     private String password;
     private String nickName;
     private String adminToken;
+
+    private String phoneNumber;
 }
