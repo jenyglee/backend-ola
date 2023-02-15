@@ -15,4 +15,6 @@ public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, Bo
   Page<CommunityBoard> findAllByNickName(Pageable pageable, String nickName);
 
   Optional<CommunityBoard> findByIdAndUser_NickName(Long id, String nickName);
+
+
 }
