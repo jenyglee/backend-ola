@@ -29,13 +29,10 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
     private int age;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
     private String userImageUrl;
 
     @Enumerated(value = EnumType.STRING)
@@ -56,7 +53,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
 
-    // @Column(nullable = false)
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<CommunityBoard> communityBoards = new ArrayList<>();
 
@@ -64,8 +60,8 @@ public class User {
         this.tags = userTagList;
     }
 
-    @Builder
-    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl, List<UserTag> tags) {
+    @Builder(builderClassName = "user", builderMethodName = "userBuilder")
+    public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
         this.password = password;
         this.nickName = nickName;
         this.email = email;
@@ -75,7 +71,15 @@ public class User {
         this.userImageUrl = userImageUrl;
         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
         this.status = StatusEnum.USER_REGISTERED;
-        this.tags = tags;
+    }
+
+    @Builder(builderClassName = "admin", builderMethodName = "adminBuilder")
+    public User(String email, String password, String nickName) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.role = UserRoleEnum.ADMIN;
+        this.status = StatusEnum.ADMIN_REGISTERED;
     }
 
     // 카카오 회원가입 생성자
@@ -92,19 +96,6 @@ public class User {
         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
         this.status = StatusEnum.USER_REGISTERED;
     }
-
-    @Builder()
-     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
-         this.password = password;
-         this.nickName = nickName;
-         this.email = email;
-         this.role = UserRoleEnum.USER;
-         this.age = age;
-         this.phoneNumber = phoneNumber;
-         this.userImageUrl = userImageUrl;
-         this.gradeEnum = UserGradeEnum.MOUNTAIN_CHILDREN;
-         this.status = StatusEnum.USER_REGISTERED;
-     }
 
     public User kakaoIdUpdate(Long kakaoId) {
         this.kakaoId = kakaoId;
