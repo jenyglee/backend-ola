@@ -1,6 +1,5 @@
 package com.project.sparta.user.controller;
 
-import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
 import com.project.sparta.refreshToken.dto.TokenDto;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.*;
@@ -61,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/regenerateToken")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto refreshTokenDto) {
-        return userService.regenerateToken(refreshTokenDto);
+    public ResponseEntity<TokenDto> regenerateToken(@Validated String refreshToken) {
+        return userService.regenerateToken(refreshToken);
     }
 }

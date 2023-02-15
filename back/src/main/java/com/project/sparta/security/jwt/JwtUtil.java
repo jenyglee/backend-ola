@@ -28,7 +28,7 @@ public class JwtUtil{
     private final UserDetailServiceImpl userDetailsService;
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
-    private static final long ACCESS_TOKEN_TIME = 60 * 60 * 1000L;     //Access 토큰 유효(1시간)
+    private static final long ACCESS_TOKEN_TIME = 60 * 1000L;     //Access 토큰 유효(1시간)
     public static final long REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000L;     //Refresh 토큰(1일)
 
     @Value("${jwt.token.access-token-secret}")
@@ -116,7 +116,6 @@ public class JwtUtil{
     }
 
 
-
     // header 토큰을 가져오기
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
@@ -128,10 +127,7 @@ public class JwtUtil{
 
     public Authentication getAuthenticationByAccessToken(String access_token){
         String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(access_token).getBody().getSubject();
-
-        System.out.println(userPrincipal);
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
-        System.out.println(userDetails.getUsername());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
