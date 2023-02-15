@@ -73,6 +73,11 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getRole()));
+        System.out.println(user.getEmail());
+        System.out.println(user.getNickName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getPhoneNumber());
+        System.out.println(user.getAge());
         return new LoginResponseDto(user.getRole());
     }
 
