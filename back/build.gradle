@@ -36,6 +36,9 @@ dependencies {
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
 
+    //OAuth2 추가
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.3'
+
     // MySql 추가
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 //    implementation 'mysql:mysql-connector-java'

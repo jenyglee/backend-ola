@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,16 +42,17 @@ public class UserController {
 
     //카카오 로그인(redirect-uri)
     @GetMapping("/login/kakao")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+    public void kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
         // code: 카카오 서버로부터 받은 인가 코드
-        // new KakaoApi
         System.out.println("code = " + code);
         String createToken = kakaoService.kakaoLogin(code, response);
-        // // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
+
+        // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
         Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
         cookie.setPath("/");
         response.addCookie(cookie);
-        return "gello";
+        response.sendRedirect("http://localhost:63342/front/template/j-1_noticeBoardAllList.html");
+        // return new TokenDto(createToken);
     }
 
     //로그아웃
