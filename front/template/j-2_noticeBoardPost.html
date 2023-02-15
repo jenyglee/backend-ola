@@ -133,10 +133,10 @@
     window.localStorage
   function getGuestBook() {
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: "http://localhost:8080/notice-boards/1", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
         beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+            xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
         },
       // data: {
       //   name: "sasas",

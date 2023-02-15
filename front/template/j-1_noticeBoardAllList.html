@@ -143,16 +143,16 @@
         <div class="w_1"></div>
         <div class="w_2">
             <div class="b_2">
-                <button type="button" id="btn_1">전체</button>
+                <button type="button" id="btn_1" onclick="allList()">전체</button>
             </div>
             <div class="b_3">
-                <button type="button" id="btn_2">서비스</button>
+                <button type="button" id="btn_2" onclick="serviceList()">서비스</button>
             </div>
             <div class="b_4">
-                <button type="button" id="btn_3">업데이트</button>
+                <button type="button" id="btn_3" onclick="updateList()">업데이트</button>
             </div>
             <div class="b_5">
-                <button type="button" id="btn_4">이벤트</button>
+                <button type="button" id="btn_4" onclick="eventList">이벤트</button>
             </div>
         </div>
         <div class="w_3"></div>
@@ -242,7 +242,8 @@
     </section>
 </main>
 <script>
-    window.localStorage
+    //window.localStorage
+
     //이 화면 들어올때 자동으로 호출
     $(document).ready(function () {
         getNoticeList(0);
@@ -256,10 +257,10 @@
           type: "GET",
           url: "http://localhost:8080/notice-boards?offset=" + offset + "&limit=10",
           beforeSend: function (xlr) {
-              xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+              xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
           },
           // data: {
-          //   name: "sasas",
+          //  title: "sasas",
           // },
           success: function (response) {
               console.log("호출완료");
@@ -277,10 +278,6 @@
               }
           },
       })
-
-
-
-
   }
 
 </script>
