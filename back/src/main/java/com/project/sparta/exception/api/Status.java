@@ -24,7 +24,6 @@ public enum Status {
    
 
     //403 -> Forbidden : 권한에러
-
     NO_PERMISSIONS_RECOMMENDCOURSE(HttpStatus.FORBIDDEN,"게시글작성 등급권한이 없습니다."),
     NO_PERMISSIONS_POST(HttpStatus.FORBIDDEN,"내가 작성한 게시글이 아닙니다."),
 

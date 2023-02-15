@@ -1,10 +1,8 @@
 package com.project.sparta.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
-import com.project.sparta.refreshToken.dto.TokenDto;
+import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.UserDetailsImpl;
-import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
@@ -15,7 +13,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -83,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping("/regenerateToken")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated String refreshToken) {
-        return userService.regenerateToken(refreshToken);
+    public ResponseEntity<TokenDto> regenerateToken(@Validated TokenDto tokenDto) {
+        return userService.regenerateToken(tokenDto);
     }
 }
