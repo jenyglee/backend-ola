@@ -1,6 +1,8 @@
 package com.project.sparta.config;
 
 
+import com.project.sparta.security.JwtAccessDeniedHandler;
+import com.project.sparta.security.JwtAuthenticationEntryPoint;
 import com.project.sparta.security.jwt.JwtAuthFilter;
 import com.project.sparta.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class SecurityConfig {
+@EnableGlobalMethodSecurity(securedEnabled = true)
+public class SecurityConfig{
     private final JwtUtil jwtUtil;
 
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -35,8 +40,11 @@ public class SecurityConfig {
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toH2Console())
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                .antMatchers(HttpMethod.POST, "/user/signup")       //회원가입 api 필터제외 -> api 나오면 수정 요함
-                .antMatchers(HttpMethod.POST, "/user/login");      //로그인 api 필터제외 -> api 나오면 수정 요함
+                .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외 -> api 나오면 수정 요함
+                .antMatchers(HttpMethod.POST, "/auth/login")      //로그인 api 필터제외 -> api 나오면 수정 요함
+                .antMatchers(HttpMethod.POST, "/auth/regenerateToken")
+                .antMatchers(HttpMethod.POST, "/auth/logout");
+
 //                .antMatchers(HttpMethod.POST,"/api/board");
 
     }
@@ -46,6 +54,12 @@ public class SecurityConfig {
 
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);        //세션을 만들지도 않고, 기존것을 사용하지 않겠다. -> JWT 토큰을 사용할 떄 주로 사용함.
+
+        // exception handling for jwt
+        httpSecurity.exceptionHandling()
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint);
+
         httpSecurity.authorizeRequests()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
@@ -55,4 +69,6 @@ public class SecurityConfig {
 
         return httpSecurity.build();
     }
+
+
 }

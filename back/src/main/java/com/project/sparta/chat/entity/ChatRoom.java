@@ -1,6 +1,6 @@
-package com.project.sparta.chatting.entity;
+package com.project.sparta.chat.entity;
 
-import com.project.sparta.chatting.service.ChatService;
+import com.project.sparta.chat.service.ChatService;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.socket.WebSocketSession;

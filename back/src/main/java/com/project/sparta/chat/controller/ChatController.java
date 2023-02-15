@@ -1,16 +1,12 @@
-package com.project.sparta.chatting.controller;
+package com.project.sparta.chat.controller;
 
-import com.project.sparta.chatting.entity.ChatRoom;
-import com.project.sparta.chatting.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;

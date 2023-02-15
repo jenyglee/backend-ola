@@ -17,6 +17,9 @@ public enum Status {
     INVALID_HASHTAG_NAME(HttpStatus.BAD_REQUEST, "해시태그 이름을 입력해주세요."),
     INVALID_USER(HttpStatus.BAD_REQUEST, "회원정보를 찾을 수 없습니다."),
 
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰이 유효하지 않습니다."),
+    DISCORD_TOKEN(HttpStatus.BAD_REQUEST, "토큰이 일치하지 않습니다."),
+   
 
     //403 -> Forbidden : 권한에러
 
@@ -37,7 +40,11 @@ public enum Status {
     CONFLICT_NICKNAME(HttpStatus.CONFLICT, "이미 사용중인 닉네임입니다"),
 
     // 401 -> 잘못된 인증 및 인가 정보
-    INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 비밀번호를 잘못 입력했습니다.");
+    INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 비밀번호를 잘못 입력했습니다."),
+
+    //500 -> SERVER ERROR
+    INVALID_SERVER(HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 REFRESH 토큰입니다.");
+
 
 
     private HttpStatus httpStatus;

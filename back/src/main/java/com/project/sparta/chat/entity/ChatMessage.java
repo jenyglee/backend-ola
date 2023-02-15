@@ -1,4 +1,4 @@
-package com.project.sparta.chatting.entity;
+package com.project.sparta.chat.entity;
 
 import lombok.Getter;
 import lombok.Setter;

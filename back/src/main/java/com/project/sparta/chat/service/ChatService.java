@@ -1,8 +1,7 @@
-package com.project.sparta.chatting.service;
+package com.project.sparta.chat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.sparta.chatting.entity.ChatRoom;
-import com.project.sparta.security.UserDetailsImpl;
+import com.project.sparta.chat.entity.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

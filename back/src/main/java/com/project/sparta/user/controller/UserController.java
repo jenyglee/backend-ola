@@ -1,5 +1,7 @@
 package com.project.sparta.user.controller;
 
+import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
+import com.project.sparta.refreshToken.dto.TokenDto;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.UserService;
@@ -7,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,10 +27,17 @@ public class UserController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto requestDto){
         // 어드민인지 확인하는 로직
-        LoginResponseDto myRole = userService.login(requestDto, response);
-        return new ResponseEntity(myRole, HttpStatus.OK);
+        return userService.login(requestDto);
+    }
+
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity login(@Validated @RequestBody TokenDto tokenRequestDto){
+        // 어드민인지 확인하는 로직
+        userService.logout(tokenRequestDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 이메일 중복확인
@@ -50,5 +58,10 @@ public class UserController {
     public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
         userService.getMyInfo(userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/regenerateToken")
+    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto refreshTokenDto) {
+        return userService.regenerateToken(refreshTokenDto);
     }
 }
