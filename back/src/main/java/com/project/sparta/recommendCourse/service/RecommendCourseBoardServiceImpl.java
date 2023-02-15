@@ -182,7 +182,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //2.전체 데이터 뽑아서
         List<RecommendCourseBoard> contentList = all.getContent();
         for (RecommendCourseBoard recommendCourseBoard : contentList) {
-            // 도와줘~
+            if(recommendCourseBoard.getPostStatus().equals(PostStatusEnum.VAILABLE)){
+                contentList.add(recommendCourseBoard);
+            }
         }
 
         long totalElements = all.getTotalElements();
