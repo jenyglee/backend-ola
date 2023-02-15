@@ -23,12 +23,12 @@ import java.util.Date;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtUtil{
+public class JwtUtil {
 
     private final UserDetailServiceImpl userDetailsService;
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
-    private static final long ACCESS_TOKEN_TIME = 60 * 1000L;     //Access 토큰 유효(1시간)
+    private static final long ACCESS_TOKEN_TIME = 60 * 60 * 1000L;     //Access 토큰 유효(1시간)
     public static final long REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000L;     //Refresh 토큰(1일)
 
     @Value("${jwt.token.access-token-secret}")
@@ -37,7 +37,7 @@ public class JwtUtil{
     @Value(("${jwt.token.refresh-token-secret}"))
     private String refresh_token_secret_key;
 
-    public Key tokenDecode(String token){
+    public Key tokenDecode(String token) {
         byte[] bytes = Base64.getDecoder().decode(token);
         return Keys.hmacShaKeyFor(bytes);
     }
@@ -45,7 +45,7 @@ public class JwtUtil{
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
 
-    public String generateAccessToken(String email, UserRoleEnum role){
+    public String generateAccessToken(String email, UserRoleEnum role) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
         Date date = new Date();
@@ -63,7 +63,6 @@ public class JwtUtil{
     }
 
 
-    // 토큰 생성
     public String generateRefreshToken(String email, UserRoleEnum role) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
@@ -85,7 +84,8 @@ public class JwtUtil{
     // jwt의 유효성 체크 및 만료일자 확인
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(token);
+            String changeToken = token.substring(7);
+            Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
@@ -99,9 +99,10 @@ public class JwtUtil{
         return false;
     }
 
-    public boolean validateRefreshToken(String token){
+    public boolean validateRefreshToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(token);
+            String changeToken = token.substring(7);
+            Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(changeToken);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
@@ -116,7 +117,6 @@ public class JwtUtil{
     }
 
 
-    // header 토큰을 가져오기
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
@@ -125,23 +125,24 @@ public class JwtUtil{
         return null;
     }
 
-    public Authentication getAuthenticationByAccessToken(String access_token){
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(access_token).getBody().getSubject();
+    public Authentication getAuthenticationByAccessToken(String access_token) {
+        String changeToken = access_token.substring(7);
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public Authentication getAuthenticationByRefreshToken(String access_token){
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(access_token).getBody().getSubject();
+    public Authentication getAuthenticationByRefreshToken(String access_token) {
+        String changeToken = access_token.substring(7);
+        String userPrincipal = Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(changeToken).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public Long getExpiration(String accessToken){
-        Date expiration = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(accessToken).getBody().getExpiration();
-
-        //현재시간
+    public Long getExpiration(String accessToken) {
+        String changeToken = accessToken.substring(7);
+        Date expiration = Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken).getBody().getExpiration();
         long now = new Date().getTime();
-        return (expiration.getTime()-now);
+        return (expiration.getTime() - now);
     }
 }

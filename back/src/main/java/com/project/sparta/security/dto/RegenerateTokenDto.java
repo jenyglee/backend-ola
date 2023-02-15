@@ -1,4 +1,4 @@
-package com.project.sparta.refreshToken.dto;
+package com.project.sparta.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
