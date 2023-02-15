@@ -318,10 +318,12 @@
         };
 
         $.ajax(settings).done(function (response,status,xhr) {
-            console.log(response);
+            // console.log(response);
+            console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
-
             alert("로그인 성공")
+            window.location.href = "../index.html";
+
         }).fail(function (response){
             console.log(response);
             alert("로그인 실패")
