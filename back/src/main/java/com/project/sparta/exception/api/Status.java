@@ -38,6 +38,7 @@ public enum Status {
     CONFLICT_FRIEND(HttpStatus.CONFLICT, "이미 친구 관계입니다."),
     CONFLICT_EMAIL(HttpStatus.CONFLICT, "이미 사용중인 이메일입니다"),
     CONFLICT_NICKNAME(HttpStatus.CONFLICT, "이미 사용중인 닉네임입니다"),
+    CONFLICT_LIKE(HttpStatus.CONFLICT, "이미 좋아요를 누른 게시글입니다."),
 
     // 401 -> 잘못된 인증 및 인가 정보
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 비밀번호를 잘못 입력했습니다."),

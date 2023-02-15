@@ -4,6 +4,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.refreshToken.dto.RegenerateTokenDto;
 import com.project.sparta.refreshToken.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
     private final BoardRepository boardRepository;
+    private final RecommendCourseBoardRepository recommandCoursePostRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtUtil jwtUtil;
 
@@ -49,22 +52,30 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
         User user1 = new User(signupDto.getEmail(), encodedPassword, signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
         User saveUser = userRepository.save(user1);
+        System.out.println(signupDto.getEmail());
+        System.out.println(signupDto.getNickName());
+        System.out.println(signupDto.getPassword());
+        System.out.println(signupDto.getPhoneNumber());
+        System.out.println(signupDto.getAge());
 
         // 2. 선택한 hashtag를 각각 Usertag로 테이블에 저장한다.
         List<Long> longList = signupDto.getTagList();
         List<UserTag> userTagList = new ArrayList<>();
 
-        for (Long along : longList) {
-            Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-            UserTag userTag = new UserTag(saveUser, hashtag);
-            userTagRepository.save(userTag);
-            userTagList.add(userTag);
+        if(longList!=null)
+        {
+            for (Long along : longList) {
+                Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+                UserTag userTag = new UserTag(saveUser, hashtag);
+                userTagRepository.save(userTag);
+                userTagList.add(userTag);
+            }
         }
-
+        
         // 3. User에 List<UserTag>를 넣어준다.
         saveUser.updateUserTags(userTagList);
-    }
 
+    }
     //로그인
     @Override
     public ResponseEntity<TokenDto> login(LoginRequestDto requestDto) {
@@ -73,6 +84,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
+
 
         String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
@@ -120,7 +132,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void validateEmail(ValidateEmailDto emailDto) {
         Optional<User> findUser = userRepository.findByEmail(emailDto.getEmail());
-        if (findUser.isPresent()) {
+        if(findUser.isPresent()){
             throw new CustomException(CONFLICT_EMAIL);
         }
     }
@@ -129,7 +141,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void validateNickName(ValidateNickNameDto nickNameDto) {
         Optional<User> findUser = userRepository.findByNickName(nickNameDto.getNickName());
-        if (findUser.isPresent()) {
+        if(findUser.isPresent()){
             throw new CustomException(CONFLICT_NICKNAME);
         }
     }

@@ -1,8 +1,6 @@
 package com.project.sparta.config;
 
 
-import com.project.sparta.security.JwtAccessDeniedHandler;
-import com.project.sparta.security.JwtAuthenticationEntryPoint;
 import com.project.sparta.security.jwt.JwtAuthFilter;
 import com.project.sparta.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +21,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
-public class SecurityConfig{
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+public class SecurityConfig {
     private final JwtUtil jwtUtil;
 
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -69,6 +64,4 @@ public class SecurityConfig{
 
         return httpSecurity.build();
     }
-
-
 }

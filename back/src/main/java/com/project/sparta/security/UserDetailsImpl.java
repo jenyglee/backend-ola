@@ -29,8 +29,14 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         UserRoleEnum role = user.getRole();
-        UserGradeEnum grade = user.getGradeEnum();
-        String authority = role.getAuthority() + ":" + grade.getAuthority();
+        String authority;
+
+        if (role.getAuthority().equals("ROLE_ADMIN")){
+            authority = role.getAuthority();
+        }else {
+            UserGradeEnum grade = user.getGradeEnum();
+            authority = role.getAuthority() + ":" + grade.getAuthority();
+        }
 
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
         Collection<GrantedAuthority> authorities = new ArrayList<>();

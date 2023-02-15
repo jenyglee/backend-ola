@@ -364,7 +364,7 @@
           </select>
         </div>
         <!-- 카드 -->
-        <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+        <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px " id="postList">
           <a href="./h-3_communityPostDetails.html" class="article" style="text-decoration: none; color: #000000">
             <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
               <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
@@ -544,6 +544,35 @@
           },
         })
       }
+      function getCommunityList(offset) {
+        // 1. 데이터 초기화를 해야됨.
+        $('#postList').empty();
+
+        // 2. 통신해서 불러오기
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/community_boards?offset=" + offset + "&limit=10",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+          },
+          data: {},
+          success: function (response) {
+            for (let i = 0; i < response.data.length; i++) {
+              let temp =
+                      `
+                <tr>
+                    <td>서비스</td>
+                   <td><a href="j-2_noticeBoardPost.html">22000</a></td> // 누르면 이 게시글의 ID를 localStorage.set("boardId", "내가누른 게시글ID")
+                    <td>2023-02-11</td>
+                </tr>
+                        `
+              $('#PostList').append(temp)
+            }
+          },
+        })
+      }
+
+
     </script>
   </body>
 </html>
