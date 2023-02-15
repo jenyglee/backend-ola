@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toH2Console())
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외 -> api 나오면 수정 요함
+                .antMatchers(HttpMethod.POST, "/auth/signup/admin")       //회원가입 api 필터제외 -> api 나오면 수정 요함
                 .antMatchers(HttpMethod.POST, "/auth/login")      //로그인 api 필터제외 -> api 나오면 수정 요함
                 .antMatchers(HttpMethod.POST, "/auth/logout");
 //                .antMatchers(HttpMethod.POST,"/api/board");
