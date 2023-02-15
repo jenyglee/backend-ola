@@ -244,18 +244,18 @@
             <div class="main_line">
             <div class="midmain">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">이메일</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+                    <label for="inputEmail">이메일</label>
                 </div>
 
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">비밀번호</label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <label for="inputPassword">비밀번호</label>
                 </div>
 
                 <br>
                 <div class="d-grid gap-2 col-6 mx-auto" id="loginbtn">
-                    <button class="btn_1" type="button" style="border-radius: 5px;"><b>로그인</b></button>
+                    <button class="btn_1" type="button" style="border-radius: 5px;" onclick="handleLogin()"><b>로그인</b></button>
                 </div>
 
                 <br>
@@ -301,19 +301,29 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
     }
-    function handleCreateGuestBook() {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-            data: {
-                name: "sasas",
+    function handleLogin() {
+        var settings = {
+            "url": "http://localhost:8080/auth/login",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                 "Content-Type": "application/json"
             },
-            success: function (response) {
-                console.log(response)
-                alert(response.msc)
-                window.location.reload();
-            },
-        })
+            "data": JSON.stringify({
+                "email": $('#inputEmail').val(),
+                "password": $('#inputPassword').val()
+            }),
+        };
+
+        $.ajax(settings).done(function (response,status,xhr) {
+            console.log(response);
+            localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
+
+            alert("로그인 성공")
+        }).fail(function (response){
+            console.log(response);
+            alert("로그인 실패")
+        });
     }
 </script>
 </body>

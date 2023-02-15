@@ -185,19 +185,13 @@
       };
 
       $.ajax(settings).done(function (response) {
-          if(settings.data)
-          {
               console.log(response);
               alert("회원가입 완료")
-              window.location.href = "c-2_singup.html";
-          }
-          else
-          {
-              console.log(response);
-              alert("회원가입 실패")
-          }
-
-
+              window.location.href = "b-1_login.html";
+      })
+      .fail(function (response){
+          console.log(response);
+          alert("회원가입 실패")
       });
   }
 </script>
