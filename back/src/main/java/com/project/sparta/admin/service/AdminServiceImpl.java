@@ -10,6 +10,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 
+import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
@@ -49,6 +50,7 @@ public class AdminServiceImpl implements AdminService{
     // 어드민 회원가입
 // ADMIN_TOKEN
     private final PasswordEncoder encoder;
+    private final LikeBoardRepository likeBoardRepository;
 
     // 어드민 회원가입
     public void signup(AdminRequestSignupDto adminRequestSignupDto) {
@@ -71,8 +73,9 @@ public class AdminServiceImpl implements AdminService{
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
         communityBoard.updateBoard(communityBoardRequestDto);
         boardRepository.saveAndFlush(communityBoard);
+        Long likeCount = likeBoardRepository.countByBoard_Id(community_board_id);
         CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-            communityBoard);
+            communityBoard , likeCount);
         return communityBoardResponseDto;
     }
 
@@ -90,10 +93,17 @@ public class AdminServiceImpl implements AdminService{
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<CommunityBoard> boards = boardRepository.findAll(pageable);
-        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
-            .stream()
-            .map(CommunityBoardResponseDto::new)
-            .collect(Collectors.toList());
+
+        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = new ArrayList<>();
+        for (CommunityBoard communityBoard: boards) {
+            Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
+            CommunityBoardResponseDtoList.add(new CommunityBoardResponseDto(communityBoard,likeCount));
+        }
+
+//        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+//            .stream()
+//            .map(CommunityBoardResponseDto::new)
+//            .collect(Collectors.toList());
         return CommunityBoardResponseDtoList;
     }
     @Override
@@ -101,8 +111,9 @@ public class AdminServiceImpl implements AdminService{
     public CommunityBoardResponseDto getCommunityBoard(Long communityBoardId) {
         CommunityBoard communityBoard = boardRepository.findById(communityBoardId)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+        Long likeCount = likeBoardRepository.countByBoard_Id(communityBoardId);
         CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-            communityBoard);
+            communityBoard,likeCount);
         return communityBoardResponseDto;
     }
 

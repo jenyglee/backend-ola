@@ -15,4 +15,6 @@ public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
 
     Optional<CommentLike> findByUserEmailAndComment(String email, CommunityComment comment);
 
+//    long countByComment_Id(Long id);
+
 }

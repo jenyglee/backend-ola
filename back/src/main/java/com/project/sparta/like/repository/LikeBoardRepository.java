@@ -12,4 +12,6 @@ public interface LikeBoardRepository extends JpaRepository<BoardLike, Long> {
 
 
     Optional<BoardLike> findByUserEmailAndBoard(String email, CommunityBoard board);
+
+    Long countByBoard_Id(Long id);
 }

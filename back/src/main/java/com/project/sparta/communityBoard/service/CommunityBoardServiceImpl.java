@@ -12,6 +12,7 @@ import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserRoleEnum;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommunityBoardServiceImpl implements CommunityBoardService {
 
   private final BoardRepository boardRepository;
+  private final LikeBoardRepository likeBoardRepository;
 
   @Override
   @Transactional
@@ -86,10 +88,17 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     Pageable pageable = PageRequest.of(page, size, sort);
 
     Page<CommunityBoard> boards = boardRepository.findAll(pageable);
-    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
-        .stream()
-        .map(CommunityBoardResponseDto::new)
-        .collect(Collectors.toList());
+
+    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = new ArrayList<>();
+    for (CommunityBoard communityBoard: boards) {
+      Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
+      CommunityBoardResponseDtoList.add(new CommunityBoardResponseDto(communityBoard,likeCount));
+    }
+
+//    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+//        .stream()
+//        .map(CommunityBoardResponseDto::new)
+//        .collect(Collectors.toList());
     return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
   }
   @Override
@@ -98,10 +107,16 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     Sort sort = Sort.by(Direction.ASC, "id");
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<CommunityBoard> boards = boardRepository.findAllByNickName(pageable,user.getNickName());
-    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
-        .stream()
-        .map(CommunityBoardResponseDto::new)
-        .collect(Collectors.toList());
+
+    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = new ArrayList<>();
+    for (CommunityBoard communityBoard: boards) {
+      Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
+      CommunityBoardResponseDtoList.add(new CommunityBoardResponseDto(communityBoard,likeCount));
+    }
+//    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+//        .stream()
+//        .map(CommunityBoardResponseDto::new)
+//        .collect(Collectors.toList());
     return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
   }
 

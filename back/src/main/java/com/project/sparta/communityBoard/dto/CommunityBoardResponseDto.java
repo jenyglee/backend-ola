@@ -21,7 +21,9 @@ public class CommunityBoardResponseDto {
 
   private Long id;
 
-  public CommunityBoardResponseDto(CommunityBoard communityBoard) {
+  private Long likeCount;
+
+  public CommunityBoardResponseDto(CommunityBoard communityBoard , Long likeCount) {
     this.nickName = communityBoard.getNickName();
     this.contents = communityBoard.getContents();
     this.title = communityBoard.getTitle();
@@ -30,5 +32,6 @@ public class CommunityBoardResponseDto {
         .stream()
         .map(CommunityResponseDto::new)
         .collect(Collectors.toList());
+    this.likeCount = likeCount;
   }
 }

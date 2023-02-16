@@ -19,7 +19,7 @@ public class RecommendCourseBoard extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recommandCourse_post_id")
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -73,8 +73,10 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
         // this.images = images;
     }
+    
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus){
         this.postStatus = postStatus;
     }
+
 }

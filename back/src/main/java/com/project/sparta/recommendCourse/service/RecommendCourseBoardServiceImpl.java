@@ -4,6 +4,7 @@ package com.project.sparta.recommendCourse.service;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeRecommendRepository;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
@@ -34,6 +35,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     private final RecommendCourseImgService recommendCourseImgService;
     private final UserRepository userRepository;
+    private final LikeRecommendRepository likeRecommendRepository;
 
 
     /**
@@ -167,8 +169,13 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
         List<String> imgRouteList = dummyList;
 
+
+
+        //게시글의 라이크가 몇개인지 넣어준다.
+        Long likeCount = likeRecommendRepository.countByCourseBoard_Id(recommendCourseBoard.getId());
+
         //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName());
+        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName(),likeCount);
     }
 
     //전체 코스 조회(페이징)
@@ -190,11 +197,14 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         long totalElements = all.getTotalElements();
 
+
+
         //3. 엔티티로 만들어서
         List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
         List<String> dummyList = new ArrayList<>();
         dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
         for (RecommendCourseBoard coursePost:contentList) {
+            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(coursePost.getId());
             RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
                     .title(coursePost.getTitle())
                     // .imgList(coursePost
@@ -203,10 +213,12 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
                     //         .map(RecommendCourseImg::getImgRoute)
                     //         .collect(Collectors.toList()))
                     .imgList(dummyList)
-                    .count(1523)
+                    .likeCount(likeCount)
                     .build();
             FindAllPostDtoList.add(responseFindAllPos);
         }
+
+
         // Todo 좋아요 갯수 필드에 추후에 추가
 
         //4. 클라이언트에 응답.

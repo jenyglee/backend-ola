@@ -37,11 +37,13 @@ public class CommunityBoardController {
         communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
   }
+
   @GetMapping("/community_boards/{community_board_id}")
   public ResponseEntity getCommunityBoard(@PathVariable Long community_board_id) {
     CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(community_board_id);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
+
   @GetMapping("/community_boards")
   public ResponseEntity getAllCommunityBoard(
       @RequestParam("page") int page,
@@ -50,6 +52,7 @@ public class CommunityBoardController {
     PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
+
   @GetMapping("/community_boards/me_boards")
   public ResponseEntity getMyBoardAll(
       @RequestParam("page") int page,
@@ -58,6 +61,7 @@ public class CommunityBoardController {
     PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page,size,userDetails.getUser());
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
+
   @PatchMapping("/community_boards/{community_board_id}")
   public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -65,6 +69,7 @@ public class CommunityBoardController {
         community_board_id, communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
   }
+
 
   //선택한 게시글 삭제
   @DeleteMapping("/community_boards/{community_board_id}")

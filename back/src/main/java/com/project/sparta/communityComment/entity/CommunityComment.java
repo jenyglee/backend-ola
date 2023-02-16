@@ -32,8 +32,8 @@ public class CommunityComment extends Timestamped {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "communityCommentId")
   private Long Id;
-  private Long communityBoardId;
-  private String nickName;
+  private Long communityBoardId; //게시글.. 연관관계가 원래 없는건가..? 양방향 연관관계 달아줘야 하지 않나..? 보니까 컨트롤러 다 보이던데.. 그럼 게시글에서 좋아요 찾아서 보내줘야 할텐데..
+  private String nickName; // 엔티티 건드는거는 물어보고 바꾸자..!
   private String contents;
 
 
