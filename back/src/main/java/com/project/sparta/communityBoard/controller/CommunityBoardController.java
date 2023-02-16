@@ -8,6 +8,7 @@ import com.project.sparta.communityBoard.service.CommunityBoardService;
 //import com.project.sparta.communityComment.controller.CommunityCommnetController;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.dto.CommunityResponseDto;
+import com.project.sparta.communityComment.dto.CommunityWithLikeResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.security.UserDetailsImpl;
@@ -33,9 +34,8 @@ public class CommunityBoardController {
   @PostMapping("/community_boards")
   public ResponseEntity createCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
       , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(
-        communityBoardRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @GetMapping("/community_boards/{community_board_id}")
@@ -53,21 +53,21 @@ public class CommunityBoardController {
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
 
-  @GetMapping("/community_boards/me_boards")
-  public ResponseEntity getMyBoardAll(
-      @RequestParam("page") int page,
-      @RequestParam("size") int size,
-      @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page,size,userDetails.getUser());
-    return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
-  }
+//  @GetMapping("/community_boards/me_boards")
+//  public ResponseEntity getMyBoardAll(
+//      @RequestParam("page") int page,
+//      @RequestParam("size") int size,
+//      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//    PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page,size,userDetails.getUser());
+//    return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
+//
+//  }
 
   @PatchMapping("/community_boards/{community_board_id}")
   public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.updateCommunityBoard(
-        community_board_id, communityBoardRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    communityBoardService.updateCommunityBoard(community_board_id, communityBoardRequestDto, userDetail.getUser());
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
 

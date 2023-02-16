@@ -16,10 +16,10 @@ import java.util.List;
 
 public interface AdminService {
   void signup(AdminRequestSignupDto signupDto);
-  CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
+//  void updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
   void deleteCommunityBoard(Long community_board_id);
-  CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
-  List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size);
+//  CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
+//  List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size);
 //  List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto) throws IOException;
 //  //코스 삭제
 //  void deleteRecommendCoursePost(Long id);

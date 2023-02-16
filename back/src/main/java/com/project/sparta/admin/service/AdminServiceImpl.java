@@ -65,19 +65,21 @@ public class AdminServiceImpl implements AdminService{
         userRepository.save(admin);
     }
 
-    @Override
-    @Transactional
-    public CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto,
-        User user) {
-        CommunityBoard communityBoard = boardRepository.findById(community_board_id)
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        communityBoard.updateBoard(communityBoardRequestDto);
-        boardRepository.saveAndFlush(communityBoard);
-        Long likeCount = likeBoardRepository.countByBoard_Id(community_board_id);
-        CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-            communityBoard , likeCount);
-        return communityBoardResponseDto;
-    }
+//    @Override
+//    @Transactional
+//    public void updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto,
+//        User user) {
+//        CommunityBoard communityBoard = boardRepository.findById(community_board_id)
+//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+//        communityBoard.updateBoard(communityBoardRequestDto);
+//
+//        boardRepository.saveAndFlush(communityBoard);
+//
+//        Long likeCount = likeBoardRepository.countByBoard_Id(community_board_id);
+//        CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
+//            communityBoard , likeCount);
+//
+//    }
 
     @Override
     @Transactional
@@ -86,36 +88,36 @@ public class AdminServiceImpl implements AdminService{
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
         boardRepository.deleteById(community_board_id);
     }
-    @Override
-    @Transactional
-    public List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of(page, size, sort);
-
-        Page<CommunityBoard> boards = boardRepository.findAll(pageable);
-
-        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = new ArrayList<>();
-        for (CommunityBoard communityBoard: boards) {
-            Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
-            CommunityBoardResponseDtoList.add(new CommunityBoardResponseDto(communityBoard,likeCount));
-        }
-
-//        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
-//            .stream()
-//            .map(CommunityBoardResponseDto::new)
-//            .collect(Collectors.toList());
-        return CommunityBoardResponseDtoList;
-    }
-    @Override
-    @Transactional
-    public CommunityBoardResponseDto getCommunityBoard(Long communityBoardId) {
-        CommunityBoard communityBoard = boardRepository.findById(communityBoardId)
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        Long likeCount = likeBoardRepository.countByBoard_Id(communityBoardId);
-        CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
-            communityBoard,likeCount);
-        return communityBoardResponseDto;
-    }
+//    @Override
+//    @Transactional
+//    public List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size) {
+//        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//
+//        Page<CommunityBoard> boards = boardRepository.findAll(pageable);
+//
+//        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = new ArrayList<>();
+//        for (CommunityBoard communityBoard: boards) {
+//            Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
+//            CommunityBoardResponseDtoList.add(new CommunityBoardResponseDto(communityBoard,likeCount));
+//        }
+//
+////        List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+////            .stream()
+////            .map(CommunityBoardResponseDto::new)
+////            .collect(Collectors.toList());
+//        return CommunityBoardResponseDtoList;
+//    }
+//    @Override
+//    @Transactional
+//    public CommunityBoardResponseDto getCommunityBoard(Long communityBoardId) {
+//        CommunityBoard communityBoard = boardRepository.findById(communityBoardId)
+//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+//        Long likeCount = likeBoardRepository.countByBoard_Id(communityBoardId);
+//        CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto(
+//            communityBoard,likeCount);
+//        return communityBoardResponseDto;
+//    }
 
 //    @Override
 //    public List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto) throws IOException {

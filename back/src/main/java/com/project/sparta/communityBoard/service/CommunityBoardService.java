@@ -10,14 +10,14 @@ import com.project.sparta.user.entity.User;
 import java.util.List;
 
 public interface CommunityBoardService {
-   CommunityBoardResponseDto createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
-   CommunityBoardResponseDto updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
+   void createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
+   void updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
    void deleteCommunityBoard(Long community_board_id,User user);
    CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
 
    PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);
 
-   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+//   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);
 
 
 

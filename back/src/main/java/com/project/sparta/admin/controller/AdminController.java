@@ -50,13 +50,13 @@ public class AdminController {
 //        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
 //    }
 
-    @PatchMapping("/community_boards/{community_board_id}")
-    public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-            ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.updateCommunityBoard(
-                community_board_id, communityBoardRequestDto, userDetail.getUser());
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-    }
+//    @PatchMapping("/community_boards/{community_board_id}")
+//    public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
+//            ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
+//        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.updateCommunityBoard(
+//                community_board_id, communityBoardRequestDto, userDetail.getUser());
+//        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+//    }
 
 //    //선택한 게시글 삭제
 //    @DeleteMapping("/community_boards/{community_board_id}")

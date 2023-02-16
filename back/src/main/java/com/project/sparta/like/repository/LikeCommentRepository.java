@@ -7,6 +7,7 @@ import com.project.sparta.like.entity.CommentLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.xml.stream.events.Comment;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,6 +16,8 @@ public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
 
     Optional<CommentLike> findByUserEmailAndComment(String email, CommunityComment comment);
 
-//    long countByComment_Id(Long id);
+    long countByComment(CommunityComment comment);
+
+//    List<CommentLike> findByComment(CommunityComment comment);
 
 }
