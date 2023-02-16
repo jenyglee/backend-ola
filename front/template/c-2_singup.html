@@ -94,84 +94,89 @@
 
         <div class="tag-box">
             <div>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag()" id="mountain">#등산</button>
-                <button type="button" class="btn btn-warning btn-tag">#파전</button>
-                <button type="button" class="btn btn-warning btn-tag">#정상</button>
-                <button type="button" class="btn btn-warning btn-tag">#야호</button>
-                <button type="button" class="btn btn-warning btn-tag">#맛집</button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #막걸리
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(1)">#주변맛집</button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(2)">#등산용품</button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(3)">#등산데이트</button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(4)">#등산친구</button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(5)">
+                    #봄산
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #등린이
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(6)">
+                    #여름산
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #등산복
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(7)">
+                    #가을산
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(8)">
                     #겨울산
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(9)">
+                    #안전수칙
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(10)">
                     #산악회
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #등산용품
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(11)">
+                    #10~20대
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #등산코스
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(12)">
+                    #30~40대
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #금강산
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(13)">
+                    #50~60대
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #등산데이트코스
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(14)">
+                    #등산꿀팁
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #계절별등산추천
-                </button>
-                <button type="button" class="btn btn-warning btn-tag">
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(15)">
                     #가을산추천
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #금강산도식후경
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(16)">
+                    #산추천
                 </button>
-                <button type="button" class="btn btn-warning btn-tag">
-                    #야간등산
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(17)">
+                    #계곡추천
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(18)">
+                    #등린이
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(19)">
+                    #등산입문자
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(20)">
+                    #등산매니아
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(21)">
+                    #등산모임
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(22)">
+                    #1시간걸리는산
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(23)">
+                    #2시간걸리는산
+                </button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(24)">
+                    #3시간걸리는산
                 </button>
             </div>
 
             <div class="d-grid gap-2 col-6 mx-auto" id="nextbtn">
-                <button class="btn1" type="button" style="border-radius: 5px;"><b>다음으로</b></button>
+                <button class="btn1" type="button" style="border-radius: 5px;" onclick="next()"><b>다음으로</b></button>
             </div>
         </div>
 
     </section>
 </main>
 <script>
-function handleCreateHashtag() {
-    var settings = {
-        "url": "http://localhost:8080/hashtag",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json",
-            // "Authurization" :""
-        },
-        "data": JSON.stringify({
+    let list =[];
+function handleCreateHashtag(hashtag) {
+    list.push(hashtag)
+    localStorage.setItem("signup2",list)
+    console.log(list)
+}
 
-        }),
-    };
-
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        alert("회원가입 완료")
-        window.location.href = "c-2_singup.html";
-        settings.headers.Authurization = response.toString();
-    })
-    .fail(function (response){
-        console.log(response);
-        alert("회원가입 실패")
-    });
+function next() {
+    window.location.href = "c-3_singup.html";
 }
 </script>
 </body>
