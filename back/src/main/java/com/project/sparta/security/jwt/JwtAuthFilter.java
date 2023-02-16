@@ -3,24 +3,19 @@ package com.project.sparta.security.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.security.dto.SecurityExceptionDto;
-import com.project.sparta.user.controller.UserController;
-import com.project.sparta.user.service.UserService;
-import com.project.sparta.user.service.UserServiceImpl;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 
 @Slf4j
@@ -38,12 +33,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = jwtUtil.resolveToken(request);
 
         try {
-            if (token != null) {
+            if (!Objects.isNull(token)) {
                 if (!jwtUtil.validateToken(token)) {
-                    //유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
-                    // 에러를 보내주고 -> 클라이언트
+                    // 유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
+                    // 클라이언트에게 에러를 보내주고
                     // 클라이언트 -> 갱신된 api호출 -> api
-                    //throw new 401에러 발생되게 만들기
+                    // throw new AuthenticationException();
+                    response.sendError(401, "토큰이 만료되었습니다.");
                 }
 
                 Authentication auth = jwtUtil.getAuthenticationByAccessToken(token);
