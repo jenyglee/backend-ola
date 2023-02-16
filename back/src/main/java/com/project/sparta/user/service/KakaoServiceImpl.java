@@ -36,14 +36,15 @@ public class KakaoServiceImpl implements KakaoService {
         String accessToken = getToken(code);
         System.out.println("accessToken = " + accessToken);
         //2. 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
-        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
-
-        //3. 필요시에 회원가입
-        User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
-
-        //4. JWT 토큰 반환
-        String createToken = jwtUtil.generateAccessToken(kakaoUser.getNickName(), kakaoUser.getRole());
-        return createToken;
+        // KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
+        //
+        // //3. 필요시에 회원가입
+        // User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
+        //
+        // //4. JWT 토큰 반환
+        // String createToken = jwtUtil.generateAccessToken(kakaoUser.getNickName(), kakaoUser.getRole());
+        // return createToken;
+        return null;
     }
 
     // '인가 코드'로 Access Token 요청
