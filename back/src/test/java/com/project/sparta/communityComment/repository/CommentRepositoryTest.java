@@ -1,4 +1,3 @@
-/*
 package com.project.sparta.communityComment.repository;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
@@ -47,4 +46,3 @@ public class CommentRepositoryTest {
 
 
 }
-*/
