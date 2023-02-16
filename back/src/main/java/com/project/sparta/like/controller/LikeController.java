@@ -18,7 +18,7 @@ public class LikeController {
 //    private final RecommendCourseLikeService recommendCourseLikeService;
 
     //보드 라이크
-    @PostMapping("/board_like/{id}")
+    @PostMapping("/board_like")
     @ResponseStatus(HttpStatus.OK)
     public void likeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
