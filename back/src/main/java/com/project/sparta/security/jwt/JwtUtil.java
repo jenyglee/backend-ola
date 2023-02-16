@@ -81,7 +81,6 @@ public class JwtUtil {
         return refreshToken;
     }
 
-    // jwt의 유효성 체크 및 만료일자 확인
     public boolean validateToken(String token) {
         try {
             String changeToken = token.substring(7);
