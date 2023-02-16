@@ -321,6 +321,7 @@
             // console.log(response);
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
+
             alert("로그인 성공")
             window.location.href = "../index.html";
 

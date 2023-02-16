@@ -94,7 +94,7 @@
 
         <div class="tag-box">
             <div>
-                <button type="button" class="btn btn-warning btn-tag">#등산</button>
+                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag()" id="mountain">#등산</button>
                 <button type="button" class="btn btn-warning btn-tag">#파전</button>
                 <button type="button" class="btn btn-warning btn-tag">#정상</button>
                 <button type="button" class="btn btn-warning btn-tag">#야호</button>
@@ -147,21 +147,32 @@
 
     </section>
 </main>
-<!--<script>-->
-<!--  function handleCreateGuestBook() {-->
-<!--    $.ajax({-->
-<!--      type: "GET",-->
-<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
-<!--      data: {-->
-<!--        name: "sasas",-->
-<!--      },-->
-<!--      success: function (response) {-->
-<!--        console.log(response)-->
-<!--        alert(response.msc)-->
-<!--        window.location.reload();-->
-<!--      },-->
-<!--    })-->
-<!--  }-->
+<script>
+function handleCreateHashtag() {
+    var settings = {
+        "url": "http://localhost:8080/hashtag",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json",
+            // "Authurization" :""
+        },
+        "data": JSON.stringify({
+
+        }),
+    };
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        alert("회원가입 완료")
+        window.location.href = "c-2_singup.html";
+        settings.headers.Authurization = response.toString();
+    })
+    .fail(function (response){
+        console.log(response);
+        alert("회원가입 실패")
+    });
+}
 </script>
 </body>
 
