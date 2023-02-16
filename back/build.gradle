@@ -33,20 +33,23 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+    implementation 'org.springframework.boot:spring-boot-devtools'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
-
-    // MySql 추가
-    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-//    implementation 'mysql:mysql-connector-java'
-    implementation 'mysql:mysql-connector-java:8.0.32'
-
-    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
-
+    // 다중이미지 업로드
+    implementation 'commons-io:commons-io:2.6'
+    // 웹 소켓
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    // 레디스
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // JSON을 키값으로 가져오기 위한 세팅
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'
+    // MySql 추가
+    // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+    // implementation 'mysql:mysql-connector-java'
+    implementation 'mysql:mysql-connector-java:8.0.32'
 
     compileOnly 'org.projectlombok:lombok'
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
@@ -54,14 +57,8 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-devtools'
-    // 다중이미지 업로드
-    implementation 'commons-io:commons-io:2.6'
-    // 웹 소켓
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    // 레디스
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
