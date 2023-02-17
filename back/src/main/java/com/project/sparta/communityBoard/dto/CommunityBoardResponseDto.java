@@ -39,7 +39,7 @@ public class CommunityBoardResponseDto {
 //    this.boardLikeCount = likeCount;
 //  }
 public CommunityBoardResponseDto(CommunityBoard communityBoard , Long likeCount,List<CommunityWithLikeResponseDto> communityCommentsWithLike) {
-  this.nickName = communityBoard.getNickName();
+  this.nickName = communityBoard.getUser().getNickName();
   this.contents = communityBoard.getContents();
   this.title = communityBoard.getTitle();
   this.id = communityBoard.getId();

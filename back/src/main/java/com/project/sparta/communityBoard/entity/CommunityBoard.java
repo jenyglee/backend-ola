@@ -1,7 +1,6 @@
 package com.project.sparta.communityBoard.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
-import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.user.entity.User;
@@ -18,11 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @NoArgsConstructor
 @Getter
@@ -51,12 +48,6 @@ public class CommunityBoard extends Timestamped {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder
-    public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
-        this.title = communityBoardRequestDto.getTitle();
-        this.contents = communityBoardRequestDto.getContents();
-        this.user = user;
-    }
 
     @Builder
     public CommunityBoard(String title, String contents, List<Hashtag> tagList, String chatStatus,
@@ -69,8 +60,10 @@ public class CommunityBoard extends Timestamped {
         this.communityComment = communityComment;
         this.user = user;
     }
-    public void updateBoard(CommunityBoardRequestDto communityBoardRequestDto) {
-        this.title = communityBoardRequestDto.getTitle();
-        this.contents = communityBoardRequestDto.getContents();
+
+    public void updateBoard(String title, String contents, List<Hashtag> tagList) {
+        this.title = title;
+        this.contents = contents;
+        this.tagList = tagList;
     }
 }
