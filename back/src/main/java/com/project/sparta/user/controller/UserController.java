@@ -85,7 +85,6 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
     //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
     @PostMapping("/regenerate-token")
     public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {

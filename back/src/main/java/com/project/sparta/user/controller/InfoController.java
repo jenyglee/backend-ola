@@ -6,6 +6,7 @@ import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.security.UserDetailsImpl;
+import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,14 @@ public class InfoController {
     @GetMapping("/me")
     public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
         userService.getMyInfo(userDetails.getUser());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //TODO 자동 등업 API 제작
+    //자동 등업(명세서 수정)
+    @PostMapping("/upgrade")
+    public ResponseEntity autoUpgrade(UpgradeRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        userService.upgrade(requestDto, userDetails.getUser().getId());
         return new ResponseEntity(HttpStatus.OK);
     }
 

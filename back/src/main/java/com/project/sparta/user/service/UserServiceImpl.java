@@ -10,6 +10,7 @@ import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
@@ -199,7 +200,17 @@ public class UserServiceImpl implements UserService {
         } catch (AuthenticationException e) {
             throw new CustomException(DISCORD_TOKEN);
         }
-
     }
 
+    //자동 등업
+    @Override
+    public void upgrade(UpgradeRequestDto requestDto, Long userId){
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        if(requestDto.getGrade().equals("MANIA")){
+            user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
+        }else if(requestDto.getGrade().equals("GOD")){
+            user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
+        }
+    }
 }
