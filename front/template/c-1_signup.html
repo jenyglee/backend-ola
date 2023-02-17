@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="form-floating" style="width: 100%">
-                <input type="password" class="form-control" id="email" placeholder="email">
+                <input type="text" class="form-control" id="email" placeholder="email">
                 <label for="email">이메일</label>
             </div>
             <div class="form-floating" style="width: 100%">
@@ -150,15 +150,15 @@
                 <label for="password">비밀번호</label>
             </div>
             <div class="form-floating" style="width: 100%">
-                <input type="password" class="form-control" id="nickname" placeholder="Panicknamessword">
+                <input type="text" class="form-control" id="nickname" placeholder="Panicknamessword">
                 <label for="nickname">닉네임</label>
             </div>
             <div id="user-input1" class="form-floating" style="width: 100%">
-                <input type="password" class="form-control" id="age" placeholder="age">
+                <input type="text" class="form-control" id="age" placeholder="age">
                 <label for="age">나이</label>
             </div>
             <div id="user-input2" class="form-floating" style="width: 100%">
-                <input type="password" class="form-control" id="phoneNumber" placeholder="phoneNumber">
+                <input type="text" class="form-control" id="phoneNumber" placeholder="phoneNumber">
                 <label for="phoneNumber">휴대폰번호(-제외)</label>
             </div>
             <div id="user-input3" class="w_8">
@@ -175,6 +175,9 @@
     </section>
 </main>
 <script>
+    $(document).ready(function () {
+        $("#sign-btn").hide();
+    });
     function onClickUpload() {
         let myInput = document.getElementById("my-input");
         myInput.click();
@@ -208,15 +211,16 @@
               // "Authurization" :""
           },
           "data": JSON.stringify({
-              "email": $('#inputEmail').val(),
-              "password": $('#inputPwd').val(),
-              "nickName": $('#inputNickName').val(),
-              "age": Number($('#inputAge').val()),
-              "phoneNumber": $('#inputPhone').val(),
+              "email": $('#email').val(),
+              "password": $('#password').val(),
+              "nickName": $('#nickname').val(),
+              "age": Number($('#age').val()),
+              "phoneNumber": $('#phoneNumber').val(),
               "imageUrl": "default.jpg"
           }),
       };
-      localStorage.setItem("signup1",settings.data)
+      localStorage.setItem("signup1", settings.data);
+
       window.location.href = "c-2_singup.html";
   }
 
