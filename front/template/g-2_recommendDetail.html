@@ -128,6 +128,26 @@
             border-radius: 5px;
             color: black;
         }
+
+        .btns{
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 100px;
+        }
+        .btns > button{
+            width: 160px;
+            height: 50px;
+            margin-left: 10px;
+            background-color: white;
+            border: 1px solid #F46B3F;
+            color: #F46B3F;
+        }
+
+        .btns > button:hover{
+            background-color: #F46B3F;
+            border: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +159,7 @@
     </div>
     <div class="item-list">
         <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
-        <a href="./h-1_communityMain.html">커뮤니티</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
         <a href="./i-1_shopMain.html">쇼핑몰</a>
         <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
@@ -316,23 +336,28 @@
                 </div>
             </div>
             <br>
-            <div class="w_4">
-                <div class="b_1"></div>
+<!--            <div class="w_4">-->
+<!--                <div class="b_1"></div>-->
 
-                <div class="b_4">
-                    <button type="button" id="btn_3">목록</button>
-                </div>
+<!--                <div class="b_4">-->
+<!--                    <button type="button" id="btn_3">목록</button>-->
+<!--                </div>-->
 
-                <div class="b_2">
-                    <a href="g-4_recommendModify.html" style="text-decoration: none; color : black;">
-                        <button type="button" id="btn_1">
-                            수정
-                        </button>
-                    </a>
-                </div>
-                <div class="b_3">
-                    <button type="button" id="btn_2">삭제</button>
-                </div>
+<!--                <div class="b_2">-->
+<!--                    <a href="g-4_recommendModify.html" style="text-decoration: none; color : black;">-->
+<!--                        <button type="button" id="btn_1">-->
+<!--                            수정-->
+<!--                        </button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="b_3">-->
+<!--                    <button type="button" id="btn_2">삭제</button>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="btns">
+                <button type="button" class="modifyBtn btn btn-primary btn-search">수정</button>
+                <button type="button" class="deleteBtn btn btn-primary btn-search">삭제</button>
+                <button type="button" class="btn btn-primary btn-search" style="background-color: #F46B3F; border: none; color: white;">목록</button>
             </div>
         </div>
     </section>
