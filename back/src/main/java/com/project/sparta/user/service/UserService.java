@@ -21,4 +21,6 @@ public interface UserService {
     void validateNickName(ValidateNickNameDto nickNameDto);
 
     void getMyInfo(User user);
+
+    void upgrade(UpgradeRequestDto requestDto, Long userId);
 }
