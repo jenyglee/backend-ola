@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="../css/sing-up.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
@@ -18,9 +19,9 @@
     <style>
         .container{
             width: 1200px;
-            height: 1000px;
+            /*height: 1000px;*/
             padding: 0;
-            background-color: #FFFBF4;
+            /*background-color: #FFFBF4;*/
         }
         .sing_up-header{
             margin: 50px 100px;
@@ -41,6 +42,21 @@
             color: #000;
             border-radius: 50px;
             margin: 5px 2px;
+            border-color: #d2d2d2;
+        }
+        /*.btn-tag {*/
+        /*    background-color: #ffffff;*/
+        /*    color: #000;*/
+        /*    border-radius: 50px;*/
+        /*    margin: 5px 2px;*/
+
+        /*}*/
+
+        .btn-tag:hover,
+        .btn-tag:focus{
+            color:#ffffff;
+            background-color: #F46B3F;
+            border: 1px solid #F46B3F;
         }
         #nextbtn{
             width: 100%;
@@ -54,6 +70,23 @@
         }
         .sing_up-header__text,.sing_up-header__text3{
             color: #F46B3F;
+        }
+
+        .btn-group{
+            width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .btn-group > label {
+            border-radius: 0;
+            margin: 10px;
+            border: 1px solid #F46B3F;
+            color: #F46B3F;
+        }
+        .btn-group > label:hover,
+        .btn-check:checked+.btn-outline-primary{
+            background-color: #F46B3F;
+            border: 1px solid #F46B3F;
         }
     </style>
 </head>
@@ -93,91 +126,150 @@
         </header>
 
         <div class="tag-box">
-            <div>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(1)">#주변맛집</button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(2)">#등산용품</button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(3)">#등산데이트</button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(4)">#등산친구</button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(5)">
-                    #봄산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(6)">
-                    #여름산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(7)">
-                    #가을산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(8)">
-                    #겨울산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(9)">
-                    #안전수칙
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(10)">
-                    #산악회
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(11)">
-                    #10~20대
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(12)">
-                    #30~40대
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(13)">
-                    #50~60대
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(14)">
-                    #등산꿀팁
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(15)">
-                    #가을산추천
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(16)">
-                    #산추천
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(17)">
-                    #계곡추천
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(18)">
-                    #등린이
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(19)">
-                    #등산입문자
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(20)">
-                    #등산매니아
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(21)">
-                    #등산모임
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(22)">
-                    #1시간걸리는산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(23)">
-                    #2시간걸리는산
-                </button>
-                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(24)">
-                    #3시간걸리는산
-                </button>
-            </div>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                </div>
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(1)">#주변맛집</button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(2)">#등산용품</button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(3)">#등산데이트</button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(4)">#등산친구</button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(5)">-->
+<!--                    #봄산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(6)">-->
+<!--                    #여름산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(7)">-->
+<!--                    #가을산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(8)">-->
+<!--                    #겨울산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(9)">-->
+<!--                    #안전수칙-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(10)">-->
+<!--                    #산악회-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(11)">-->
+<!--                    #10~20대-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(12)">-->
+<!--                    #30~40대-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(13)">-->
+<!--                    #50~60대-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(14)">-->
+<!--                    #등산꿀팁-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(15)">-->
+<!--                    #가을산추천-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(16)">-->
+<!--                    #산추천-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(17)">-->
+<!--                    #계곡추천-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(18)">-->
+<!--                    #등린이-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(19)">-->
+<!--                    #등산입문자-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(20)">-->
+<!--                    #등산매니아-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(21)">-->
+<!--                    #등산모임-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(22)">-->
+<!--                    #1시간걸리는산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(23)">-->
+<!--                    #2시간걸리는산-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-warning btn-tag" onclick="handleCreateHashtag(23)">-->
+<!--                    #3시간걸리는산-->
+<!--                </button>-->
 
             <div class="d-grid gap-2 col-6 mx-auto" id="nextbtn">
-                <button class="btn1" type="button" style="border-radius: 5px;" onclick="next()"><b>다음으로</b></button>
+                <button class="btn1" type="button" style="border-radius: 5px;" onclick="next(num)"><b>다음으로</b></button>
             </div>
         </div>
 
     </section>
 </main>
 <script>
-    let list =[];
-function handleCreateHashtag(hashtag) {
-    list.push(hashtag)
-    localStorage.setItem("signup2",list)
-    console.log(list)
-}
 
-function next() {
-    window.location.href = "c-3_singup.html";
-}
+
+
+
+
+
+
+
+
+    let list =[
+        {id: 1, name: "#주변맛집"},
+        {id: 2, name: "#등산용품"},
+        {id: 3, name: "#등산데이트"},
+        {id: 4, name: "#등산친구"},
+        {id: 5, name: "#봄산"},
+        {id: 6, name: "#여름산"},
+        {id: 7, name: "#가을산"},
+        {id: 8, name: "#겨울산"},
+        {id: 9, name: "#안전수칙"},
+        {id: 10, name: "#산악회"},
+        {id: 11, name: "#10~20대"},
+        {id: 12, name: "#30~40대"},
+        {id: 13, name: "#50~60대"},
+        {id: 14, name: "#등산꿀팁"},
+        {id: 15, name: "#가을산추천"},
+        {id: 16, name: "#산추천"},
+        {id: 17, name: "#계곡추천"},
+        {id: 18, name: "#등린이"},
+        {id: 19, name: "#등산입문자"},
+        {id: 20, name: "#등산매니아"},
+        {id: 21, name: "#등산모임"},
+        {id: 22, name: "#1시간걸리는산"},
+        {id: 23, name: "#2시간걸리는산"}
+    ];
+    $(document).ready(function () {
+        for (let i=0; i<list.length; i++){
+            var temp = `
+                 <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off" >
+                <label class="btn btn-outline-primary" for="btncheck${i}" >${list[i].name}</label>
+            `
+            $(".btn-group").append(temp);
+        }
+
+        $('.btn-group .btn').on('click', function() {
+            var thisBtn = $(this);
+            // thisBtn.addClass('active').siblings().removeClass('active');
+            var btnText = thisBtn.text();
+            var btnValue = thisBtn.val();
+            console.log(btnText + ' - ' + btnValue);
+            //
+            // $('#selectedVal').text(btnValue);
+        });
+
+    });
+    // <input type="checkbox" className="btn-check" id="btncheck1" autoComplete="off">
+    //     <label className="btn btn-outline-primary" htmlFor="btncheck1">#주변맛집</label>
+
+    function click(){
+        console.log("asdasdasd");
+    }
+    function handleCreateHashtag(hashtag) {
+        list.push(hashtag)
+        localStorage.setItem("signup2",list)
+        console.log(list)
+    }
+
+    function next() {
+        window.location.href = "c-3_singup.html";
+    }
 </script>
 </body>
 
