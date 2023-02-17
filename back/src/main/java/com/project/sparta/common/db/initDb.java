@@ -231,38 +231,61 @@ public class initDb {
         @Transactional
         public void communityInit(){
             User user = em.find(User.class, 1L);
+
+            communityBoardService.createCommunityBoard(
+                CommunityBoardRequestDto.builder()
+                    .title("커뮤니티")
+                    .contents("커뮤니티 콘텐츠")
+                    .chatStatus("N")
+                    .chatMemCnt(0)
+                    .tagList(Arrays.asList(7L, 8L, 9L))
+                    .build(),
+                user
+            );
             for (int i=0; i<5; i++){
                 communityBoardService.createCommunityBoard(
                     CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
                     user
                 );
             }
             for (int i=5; i<10; i++){
                 communityBoardService.createCommunityBoard(
-                    CommunityBoardRequestDto.builder()
+                     CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
                     user
                 );
             }
             for (int i=10; i<15; i++){
                 communityBoardService.createCommunityBoard(
-                    CommunityBoardRequestDto.builder()
+                     CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
                     user
                 );
             }
             for (int i=15; i<20; i++){
                 communityBoardService.createCommunityBoard(
-                    CommunityBoardRequestDto.builder()
+                     CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
                     user
                 );
