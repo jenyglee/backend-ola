@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class UserController {
-    // TODO 어드민 User API 제작
-    @GetMapping("/users")
-    public void getUserList(){
+public class AdminCommunityController {
+    // TODO 어드민 Community API 제작
+    @GetMapping("/boards/communities")
+    public void getCommunityList(){
 
     }
 
-    @GetMapping("/users/{userId}")
-    public void getUser(){
+    @GetMapping("/boards/communities/{boardId}")
+    public void getCommunity(){
 
     }
 
-    @PatchMapping("/users/{userId}")
-    public void updateUser(){
+    @PatchMapping("/boards/communities/{boardId}")
+    public void updateCommunity(){
 
     }
 
-    @DeleteMapping("/users/{userId}")
-    public void deleteUser(){
+    @DeleteMapping("/boards/communities/{boardId}")
+    public void deleteCommunity(){
 
     }
 }

@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class CommunityController {
-    // TODO 어드민 Community API 제작
-    @GetMapping("/boards/communities")
-    public void getCommunityList(){
+public class AdminNoticeController {
+    // TODO 어드민 Notice API 제작
+    @GetMapping("/boards/notices")
+    public void getNoticeList(){
 
     }
 
-    @GetMapping("/boards/communities/{boardId}")
-    public void getCommunity(){
+    @GetMapping("/boards/notices/{boardId}")
+    public void getNotice(){
 
     }
 
-    @PatchMapping("/boards/communities/{boardId}")
-    public void updateCommunity(){
+    @PatchMapping("/boards/notices/{boardId}")
+    public void updateNotice(){
 
     }
 
-    @DeleteMapping("/boards/communities/{boardId}")
-    public void deleteCommunity(){
+    @DeleteMapping("/boards/notices/{boardId}")
+    public void deleteNotice(){
 
     }
 }
