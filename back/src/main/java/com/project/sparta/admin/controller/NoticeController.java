@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class NoticeController {
+    // TODO 어드민 Notice API 제작
     @GetMapping("/boards/notices")
     public void getNoticeList(){
 
