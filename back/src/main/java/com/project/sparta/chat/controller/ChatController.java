@@ -4,8 +4,8 @@ package com.project.sparta.chat.controller;
 import com.project.sparta.chat.dto.ChatDTO;
 import com.project.sparta.chat.dto.ChatDTO.MessageType;
 import com.project.sparta.chat.repository.ChatRepository;
-import com.sun.xml.bind.v2.TODO;
-import lombok.extern.log4j.Log4j2;
+import java.util.ArrayList;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@Controller
 public class ChatController {
 
     private final SimpMessageSendingOperations template;
