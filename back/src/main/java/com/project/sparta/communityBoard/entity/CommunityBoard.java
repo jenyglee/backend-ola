@@ -1,4 +1,5 @@
 package com.project.sparta.communityBoard.entity;
+import com.project.sparta.admin.entity.Timestamped;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.security.UserDetailsImpl;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @Builder
-public class CommunityBoard {
+public class CommunityBoard extends Timestamped {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
 //  @Column(name = "community_board_id")
@@ -32,9 +33,12 @@ public class CommunityBoard {
   private String nickName;
   private String contents;
   private String title;
+
+
   @Column(nullable = false)
   @OneToMany(mappedBy = "communityBoardId",cascade = CascadeType.REMOVE)
   private List<CommunityComment> communityComment = new ArrayList<>();
+
 
   @ManyToOne
   @JoinColumn(name = "user_id")

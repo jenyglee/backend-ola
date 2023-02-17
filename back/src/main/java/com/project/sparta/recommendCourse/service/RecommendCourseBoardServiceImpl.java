@@ -2,8 +2,12 @@ package com.project.sparta.recommendCourse.service;
 
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeRecommendRepository;
+import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
@@ -16,10 +20,13 @@ import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +38,8 @@ import java.util.stream.Collectors;
 public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardService {
 
     private final RecommendCourseBoardRepository recommendCourseBoardRepository;
-
-    private final RecommendCourseImgService recommendCourseImgService;
     private final UserRepository userRepository;
+    private final LikeRecommendRepository likeRecommendRepository;
 
 
     /**
@@ -167,8 +173,13 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
         List<String> imgRouteList = dummyList;
 
+
+
+        //게시글의 라이크가 몇개인지 넣어준다.
+        Long likeCount = likeRecommendRepository.countByCourseBoard_Id(recommendCourseBoard.getId());
+
         //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName());
+        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName(),likeCount);
     }
 
     //전체 코스 조회(페이징)
@@ -190,27 +201,55 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         long totalElements = all.getTotalElements();
 
+
+
         //3. 엔티티로 만들어서
         List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
         List<String> dummyList = new ArrayList<>();
         dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
-        for (RecommendCourseBoard coursePost:contentList) {
+        //todo 나중에 필드에 UserId 값이 아니라 user객체가 들어가도록 엔티티 수정하는게 좋을 듯.
+        for (RecommendCourseBoard courseBoard:contentList) {
+            User user = userRepository.findById(courseBoard.getUserId()).orElseThrow(()->new CustomException(Status.NOT_FOUND_USER));
+            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(courseBoard.getId());
             RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
-                    .title(coursePost.getTitle())
-                    // .imgList(coursePost
-                    //         .getImages()
-                    //         .stream()
-                    //         .map(RecommendCourseImg::getImgRoute)
-                    //         .collect(Collectors.toList()))
+                    .title(courseBoard.getTitle())
                     .imgList(dummyList)
-                    .count(1523)
+                    .likeCount(likeCount)
+                    .nickName(user.getNickName())
+                    .timestamped(courseBoard.getCreateAt())
                     .build();
             FindAllPostDtoList.add(responseFindAllPos);
         }
+
+
         // Todo 좋아요 갯수 필드에 추후에 추가
 
         //4. 클라이언트에 응답.
         return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
+    }
+
+    //내가 쓴 게시물 조회
+    @Override
+    public PageResponseDto<List<GetMyRecommendCourseResponseDto>> getMyRecommendCourseBoard(int page, int size, User user){
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<RecommendCourseBoard> boards = recommendCourseBoardRepository.findByUserId(pageable, user.getId());
+
+        List<GetMyRecommendCourseResponseDto> getMyBoardResponseDtoList = new ArrayList<>();
+        for (RecommendCourseBoard recommendBoard : boards) {
+            //todo userid 변수를 User 객체로 변경해야 됨
+            User user1 = userRepository.findById(recommendBoard.getUserId()).orElseThrow(()->new CustomException(Status.NOT_FOUND_USER));
+            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(recommendBoard.getId());
+            GetMyRecommendCourseResponseDto getMyBoardResponse = GetMyRecommendCourseResponseDto.builder()
+                    .localDateTime(recommendBoard.getCreateAt())
+                    .title(recommendBoard.getTitle())
+                    .likeCount(likeCount)
+                    .nickName(user1.getNickName())
+                    .build();
+            getMyBoardResponseDtoList.add(getMyBoardResponse);
+        }
+        return  new PageResponseDto<>(page, boards.getTotalElements(), getMyBoardResponseDtoList);
+
     }
 
     // 필터링 도전

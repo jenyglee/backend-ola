@@ -27,13 +27,13 @@ public class CourseLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RecommendCourseBoard_id")
-    private RecommendCourseBoard CourseBoard;
+    private RecommendCourseBoard courseBoard;
 
 
     @Builder
     public CourseLike(String userEmail, String userNickName, RecommendCourseBoard courseBoard) {
         this.userEmail = userEmail;
         this.userNickName = userNickName;
-        this.CourseBoard = courseBoard;
+        this.courseBoard = courseBoard;
     }
 }
