@@ -59,9 +59,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 전체조회
     @Override
-    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int offset, int limit, User user) {
+    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, User user) {
         // 1. 페이징으로 요청해서 조회
-        PageRequest pageRequest = PageRequest.of(offset, limit);
+        PageRequest pageRequest = PageRequest.of(page, size);
         Page<NoticeBoard> results = noticeBoardRepository.findAll(pageRequest);
 
         // 2. 데이터, 전체 개수 추출
@@ -72,6 +72,6 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         long totalElements = allList.getTotalElements();
 
         //4. 클라이언트에 응답(현재페이지, 전체 건수, 데이터 포함)
-        return new PageResponseDto<>(offset, totalElements, content);
+        return new PageResponseDto<>(page, totalElements, content);
     }
 }

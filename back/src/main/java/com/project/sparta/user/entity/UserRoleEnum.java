@@ -2,7 +2,7 @@ package com.project.sparta.user.entity;
 
 public enum UserRoleEnum {
 
-     USER(Authority.USER),  // 사용자
+    USER(Authority.USER),  // 사용자
     ADMIN(Authority.ADMIN);  // 관리자
 
     private final String authority;

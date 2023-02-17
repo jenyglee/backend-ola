@@ -4,8 +4,8 @@ package com.project.sparta.chat.controller;
 import com.project.sparta.chat.dto.ChatDTO;
 import com.project.sparta.chat.dto.ChatDTO.MessageType;
 import com.project.sparta.chat.repository.ChatRepository;
-import java.util.ArrayList;
-import lombok.RequiredArgsConstructor;
+import com.sun.xml.bind.v2.TODO;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import org.springframework.web.bind.annotation.PostMapping;
 
+
+@Controller
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -108,5 +111,13 @@ public class ChatController {
 
         return userName;
     }
+
+    //ChatRepostiory Bean 가져오기
+     private ChatRepository chatRepository;
+
+     //TODO 실시간채팅 API 제작
+    //실시간 채팅
+    @PostMapping("/chat")
+    public void chat(){}
 
 }

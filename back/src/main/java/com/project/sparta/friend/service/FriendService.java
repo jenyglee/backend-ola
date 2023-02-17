@@ -16,6 +16,6 @@ public interface FriendService {
 
     void addFriend(Long userId, String targetUsername); //친구 추가
     void deleteFriend(Long targetId);    // 친구 삭제
-    PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int offset, int limit, String targetUsername);    //친구 검색
+    PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int offset, int limit, String targetUsername);    //친구 검색(내친구 포함 모든친구)
 
 }

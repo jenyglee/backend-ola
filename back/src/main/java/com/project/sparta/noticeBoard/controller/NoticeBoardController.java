@@ -16,48 +16,49 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/boards")
 public class NoticeBoardController {
     private final NoticeBoardService noticeBoardService;
 
-    //공지글 작성
-    @PostMapping("/notice-boards")
+    //공지사항 작성
+    @PostMapping("/notices")
     public ResponseEntity createNoticeBoard(@RequestBody NoticeBoardRequestDto requestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
         noticeBoardService.createNoticeBoard(requestDto, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //공지글 삭제
-    @DeleteMapping("/notice-boards/{id}")
-    public ResponseEntity deleteNoticeBoard(@PathVariable Long id,
+    //공지사항 삭제
+    @DeleteMapping("/notices/{boardId}")
+    public ResponseEntity deleteNoticeBoard(@PathVariable Long boardId,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
-        noticeBoardService.deleteNoticeBoard(id, userDetails.getUser());
+        noticeBoardService.deleteNoticeBoard(boardId, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //공지글 수정
-    @PutMapping("/notice-boards/{id}")
-    public ResponseEntity updateNoticeBoard(@PathVariable Long id,
+    //공지사항 수정
+    @PutMapping("/notices/{boardId}")
+    public ResponseEntity updateNoticeBoard(@PathVariable Long boardId,
                                             @RequestBody NoticeBoardRequestDto requestDto,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
-        noticeBoardService.updateNoticeBoard(id, requestDto, userDetails.getUser());
+        noticeBoardService.updateNoticeBoard(boardId, requestDto, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //공지글 단건조회
-    @GetMapping("/notice-boards/{id}")
-    public ResponseEntity getNoticeBoard(@PathVariable Long id,
+    @GetMapping("/notices/{boardId}")
+    public ResponseEntity getNoticeBoard(@PathVariable Long boardId,
                                          @AuthenticationPrincipal UserDetailsImpl userDetails){
-        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(id, userDetails.getUser());
+        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(boardId, userDetails.getUser());
         return new ResponseEntity(noticeBoard, HttpStatus.OK);
     }
 
-    //공지글 전체조회
-    @GetMapping("/notice-boards")
-    public ResponseEntity getNoticeBoardList(@RequestParam int offset,
-                                             @RequestParam int limit,
+    //공지사항 전체조회
+    @GetMapping("/notices")
+    public ResponseEntity getNoticeBoardList(@RequestParam int page,
+                                             @RequestParam int size,
                                              @AuthenticationPrincipal UserDetailsImpl userDetails){
-        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(offset, limit, userDetails.getUser());
+        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, userDetails.getUser());
         return new ResponseEntity(allNoticeBoard, HttpStatus.OK);
     }
 

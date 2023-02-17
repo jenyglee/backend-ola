@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/menu.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
@@ -78,35 +78,51 @@
       <div class="welcomebtn">
         <br>
         <div class="d-grid gap-2 col-6 mx-auto" id="coursebtn">
-          <button class="btn_1" type="button" style="border-radius: 5px;"><b>코스 추천받기</b></button>
+          <button class="btn_1" type="button" style="border-radius: 5px;" onclick="login()"><b>로그인 하기</b></button>
         </div>
         <br>
         <div class="d-grid gap-2 col-6 mx-auto"id="crewbtn" >
-          <button class="btn_2" type="button" style="border-radius: 5px;"><b>등산 크루 찾기</b></button>
-        </div>
-        <br>
-        <div class="d-grid gap-2 col-6 mx-auto" id="homebtn">
-          <button class="btn_3" type="button" style="border-radius: 5px;"><b>홈으로</b></button>
+          <button class="btn_2" type="button" style="border-radius: 5px;" onclick="community()"><b>커뮤니티 보러가기</b></button>
         </div>
       </div>
     </header>
   </section>
 </main>
-<!--<script>-->
-<!--  function handleCreateGuestBook() {-->
-<!--    $.ajax({-->
-<!--      type: "GET",-->
-<!--      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "-->
-<!--      data: {-->
-<!--        name: "sasas",-->
-<!--      },-->
-<!--      success: function (response) {-->
-<!--        console.log(response)-->
-<!--        alert(response.msc)-->
-<!--        window.location.reload();-->
-<!--      },-->
-<!--    })-->
-<!--  }-->
+<script>
+  let result1 = localStorage.getItem("signup1")
+  const temp = localStorage.getItem("signup2")
+  let result3 = result1.substring(0,result1.length-1) + ',' + '"' + "tagList" + '"' + ':' + '['+ temp.toString() + "]}"
+  console.log(result3)
+  function login()
+  {
+    var settings = {
+      "url": "http://localhost:8080/auth/signup",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "data": result1
+    };
+    $.ajax(settings).done(function (response) {
+      localStorage.setItem("signup3",result3)
+      console.log(response);
+      alert("회원가입 완료")
+      window.location.href = "b-1_login.html";
+    })
+    .fail(function (response){
+      console.log(result1)
+      console.log(settings.data)
+      console.log(response);
+      alert("회원가입 실패")
+    });
+  }
+  function community()
+  {
+
+  }
+  // let result = Array.from(new Set(list))
+  // localStorage.setItem("signup2",result)
 </script>
 </body>
 

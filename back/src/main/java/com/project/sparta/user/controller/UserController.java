@@ -38,6 +38,7 @@ public class UserController {
         return userService.login(requestDto);
     }
 
+    // TODO 카카오, 네이버, 구글 로그인 API 제작
     //카카오 로그인(redirect-uri)
     @GetMapping("/login/kakao")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
@@ -52,6 +53,16 @@ public class UserController {
         return "gello";
     }
 
+    //네이버 로그인
+    @GetMapping("/login/naver")
+    public void naverLogin() {
+    }
+
+    //구글 로그인
+    @GetMapping("/login/google")
+    public void googleLogin() {
+    }
+
     //로그아웃
     @PostMapping("/logout")
     public ResponseEntity login(@Validated @RequestBody TokenDto tokenRequestDto){
@@ -61,27 +72,29 @@ public class UserController {
     }
 
     // 이메일 중복확인
-    @PostMapping("/check_emails")
+    @PostMapping("/verify/email")
     public ResponseEntity validateEmail(@RequestBody ValidateEmailDto emailDto){
         userService.validateEmail(emailDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     // 닉네임 중복확인
-    @PostMapping("/check_nicknames")
+    @PostMapping("/verify/nickname")
     public ResponseEntity validateNickName(@RequestBody ValidateNickNameDto nickNameDto){
         userService.validateNickName(nickNameDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/myInfo")
-    public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        userService.getMyInfo(userDetails.getUser());
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
-    @PostMapping("/regenerateToken")
+    //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
+    @PostMapping("/regenerate-token")
     public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {
         return userService.regenerateToken(tokenDto);
+    }
+
+    // TODO 새로운 비밀번호 이메일로 발송 API 제작
+    // 새로운 비밀번호 이메일로 발송
+    @PostMapping("/change-password")
+    public void changePassword(){
     }
 }
