@@ -32,6 +32,16 @@ public class ChatController {
     @Autowired
     ChatRepository repository;
 
+
+
+    //ChatRepostiory Bean 가져오기
+    private ChatRepository chatRepository;
+
+    //TODO 실시간채팅 API 제작
+    //실시간 채팅
+    @PostMapping("/chat")
+    public void chat(){}
+
     //MessageMapping을 통해 webSocket으로 들어오는 메세지를 발신 처리 한다.
     // 이때 클라이언트에서는 /pub/chat/message로 요청하게 되고 이것을 controller가 받아서 처리 한다.
     // 처리가 완료되면 /sub/chat/room/roomId로 메세지가 전송된다.
@@ -111,12 +121,5 @@ public class ChatController {
         return userName;
     }
 
-    //ChatRepostiory Bean 가져오기
-     private ChatRepository chatRepository;
-
-     //TODO 실시간채팅 API 제작
-    //실시간 채팅
-    @PostMapping("/chat")
-    public void chat(){}
 
 }
