@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class CommunityBoardRequestDto {
   private String contents;
   private String title;
+
+  @Builder
   public CommunityBoardRequestDto(String contents, String title) {
     this.contents = contents;
     this.title = title;

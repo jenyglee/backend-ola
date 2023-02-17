@@ -1,20 +1,33 @@
+
 package com.project.sparta.common.db;
 
+import com.project.sparta.admin.dto.AdminSignupDto;
+import com.project.sparta.admin.service.AdminService;
+import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.service.CommunityBoardService;
+import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
+import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
+import com.project.sparta.noticeBoard.service.NoticeBoardService;
+import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
+import com.project.sparta.user.dto.UpgradeRequestDto;
+import com.project.sparta.user.dto.UserSignupDto;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
-import com.project.sparta.user.entity.UserTag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.project.sparta.user.service.UserService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Profile("local")
 @Component
@@ -24,14 +37,30 @@ public class initDb {
 
     @PostConstruct
     public void init(){
-        // 사용처: 회원가입 시 선택할 해시태그 목록
         initService.hashtagInit();
+        initService.userInit();
+        initService.recommendInit();
+        initService.communityInit();
+        initService.communityCommentInit();
+        initService.noticeInit();
     }
 
     @Component
     static class InitService{
         @PersistenceContext
         EntityManager em;
+        @Autowired
+        UserService userService;
+        @Autowired
+        AdminService adminService;
+        @Autowired
+        RecommendCourseBoardService recommendCourseBoardService;
+        @Autowired
+        CommunityBoardService communityBoardService;
+        @Autowired
+        CommunityCommentService communityCommentService;
+        @Autowired
+        NoticeBoardService noticeBoardService;
 
         @Transactional
         public void hashtagInit(){
@@ -59,6 +88,231 @@ public class initDb {
             em.persist(new Hashtag("2시간걸리는산"));
             em.persist(new Hashtag("3시간걸리는산"));
         }
+
+        @Transactional
+        public void userInit(){
+            // 유저 10명 생성
+            for (int i=0; i<3; i++){
+                userService.signup(
+                    UserSignupDto.builder()
+                        .email("user" + i + "@naver.com")
+                        .password("1234")
+                        .nickName("user" + i)
+                        .age(i)
+                        .phoneNumber("01012345678")
+                        .imageUrl(
+                            "https://i.pinimg.com/236x/e0/a2/55/e0a255de0ff796435db654b03af8f264.jpg")
+                        .tagList(Arrays.asList(1L, 2L, 3L))
+                        .build()
+                );
+            }
+            for (int i=3; i<6; i++){
+                userService.signup(
+                    UserSignupDto.builder()
+                        .email("user" + i + "@naver.com")
+                        .password("1234")
+                        .nickName("user" + i)
+                        .age(i)
+                        .phoneNumber("01012345678")
+                        .imageUrl(
+                            "https://i.pinimg.com/236x/e0/a2/55/e0a255de0ff796435db654b03af8f264.jpg")
+                        .tagList(Arrays.asList(4L, 5L, 6L))
+                        .build()
+                );
+            }
+            for (int i=6; i<10; i++){
+                userService.signup(
+                    UserSignupDto.builder()
+                        .email("user" + i + "@naver.com")
+                        .password("1234")
+                        .nickName("user" + i)
+                        .age(i)
+                        .phoneNumber("01012345678")
+                        .imageUrl(
+                            "https://i.pinimg.com/236x/e0/a2/55/e0a255de0ff796435db654b03af8f264.jpg")
+                        .tagList(Arrays.asList(7L, 8L, 9L))
+                        .build()
+                );
+            }
+
+            // 3명 등산매니아로 변경
+            UpgradeRequestDto mania = new UpgradeRequestDto("MANIA");
+            userService.upgrade(mania, 6L);
+            userService.upgrade(mania, 7L);
+            userService.upgrade(mania, 8L);
+
+
+            //산신령 2명 추가
+            UpgradeRequestDto god = new UpgradeRequestDto("GOD");
+            userService.upgrade(god, 9L);
+            userService.upgrade(god, 10L);
+
+            //어드민 1명 추가
+            adminService.signup(
+                AdminSignupDto.builder()
+                    .email("admin@naver.com")
+                    .password("1234")
+                    .nickName("admin")
+                    .phoneNumber("01012345678")
+                    .adminToken("AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC")
+                    .build()
+            );
+        }
+
+        @Transactional
+        public void recommendInit(){
+            for (int i=0; i<5; i++){
+                List<String> imgList = new ArrayList<>();
+                imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
+                imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+                recommendCourseBoardService.creatRecommendCourseBoard(
+                    RecommendRequestDto.builder()
+                        .title("코스추천" + i)
+                        .score(1)
+                        .season("가을")
+                        .altitude((int) (Math.random() * 100) + 100)
+                        .contents("추천해요!" + i)
+                        .imgList(imgList)
+                        .build()
+                    , 9L
+                );
+            }
+            for (int i=5; i<10; i++){
+                List<String> imgList = new ArrayList<>();
+                imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
+                imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+                recommendCourseBoardService.creatRecommendCourseBoard(
+                    RecommendRequestDto.builder()
+                        .title("코스추천" + i)
+                        .score(2)
+                        .season("여름")
+                        .altitude((int) (Math.random() * 100) + 200)
+                        .contents("추천해요!" + i)
+                        .imgList(imgList)
+                        .build()
+                    , 9L
+                );
+            }
+            for (int i=10; i<15; i++){
+                List<String> imgList = new ArrayList<>();
+                imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
+                imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+                recommendCourseBoardService.creatRecommendCourseBoard(
+                    RecommendRequestDto.builder()
+                        .title("코스추천" + i)
+                        .score(3)
+                        .season("봄")
+                        .altitude((int) (Math.random() * 100) + 300)
+                        .contents("추천해요!" + i)
+                        .imgList(imgList)
+                        .build()
+                    , 9L
+                );
+            }
+            for (int i=15; i<20; i++){
+                List<String> imgList = new ArrayList<>();
+                imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
+                imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+                recommendCourseBoardService.creatRecommendCourseBoard(
+                    RecommendRequestDto.builder()
+                        .title("코스추천" + i)
+                        .score(4)
+                        .season("겨울")
+                        .altitude((int) (Math.random() * 100) + 400)
+                        .contents("추천해요!" + i)
+                        .imgList(imgList)
+                        .build()
+                    , 9L
+                );
+            }
+        }
+
+        //TODO communityInit 커뮤니티에 해시태그 추가되면 변경해야함
+        @Transactional
+        public void communityInit(){
+            User user = em.find(User.class, 1L);
+            for (int i=0; i<5; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=5; i<10; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=10; i<15; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=15; i<20; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+        }
+
+        @Transactional
+        public void communityCommentInit(){
+            User user = em.find(User.class, 2L);
+            for (int i=0; i<22; i++){
+                CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
+                communityCommentService.createCommunityComments(5L, requestDto, user);
+            }
+        }
+
+        @Transactional
+        public void noticeInit(){
+            User admin = em.find(User.class, 11L);
+            for (int i=0; i<12; i++){
+                noticeBoardService.createNoticeBoard(
+                    NoticeBoardRequestDto.builder()
+                        .title("서비스공지" + i)
+                        .contents("공지사항 내용")
+                        .category(NoticeCategoryEnum.SERVICE)
+                        .build(),
+                    admin
+                );
+            }
+            for (int i=0; i<12; i++){
+                noticeBoardService.createNoticeBoard(
+                    NoticeBoardRequestDto.builder()
+                        .title("이벤트공지" + i)
+                        .contents("공지사항 내용")
+                        .category(NoticeCategoryEnum.EVENT)
+                        .build(),
+                    admin
+                );
+            }
+            for (int i=0; i<12; i++){
+                noticeBoardService.createNoticeBoard(
+                    NoticeBoardRequestDto.builder()
+                        .title("업데이트공지" + i)
+                        .contents("공지사항 내용")
+                        .category(NoticeCategoryEnum.UPDATE)
+                        .build(),
+                    admin
+                );
+            }
+        }
     }
 }
+
 
