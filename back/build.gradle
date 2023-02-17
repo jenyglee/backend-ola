@@ -41,11 +41,18 @@ dependencies {
     implementation 'commons-io:commons-io:2.6'
     // 웹 소켓
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    // sockjs
+    implementation 'org.webjars:sockjs-client:1.5.1'
+    // stomp
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+    // gson
+    implementation 'com.google.code.gson:gson:2.9.0'
     // 레디스
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // JSON을 키값으로 가져오기 위한 세팅
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'
+
     // MySql 추가
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
     // implementation 'mysql:mysql-connector-java'
