@@ -73,7 +73,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto().builder()
             .title(communityBoard.getTitle())
-            .nickName(communityBoard.getNickName())
+            .nickName(communityBoard.getUser().getNickName())
             .contents(communityBoard.getContents())
             .id(communityBoard.getId())
             .communityCommentsWithLike(communityWithLikeResponseDtoList)
@@ -98,7 +98,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
       allCommunityBoardResponseDtos.add(AllCommunityBoardResponseDto.builder()
                       .timestamped(communityBoard.getCreateAt())
               .title(communityBoard.getTitle())
-                      .nickName(communityBoard.getNickName())
+                      .nickName(communityBoard.getUser().getNickName())
                       .boardLikeCount(likeCount)
               .build());
     }
@@ -122,7 +122,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
               .localDateTime(communityBoard.getCreateAt())
               .title(communityBoard.getTitle())
               .likeCount(likeCount)
-              .nickName(communityBoard.getNickName())
+              .nickName(communityBoard.getUser().getNickName())
               .build();
       getMyBoardResponseDtos.add(getMyBoardResponseDto);
     }

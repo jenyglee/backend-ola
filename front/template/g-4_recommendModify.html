@@ -15,56 +15,49 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous">
-  <title>Title</title>
+  <title>올라 코스추천</title>
   <style>
     .container{
       width: 1200px;
-      height: 1000px;
       padding: 0;
-      background-color: #FFFBF4;
-      align-items: center;
-    }
-    .main{
-      width: 1200px;
-      height: 1000px;
-      background-color: #FFFBF4;
-      display: flex;
-      justify-content: center;
-    }
-    .main .midmain {
-      width: 600px;
-      height: 500px;
     }
 
-    .findpwd
-    {
-      color: BLACK;
-      text-align : center;
-      font-size: 25px;
+    .w_1{
+      width: 1200px;
+      height: 130px;
     }
-    .firstfindpwd
-    {
-      color: BLACK;
-      font-size: 50px;
+    .w_2, .w_3, .w_4, .w_5, .w_6, .w_8, .w_9{
+      padding: 0px;
+      width: 1200px;
+      height: 55px;
     }
-    .findpwdBtn
-    {
-      width : 600px;
-      height: 50px;
+    .w_7{
+      width: 1200px;
+      height: 400px;
+    }
+    #btn_1{
+      width: 200px;
+      height : 50px;
+      border: 1px solid white;
+      background-color: #F46B3F;
       border-radius: 5px;
       color: white;
-      border: none;
-      background-color: #F46B3F;
+      float: right;
     }
-    .box1{
-      width :600px;
-      height: 100px;
-      border: 1px solid BLACK;
-      box-sizing: border-box;
-      text-align: center;
-      line-height: 100px;
+    .w_3 input, .w_4 input, .w_5 input{
+      width: 350px;
     }
-
+    .w_7 textarea{
+      height: 380px;
+      resize: none;
+    }
+    .w_8 input{
+      width: 500px;
+    }
+    .inputLabel{
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -75,7 +68,7 @@
     <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
-    <a href="./g-1_recommend.html">코스추천</a>
+    <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
     <a href="h-1_communityMain.html">커뮤니티</a>
     <a href="./i-1_shopMain.html">쇼핑몰</a>
     <a href="./j-1_noticeMain.html">공지사항</a>
@@ -88,7 +81,7 @@
       <div class="friend-dropbox">
         <div class="search-area">
           <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
+            <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="닉네임 검색">
           </div>
           <div class="btn-wrap">
             <button type="button" class="btn btn-primary search-btn">검색</button>
@@ -201,37 +194,72 @@
         </ul>
       </div>
     </div>
-    <div class="my-profile-wrap">
+    <a class="my-profile-wrap" href="./f-1_myPage.html">
       <div class="img-wrap">
-        <img class="img" src="./../static/img/icon_profile_default.png " />
+        <img class="img" src="./../static/img/icon_profile_default.png "/>
       </div>
       <p class="text">나와바리나와바님</p>
-    </div>
+    </a>
   </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
 <main class="container">
-  <section class="">
-    <div class="firstfindpwd" >
-      <br>
-      비밀번호 찾기
+  <h3 style="margin: 30px 0; font-weight: bold;">코스추천 수정</h3>
+  <section>
+    <p class="inputLabel">제목</p>
+    <div class="w_2">
+      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요">
     </div>
-    <br>
-    <div class = "main">
-      <div class ="midmain">
-        <div class = "box1">
-          고객님의 이메일 wodnjs3062@gmail.com로 새로운 비밀번호를 전송했습니다.
-        </div>
-        <br>
-        <div class="">
-          <button class="findpwdBtn">로그인</button>
-        </div>
+    <p class="inputLabel">점수</p>
+    <div class="w_3">
+      <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="점수를 입력하세요">
+    </div>
+    <p class="inputLabel">계절</p>
+    <div class="w_4">
+      <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="계절을 입력하세요">
+    </div>
+    <p class="inputLabel">높이</p>
+    <div class="w_5">
+      <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="높이를 입력하세요">
+    </div>
+    <p class="inputLabel">주소</p>
+    <div class="w_6">
+      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="주소를 입력하세요">
+    </div>
+    <p class="inputLabel">내용</p>
+    <div class="w_7">
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
+    </div>
+    <!--        &lt;!&ndash; 이미지업로드 쪽 레이아웃 &ndash;&gt;-->
+    <!--        <div class="img-upload-box">-->
+    <!--            <div class="mb-3">-->
+    <!--                <div class="filebox">-->
+    <!--                    <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
+    <!--                    <label for="file" class="upload-label">파일찾기</label>-->
+    <!--                    <input type="file" id="file">-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <div class="w_8">
+      <input class="form-control" type="file" id="formFileMultiple" multiple>
+    </div>
+    <div class="w_9">
+      <div class="b_1">
+        <button type="button" id="btn_1">게시글 등록</button>
       </div>
     </div>
   </section>
 </main>
+<!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+  window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+  ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+</script>
 <script>
   $(document).ready(function () {
     $(".friend-dropbox").hide();
@@ -246,21 +274,8 @@
     $(".friend-dropbox").toggle();
     $(".bell-dropbox").hide();
   }
-  function handleCreateGuestBook() {
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-      data: {
-        name: "sasas",
-      },
-      success: function (response) {
-        console.log(response)
-        alert(response.msc)
-        window.location.reload();
-      },
-    })
-  }
-</script>
-</body>
 
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
 </html>

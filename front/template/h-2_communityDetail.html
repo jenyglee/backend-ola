@@ -19,7 +19,6 @@
     <style>
       .container {
         width: 1200px;
-        height: 1200px;
         padding: 0;
         /* background-color: #fffbf4; */
       }
@@ -156,10 +155,13 @@
 
       /* 프로필 박스 */
       .comment-profile-box {
-        margin: 100px;
         width: 120px;
+        display: flex;
+        align-items: center;
         height: 60px;
-        line-height: 60px;
+        color: #666666;
+        margin-right: 40px;
+        /*line-height: 60px;*/
       }
       .comment-profile-box > img {
         width: 50px;
@@ -175,6 +177,7 @@
       }
       .comment-read-box {
         display: flex;
+        align-items: center;
       }
 
       .comment-content-box {
@@ -230,6 +233,40 @@
         margin-left: 10px;
         width: 20px;
       }
+
+      .comment-box{
+        margin-bottom: 30px;
+      }
+      .bottomBtn{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin-bottom: 100px;
+      }
+      .btns{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+      .btns > button{
+        width: 160px;
+        height: 50px;
+        background-color: white;
+        border: 1px solid #F46B3F;
+        color: #F46B3F;
+      }
+
+      .form-check-input:checked {
+        background-color: #F46B3F;
+        border-color: #F46B3F;
+      }
+
+      .page-link,
+      .page-link:hover,
+      .page-link:active,
+      .page-link:focus{
+        color: #F46B3F;
+      }
     </style>
   </head>
   <body>
@@ -241,7 +278,7 @@
     </div>
     <div class="item-list">
       <a href="./g-1_recommend.html">코스추천</a>
-      <a href="./h-1_communityMain.html" style="font-weight: bold; color: #F46B3F">커뮤니티</a>
+      <a href="h-1_communityMain.html" style="font-weight: bold; color: #F46B3F">커뮤니티</a>
       <a href="./i-1_shopMain.html">쇼핑몰</a>
       <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
@@ -421,9 +458,9 @@
             <span>5422</span>
           </div>
           <!-- 댓글-->
-          <div class="comment-box">
+          <div class="comment-box" style="padding-top: 20px">
             <!-- 댓글입력창 -->
-            <div class="comment-create">
+            <div class="comment-create" style="margin-bottom: 10px">
               <input
                 type="text"
                 class="form-control post-content"
@@ -443,10 +480,13 @@
             <div class="comment-read-box">
               <!-- 프로필 -->
               <div class="comment-profile-box">
-                <img
-                  src="/static/img/icon_profile_default.png"
-                  alt="프로필이미지"
-                />
+                <div style="display: flex; width:40px; height: 40px; border-radius: 100%; overflow:hidden; margin-right: 10px">
+                  <img
+                    src="/static/img/icon_profile_default.png"
+                    alt="프로필이미지"
+                    style="width: 100%"
+                  />
+                </div>
                 <span>이재원</span>
               </div>
               <!-- 댓글내용 -->
@@ -456,7 +496,7 @@
                     <span>우와 가까웠으면 갔을텐데...</span>
                   </div>
                   <!-- 좋아요 -->
-                  <div class="commetn-like-box">
+                  <div class="commetn-like-box" style="cursor: pointer" onclick="">
                     <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
                     <span>5</span>
                   </div>
@@ -477,10 +517,13 @@
             <div class="comment-read-box">
               <!-- 프로필 -->
               <div class="comment-profile-box">
-                <img
-                  src="/static/img/icon_profile_default.png"
-                  alt="프로필이미지"
-                />
+                <div style="display: flex; width:40px; height: 40px; border-radius: 100%; overflow:hidden; margin-right: 10px">
+                  <img
+                    src="/static/img/icon_profile_default.png"
+                    alt="프로필이미지"
+                    style="width: 100%"
+                  />
+                </div>
                 <span>이재원</span>
               </div>
               <!-- 댓글내용 -->
@@ -490,7 +533,7 @@
                     <span>우와 가까웠으면 갔을텐데...</span>
                   </div>
                   <!-- 좋아요 -->
-                  <div class="commetn-like-box">
+                  <div class="commetn-like-box" style="cursor: pointer" onclick="">
                     <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
                     <span>3</span>
                   </div>
@@ -511,10 +554,13 @@
             <div class="comment-read-box">
               <!-- 프로필 -->
               <div class="comment-profile-box">
-                <img
-                  src="/static/img/icon_profile_default.png"
-                  alt="프로필이미지"
-                />
+                <div style="display: flex; width:40px; height: 40px; border-radius: 100%; overflow:hidden; margin-right: 10px">
+                  <img
+                    src="/static/img/icon_profile_default.png"
+                    alt="프로필이미지"
+                    style="width: 100%"
+                  />
+                </div>
                 <span>이재원</span>
               </div>
               <!-- 댓글내용 -->
@@ -524,7 +570,7 @@
                     <span>우와 가까웠으면 갔을텐데...</span>
                   </div>
                   <!-- 좋아요 -->
-                  <div class="commetn-like-box">
+                  <div class="commetn-like-box" style="cursor: pointer" onclick="">
                     <img src="/static/img/heart.png" alt="좋아요아이콘" />
                     <span>2</span>
                   </div>
@@ -545,10 +591,13 @@
             <div class="comment-read-box">
               <!-- 프로필 -->
               <div class="comment-profile-box">
-                <img
-                  src="/static/img/icon_profile_default.png"
-                  alt="프로필이미지"
-                />
+                <div style="display: flex; width:40px; height: 40px; border-radius: 100%; overflow:hidden; margin-right: 10px">
+                  <img
+                    src="/static/img/icon_profile_default.png"
+                    alt="프로필이미지"
+                    style="width: 100%"
+                  />
+                </div>
                 <span>이재원</span>
               </div>
               <!-- 댓글내용 -->
@@ -558,7 +607,7 @@
                     <span>우와 가까웠으면 갔을텐데...</span>
                   </div>
                   <!-- 좋아요 -->
-                  <div class="commetn-like-box">
+                  <div class="commetn-like-box" style="cursor: pointer" onclick="">
                     <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
                     <span>5</span>
                   </div>
@@ -576,9 +625,32 @@
               </div>
             </div>
           </div>
-          <!-- 보여지는 댓글들 -->
-
-          <!-- 게시글 작성 버튼 -->
+          <!--   페이지네이션/작성버튼     -->
+          <div class="bottomBtn">
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div class="btns">
+              <button type="button" class="modifyBtn btn btn-primary btn-search">수정</button>
+              <button type="button" class="deleteBtn btn btn-primary btn-search">삭제</button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
