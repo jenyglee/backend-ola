@@ -1,51 +1,61 @@
 package com.project.sparta.communityBoard.dto;
 
-import com.project.sparta.communityBoard.entity.CommunityBoard;
-import com.project.sparta.communityComment.dto.CommunityResponseDto;
+import com.project.sparta.hashtag.entity.Hashtag;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.project.sparta.communityComment.dto.CommunityWithLikeResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
+
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CommunityBoardResponseDto {
-  private String nickName;
-  private String contents;
-  private String title;
-//  private List<CommunityResponseDto> communityComments;
-  private List<CommunityWithLikeResponseDto> communityCommentsWithLike;
+    private Long boardId;
+    private String nickName;
+    private String title;
+    private String contents;
+    private List<Hashtag> tagList = new ArrayList<>();
+    private Long communityLikeCnt;
+    private List<CommunityComment> communityComments;
+    private Long commentLikeCnt;
 
-  private Long id;
-
-  private Long boardLikeCount;
-
-//  public CommunityBoardResponseDto(CommunityBoard communityBoard , Long likeCount) {
-//    this.nickName = communityBoard.getNickName();
-//    this.contents = communityBoard.getContents();
-//    this.title = communityBoard.getTitle();
-//    this.id = communityBoard.getId();
-//    this.communityComments = communityBoard.getCommunityComment()
-//        .stream()
-//        .map(CommunityResponseDto::new)
-//        .collect(Collectors.toList());
-//    this.boardLikeCount = likeCount;
-//  }
-public CommunityBoardResponseDto(CommunityBoard communityBoard , Long likeCount,List<CommunityWithLikeResponseDto> communityCommentsWithLike) {
-  this.nickName = communityBoard.getUser().getNickName();
-  this.contents = communityBoard.getContents();
-  this.title = communityBoard.getTitle();
-  this.id = communityBoard.getId();
-  this.communityCommentsWithLike = communityCommentsWithLike;
-  this.boardLikeCount = likeCount;
-}
+    @Builder
+    public CommunityBoardResponseDto(Long boardId, String nickName, String title, String contents,
+        List<Hashtag> tagList, Long communityLikeCnt, List<CommunityComment> communityComments,
+        Long commentLikeCnt) {
+        this.boardId = boardId;
+        this.nickName = nickName;
+        this.title = title;
+        this.contents = contents;
+        this.tagList = tagList;
+        this.communityLikeCnt = communityLikeCnt;
+        this.communityComments = communityComments;
+        this.commentLikeCnt = commentLikeCnt;
+    }
 
 
+    public CommunityBoardResponseDto(Long boardId, String nickName, String title,
+        List<Hashtag> tagList, Long communityLikeCnt) {
+        this.boardId = boardId;
+        this.nickName = nickName;
+        this.title = title;
+        this.tagList = tagList;
+        this.communityLikeCnt = communityLikeCnt;
+    }
+
+//    @Builder
+//    public CommunityBoardResponseDto(Long boardId, String nickName, String title, String contents,
+//        List<Hashtag> tagList, Long communityLikeCnt, List<CommunityComment> communityComments,
+//        Long commentLikeCnt) {
+//        this.boardId = boardId;
+//        this.nickName = nickName;
+//        this.title = title;
+//        this.contents = contents;
+//        this.tagList = tagList;
+//        this.communityLikeCnt = communityLikeCnt;
+//        this.communityComments = communityComments;
+//        this.commentLikeCnt = commentLikeCnt;
+//    }
 }

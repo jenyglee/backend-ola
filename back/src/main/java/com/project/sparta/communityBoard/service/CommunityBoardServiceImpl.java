@@ -36,10 +36,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     private final BoardRepository boardRepository;
-    private final LikeBoardRepository likeBoardRepository;
-    private final LikeCommentRepository likeCommentRepository;
+
     private final HashtagRepository hashtagRepository;
 
+    
+    //커뮤니티 게시글 생성
     @Override
     @Transactional
     public void createCommunityBoard(CommunityBoardRequestDto commRequestDto,
@@ -58,6 +59,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         boardRepository.saveAndFlush(communityBoard);
     }
 
+    //커뮤니티 게시글 수정
     @Override
     @Transactional
     public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto commRequestDto, User user) {
@@ -72,65 +74,113 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         boardRepository.saveAndFlush(communityBoard);
     }
 
-
+    //커뮤니티 게시글 삭제
     @Override
     @Transactional
-    public CommunityBoardResponseDto getCommunityBoard(Long boardId) {
-        CommunityBoard communityBoard = boardRepository.findById(boardId)
+    public void deleteCommunityBoard(Long boardId, User user) {
+        boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-
-        Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());//게시글의 좋아요
-
-        List<CommunityWithLikeResponseDto> communityWithLikeResponseDtoList = new ArrayList<>();
-        List<CommunityComment> communityCommentList = communityBoard.getCommunityComment();
-
-        for (CommunityComment comment : communityCommentList) {
-            Long commentLikeCount = likeCommentRepository.countByComment(comment);
-            communityWithLikeResponseDtoList.add(
-                new CommunityWithLikeResponseDto(comment, commentLikeCount));
-        }
-
-        CommunityBoardResponseDto communityBoardResponseDto = new CommunityBoardResponseDto().builder()
-            .title(communityBoard.getTitle())
-            .nickName(communityBoard.getUser().getNickName())
-            .contents(communityBoard.getContents())
-            .id(communityBoard.getId())
-            .communityCommentsWithLike(communityWithLikeResponseDtoList)
-            .boardLikeCount(likeCount)
-            .build();
-
-        return communityBoardResponseDto;
+        boardRepository.deleteById(boardId);
     }
 
+
+    //커뮤니티 게시글 단건 조회(커뮤니티 게시글 + 커뮤 좋아요 + 커뮤니티 댓글 + 커뮤니티 댓글 좋아요)
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<AllCommunityBoardResponseDto>> getAllCommunityBoard(int page,
-        int size) {
-
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<CommunityBoard> boards = boardRepository.findAll(pageable);
-
-        List<AllCommunityBoardResponseDto> allCommunityBoardResponseDtos = new ArrayList<>();
-
-        for (CommunityBoard communityBoard : boards) {
-            Long likeCount = likeBoardRepository.countByBoard(communityBoard);
-            allCommunityBoardResponseDtos.add(AllCommunityBoardResponseDto.builder()
-                .timestamped(communityBoard.getCreateAt())
-                .title(communityBoard.getTitle())
-                .nickName(communityBoard.getUser().getNickName())
-                .boardLikeCount(likeCount)
-                .build());
-        }
-        return new PageResponseDto<>(page, boards.getTotalElements(),
-            allCommunityBoardResponseDtos);
+    public CommunityBoardResponseDto getCommunityBoard(Long boardId) {
+        CommunityBoardResponseDto communityBoard = boardRepository.getBoard(boardId);
+        return communityBoard;
     }
+
+    //커뮤니티 전체조회(커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징)
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardResponseDto> allCommunityBoardList =boardRepository.communityAllList(pageRequest);
+
+        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
+    }
+
+    //커뮤니티 전체조회(좋아요순 정렬)
+    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByLike(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardResponseDto> allCommunityBoardList = boardRepository.communityAllListOrderByLike(pageRequest);
+
+        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
+    }
+
+    //커뮤니티 전체조회(날짜순 정렬)
+    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByCreateDate(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardResponseDto> allCommunityBoardList =boardRepository.communityAllListOrderByCreateDate(pageRequest);
+
+        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
+    }
+
+    //커뮤니티 (제목)검색
+
+    //커뮤니티 (내용)검색
+
+    //커뮤니티 (작성자)검색
 
 
     @Override
     @Transactional
     public PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size,
         User user) {
+        return null;
+    }
+
+
+
+
+    //새로운 태그 리스트 생성하기 => 커뮤니티 생성, 수정 시 필요함
+    public List<Hashtag> addHashTag(List tagDtoList) {
+
+        List<Hashtag> tagList = new ArrayList<>();
+
+        for (int i = 0; i < tagList.size(); i++) {
+            Hashtag hashtag = hashtagRepository.findByName(
+                    tagDtoList.get(i).toString())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+            tagList.add(hashtag);
+        }
+        return tagList;
+    }
+
+}
+
+
+//주성님의 고민의 흔적들..
+//  @Override
+//  @Transactional
+//  public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,
+//      User user) {
+//    Sort sort = Sort.by(Direction.ASC, "id");
+//    Pageable pageable = PageRequest.of(page, size, sort);
+//    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
+//    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+//        .stream()
+//        .map(CommunityBoardResponseDto::new)
+//        .collect(Collectors.toList());
+//    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
+//  }
+
+//    @Override
+//    @Transactional
+//    public PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size,
+//        User user) {
 //        Sort sort = Sort.by(Sort.Direction.ASC, "id");
 //        Pageable pageable = PageRequest.of(page, size, sort);
 //        Page<CommunityBoard> boards = boardRepository.findAllByNickName(pageable,
@@ -148,44 +198,5 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 //            getMyBoardResponseDtos.add(getMyBoardResponseDto);
 //        }
 //        return new PageResponseDto<>(page, boards.getTotalElements(), getMyBoardResponseDtos);
-        return null;
-    }
-
-//  @Override
-//  @Transactional
-//  public PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,
-//      User user) {
-//    Sort sort = Sort.by(Direction.ASC, "id");
-//    Pageable pageable = PageRequest.of(page, size, sort);
-//    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
-//    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
-//        .stream()
-//        .map(CommunityBoardResponseDto::new)
-//        .collect(Collectors.toList());
-//    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardResponseDtoList);
-//  }
-
-    @Override
-    @Transactional
-    public void deleteCommunityBoard(Long community_board_id, User user) {
-        boardRepository.findByIdAndUser_NickName(community_board_id, user.getNickName())
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        boardRepository.deleteById(community_board_id);
-    }
-
-
-    //새로운 태그 리스트 생성하기
-    public List<Hashtag> addHashTag(List tagDtoList) {
-
-        List<Hashtag> tagList = new ArrayList<>();
-
-        for (int i = 0; i < tagList.size(); i++) {
-            Hashtag hashtag = hashtagRepository.findByName(
-                    tagDtoList.get(i).toString())
-                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-            tagList.add(hashtag);
-        }
-        return tagList;
-    }
-
-}
+//        return null;
+//    }

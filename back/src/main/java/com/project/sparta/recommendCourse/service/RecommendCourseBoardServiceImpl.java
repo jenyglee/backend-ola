@@ -239,6 +239,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
 
 
+
 }
 
 //    //전체 코스 조회(페이징)(구버전)

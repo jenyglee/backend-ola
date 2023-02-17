@@ -257,7 +257,7 @@ public class initDb {
             }
             for (int i=5; i<10; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
@@ -269,7 +269,7 @@ public class initDb {
             }
             for (int i=10; i<15; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
@@ -281,7 +281,7 @@ public class initDb {
             }
             for (int i=15; i<20; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
