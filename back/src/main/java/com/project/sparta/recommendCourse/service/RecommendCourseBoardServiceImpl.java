@@ -285,7 +285,3 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //        //4. 클라이언트에 응답.
 //        return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
 //    }
-
-
-
-}

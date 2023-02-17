@@ -33,45 +33,48 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/boards")
 public class CommunityBoardController {
-  private final CommunityBoardService communityBoardService;
 
-  //커뮤니티 작성
-  @PostMapping("/communities")
-  public ResponseEntity createCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
-      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+    private final CommunityBoardService communityBoardService;
 
-  //커뮤니티 단건 조회
-  @GetMapping("/communities/{boardId}")
-  public ResponseEntity getCommunityBoard(@PathVariable Long boardId) {
-    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(boardId);
-    return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
-  }
+    //커뮤니티 작성
+    @PostMapping("/communities")
+    public ResponseEntity createCommunityBoard(
+        @RequestBody CommunityBoardRequestDto communityBoardRequestDto
+        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-  // TODO 커뮤니티 전체 조회 -> 필터링 기능 구현
-  //커뮤니티 전체 조회
-  @GetMapping("/communities")
-  public ResponseEntity getAllCommunityBoard(
-      @RequestParam("page") int page,
-      @RequestParam("size") int size) {
-    PageResponseDto<List<AllCommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
-    return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
-  }
+    //커뮤니티 단건 조회
+    @GetMapping("/communities/{boardId}")
+    public ResponseEntity getCommunityBoard(@PathVariable Long boardId) {
+        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(
+            boardId);
+        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    }
 
-  //커뮤니티 수정
-  @PatchMapping("/communities/{boardId}")
-  public ResponseEntity updateCommunityBoard(@PathVariable Long boardId, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-      ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+    // TODO 커뮤니티 전체 조회 -> 필터링 기능 구현
+    //커뮤니티 전체 조회
+    @GetMapping("/communities")
+    public ResponseEntity getAllCommunityBoard(@RequestParam("page") int page, @RequestParam("size") int size) {
+        PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(
+            page, size);
+        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    }
 
-  //커뮤니티 삭제
-  @DeleteMapping("/communities/{boardId}")
-  public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.deleteCommunityBoard(boardId,userDetail.getUser());
-    return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
-  }
+    //커뮤니티 수정
+    @PatchMapping("/communities/{boardId}")
+    public ResponseEntity updateCommunityBoard(@PathVariable Long boardId,@RequestBody CommunityBoardRequestDto communityBoardRequestDto
+                                                                        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto,
+            userDetail.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //커뮤니티 삭제
+    @DeleteMapping("/communities/{boardId}")
+    public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        communityBoardService.deleteCommunityBoard(boardId, userDetail.getUser());
+        return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
+    }
 }

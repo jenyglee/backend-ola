@@ -37,11 +37,11 @@ public class CommunityBoard extends Timestamped {
     private String contents;  //내용
     @OneToMany
     private List<Hashtag> tagList = new ArrayList<>();  //채팅방 태그리스트
-    @ColumnDefault("N")
+
     private String chatStatus;
-    @ColumnDefault("0")
+
     private int chatMemCnt;
-    @Column(nullable = false)
+
     @OneToMany(mappedBy = "communityBoardId", cascade = CascadeType.REMOVE)
     private List<CommunityComment> communityComment = new ArrayList<>();
     @ManyToOne

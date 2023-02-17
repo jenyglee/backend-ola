@@ -230,52 +230,52 @@ public class initDb {
         //TODO communityInit 커뮤니티에 해시태그 추가되면 변경해야함
         @Transactional
         public void communityInit(){
-//            User user = em.find(User.class, 1L);
-//            for (int i=0; i<5; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=5; i<10; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=10; i<15; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=15; i<20; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
+            User user = em.find(User.class, 1L);
+            for (int i=0; i<5; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=5; i<10; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=10; i<15; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
+            for (int i=15; i<20; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .build(),
+                    user
+                );
+            }
         }
 
         @Transactional
         public void communityCommentInit(){
-//            User user = em.find(User.class, 2L);
-//            for (int i=0; i<22; i++){
-//                CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
-//                communityCommentService.createCommunityComments(5L, requestDto, user);
-//            }
+            User user = em.find(User.class, 2L);
+            for (int i=0; i<22; i++){
+                CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
+                communityCommentService.createCommunityComments(5L, requestDto, user);
+            }
         }
 
         @Transactional
