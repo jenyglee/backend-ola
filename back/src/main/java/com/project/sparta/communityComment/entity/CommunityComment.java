@@ -35,6 +35,7 @@ public class CommunityComment extends Timestamped {
   private Long communityBoardId;
   private String nickName;
   private String contents;
+//  private Long likeCount;
 
 
 

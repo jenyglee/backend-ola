@@ -17,7 +17,7 @@ public class BoardLike {
     private Long boardLikesId;
 
     @Column(nullable = false)
-    private String userEmail;
+    private String userEmail; //좋아요를 누른사람이 누군지 확인하기 위한 필드
 
     @Column(nullable = false)
     private String userNickName;

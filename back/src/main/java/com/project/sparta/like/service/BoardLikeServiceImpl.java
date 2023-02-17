@@ -34,10 +34,10 @@ public class BoardLikeServiceImpl implements BoardLikeService {
         BoardLike boardLike = BoardLike.builder()
                 .userNickName(user.getNickName())
                 .userEmail(user.getEmail())
+                .board(board)
                 .build();
 
         //레파지토리에 저장
-
         likeBoardRepository.save(boardLike);
 
     }

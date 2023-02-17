@@ -13,15 +13,17 @@ import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentLikeServiceImpl implements CommentLikeService{
 
-    private CommentRepository commentRepository;
-    private LikeCommentRepository likeCommentRepository;
+    private final CommentRepository commentRepository;
+    private final LikeCommentRepository likeCommentRepository;
 
 
     public void likeComment(Long id, User user){

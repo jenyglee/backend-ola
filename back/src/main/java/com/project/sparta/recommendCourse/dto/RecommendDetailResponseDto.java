@@ -19,7 +19,9 @@ public class RecommendDetailResponseDto {
 
     private List<String> imgList;
 
-    public RecommendDetailResponseDto(RecommendCourseBoard post, List<String> imgList, String nickName) {
+    private Long likeCount;
+
+    public RecommendDetailResponseDto(RecommendCourseBoard post, List<String> imgList, String nickName,Long likeCount) {
         this.nickName = nickName;
         this.title = post.getTitle();
         this.contents = post.getContents();
@@ -27,6 +29,7 @@ public class RecommendDetailResponseDto {
         this.season = post.getSeason();
         this.altitude = post.getAltitude();
         this.imgList = imgList;
+        this.likeCount = likeCount;
 
 
     }

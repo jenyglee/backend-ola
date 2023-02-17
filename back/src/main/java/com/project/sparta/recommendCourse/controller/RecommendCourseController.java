@@ -1,10 +1,8 @@
 package com.project.sparta.recommendCourse.controller;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.recommendCourse.dto.ImgUrlDto;
-import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
-import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
-import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
+import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
+import com.project.sparta.recommendCourse.dto.*;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
@@ -76,7 +74,7 @@ public class RecommendCourseController {
      * @throws IOException
      */
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
-    @PutMapping("admin/api/OfferCourse/{id}")
+    @PutMapping("/boards/recommends/{id}")
     public ResponseEntity modifyRecommendCourse(@RequestBody RecommendRequestDto requestDto,
                                                 @PathVariable Long id,
                                                 @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -94,7 +92,7 @@ public class RecommendCourseController {
      */
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
-    @DeleteMapping("admin/api/OfferCourse/{id}")
+    @DeleteMapping("/boards/recommends/{id}")
     public void deleteRecommendCourse(@PathVariable Long id,
                                       @AuthenticationPrincipal UserDetailsImpl userDetail) {
         User user = userDetail.getUser();
@@ -102,16 +100,30 @@ public class RecommendCourseController {
     }
 
     //단건조회
-    @GetMapping("admin/api/OfferCourse/{id}")
+    @GetMapping("/boards/recommends/{boards_id}")
     public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long id) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(id);
     }
 
     //전체조회
-    @GetMapping("admin/api/OfferCourse")
+    @GetMapping("/boards/recommends")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam int offset, @RequestParam int limit) {
 
         return recommendCourseBoardService.allRecommendCourseBoard(offset, limit);
+
     }
+
+    //내가 쓴 게시물 조회
+
+    @GetMapping("/boards/recommends/me_boards")
+    public ResponseEntity getMyBoardAll(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PageResponseDto<List<GetMyRecommendCourseResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
+        return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
+
+    }
+
 
 }
