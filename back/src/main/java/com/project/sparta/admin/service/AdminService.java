@@ -16,33 +16,10 @@ import java.util.List;
 
 public interface AdminService {
   void signup(AdminRequestSignupDto signupDto);
-//  void updateCommunityBoard(Long community_board_id, CommunityBoardRequestDto communityBoardRequestDto, User user);
+
   void deleteCommunityBoard(Long community_board_id);
-//  CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
-//  List<CommunityBoardResponseDto> getAllCommunityBoard(int page, int size);
-//  List<String> modifyRecommendCoursePost(Long id, List<MultipartFile> images, RecommendRequestDto requestPostDto) throws IOException;
-//  //코스 삭제
-//  void deleteRecommendCoursePost(Long id);
-//  //단건 코스 조회
-//  RecommendDetailResponseDto oneSelectRecommendCoursePost(Long id);
-//  //전체 코스 조회
-//  PageResponseDto<List<RecommendResponseDto>> allRecommendCoursePost(int offset, int limit);
 
-
-//  AdminResponseDto getUpdateUser(User user);
-//  AdminResponseDto getDeleteUser(User user);
   ManagerPersonResponseDto getOneUser(Long userId);
-//  List<AdminResponseDto> getAllUser();
 
 
-    //  @Override
-    //  public AdminResponseDto getUpdateUser(User user)
-    //  {
-    //
-    //  }
-    //  @Override
-    //  public AdminResponseDto getDeleteUser(User user){
-    //
-    //  }
-    // AdminResponseDto getOneUser(Long id);
 }

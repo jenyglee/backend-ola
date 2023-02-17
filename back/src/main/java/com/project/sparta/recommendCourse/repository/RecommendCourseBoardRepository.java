@@ -15,4 +15,7 @@ public interface RecommendCourseBoardRepository extends JpaRepository<RecommendC
 
     @Query("select rb from RecommendCourseBoard rb where rb.postStatus =:postStatusEnum")
     Page<RecommendCourseBoard> findAllBySatusIsVailable(Pageable pageable, PostStatusEnum postStatusEnum);
+
+
+    Page<RecommendCourseBoard> findByUserId(Pageable pageable, Long userid);
 }
