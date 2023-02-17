@@ -8,6 +8,7 @@ import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   private final CommentRepository commentRepository;
   private final BoardRepository boardRepository;
+  private final LikeCommentRepository likeCommentRepository;
 
   @Override
   @Transactional
@@ -26,6 +28,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
       User user) {
     CommunityBoard communityBoard = boardRepository.findById(boardId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
     commentRepository.saveAndFlush(communityComment);

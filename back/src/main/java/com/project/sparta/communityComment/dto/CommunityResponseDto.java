@@ -17,6 +17,16 @@ public class CommunityResponseDto {
   private String nickName;
   private String contents;
 
+//  private Long likeCount; //코멘트 좋아요
+
+//  @Builder
+//  public CommunityResponseDto(CommunityComment communityComment,Long likeCount) {
+//    this.communityBoardId = communityComment.getCommunityBoardId();
+//    this.id = communityComment.getId();
+//    this.nickName = communityComment.getNickName();
+//    this.contents = communityComment.getContents();
+//    this.likeCount = likeCount;
+//  }
   @Builder
   public CommunityResponseDto(CommunityComment communityComment) {
     this.communityBoardId = communityComment.getCommunityBoardId();
