@@ -34,8 +34,14 @@
             width: 300px;
             margin-right: 10px;
         }
-        .input-area .btn-wrap{
-            width: 100px;
+        .input-area{
+            width: 100%;
+        }
+
+        .btn-wrap{
+            width: 200px;
+            display: inline-block;
+            float: left;
         }
         .input-area .btn-wrap .btn{
             width: 100%;
@@ -97,22 +103,30 @@
             color: #000000;
         }
 
+        #sendMes{
+            display: inline-block;
+            width: 70px;
+            font-size: 13px;
+            float: left;
+            height: 40px;
+            margin-right: 5px;
+        }
+        #exitMes{
+            display: inline-block;
+            width: 80px;
+            font-size: 13px;
+            float: left;
+            height: 40px;
+            background-color: #f46b3f;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
 <main>
     <ul>
-        <div class="my-chat">
-            <p class="time">11:11</p>
-            <div class="text-box">내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리내가 할 소리</div>
-        </div>
-        <div class="other-chat">
-            <p class="nickname">다른사람</p>
-            <div class="wrap">
-                <div class="text-box">다른사람의 소리</div>
-                <p class="time">11:11</p>
-            </div>
-        </div>
+        <div class="other-chat" id="msgArea"></div>
     </ul>
 
 </main>
@@ -121,97 +135,90 @@
         <input type="text" class="form-control" id="message" placeholder="입력" />
     </div>
     <div class="btn-wrap">
-        <button type="button" class="btn btn-primary search-btn" onclick="send();">보내기</button>
+        <button type="button" class="btn btn-primary search-btn" onclick="send();" id="sendMes">보내기</button>
+        <button type="button" class="btn btn-primary search-btn" onclick="exit();" id="exitMes">방나가기</button>
     </div>
 </div>
 <script>
-    // websocket 생성
-    const websocket = new WebSocket("ws://localhost:8080/ws/chat");
-    websocket.onmessage = onMessage;	// 소켓이 메세지를 받을 때
-    websocket.onopen = onOpen;		// 소켓이 생성될때(클라이언트 접속)
-    websocket.onclose = onClose;	// 소켓이 닫힐때(클라이언트 접속해제)
 
-    //접속
-    function onClose(evt) {
-        console.log("close event : " + evt);
-    }
+    $(document).ready(function(){
 
-    //연결해제
-    function onOpen(evt) {
-        console.log("open event : " + evt);
-    }
+        const username = "사용자";
+        const date = new Date();
 
-    // 메세지 발신
-    function onMessage(msg) {
-        var data = JSON.parse(msg.data); // msg를 받으면 data 필드 안에 Json String으로 정보가 있음
-        // 필요한 정보를 Json data에서 추출
-        var senderId = data.senderId;
-        var message = data.message;
-        var time = data.time;
-        var newOne = data.newOne;
-        var outOne = data.outOne;
-    }
-
-    // 메세지 수신
-    function send(){
-        var message = document.getElementById("message").value;
-
-        // don't send when content is empty
-        // 채팅 입력 칸이 비어있지 않을 경우만 정보를 Json형태로 전송
-        if(message != "") {
-            let msg = {
-                'receiverId' : receiverId,
-                'message' : message
-            }
-
-            if(message != null) {
-                websocket.send(JSON.stringify(msg));	// websocket handler로 전송(서버로 전송)
-            }
-            document.getElementById("message").value = '';
-        }
-    }
-
-    // 채팅 내용 저장하기
-    function setChatHistory(name){
-        var value =[];
-        document.querySelectorAll('.message-li').forEach(item => {
-
-            var time = item.querySelector('.message-data > .message-data-time').textContent;
-            var message = item.querySelector('.message').textContent;
-            var senderId;
-            var type = item.querySelector('.message').classList[1];
-            if(type == 'my-message'){
-                senderId = myId;
-            } else {
-                senderId = name;
-            }
-
-            data = {
-                "time":time,
-                "message":message,
-                "senderId":senderId
-            }
-            value.push(data);
-
+        $("#exitMes").on("click", (e) => {
+            disconnect();
         })
 
-        sessionStorage.setItem(name, JSON.stringify(value));
-    };
+        $("#sendMes").on("click", (e) => {
+            send();
+        });
 
-    // insert pre chat history
-    function getChatHistory(name){
-        var data = JSON.parse(sessionStorage.getItem(name));
+        const websocket = new WebSocket("ws://localhost:8080/ws/chat");
 
-        if(data != null) {
-            data.forEach(item => {
-                var time = item.time;
-                var message = item.message;
-                var senderId = item.senderId;
+        websocket.onmessage = onMessage;
+        websocket.onopen = onOpen;
+        websocket.onclose = onClose;
 
-                insertMessage(senderId, time, message);
-            })
+        function send(){
+
+            let msg = document.getElementById("message");
+
+            console.log(username + ":" + msg.value);
+            websocket.send(username + ":" + msg.value);
+            msg.value = '';
         }
-    };
+
+        //채팅창에서 나갔을 때
+        function onClose(evt) {
+            var str = username + ": 님이 방을 나가셨습니다.";
+            websocket.send(str);
+        }
+
+        //채팅창에 들어왔을 때
+        function onOpen(evt) {
+            var str = username + ": 님이 입장하셨습니다.";
+            websocket.send(str);
+        }
+
+        function onMessage(msg) {
+            var data = msg.data;
+            var sessionId = null;
+            //데이터를 보낸 사람
+            var message = null;
+            var arr = data.split(":");
+
+            for(var i=0; i<arr.length; i++){
+                console.log('arr[' + i + ']: ' + arr[i]);
+            }
+
+            var cur_session = username;
+
+            //현재 세션에 로그인 한 사람
+            console.log("cur_session : " + cur_session);
+            sessionId = arr[0];
+            message = arr[1];
+
+            console.log("sessionID : " + sessionId);
+            console.log("cur_session : " + cur_session);
+
+            //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+            if(sessionId == cur_session){
+                var str = "<div className='wrap'>";
+                str += "<div className='text-box' style='width: 300px; background-color: lightblue; border-radius: 5px; padding:10px; font-size: 15px;'>" + sessionId + ": " + message + "</div>";
+                str += "<p className='time' style='font-size: 10px;'>" + date.toLocaleTimeString('ko-kr') +"</p>";
+                str += "</div>";
+                $("#msgArea").append(str);
+            }
+            else{
+                var str = "<div className='wrap'>";
+                str += "<div className='text-box' style='width: 300px; background-color: ivory; border-radius: 5px; padding:10px'>" + sessionId + ": " + message + "</div>";
+                str += "<p className='time'>" + date.toLocaleTimeString('ko-kr') +"</p>";
+                str += "</div>";
+                $("#msgArea").append(str);
+            }
+        }
+    })
 </script>
 </body>
 </html>
