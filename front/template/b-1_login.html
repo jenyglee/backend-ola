@@ -321,9 +321,21 @@
             // console.log(response);
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
+
+            var keys = Object.values(response)
             console.log(response);
+            console.log(keys[2])
             alert("로그인 성공")
-            window.location.href = "../index.html";
+
+            if(keys[2]=="USER")
+            {
+                window.location.href = "../index.html";
+            }
+            else
+            {
+                window.location.href = "k-1_manageUser.html";
+            }
+
 
         }).fail(function (response){
             console.log(response);
