@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-    <title>Title</title>
+    <title>마이페이지</title>
     <style>
         .container {
             width: 1200px;
@@ -26,12 +26,6 @@
             height: 100px;
         }
 
-        .w_2 {
-            width: 1200px;
-            height: 60px;
-            display: inline-block;
-        }
-
         .w_3 {
             width: 1200px;
             height: 30px;
@@ -39,17 +33,6 @@
 
         .w_4 {
             width: 1200px;
-            height: 550px;
-        }
-
-        .w_4 .table th{
-            padding-left: 30px;
-        }
-        .w_4 .table tr{
-            text-align: left;
-        }
-        .w_4 .table td{
-            padding-left: 30px;
         }
 
         .w_5 {
@@ -57,58 +40,17 @@
             height: 40px;
         }
 
-        .w_2 .b_2, .w_2 .b_3, .w_2 .b_4, .w_2 .b_5 {
-            width: 150px;
-            height: 60px;
-            display: inline-block;
-            float: left;
-            text-align: center;
-        }
-
-        .w_2 .b_4, .w_2 .b_5{
-            text-align: center;
-            line-height: 50px;
-            width: 150px;
-        }
-
-        #btn_1 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            border-radius: 50px;
-            color: white;
-        }
-
-        #btn_2 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
-        #btn_3 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
-
-        #btn_4 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
         .w_4 .table{
             text-align: center;
+            margin-bottom: 50px;
         }
-
+        .w_4 .table a{
+            color : #F46B3F;
+        }
+        .w_4 .table a:hover{
+            text-decoration: underline;
+            color : black;
+        }
 
 
         .btn-group .btn{
@@ -132,6 +74,7 @@
         .page-link:focus{
             color: #F46B3F;
         }
+
     </style>
 </head>
 <body>
@@ -144,7 +87,7 @@
         <a href="./g-1_recommend.html">코스추천</a>
         <a href="h-1_communityMain.html">커뮤니티</a>
         <a href="./i-1_shopMain.html">쇼핑몰</a>
-        <a href="./j-1_noticeMain.html" style="font-weight: bold; color: #F46B3F">공지사항</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
     <div class="right">
         <div class="friend">
@@ -280,18 +223,16 @@
     <section class="">
         <!--   작업공간   -->
         <div class="w_1"></div>
-        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="btnradio1">전체</label>
+        <div style="display: flex; align-items: center">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="margin-right: 20px">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio1">내가 쓴 커뮤니티 글</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio2">서비스</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio3">업데이트</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio4">이벤트</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">내가 쓴 코스추천</label>
+            </div>
+            <div style="margin-right: 20px">내가 참여한 크루 <b style="color : #F46B3F;">6</b>개</div>
+            <div>내가 만든 크루 <b style="color : #F46B3F">6</b>개</div>
         </div>
 
         <div class="w_3"></div>
@@ -299,62 +240,73 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col" style="width: 120px">카테고리</th>
-                    <th scope="col" style="width: 500px">제목</th>
-                    <th scope="col" style="width: 200px">날짜</th>
+                    <th scope="col"></th>
+                    <th scope="col">제목</th>
+                    <th scope="col">좋아요</th>
+                    <th scope="col">날짜</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">8</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">9</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
+                <tr>
+                    <th scope="row">10</th>
+                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
+                    <td>22000</td>
+                    <td>2023-02-11</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -366,9 +318,9 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(1)">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(2)">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -376,7 +328,7 @@
                     </li>
                 </ul>
             </nav>
-        </div>
+            </div>
         </div>
     </section>
 </main>
@@ -394,39 +346,6 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
     }
-
-    function getNoticeList(offset) {
-        // 1. 데이터 초기화를 해야됨.
-        // $('tbody').empty();
-
-        // 2. 통신해서 불러오기
-        // $.ajax({
-        //     type: "GET",
-        //     url: "http://localhost:8080/notice-boards?offset=" + offset + "&limit=10",
-        //     beforeSend: function (xlr) {
-        //         xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
-        //     },
-        //     // data: {
-        //     //  title: "sasas",
-        //     // },
-        //     success: function (response) {
-        //         console.log("호출완료");
-        //         console.log(response.data)
-        //         for (let i = 0; i < response.data.length; i++) {
-        //             const temp =
-        //                 `
-        //         <tr>
-        //             <td>서비스</td>
-        //            <td><a href="#">22000</a></td> // 누르면 이 게시글의 ID를 localStorage.set("boardId", "내가누른 게시글ID")
-        //             <td>2023-02-11</td>
-        //         </tr>
-        //                 `
-        //             $('tbody').append(temp)
-        //         }
-        //     },
-        // })
-    }
-
 </script>
 </body>
 
