@@ -120,6 +120,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //         for (RecommendCourseImg image:recommendRequestDto.getImgList()) {
 //             image.addPost(board);
 //         }
+
         List<RecommendCourseImg> imgUrlList = new ArrayList<>();
         for (String imgUrl : requestDto.getImgList()) {
             RecommendCourseImg recommendCourseImg = new RecommendCourseImg(imgUrl);
@@ -182,50 +183,11 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList, user.getNickName(),likeCount);
     }
 
-    //전체 코스 조회(페이징)
+    //전체 코스 조회(페이징)(쿼리DSL)
 
     @Override
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int offset, int limit){
-        //1.페이징으로 요청해서
-        PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<RecommendCourseBoard> all = recommendCourseBoardRepository.findAllBySatusIsVailable(pageRequest, PostStatusEnum.VAILABLE);
 
-        //2.전체 데이터 뽑아서
-        List<RecommendCourseBoard> contentList = all.getContent();
-//        List<RecommendCourseBoard> newContentList = new ArrayList<>();
-//        for (RecommendCourseBoard recommendCourseBoard : contentList) {
-//            if(recommendCourseBoard.getPostStatus().equals(PostStatusEnum.VAILABLE)){
-//                newContentList.add(recommendCourseBoard);
-//            }
-//        }
-
-        long totalElements = all.getTotalElements();
-
-
-
-        //3. 엔티티로 만들어서
-        List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
-        List<String> dummyList = new ArrayList<>();
-        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
-        //todo 나중에 필드에 UserId 값이 아니라 user객체가 들어가도록 엔티티 수정하는게 좋을 듯.
-        for (RecommendCourseBoard courseBoard:contentList) {
-            User user = userRepository.findById(courseBoard.getUserId()).orElseThrow(()->new CustomException(Status.NOT_FOUND_USER));
-            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(courseBoard.getId());
-            RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
-                    .title(courseBoard.getTitle())
-                    .imgList(dummyList)
-                    .likeCount(likeCount)
-                    .nickName(user.getNickName())
-                    .timestamped(courseBoard.getCreateAt())
-                    .build();
-            FindAllPostDtoList.add(responseFindAllPos);
-        }
-
-
-        // Todo 좋아요 갯수 필드에 추후에 추가
-
-        //4. 클라이언트에 응답.
-        return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
     }
 
     //내가 쓴 게시물 조회
@@ -255,5 +217,56 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     // 필터링 도전
 
 
+
+
+
+
+}
+
+//    //전체 코스 조회(페이징)(구버전)
+//
+//    @Override
+//    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int offset, int limit){
+//        //1.페이징으로 요청해서
+//        PageRequest pageRequest = PageRequest.of(offset, limit);
+//        Page<RecommendCourseBoard> all = recommendCourseBoardRepository.findAllBySatusIsVailable(pageRequest, PostStatusEnum.VAILABLE);
+//
+//        //2.전체 데이터 뽑아서
+//        List<RecommendCourseBoard> contentList = all.getContent();
+////        List<RecommendCourseBoard> newContentList = new ArrayList<>();
+////        for (RecommendCourseBoard recommendCourseBoard : contentList) {
+////            if(recommendCourseBoard.getPostStatus().equals(PostStatusEnum.VAILABLE)){
+////                newContentList.add(recommendCourseBoard);
+////            }
+////        }
+//
+//        long totalElements = all.getTotalElements();
+//
+//
+//
+//        //3. 엔티티로 만들어서
+//        List<RecommendResponseDto> FindAllPostDtoList= new ArrayList<>();
+//        List<String> dummyList = new ArrayList<>();
+//        dummyList.add("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+//        //todo 나중에 필드에 UserId 값이 아니라 user객체가 들어가도록 엔티티 수정하는게 좋을 듯.
+//        for (RecommendCourseBoard courseBoard:contentList) {
+//            User user = userRepository.findById(courseBoard.getUserId()).orElseThrow(()->new CustomException(Status.NOT_FOUND_USER));
+//            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(courseBoard.getId());
+//            RecommendResponseDto responseFindAllPos = RecommendResponseDto.builder()
+//                    .title(courseBoard.getTitle())
+//                    .imgList(dummyList)
+//                    .likeCount(likeCount)
+//                    .nickName(user.getNickName())
+//                    .timestamped(courseBoard.getCreateAt())
+//                    .build();
+//            FindAllPostDtoList.add(responseFindAllPos);
+//        }
+//
+//
+//        // Todo 좋아요 갯수 필드에 추후에 추가
+//
+//        //4. 클라이언트에 응답.
+//        return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
+//    }
 
 }
