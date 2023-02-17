@@ -4,8 +4,10 @@ package com.project.sparta.common.db;
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
@@ -227,7 +229,6 @@ public class initDb {
             }
         }
 
-        //TODO communityInit 커뮤니티에 해시태그 추가되면 변경해야함
         @Transactional
         public void communityInit(){
             User user = em.find(User.class, 1L);
@@ -256,7 +257,7 @@ public class initDb {
             }
             for (int i=5; i<10; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
@@ -268,7 +269,7 @@ public class initDb {
             }
             for (int i=10; i<15; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
@@ -280,7 +281,7 @@ public class initDb {
             }
             for (int i=15; i<20; i++){
                 communityBoardService.createCommunityBoard(
-                     CommunityBoardRequestDto.builder()
+                    CommunityBoardRequestDto.builder()
                         .title("커뮤니티" + i)
                         .contents("커뮤니티 콘텐츠" + i)
                         .chatStatus("N")
