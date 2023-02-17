@@ -13,6 +13,31 @@
           crossorigin="anonymous">
     <title>올라 공지사항</title>
 
+    <style>
+
+        .container{
+            width: 1200px;
+            padding: 0;
+        }
+        .inputLabel{
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .w_2,
+        .w_3,
+        .w_7{
+            height: 55px;
+        }
+        #btn_1{
+            width: 200px;
+            height : 50px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+            float: right;
+        }
+    </style>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
@@ -22,10 +47,10 @@
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="./template/g-1_recommend.html">코스추천</a>
+        <a href="./g-1_recommend.html">코스추천</a>
         <a href="h-1_communityMain.html">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html" style="font-weight: bold; color: #F46B3F">공지사항</a>
     </div>
     <div class="right">
         <div class="friend">
@@ -148,17 +173,49 @@
                 </ul>
             </div>
         </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
             <p class="text">나와바리나와바님</p>
-        </div>
+        </a>
     </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
+<main class="container">
+    <h3 style="margin: 30px 0; font-weight: bold;">공지사항</h3>
+    <section>
+        <p class="inputLabel">카테고리</p>
+        <select
+            class="form-serch-select form-select"
+            aria-label="Default select example"
+            style="width: 200px; margin-bottom: 10px"
+        >
+            <option value="0">서비스</option>
+            <option value="1">업데이트</option>
+            <option value="2">이벤트</option>
+        </select>
+        <p class="inputLabel">제목</p>
+        <div class="w_3">
+            <input type="text" class="form-control" id="exampleFormControlInput2" />
+        </div>
+
+        <p class="inputLabel">내용</p>
+        <div class="w_7" style="margin-bottom: 100px">
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <a href="j-1_noticeMain.html">
+            <div class="w_9" style="">
+                <div class="b_1">
+                    <button type="button" id="btn_1">목록</button>
+                </div>
+            </div>
+        </a>
+    </section>
+</main>
+
 
 <script>
     $(document).ready(function () {
