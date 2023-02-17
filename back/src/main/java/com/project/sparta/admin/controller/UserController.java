@@ -17,17 +17,17 @@ public class UserController {
 
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/{userId}")
     public void getUser(){
 
     }
 
-    @PatchMapping("/users/{id}")
+    @PatchMapping("/users/{userId}")
     public void updateUser(){
 
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/users/{userId}")
     public void deleteUser(){
 
     }
