@@ -1,6 +1,7 @@
 package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.admin.entity.Timestamped;
+import com.project.sparta.like.entity.CourseLike;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,8 +42,8 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    // @OneToMany(mappedBy = "recommendCourseBoard",cascade = CascadeType.PERSIST)
-    // private List<RecommendCourseImg> images = new ArrayList<>();
+     @OneToMany()
+     private List<RecommendCourseImg> images = new ArrayList<>();
 
     // @ManyToOne
     // @JoinColumn(name = "user_id")

@@ -10,12 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface RecommendCourseBoardRepository extends JpaRepository<RecommendCourseBoard,Long> {
-
+public interface RecommendCourseBoardRepository extends JpaRepository<RecommendCourseBoard,Long>, RecommendCourseBoardCustomRepository {
 
     @Query("select rb from RecommendCourseBoard rb where rb.postStatus =:postStatusEnum")
     Page<RecommendCourseBoard> findAllBySatusIsVailable(Pageable pageable, PostStatusEnum postStatusEnum);
-
 
     Page<RecommendCourseBoard> findByUserId(Pageable pageable, Long userid);
 }
