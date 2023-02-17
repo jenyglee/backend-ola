@@ -106,7 +106,7 @@ public class FriendServiceImpl implements FriendService {
         friendRepository.deleteById(friend.getId());
     }
 
-    //친구 검색
+    //친구 검색(내친구 포함 모든친구)
     @Override
     @Transactional(readOnly = true)
     public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int offset, int limit, String targetUserName) {

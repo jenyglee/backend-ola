@@ -60,5 +60,10 @@ public class InfoController {
 
     }
 
+    //TODO 내 알람 전체 조회 API 제작
+    //내 알람 전체 조회
+    @GetMapping("/alarms")
+    public void getAlarmList(){}
+
     // TODO 친구가 쓴 게시글도 조회할수 있다면?
 }
