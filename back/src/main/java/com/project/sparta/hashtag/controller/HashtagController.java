@@ -38,9 +38,9 @@ public class HashtagController {
    }
 
    //해시태그 삭제
-   @DeleteMapping("/hashtags/{id}")
-   public ResponseEntity deleteHashtag(@RequestBody Long id, @AuthenticationPrincipal UserDetailsImpl userDetail) {
-       hashtagService.deleteHashtag(id, userDetail.getUser());
+   @DeleteMapping("/hashtags/{hashtagId}")
+   public ResponseEntity deleteHashtag(@RequestBody Long hashtagId, @AuthenticationPrincipal UserDetailsImpl userDetail) {
+       hashtagService.deleteHashtag(hashtagId, userDetail.getUser());
        return new ResponseEntity(HttpStatus.OK);
    }
 
@@ -51,7 +51,7 @@ public class HashtagController {
        return new ResponseEntity(HttpStatus.OK);
    }
 
-   //디폴트 해시태그 전체 조회
+   //기본 해시태그 조회
    @GetMapping("hashtags/default")
    public ResponseEntity getFixedHashtagList() {
        List<HashtagResponseDto> fixedHashtagList = hashtagService.getFixedHashtagList();
