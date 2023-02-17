@@ -3,6 +3,8 @@ package com.project.sparta.user.controller;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
+import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
+import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.service.UserService;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InfoController {
     private final UserService userService;
     private final CommunityBoardService communityBoardService;
+    private final RecommendCourseBoardService recommendCourseBoardService;
 
     // 내 정보 조회
     @GetMapping("/me")
@@ -43,6 +46,18 @@ public class InfoController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<GetMyBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page, size, userDetails.getUser());
         return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    }
+
+
+    //내가 쓴 코스추천 전체 조회
+    @GetMapping("/me/boards/recommends")
+    public ResponseEntity getMyBoardAll(
+        @RequestParam("page") int page,
+        @RequestParam("size") int size,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PageResponseDto<List<GetMyRecommendCourseResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
+        return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
+
     }
 
     // TODO 친구가 쓴 게시글도 조회할수 있다면?
