@@ -24,33 +24,33 @@ public class CommunityCommnetController {
   private final CommunityCommentService commentService;
 
   //댓글 생성
-  @PostMapping("/community_comments/{communityBoardId}")
-  public ResponseEntity createCommunityComment(@PathVariable Long communityBoardId
+  @PostMapping("/comments/communities/{boards_Id}")
+  public ResponseEntity createCommunityComment(@PathVariable Long boards_Id
       , @RequestBody CommunityRequestDto communityRequestDto
       , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardId,
+    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(boards_Id,
         communityRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);
   }
 
   //선택한 댓글 수정
-  @PatchMapping("/community_comments/{communityBoardId}/{communityCommentId}")
+  @PatchMapping("/comments/{comment_id}/communities/{boards_Id}")
   public ResponseEntity updateCommunityComment(
-      @PathVariable Long communityBoardId,
-      @PathVariable Long communityCommentId,
+      @PathVariable Long boards_Id,
+      @PathVariable Long comment_id,
       @RequestBody CommunityRequestDto communityRequestDto,
       @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommunityResponseDto communityResponseDto = commentService.updateCommunityComments(communityBoardId,communityCommentId,
+    CommunityResponseDto communityResponseDto = commentService.updateCommunityComments(boards_Id,comment_id,
         communityRequestDto, userDetail.getUser());
     return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);
   }
 
   //선택한 댓글 삭제
-  @DeleteMapping("/community_comments/{communityBoardId}/{communityCommentId}")
-  public ResponseEntity deleteCommunityComment(@PathVariable Long communityBoardId,
-      @PathVariable Long communityCommentId
+  @DeleteMapping("/comments/{comment_id}/communities/{boards_id}")
+  public ResponseEntity deleteCommunityComment(@PathVariable Long boards_id,
+      @PathVariable Long comment_id
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    commentService.deleteCommunityComments(communityBoardId, communityCommentId,userDetail.getUser());
+    commentService.deleteCommunityComments(boards_id, comment_id,userDetail.getUser());
     return new ResponseEntity("댓글 삭제 완료", HttpStatus.OK);
   }
 

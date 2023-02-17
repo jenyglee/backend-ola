@@ -35,7 +35,7 @@ public class CommunityBoardController {
   private final CommunityBoardService communityBoardService;
 
   //게시글 생성
-  @PostMapping("/community_boards")
+  @PostMapping("/boards/communities")
   public ResponseEntity createCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
       , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
@@ -43,9 +43,9 @@ public class CommunityBoardController {
   }
 
   //게시글 단건조회
-  @GetMapping("/community_boards/{community_board_id}")
-  public ResponseEntity getCommunityBoard(@PathVariable Long community_board_id) {
-    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(community_board_id);
+  @GetMapping("/boards/communities/{boards_id}")
+  public ResponseEntity getCommunityBoard(@PathVariable Long boards_id) {
+    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(boards_id);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
 
@@ -65,25 +65,25 @@ public class CommunityBoardController {
 
 
   //게시글 수정
-  @PatchMapping("/community_boards/{community_board_id}")
-  public ResponseEntity updateCommunityBoard(@PathVariable Long community_board_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
+  @PatchMapping("/boards/communities/{boards_id}")
+  public ResponseEntity updateCommunityBoard(@PathVariable Long boards_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.updateCommunityBoard(community_board_id, communityBoardRequestDto, userDetail.getUser());
+    communityBoardService.updateCommunityBoard(boards_id, communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
 
   //게시글 삭제
-  @DeleteMapping("/community_boards/{community_board_id}")
-  public ResponseEntity deleteCommunityBoard(@PathVariable Long community_board_id,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.deleteCommunityBoard(community_board_id,userDetail.getUser());
+  @DeleteMapping("/boards/communities/{boards_id}")
+  public ResponseEntity deleteCommunityBoard(@PathVariable Long boards_id,@AuthenticationPrincipal UserDetailsImpl userDetail) {
+    communityBoardService.deleteCommunityBoard(boards_id,userDetail.getUser());
     return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
   }
 
 
   //내가 쓴 게시물 조회
 
-  @GetMapping("/community_boards/me_boards")
+  @GetMapping("/boards/communities/me_boards")
   public ResponseEntity getMyBoardAll(
           @RequestParam("page") int page,
           @RequestParam("size") int size,
