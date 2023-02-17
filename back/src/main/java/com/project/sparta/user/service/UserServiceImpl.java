@@ -85,8 +85,7 @@ public class UserServiceImpl implements UserService {
 
         TokenDto tokenDto = new TokenDto(
                 jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
-                refresh_token,
-                user.getRole()
+                refresh_token
         );
 
         redisTemplate.opsForValue().set(
@@ -184,8 +183,7 @@ public class UserServiceImpl implements UserService {
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
             TokenDto new_tokenDto = new TokenDto(
                     jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
-                    new_refresh_token,
-                    user.getRole()
+                    new_refresh_token
             );
 
             redisTemplate.opsForValue().set(
