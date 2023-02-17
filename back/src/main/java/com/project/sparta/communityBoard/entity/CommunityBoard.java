@@ -52,6 +52,13 @@ public class CommunityBoard extends Timestamped {
     private User user;
 
     @Builder
+    public CommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user) {
+        this.title = communityBoardRequestDto.getTitle();
+        this.contents = communityBoardRequestDto.getContents();
+        this.user = user;
+    }
+
+    @Builder
     public CommunityBoard(String title, String contents, List<Hashtag> tagList, String chatStatus,
         int chatMemCnt, List<CommunityComment> communityComment, User user) {
         this.title = title;
