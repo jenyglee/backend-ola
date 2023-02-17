@@ -17,29 +17,27 @@ import com.project.sparta.admin.dto.ManagerPersonResponseDto;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 public class AdminController {
     private final AdminService adminService;
-    private final CommunityBoardService communityBoardService;
-
-    @GetMapping("/get/one/person")
-    public ResponseEntity getOnePerson(@PathVariable Long id) {
-        ManagerPersonResponseDto managerPersonResponseDto = adminService.getOneUser(id);
-        return new ResponseEntity<>(managerPersonResponseDto, HttpStatus.OK);
-    }
-
 
     // 어드민 회원가입
-    @PostMapping("/signup/admin")
+    @PostMapping("/auth/signup/admin")
     public ResponseEntity signup(@RequestBody AdminRequestSignupDto signupDto){
         adminService.signup(signupDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/community_boards/{community_board_id}")
-    public ResponseEntity getCommunityBoard(@PathVariable Long community_board_id) {
-        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(community_board_id);
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-    }
+//    @GetMapping("/community_boards/{community_board_id}")
+//    public ResponseEntity getCommunityBoard(@PathVariable Long community_board_id) {
+//        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(community_board_id);
+//        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+//    }
+
+//    @GetMapping("/get/one/person")
+//    public ResponseEntity getOnePerson(@PathVariable Long id) {
+//        ManagerPersonResponseDto managerPersonResponseDto = adminService.getOneUser(id);
+//        return new ResponseEntity<>(managerPersonResponseDto, HttpStatus.OK);
+//    }
+
 
 }
