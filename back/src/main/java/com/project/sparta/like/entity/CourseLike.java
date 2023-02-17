@@ -12,11 +12,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class CourseLike {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long likesId;
-
 
     @Column(nullable = false)
     private String userEmail;
@@ -24,11 +22,9 @@ public class CourseLike {
     @Column(nullable = false)
     private String userNickName;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RecommendCourseBoard_id")
     private RecommendCourseBoard courseBoard;
-
 
     @Builder
     public CourseLike(String userEmail, String userNickName, RecommendCourseBoard courseBoard) {
