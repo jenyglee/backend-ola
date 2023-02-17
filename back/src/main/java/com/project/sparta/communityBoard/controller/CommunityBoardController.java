@@ -31,66 +31,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/boards")
 public class CommunityBoardController {
   private final CommunityBoardService communityBoardService;
 
-  //게시글 생성
-  @PostMapping("/boards/communities")
+  //커뮤니티 작성
+  @PostMapping("/communities")
   public ResponseEntity createCommunityBoard(@RequestBody CommunityBoardRequestDto communityBoardRequestDto
       , @AuthenticationPrincipal UserDetailsImpl userDetail) {
     communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  //게시글 단건조회
-  @GetMapping("/boards/communities/{boards_id}")
-  public ResponseEntity getCommunityBoard(@PathVariable Long boards_id) {
-    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(boards_id);
+  //커뮤니티 단건 조회
+  @GetMapping("/communities/{boardId}")
+  public ResponseEntity getCommunityBoard(@PathVariable Long boardId) {
+    CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(boardId);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
   }
 
-  //게시글 전체조회
-
-  @GetMapping("/community_boards")
+  // TODO 커뮤니티 전체 조회 -> 필터링 기능 구현
+  //커뮤니티 전체 조회
+  @GetMapping("/communities")
   public ResponseEntity getAllCommunityBoard(
       @RequestParam("page") int page,
       @RequestParam("size") int size) {
-
     PageResponseDto<List<AllCommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(page,size);
     return new ResponseEntity<>(communityBoardResponseDto,HttpStatus.OK);
-
   }
 
-
-
-
-  //게시글 수정
-  @PatchMapping("/boards/communities/{boards_id}")
-  public ResponseEntity updateCommunityBoard(@PathVariable Long boards_id, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
+  //커뮤니티 수정
+  @PatchMapping("/communities/{boardId}")
+  public ResponseEntity updateCommunityBoard(@PathVariable Long boardId, @RequestBody CommunityBoardRequestDto communityBoardRequestDto
       ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.updateCommunityBoard(boards_id, communityBoardRequestDto, userDetail.getUser());
+    communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto, userDetail.getUser());
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-
-  //게시글 삭제
-  @DeleteMapping("/boards/communities/{boards_id}")
-  public ResponseEntity deleteCommunityBoard(@PathVariable Long boards_id,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    communityBoardService.deleteCommunityBoard(boards_id,userDetail.getUser());
+  //커뮤니티 삭제
+  @DeleteMapping("/communities/{boardId}")
+  public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId,@AuthenticationPrincipal UserDetailsImpl userDetail) {
+    communityBoardService.deleteCommunityBoard(boardId,userDetail.getUser());
     return new ResponseEntity("보드 삭제 완료", HttpStatus.OK);
   }
-
-
-  //내가 쓴 게시물 조회
-
-  @GetMapping("/boards/communities/me_boards")
-  public ResponseEntity getMyBoardAll(
-          @RequestParam("page") int page,
-          @RequestParam("size") int size,
-          @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    PageResponseDto<List<GetMyBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page, size, userDetails.getUser());
-    return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-
-  }
-
 }
