@@ -18,17 +18,24 @@
     <style>
         .container{
             width: 1200px;
-            height: 1000px;
+            /*height: 1000px;*/
             padding: 0;
-            background-color: #FFFBF4;
+
             align-items: center;
         }
         .sing_up-header{
-            margin: 50px 100px;
+            /*margin: 50px 100px;*/
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+        /* 라디오버튼 체크시 색 변경 */
+        .form-check-input:focus,
+        .form-check-input:checked {
+            background-color: #f46b3f;
+            border: 1px solid #f46b3f;
+            appearance: none;
         }
 
         .btn{
@@ -38,8 +45,8 @@
             height: 50px;
 
         }
-        #nextbtn{
-            width: 700px;
+        .btn:hover{
+            color: white;
         }
         .sing_up-header__text{
             color: #F46B3F;
@@ -79,7 +86,9 @@
 
         }
 
-
+        .form-floating{
+            margin-bottom: 20px;
+        }
 
     </style>
 </head>
@@ -108,62 +117,61 @@
     <div class="line"></div>
 </header>
 <main class="container">
-    <section class="">
+    <section>
         <header class="sing_up-header">
             <h1 class="sing_up-header__title">회원가입</h1>
             <h1><p class=" sing_up-header__text">STEP 01</p></h1>
         </header>
-        <div class="s1">
-        <div class="form-floating">
-            <input type="password" class="form-control" id="adminPassword" placeholder="Password">
-            <label for="adminPassword">관리자 비밀번호</label>
-
-        </div>
-        <br>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
-            <label for="inputEmail">Email address</label>
-            <label class="check">중복확인</label>
-
-        </div>
-            <br>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="inputPwd" placeholder="Password">
-                <label for="inputPwd">비밀번호</label>
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputNickName" style="resize : none;"></textarea>
-                <label for="inputNickName">닉네임</label>
-                <label  class="check">중복확인</label>
-
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputAge" style="resize : none;"></textarea>
-                <label for="inputAge">나이</label>
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputPhone" style="resize : none;"></textarea>
-                <label for="inputPhone">휴대폰번호</label>
-            </div>
-            <br>
-            <div class="img-upload-box">
-                <div class="mb-3">
-                    <div class="filebox">
-                        <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">
-<!--                        <label for="file" class="upload-label">파일찾기</label>-->
-                        <button id="my-button" onclick="onClickUpload();">파일 불러오기</button>
-                        <input type="file" id="file">
+        <div style="width: 590px; margin: 0 auto;">
+            <div style="height:90px; display: flex; align-items: center;">
+                <div style="width: 190px; display: flex; align-items: center">
+                    <div class="form-check form-check-inline" onclick="changeUser()" style="width: 90px">
+                        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory1"
+                               value="all" checked>
+                        <label class="form-check-label" for="inlineRadioCategory1">일반</label>
+                    </div>
+                    <div class="form-check form-check-inline" onclick="changeManager()" style="width: 90px">
+                        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                               id="inlineRadioCategory1-1" value="shoes">
+                        <label class="form-check-label" for="inlineRadioCategory1-1">매니저</label>
                     </div>
                 </div>
+                <div id="admin-input1" class="form-floating" style="width: 100%; margin-bottom: 0; display: none">
+                    <input type="password" class="form-control" id="adminPassword" placeholder="adminPassword">
+                    <label for="adminPassword">관리자 비밀번호</label>
+                </div>
             </div>
-            <br>
-            <div class="d-grid gap-2 col-6 mx-auto" id="nextbtn">
-                <button class="btn" type="button" style="border-radius: 5px;" onclick="handleCreatePeople()"><b>다음으로</b></button>
+            <div class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="email" placeholder="email">
+                <label for="email">이메일</label>
             </div>
+            <div class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="password" placeholder="password">
+                <label for="password">비밀번호</label>
             </div>
+            <div class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="nickname" placeholder="Panicknamessword">
+                <label for="nickname">닉네임</label>
+            </div>
+            <div id="user-input1" class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="age" placeholder="age">
+                <label for="age">나이</label>
+            </div>
+            <div id="user-input2" class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="phoneNumber" placeholder="phoneNumber">
+                <label for="phoneNumber">휴대폰번호(-제외)</label>
+            </div>
+            <div id="user-input3" class="w_8">
+                <label for="formFileMultiple"><b>프로필 이미지</b></label>
+                <input class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
+                <button id="next-btn" class="btn" type="button" style="border-radius: 5px;" onclick="handleNext()"><b>다음으로</b></button>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
+                <button id="sign-btn" class="btn" type="button" style="border-radius: 5px;" onclick="handleSignupAdmin()"><b>회원가입 완료</b></button>
+            </div>
+        </div>
     </section>
 </main>
 <script>
@@ -172,7 +180,25 @@
         myInput.click();
     }
 
-  function handleCreatePeople() {
+    function changeUser(){
+        $("#admin-input1").hide();
+        $("#user-input1").show();
+        $("#user-input2").show();
+        $("#user-input3").show();
+        $("#sign-btn").hide();
+        $("#next-btn").show();
+    }
+    function changeManager(){
+        $("#admin-input1").show();
+        $("#user-input1").hide();
+        $("#user-input2").hide();
+        $("#user-input3").hide();
+        $("#sign-btn").show();
+        $("#next-btn").hide();
+    }
+
+  function handleNext() {
+    //유저 회원가입, 인풋값 저장 후 다음페이지로 이동
       var settings = {
           "url": "http://localhost:8080/auth/signup",
           "method": "POST",
@@ -192,6 +218,12 @@
       };
       localStorage.setItem("signup1",settings.data)
       window.location.href = "c-2_singup.html";
+  }
+
+  function handleSignupAdmin(){
+        console.log("어드민 회원가입")
+      alert("이 알럿이 뜨고 로그인화면으로 이동")
+      window.location.href = "b-1_login.html";
   }
 </script>
 </body>
