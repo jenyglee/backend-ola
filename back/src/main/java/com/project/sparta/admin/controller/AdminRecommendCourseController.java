@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class RecommendCourseController {
+public class AdminRecommendCourseController {
     // TODO 어드민 Recommend API 제작
     @GetMapping("/boards/recommends")
     public void getRecommendList(){

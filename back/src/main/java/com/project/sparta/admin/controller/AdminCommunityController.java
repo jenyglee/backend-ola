@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class CommunityController {
+public class AdminCommunityController {
     // TODO 어드민 Community API 제작
     @GetMapping("/boards/communities")
     public void getCommunityList(){

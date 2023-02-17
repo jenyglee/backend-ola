@@ -35,7 +35,12 @@ public class InfoController {
     // TODO 내가 쓴 코스추천 전체 조회 API 제작
     //내가 쓴 코스추천 전체 조회
     @GetMapping("/me/boards/recommends")
-    public void getMyRecommendList(){
+    public ResponseEntity getMyBoardAll(
+        @RequestParam("page") int page,
+        @RequestParam("size") int size,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PageResponseDto<List<GetMyRecommendCourseResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
+        return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
     }
 
     //내가 쓴 커뮤니티 전체 조회
@@ -46,18 +51,6 @@ public class InfoController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<GetMyBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page, size, userDetails.getUser());
         return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-    }
-
-
-    //내가 쓴 코스추천 전체 조회
-    @GetMapping("/me/boards/recommends")
-    public ResponseEntity getMyBoardAll(
-        @RequestParam("page") int page,
-        @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        PageResponseDto<List<GetMyRecommendCourseResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
-        return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
-
     }
 
     //TODO 내 알람 전체 조회 API 제작

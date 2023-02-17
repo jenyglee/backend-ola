@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-public class UserController {
-    // TODO 어드민 User API 제작
-    @GetMapping("/users")
-    public void getUserList(){
+public class AdminNoticeController {
+    // TODO 어드민 Notice API 제작
+    @GetMapping("/boards/notices")
+    public void getNoticeList(){
 
     }
 
-    @GetMapping("/users/{id}")
-    public void getUser(){
+    @GetMapping("/boards/notices/{boardId}")
+    public void getNotice(){
 
     }
 
-    @PatchMapping("/users/{id}")
-    public void updateUser(){
+    @PatchMapping("/boards/notices/{boardId}")
+    public void updateNotice(){
 
     }
 
-    @DeleteMapping("/users/{id}")
-    public void deleteUser(){
+    @DeleteMapping("/boards/notices/{boardId}")
+    public void deleteNotice(){
 
     }
 }
