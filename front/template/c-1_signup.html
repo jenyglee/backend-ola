@@ -18,28 +18,35 @@
     <style>
         .container{
             width: 1200px;
-            height: 1000px;
+            /*height: 1000px;*/
             padding: 0;
-            background-color: #FFFBF4;
+
             align-items: center;
         }
         .sing_up-header{
-            margin: 50px 100px;
+            /*margin: 50px 100px;*/
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+        /* 라디오버튼 체크시 색 변경 */
+        .form-check-input:focus,
+        .form-check-input:checked {
+            background-color: #f46b3f;
+            border: 1px solid #f46b3f;
+            appearance: none;
+        }
 
-        .btn{
+        .next-btn{
             color: white;
             border: none;
             background-color: #F46B3F;
             height: 50px;
 
         }
-        #nextbtn{
-            width: 700px;
+        .next-btn:hover{
+            color: white;
         }
         .sing_up-header__text{
             color: #F46B3F;
@@ -79,100 +86,121 @@
 
         }
 
-
+        .form-floating{
+            margin-bottom: 20px;
+        }
 
     </style>
 </head>
 <body>
 <header class="menu">
+    <div class="bg-line"></div>
     <div class="logo-wrap">
-        <img class="img" src="../static/img/logo_main.png" alt="로고" />
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="#">코스추천</a>
-        <a href="#">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
     <div class="right">
-        <div class="icon-friend">
-            <img class="img" src="../static/img/icon_friends.png" />
-        </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
-            <p class="text">나와바리나와바님</p>
-        </div>
+            <p class="text">로그인 해주세요</p>
+        </a>
     </div>
-    <div class="line"></div>
+
 </header>
 <main class="container">
-    <section class="">
+    <section style="margin-top: 50px">
         <header class="sing_up-header">
             <h1 class="sing_up-header__title">회원가입</h1>
             <h1><p class=" sing_up-header__text">STEP 01</p></h1>
         </header>
-        <div class="s1">
-        <div class="form-floating">
-            <input type="password" class="form-control" id="adminPassword" placeholder="Password">
-            <label for="adminPassword">관리자 비밀번호</label>
-
-        </div>
-        <br>
-        <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
-            <label for="inputEmail">Email address</label>
-            <label class="check">중복확인</label>
-
-        </div>
-            <br>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="inputPwd" placeholder="Password">
-                <label for="inputPwd">비밀번호</label>
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputNickName" style="resize : none;"></textarea>
-                <label for="inputNickName">닉네임</label>
-                <label  class="check">중복확인</label>
-
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputAge" style="resize : none;"></textarea>
-                <label for="inputAge">나이</label>
-            </div>
-            <br>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="inputPhone" style="resize : none;"></textarea>
-                <label for="inputPhone">휴대폰번호</label>
-            </div>
-            <br>
-            <div class="img-upload-box">
-                <div class="mb-3">
-                    <div class="filebox">
-                        <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">
-<!--                        <label for="file" class="upload-label">파일찾기</label>-->
-                        <button id="my-button" onclick="onClickUpload();">파일 불러오기</button>
-                        <input type="file" id="file">
+        <div style="width: 590px; margin: 0 auto;">
+            <div style="height:90px; display: flex; align-items: center;">
+                <div style="width: 190px; display: flex; align-items: center">
+                    <div class="form-check form-check-inline" onclick="changeUser()" style="width: 90px">
+                        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions" id="inlineRadioCategory1"
+                               value="all" checked>
+                        <label class="form-check-label" for="inlineRadioCategory1">일반</label>
+                    </div>
+                    <div class="form-check form-check-inline" onclick="changeManager()" style="width: 90px">
+                        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                               id="inlineRadioCategory1-1" value="shoes">
+                        <label class="form-check-label" for="inlineRadioCategory1-1">매니저</label>
                     </div>
                 </div>
+                <div id="admin-input1" class="form-floating" style="width: 100%; margin-bottom: 0; display: none">
+                    <input type="password" class="form-control" id="adminPassword" placeholder="adminPassword">
+                    <label for="adminPassword">관리자 비밀번호</label>
+                </div>
             </div>
-            <br>
-            <div class="d-grid gap-2 col-6 mx-auto" id="nextbtn">
-                <button class="btn" type="button" style="border-radius: 5px;" onclick="handleCreatePeople()"><b>다음으로</b></button>
+            <div class="form-floating" style="width: 100%">
+                <input type="text" class="form-control" id="email" placeholder="email">
+                <label for="email">이메일</label>
             </div>
+            <div class="form-floating" style="width: 100%">
+                <input type="password" class="form-control" id="password" placeholder="password">
+                <label for="password">비밀번호</label>
             </div>
+            <div class="form-floating" style="width: 100%">
+                <input type="text" class="form-control" id="nickname" placeholder="Panicknamessword">
+                <label for="nickname">닉네임</label>
+            </div>
+            <div id="user-input1" class="form-floating" style="width: 100%">
+                <input type="text" class="form-control" id="age" placeholder="age">
+                <label for="age">나이</label>
+            </div>
+            <div id="user-input2" class="form-floating" style="width: 100%">
+                <input type="text" class="form-control" id="phoneNumber" placeholder="phoneNumber">
+                <label for="phoneNumber">휴대폰번호(-제외)</label>
+            </div>
+            <div id="user-input3" class="w_8">
+                <label for="formFileMultiple"><b>프로필 이미지</b></label>
+                <input class="form-control" type="file" id="formFileMultiple" multiple>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
+                <button id="next-btn" class="next-btn" type="button" style="border-radius: 5px;" onclick="handleNext()"><b>다음으로</b></button>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
+                <button id="sign-btn" class="next-btn" type="button" style="border-radius: 5px;" onclick="handleSignupAdmin()"><b>회원가입 완료</b></button>
+            </div>
+        </div>
     </section>
 </main>
 <script>
+    $(document).ready(function () {
+        $("#sign-btn").hide();
+        getNoticeList(0);
+    });
     function onClickUpload() {
         let myInput = document.getElementById("my-input");
         myInput.click();
     }
 
-  function handleCreatePeople() {
+    function changeUser(){
+        $("#admin-input1").hide();
+        $("#user-input1").show();
+        $("#user-input2").show();
+        $("#user-input3").show();
+        $("#sign-btn").hide();
+        $("#next-btn").show();
+    }
+    function changeManager(){
+        $("#admin-input1").show();
+        $("#user-input1").hide();
+        $("#user-input2").hide();
+        $("#user-input3").hide();
+        $("#sign-btn").show();
+        $("#next-btn").hide();
+    }
+
+  function handleNext() {
+    //유저 회원가입, 인풋값 저장 후 다음페이지로 이동
       var settings = {
           "url": "http://localhost:8080/auth/signup",
           "method": "POST",
@@ -182,16 +210,23 @@
               // "Authurization" :""
           },
           "data": JSON.stringify({
-              "email": $('#inputEmail').val(),
-              "password": $('#inputPwd').val(),
-              "nickName": $('#inputNickName').val(),
-              "age": Number($('#inputAge').val()),
-              "phoneNumber": $('#inputPhone').val(),
+              "email": $('#email').val(),
+              "password": $('#password').val(),
+              "nickName": $('#nickname').val(),
+              "age": Number($('#age').val()),
+              "phoneNumber": $('#phoneNumber').val(),
               "imageUrl": "default.jpg"
           }),
       };
-      localStorage.setItem("signup1",settings.data)
+      localStorage.setItem("signup1", settings.data);
+
       window.location.href = "c-2_singup.html";
+  }
+
+  function handleSignupAdmin(){
+        console.log("어드민 회원가입")
+      alert("이 알럿이 뜨고 로그인화면으로 이동")
+      window.location.href = "b-1_login.html";
   }
 </script>
 </body>

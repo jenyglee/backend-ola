@@ -1,11 +1,13 @@
 package com.project.sparta.recommendCourse.repository;
 
+
 import com.project.sparta.like.entity.QCourseLike;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseImg;
 import com.project.sparta.user.entity.QUser;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -36,13 +38,13 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .select(Projections.constructor(RecommendResponseDto.class,
                 reBoard.title,
                 reBoard.images,
-                JPAExpressions.select(like.courseBoard.count()).from(like.courseBoard).groupBy(like.courseBoard),
+                    ExpressionUtils.as(JPAExpressions.select(like.courseBoard.count()).from(like.courseBoard).groupBy(like.courseBoard), "reBoardLike"),
                 user.nickName,
                 reBoard.modifiedAt))
             .from(reBoard)
-            .join(user).on(reBoard.userId.eq(user.Id))
-            .join(reBoard.images, courseImg)
-            .join(reBoard, like.courseBoard)
+                .join(user).on(reBoard.userId.eq(user.Id))
+                .join(reBoard.images, courseImg)
+                .join(reBoard, like.courseBoard)
             .where(reBoard.postStatus.eq(postStatusEnum))
             .orderBy(reBoard.id.desc())
             .offset(pageable.getOffset())

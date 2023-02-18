@@ -22,7 +22,6 @@ public class BoardLike {
     @Column(nullable = false)
     private String userNickName;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_board_id")
     private CommunityBoard board;

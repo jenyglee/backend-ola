@@ -18,36 +18,38 @@
     <title>올라 쇼핑몰</title>
     <style>
 
-    
+
         .container{
             width: 1200px;
-            height: 700px;
             padding: 0;
             position: relative;
         }
 
         .shop-details-wrap{
-            
+
         }
         .shop-content-wrap{
-            height: 700px;
+            /*background-color: red;*/
+            /*height: 700px;*/
             display: flex;
-            justify-content: center;
-            margin: 50px 0 0 0;
-            padding: 100px 0 50px 0;
+            justify-content: space-between;
+            margin: 50px 0;
+            /*padding: 100px 0 50px 0;*/
         }
 
         .item-img{
-            width: 500px;
+            width: 550px;
+            height: 500px;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             margin: 20px;
 
         }
         .item-img > img {
-            width: 400px;
-            height: 400px;
+            width: 100%;
+            /*height: 400px;*/
         }
         .item-taxt{
             width: 450px;
@@ -65,42 +67,42 @@
 
         /* 구매버튼 */
         .btn-buy {
-        width: 130px;
-        background-color: #f46b3f;
-        border: 1px solid #f46b3f;
-        margin-right: 20px;
-        margin-left: 15px;
-      }
+            width: 130px;
+            background-color: #f46b3f;
+            border: 1px solid #f46b3f;
+            margin-right: 20px;
+            margin-left: 15px;
+        }
 
-      .item-details-text{
-        margin: 30px;
-        height: 300px;
-        overflow-y: scroll;
+        .item-details-text{
+            margin: 30px;
+            height: 300px;
+            overflow-y: scroll;
 
-      }
-      
-      /* 스크롤바 숨기기 */
+        }
 
-      .item-details-text::-webkit-scrollbar{
-        display: none;
-      }
- /* 댓글작성 호버, 포커스 기능빼기 */
-      .list-btn> .btn:hover,
-      .btn:focus {
-        background-color: white !important;
-        color: #f46b3f;
-      }
+        .buy-btn > button:hover {
+            background-color: #f46b3f;
+            border: none;
+        }
+        /* 스크롤바 숨기기 */
 
-      .list-btn > .btn {
-        width: 100px;
-        height: 50px;
-        border: 1px solid #f46b3f;
-        color: #f46b3f;
-        position: absolute;
-        right: 80px;
-      }
-
-
+        .item-details-text::-webkit-scrollbar{
+            display: none;
+        }
+        .btns{
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 100px;
+        }
+        .btns > button,
+        .btns > button:hover{
+            width: 160px;
+            height: 50px;
+            background-color: #F46B3F;
+            border: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -265,32 +267,28 @@
                     <div class="buy-btn">
                         <button type="button" class="btn btn-primary btn-buy">
                             구매하러 가기
-                          </button>
-                       
+                        </button>
+
                     </div>
                 </div>
                 <div class="item-details-text">
                     <p>
                         20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
-                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
-                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
-                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
-                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
-                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다. 
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
+                        20만원에 팔고싶지만 20만원에 팔면 너무 비싸게느껴져서 사람들이 안살까봐 1000원만 가격을 내려서 싸보이는 착시효과를 줘서 팔 운동화 입니다.
                     </p>
                 </div>
             </div>
         </div>
-        <div class="fouter">
-            <div class="list-btn">
-                 <button
-                        type="button"
-                        class="btn create-comment btn-outline-warning"
-                        >
-                            목록
-                        </button>
+        <a href="i-1_shopMain.html" style="text-decoration: none">
+            <div class="btns">
+                <button type="button" class="btn btn-primary btn-search">목록</button>
             </div>
-        </div>
+        </a>
+
     </section>
 </main>
 <script>
@@ -325,3 +323,4 @@
 </body>
 
 </html>
+
