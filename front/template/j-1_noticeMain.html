@@ -26,11 +26,6 @@
             height: 100px;
         }
 
-        .w_2 {
-            width: 1200px;
-            height: 60px;
-            display: inline-block;
-        }
 
         .w_3 {
             width: 1200px;
@@ -57,54 +52,6 @@
             height: 40px;
         }
 
-        .w_2 .b_2, .w_2 .b_3, .w_2 .b_4, .w_2 .b_5 {
-            width: 150px;
-            height: 60px;
-            display: inline-block;
-            float: left;
-            text-align: center;
-        }
-
-        .w_2 .b_4, .w_2 .b_5{
-            text-align: center;
-            line-height: 50px;
-            width: 150px;
-        }
-
-        #btn_1 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            border-radius: 50px;
-            color: white;
-        }
-
-        #btn_2 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
-        #btn_3 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
-
-        #btn_4 {
-            width: 130px;
-            height: 50px;
-            border: 1px solid #999999;
-            background-color: white;
-            border-radius: 50px;
-            color: black;
-        }
         .w_4 .table{
             text-align: center;
         }
@@ -285,13 +232,13 @@
             <label class="btn btn-outline-primary" for="btnradio1">전체</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio2">서비스</label>
+            <label class="btn btn-outline-primary" for="btnradio2" onclick="getNoticeList(0, 'SERVICE')">서비스</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio3">업데이트</label>
+            <label class="btn btn-outline-primary" for="btnradio3" onclick="getNoticeList(0, 'UPDATE')">업데이트</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio4">이벤트</label>
+            <label class="btn btn-outline-primary" for="btnradio4" onclick="getNoticeList(0, 'EVENT')">이벤트</label>
         </div>
 
         <div class="w_3"></div>
@@ -305,56 +252,56 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>서비스</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>업데이트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
-                    <tr>
-                        <td>이벤트</td>
-                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>
-                        <td>2023-02-11</td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
                 </tbody>
             </table>
         </div>
@@ -385,6 +332,7 @@
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getNoticeList(0);
+
     });
     function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
@@ -395,36 +343,41 @@
         $(".bell-dropbox").hide();
     }
 
-    function getNoticeList(offset) {
+    function getNoticeList(page, categoryStr) {
         // 1. 데이터 초기화를 해야됨.
-        // $('tbody').empty();
-
+        $('tbody').empty();
+        const accessToken = localStorage.getItem("accessToken");
         // 2. 통신해서 불러오기
-        // $.ajax({
-        //     type: "GET",
-        //     url: "http://localhost:8080/notice-boards?offset=" + offset + "&limit=10",
-        //     beforeSend: function (xlr) {
-        //         xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
-        //     },
-        //     // data: {
-        //     //  title: "sasas",
-        //     // },
-        //     success: function (response) {
-        //         console.log("호출완료");
-        //         console.log(response.data)
-        //         for (let i = 0; i < response.data.length; i++) {
-        //             const temp =
-        //                 `
-        //         <tr>
-        //             <td>서비스</td>
-        //            <td><a href="#">22000</a></td> // 누르면 이 게시글의 ID를 localStorage.set("boardId", "내가누른 게시글ID")
-        //             <td>2023-02-11</td>
-        //         </tr>
-        //                 `
-        //             $('tbody').append(temp)
-        //         }
-        //     },
-        // })
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/boards/notices?page=" + page + "&size=10",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            // data: {
+            //  title: "sasas",
+            // },
+            success: function (response) {
+                console.log("호출완료");
+                console.log(response.data)
+                for (let i = 0; i < response.data.length; i++) {
+                    console.log("response.data[i] : ", response.data[i])
+                    const temp =
+                        `
+                            <tr>
+                                <td>서비스</td>
+                                  <td><a href="j-2_noticeDetail.html" onclick="setNoticeId(${response.data[i].id})">${response.data[i].title}</a></td>
+                                <td>${response.data[i].createdAt.substring(0, 10)}</td>
+                            </tr>
+                        `
+                    $('tbody').append(temp)
+                }
+            },
+        })
+    }
+
+    function setNoticeId(id){
+        localStorage.setItem("noticeId", id);
     }
 
 </script>
