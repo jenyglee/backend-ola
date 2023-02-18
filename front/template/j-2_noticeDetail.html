@@ -186,25 +186,27 @@
 <!-- ############# 작업공간 #############-->
 <main class="container">
     <h3 style="margin: 30px 0; font-weight: bold;">공지사항</h3>
-    <section>
-        <p class="inputLabel">카테고리</p>
-        <select
-            class="form-serch-select form-select"
-            aria-label="Default select example"
-            style="width: 200px; margin-bottom: 10px"
-        >
-            <option value="0">서비스</option>
-            <option value="1">업데이트</option>
-            <option value="2">이벤트</option>
-        </select>
-        <p class="inputLabel">제목</p>
+    <section style="margin-bottom: 250px">
+        <p class="inputLabel" >카테고리</p>
+        <div class="w_3" style="width: 200px">
+            <input id="category" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >게시날짜</p>
+        <div class="w_3" style="width: 200px">
+            <input id="createAt" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >작성자</p>
+        <div class="w_3" style="width: 200px">
+            <input id="username" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >제목</p>
         <div class="w_3">
-            <input type="text" class="form-control" id="exampleFormControlInput2" />
+            <input id="title" type="text" class="form-control" disabled />
         </div>
 
         <p class="inputLabel">내용</p>
-        <div class="w_7" style="margin-bottom: 100px">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <div class="w_7" style="margin-bottom: 100px; height: 200px">
+            <textarea class="form-control" id="contents" rows="10" disabled></textarea>
         </div>
         <a href="j-1_noticeMain.html">
             <div class="w_9" style="">
@@ -222,21 +224,42 @@
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
 
-        const id = localStorage.getItem("boardId")
+        const id = localStorage.getItem("noticeId")
         $.ajax({
             type: "GET",
-            url: `http://localhost:8080/notice-boards/${id}`,
+            url: `http://localhost:8080/boards/notices/${id}`,
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
-            data: {
-              name: "sasas",
-            },
+            // data: {
+            //   name: "sasas",
+            // },
             success: function (response) {
+                console.log("response : ", response)
+                const category = response.category;
+                const contents = response.contents;
+                const createdAt = response.createdAt.substring(0, 10);
+                const modifiedAt = response.modifiedAt.substring(0, 10);
+                const title = response.title;
+                const username = response.username;
 
-                temp = `
-                <div></div>
-                `
+                // 카테고리가 영어로 들어와서 한글로 반환
+                switch (category) {
+                    case "SERVICE" :
+                        $('#category').val("서비스");
+                        break;
+                    case "EVENT" :
+                        $('#category').val("이벤트");
+                        break;
+                    case "UPDATE" :
+                        $('#category').val("업데이트");
+                        break;
+                }
+
+                $('#title').val(title);
+                $('#contents').val(contents);
+                $('#createAt').val(createdAt);
+                $('#username').val(username);
             },
         })
     });
@@ -249,6 +272,7 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
     }
+
 
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')

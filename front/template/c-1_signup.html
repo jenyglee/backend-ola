@@ -38,14 +38,14 @@
             appearance: none;
         }
 
-        .btn{
+        .next-btn{
             color: white;
             border: none;
             background-color: #F46B3F;
             height: 50px;
 
         }
-        .btn:hover{
+        .next-btn:hover{
             color: white;
         }
         .sing_up-header__text{
@@ -94,30 +94,28 @@
 </head>
 <body>
 <header class="menu">
+    <div class="bg-line"></div>
     <div class="logo-wrap">
-        <img class="img" src="../static/img/logo_main.png" alt="로고" />
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="#">코스추천</a>
-        <a href="#">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
     <div class="right">
-        <div class="icon-friend">
-            <img class="img" src="../static/img/icon_friends.png" />
-        </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
-            <p class="text">나와바리나와바님</p>
-        </div>
+            <p class="text">로그인 해주세요</p>
+        </a>
     </div>
-    <div class="line"></div>
+
 </header>
 <main class="container">
-    <section>
+    <section style="margin-top: 50px">
         <header class="sing_up-header">
             <h1 class="sing_up-header__title">회원가입</h1>
             <h1><p class=" sing_up-header__text">STEP 01</p></h1>
@@ -166,10 +164,10 @@
                 <input class="form-control" type="file" id="formFileMultiple" multiple>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
-                <button id="next-btn" class="btn" type="button" style="border-radius: 5px;" onclick="handleNext()"><b>다음으로</b></button>
+                <button id="next-btn" class="next-btn" type="button" style="border-radius: 5px;" onclick="handleNext()"><b>다음으로</b></button>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
-                <button id="sign-btn" class="btn" type="button" style="border-radius: 5px;" onclick="handleSignupAdmin()"><b>회원가입 완료</b></button>
+                <button id="sign-btn" class="next-btn" type="button" style="border-radius: 5px;" onclick="handleSignupAdmin()"><b>회원가입 완료</b></button>
             </div>
         </div>
     </section>
@@ -177,6 +175,7 @@
 <script>
     $(document).ready(function () {
         $("#sign-btn").hide();
+        getNoticeList(0);
     });
     function onClickUpload() {
         let myInput = document.getElementById("my-input");
