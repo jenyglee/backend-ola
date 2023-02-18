@@ -37,27 +37,6 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        .btn-tag {
-            background-color: #ffffff;
-            color: #000;
-            border-radius: 50px;
-            margin: 5px 2px;
-            border-color: #d2d2d2;
-        }
-        /*.btn-tag {*/
-        /*    background-color: #ffffff;*/
-        /*    color: #000;*/
-        /*    border-radius: 50px;*/
-        /*    margin: 5px 2px;*/
-
-        /*}*/
-
-        .btn-tag:hover,
-        .btn-tag:focus{
-            color:#ffffff;
-            background-color: #F46B3F;
-            border: 1px solid #F46B3F;
-        }
         #nextbtn{
             width: 100%;
             height: 70px;
@@ -92,27 +71,25 @@
 </head>
 <body>
 <header class="menu">
+    <div class="bg-line"></div>
     <div class="logo-wrap">
-        <img class="img" src="../static/img/logo_main.png" alt="로고" />
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="#">코스추천</a>
-        <a href="#">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
     <div class="right">
-        <div class="icon-friend">
-            <img class="img" src="../static/img/icon_friends.png" />
-        </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
-            <p class="text">나와바리나와바님</p>
-        </div>
+            <p class="text">로그인 해주세요</p>
+        </a>
     </div>
-    <div class="line"></div>
+
 </header>
 <main class="container">
     <section class="">
@@ -132,7 +109,6 @@
                 <button class="btn1" type="button" style="border-radius: 5px;" onclick="handleSignupUser()"><b>회원가입하기</b></button>
             </div>
         </div>
-
     </section>
 </main>
 <script>
@@ -172,6 +148,7 @@
             $(".btn-group").append(temp);
         }
 
+        // 선택한 태그를 숫자로 만들어서 배열에 저장
         $('.btn-group .btn').on('click', function() {
             var thisBtn = $(this);
             var btnText = thisBtn.text();
@@ -179,8 +156,9 @@
             tagList.push(num);
         });
 
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
     });
-
 
     function handleSignupUser() {
         let load = localStorage.getItem("signup1");

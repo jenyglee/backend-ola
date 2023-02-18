@@ -108,131 +108,11 @@
         <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
     <div class="right">
-        <div class="friend">
-            <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-                <img class="img" src="./../static/img/icon_friends.png" />
-            </div>
-            <div class="friend-dropbox">
-                <div class="search-area">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary search-btn">검색</button>
-                    </div>
-                </div>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                </ul>
-                <div class="line"></div>
-                <p class="recommend-title">추천 친구</p>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png" />
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="bell">
-            <div class="icon-bell" onclick="handleToggleBellDropBox()">
-                <img class="img" src="./../static/img/icon_bell.png" />
-            </div>
-            <div class="bell-dropbox">
-                <p>알람</p>
-                <ul>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="my-profile-wrap">
             <div class="img-wrap">
                 <img class="img" src="./../static/img/icon_profile_default.png " />
             </div>
-            <p class="text">나와바리나와바님</p>
+            <p class="text">로그인 해주세요</p>
         </div>
     </div>
 
@@ -293,19 +173,6 @@
     </section>
 </main>
 <script>
-    $(document).ready(function () {
-        $(".friend-dropbox").hide();
-        $(".bell-dropbox").hide();
-    });
-    function handleToggleBellDropBox() {
-        $(".bell-dropbox").toggle();
-        $(".friend-dropbox").hide();
-    }
-
-    function handleToggleFriendDropBox() {
-        $(".friend-dropbox").toggle();
-        $(".bell-dropbox").hide();
-    }
     function handleLogin() {
         var settings = {
             "url": "http://localhost:8080/auth/login",
@@ -321,6 +188,8 @@
         };
 
         $.ajax(settings).done(function (response,status,xhr) {
+            // 더미 ID user0@naver.com
+            // 더미 PW 1234
             // console.log(response);
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
@@ -330,14 +199,15 @@
             console.log(keys[2])
             alert("로그인 성공")
 
-            if(keys[2]=="USER")
-            {
-                window.location.href = "../index.html";
-            }
-            else
-            {
-                window.location.href = "k-1_manageUser.html";
-            }
+            // TODO role 추가하시면 아래 주석 풀어주세요
+            // if(keys[2]=="USER")
+            // {
+            //     window.location.href = "../index.html";
+            // }
+            // else
+            // {
+            //     window.location.href = "k-1_manageUser.html";
+            // }
 
 
         }).fail(function (response){

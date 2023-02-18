@@ -57,8 +57,9 @@ public class NoticeBoardController {
     @GetMapping("/notices")
     public ResponseEntity getNoticeBoardList(@RequestParam int page,
                                              @RequestParam int size,
+                                             @RequestParam String category,
                                              @AuthenticationPrincipal UserDetailsImpl userDetails){
-        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, userDetails.getUser());
+        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, category, userDetails.getUser());
         return new ResponseEntity(allNoticeBoard, HttpStatus.OK);
     }
 
