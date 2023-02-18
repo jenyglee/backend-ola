@@ -229,7 +229,7 @@
         <div class="w_1"></div>
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="btnradio1">전체</label>
+            <label class="btn btn-outline-primary" for="btnradio1" onclick="getNoticeList(0, '')">전체</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
             <label class="btn btn-outline-primary" for="btnradio2" onclick="getNoticeList(0, 'SERVICE')">서비스</label>
@@ -313,9 +313,9 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(1)">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(2)">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0, '')">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(1, '')">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(2, '')">3</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -331,7 +331,7 @@
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
-        getNoticeList(0);
+        getNoticeList(0,"");
 
     });
     function handleToggleBellDropBox() {
@@ -350,7 +350,7 @@
         // 2. 통신해서 불러오기
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/boards/notices?page=" + page + "&size=10",
+            url: "http://localhost:8080/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -359,13 +359,24 @@
             // },
             success: function (response) {
                 console.log("호출완료");
-                console.log(response.data)
+                console.log(response)
                 for (let i = 0; i < response.data.length; i++) {
-                    console.log("response.data[i] : ", response.data[i])
+
+                    // 영어로 되어있는 카테고리를 한글로 변환
+                    let formatCategory = ""
+                    if(response.data[i].category == "SERVICE"){
+                        formatCategory = "서비스"
+                    }else if(response.data[i].category == "EVENT"){
+                        formatCategory = "이벤트"
+                    }else if(response.data[i].category == "UPDATE"){
+                        formatCategory = "업데이트"
+                    }
+
+                    // 데이터 바인딩
                     const temp =
                         `
                             <tr>
-                                <td>서비스</td>
+                                <td>${formatCategory}</td>
                                   <td><a href="j-2_noticeDetail.html" onclick="setNoticeId(${response.data[i].id})">${response.data[i].title}</a></td>
                                 <td>${response.data[i].createdAt.substring(0, 10)}</td>
                             </tr>
