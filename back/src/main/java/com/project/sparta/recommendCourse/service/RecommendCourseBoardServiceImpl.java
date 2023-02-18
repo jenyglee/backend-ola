@@ -286,6 +286,3 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //        return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
 //    }
 
-
-
-}
