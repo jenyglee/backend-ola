@@ -26,7 +26,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     QRecommendCourseBoard reBoard = new QRecommendCourseBoard("reBoard");
 
-    QCourseLike like = new QCourseLike("like");
+    QCourseLike cLike = new QCourseLike("cLike");
 
     QRecommendCourseImg courseImg = new QRecommendCourseImg("courseImg");
 
@@ -36,15 +36,15 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
         List<RecommendResponseDto> boards = queryFactory
             .select(Projections.constructor(RecommendResponseDto.class,
-                reBoard.title,
-                reBoard.images,
-                    ExpressionUtils.as(JPAExpressions.select(like.courseBoard.count()).from(like.courseBoard).groupBy(like.courseBoard), "reBoardLike"),
-                user.nickName,
-                reBoard.modifiedAt))
+                reBoard.title.as("title"),
+                Projections.list(courseImg.url),
+                ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike).where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
+                user.nickName.as("nickName"),
+                reBoard.modifiedAt.as("createDate")))
             .from(reBoard)
-                .join(user).on(reBoard.userId.eq(user.Id))
-                .join(reBoard.images, courseImg)
-                .join(reBoard, like.courseBoard)
+            .leftJoin(user).on(reBoard.userId.eq(user.Id))
+            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
+            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
             .where(reBoard.postStatus.eq(postStatusEnum))
             .orderBy(reBoard.id.desc())
             .offset(pageable.getOffset())
@@ -54,3 +54,4 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         return new PageImpl<>(boards, pageable, boards.size());
     }
 }
+
