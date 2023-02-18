@@ -250,71 +250,102 @@
 </head>
 <body>
 
-<main class="container">
-    <div class="wrap">
-        <div class="w_1">
-            <div class="b_1"></div>
-            <div class="b_2">
-                <div class="b_2_1">
+<main>
+    <div style="display: flex">
+        <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
+            <div style="">
+                <div style="font-size: 26px; color: white">
                     <span>이재원</span>
                     <span>매니저</span>
                 </div>
-                <div class="b_2_2">
-                    <button type="button" class="logout" onclick="">로그아웃</button>
-                </div>
-            </div>
-            <div class="b_4"></div>
-            <div class="b_5">
-                <a href="#">회원관리</a><br><br>
-                <a href="#">등산 추천 코스 관리</a><br><br>
-                <a href="#">커뮤니티 관리</a><br><br>
-                <a href="#">공지사항 관리</a>
-            </div>
-        </div>
-        <div class="w_2">
-            <div class="b_6"></div>
-            <div class="b_7">
-                <span>제목 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="title" id="title" value="제목들어갈 자리임">
-            </div>
-            <div class="b_8">
-                <span>점수 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="score" id="score" value="점수 들어갈 자리임">
-            </div>
-            <div class="b_9">
-                <span>최고의 계절 :&nbsp;&nbsp;</span>
-                <input type="text" class="session" id="session" value="계절 들어갈 자리임">
-            </div>
-            <div class="b_10">
-                <span>해발고도 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="altitude" id="altitude" value="해발고도 들어갈 자리임">
-            </div>
-            <div class="b_11">
-                <span>주소 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="address" id="address" value="주소 들어갈 자리임">
-            </div>
-            <div class="b_12">
-                <div class="b_12_1">내용 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                <div class="b_12_2"><textarea class="form-control" id="content" rows="10"></textarea></div>
-            </div>
-            <div class="b_0"></div>
-            <div class="b_13">
-                <div class="b_13_0"></div>
-                <div class="b_13_3">
-                    <button type="button" id="btn_3">목록</button>
-                </div>
 
-                <div class="b_13_2">
-                    <a href="" style="text-decoration: none; color : black;">
-                        <button type="button" id="btn_2">수정</button>
-                    </a>
-                </div>
-                <div class="b_13_1">
-                    <button type="button" id="btn_1">삭제</button>
-                </div>
+                <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
+                        type="button" class="logout" onclick="">로그아웃</button>
 
             </div>
+
+            <div style="margin-top: 100px">
+                <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html"><b>등산 추천 코스 관리</b></a><br><br>
+                <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html">커뮤니티 관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html">공지사항 관리</a>
+            </div>
         </div>
+        <section style="margin-left: 100px; margin-top:100px;">
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요">
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">점수</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="점수를 입력하세요">
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">최고의 계절</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="계절을 입력하세요">
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">해발고도</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="해발고도 입력하세요(-제외)">
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">주소</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="주소를 입력하세요">
+            </div>
+            <div style="margin-bottom: 50px;">
+                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <div>
+                <button type="button" id="btn_1">삭제</button>
+                <button type="button" id="btn_2">수정</button>
+                <button type="button" id="btn_3">목록</button>
+            </div>
+        </section>
+<!--        <div class="w_2">-->
+<!--            <div class="b_6"></div>-->
+<!--            <div class="b_7">-->
+<!--                <span>제목 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--                <input type="text" class="title" id="title" value="제목들어갈 자리임">-->
+<!--            </div>-->
+<!--            <div class="b_8">-->
+<!--                <span>점수 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--                <input type="text" class="score" id="score" value="점수 들어갈 자리임">-->
+<!--            </div>-->
+<!--            <div class="b_9">-->
+<!--                <span>최고의 계절 :&nbsp;&nbsp;</span>-->
+<!--                <input type="text" class="session" id="session" value="계절 들어갈 자리임">-->
+<!--            </div>-->
+<!--            <div class="b_10">-->
+<!--                <span>해발고도 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--                <input type="text" class="altitude" id="altitude" value="해발고도 들어갈 자리임">-->
+<!--            </div>-->
+<!--            <div class="b_11">-->
+<!--                <span>주소 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--                <input type="text" class="address" id="address" value="주소 들어갈 자리임">-->
+<!--            </div>-->
+<!--            <div class="b_12">-->
+<!--                <div class="b_12_1">내용 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>-->
+<!--                <div class="b_12_2"><textarea class="form-control" id="content" rows="10"></textarea></div>-->
+<!--            </div>-->
+<!--            <div class="b_0"></div>-->
+<!--            <div class="b_13">-->
+<!--                <div class="b_13_0"></div>-->
+<!--                <div class="b_13_3">-->
+<!--                    <button type="button" id="btn_3">목록</button>-->
+<!--                </div>-->
+
+<!--                <div class="b_13_2">-->
+<!--                    <a href="" style="text-decoration: none; color : black;">-->
+<!--                        <button type="button" id="btn_2">수정</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="b_13_1">-->
+<!--                    <button type="button" id="btn_1">삭제</button>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
     </div>
     </div>
 </main>

@@ -188,26 +188,17 @@
         };
 
         $.ajax(settings).done(function (response,status,xhr) {
-            // 더미 ID user0@naver.com
-            // 더미 PW 1234
-            // console.log(response);
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
 
+            // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
             var keys = Object.values(response)
-            console.log(response);
-            console.log(keys[2])
             alert("로그인 성공")
-
-            // TODO role 추가하시면 아래 주석 풀어주세요
-            // if(keys[2]=="USER")
-            // {
-            //     window.location.href = "../index.html";
-            // }
-            // else
-            // {
-            //     window.location.href = "k-1_manageUser.html";
-            // }
+            if(keys[2]=="USER") {
+                window.location.href = "../index.html";
+            } else {
+                window.location.href = "k-1_manageUser.html";
+            }
 
 
         }).fail(function (response){
