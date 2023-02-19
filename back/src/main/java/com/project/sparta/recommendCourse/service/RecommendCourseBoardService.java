@@ -30,7 +30,7 @@ public interface RecommendCourseBoardService {
     RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long id);
 
     //전체 코스 조회
-    PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season, int altitude, String region, String orderByLike, UserDetailsImpl user);
+    PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season, int altitude, String region, String orderByLike);
 
     PageResponseDto<List<GetMyRecommendCourseResponseDto>> getMyRecommendCourseBoard(int page,
         int size, User user);
