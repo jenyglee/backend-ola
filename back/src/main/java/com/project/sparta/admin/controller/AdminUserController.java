@@ -37,25 +37,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminUserController {
     private final UserService userService;
 
-    // TODO 어드민 User API 제작
+    // 회원 전체 조회
     @GetMapping("/users")
     public ResponseEntity getUserList(int page, int size){
         PageResponseDto<List<UserListResponseDto>> userList = userService.getUserList(page, size);
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
+    // 회원 단건 조회
     @GetMapping("/users/{userId}")
     public ResponseEntity getUser(@PathVariable Long userId){
         UserOneResponseDto user = userService.getUser(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    // 회원 등급 변경
     @PatchMapping("/users/{userId}/grade")
     public ResponseEntity changeGradeUser(@PathVariable Long userId, @RequestBody UserGradeDto gradeDto){
         userService.changeGrade(gradeDto, userId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //회원 탈퇴/복구 처리
     @PatchMapping("/users/{userId}/status")
     public ResponseEntity changeEnableUser(@PathVariable Long userId, @RequestBody UserStatusDto statusDto){
         userService.changeStatus(statusDto, userId);

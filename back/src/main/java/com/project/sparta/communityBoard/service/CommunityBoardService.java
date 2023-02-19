@@ -12,12 +12,12 @@ public interface CommunityBoardService {
 
     void createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
 
-    void updateCommunityBoard(Long community_board_id,
+    void updateCommunityBoard(Long boardId,
         CommunityBoardRequestDto communityBoardRequestDto, User user);
 
-    void deleteCommunityBoard(Long community_board_id, User user);
+    void deleteCommunityBoard(Long boardId, User user);
 
-    CommunityBoardResponseDto getCommunityBoard(Long communityBoardId);
+    CommunityBoardResponseDto getCommunityBoard(Long boardId);
 
     PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);
 
@@ -28,6 +28,8 @@ public interface CommunityBoardService {
     PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
 //   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+    void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto);
 
+    void adminDeleteCommunityBoard(Long boardId);
 
 }

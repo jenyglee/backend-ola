@@ -1,34 +1,48 @@
 package com.project.sparta.admin.controller;
 
+import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
+import com.project.sparta.communityBoard.service.CommunityBoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminCommunityController {
-    // TODO 어드민 Community API 제작
+    private final CommunityBoardService communityBoardService;
+
+    // 커뮤니티 전체 조회
     @GetMapping("/boards/communities")
-    public void getCommunityList(){
+    public ResponseEntity getCommunityList(@RequestParam int page, @RequestParam int size){
+        PageResponseDto<List<CommunityBoardResponseDto>> result = communityBoardService.getAllCommunityBoard(page, size);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 
+    // 커뮤니티 단건 조회
     @GetMapping("/boards/communities/{boardId}")
-    public void getCommunity(){
-
+    public ResponseEntity getCommunity(@PathVariable Long boardId){
+        CommunityBoardResponseDto result = communityBoardService.getCommunityBoard(boardId);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    // 커뮤니티 수정
     @PatchMapping("/boards/communities/{boardId}")
-    public void updateCommunity(){
-
+    public ResponseEntity updateCommunity(@PathVariable Long boardId, @RequestBody CommunityBoardRequestDto requestDto){
+        communityBoardService.adminUpdateCommunityBoard(boardId, requestDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
+    // 커뮤니티 삭제
     @DeleteMapping("/boards/communities/{boardId}")
-    public void deleteCommunity(){
-
+    public ResponseEntity deleteCommunity(@PathVariable Long boardId){
+        communityBoardService.adminDeleteCommunityBoard(boardId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

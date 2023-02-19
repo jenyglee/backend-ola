@@ -3,10 +3,12 @@ package com.project.sparta.recommendCourse.dto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class RecommendRequestDto {
 
     private String title;
