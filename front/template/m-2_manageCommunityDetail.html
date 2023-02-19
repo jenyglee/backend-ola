@@ -250,78 +250,54 @@
 </head>
 <body>
 
-<main class="container">
-    <div class="wrap">
-        <div class="w_1">
-            <div class="b_1"></div>
-            <div class="b_2">
-                <div class="b_2_1">
+<main>
+    <div style="display: flex">
+        <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
+            <div style="">
+                <div style="font-size: 26px; color: white">
                     <span>이재원</span>
                     <span>매니저</span>
                 </div>
-                <div class="b_2_2">
-                    <button type="button" class="logout" onclick="">로그아웃</button>
-                </div>
-            </div>
-            <div class="b_4"></div>
-            <div class="b_5">
-                <a href="#">회원관리</a><br><br>
-                <a href="#">등산 추천 코스 관리</a><br><br>
-                <a href="#">커뮤니티 관리</a><br><br>
-                <a href="#">공지사항 관리</a>
-            </div>
-        </div>
-        <div class="w_2">
-            <div class="b_6"></div>
-            <div class="b_7">
-                <span>제목 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="title" id="title" value="제목들어갈 자리임">
-            </div>
-            <br>
-            <div class="b_8">
-                <div class="b_8_1">
-                    <span>내용 :</span>
-                </div>
-                <div class="b_8_2">
-                    <textarea class="form-control" id="content" rows="10" placeholder="내용들어갈 자리임"></textarea>
-                </div>
+
+                <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
+                        type="button" class="logout" onclick="">로그아웃</button>
+
             </div>
 
-            <div class="b_9">
-                <span>프로필 이미지 :&nbsp;&nbsp;</span>
+            <div style="margin-top: 100px">
+                <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html">등산 추천 코스 관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html"><b>커뮤니티 관리</b></a><br><br>
+                <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html">공지사항 관리</a>
+            </div>
+        </div>
+        <section style="margin-left: 100px; margin-top:100px;">
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이메일</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="이메일을 입력하세요">
+            </div>
+            <div style="margin-bottom: 30px;">
+                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이미지</p>
                 <input class="form-control" type="file" id="formFileMultiple" multiple>
             </div>
-            <br>
-            <div class="b_10">
-                <div class="b_10_1">
-                    <span>태그 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <input type="text" class="tag" id="tag1" value="#태그1">
-                    <input type="text" class="tag" id="tag2" value="#태그2">
-                    <input type="text" class="tag" id="tag3" value="#태그3">
-                    <input type="text" class="tag" id="tag4" value="#태그4">
-                    <input type="text" class="tag" id="tag5" value="#태그5">
-                </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">태그</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id="exampleFormControlInput6" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
             </div>
-            <div class="b_0"></div>
-            <div class="b_13">
-                <div class="b_13_0"></div>
-                <div class="b_13_3">
-                    <button type="button" id="btn_3">목록</button>
-                </div>
-
-                <div class="b_13_2">
-                    <a href="" style="text-decoration: none; color : black;">
-                        <button type="button" id="btn_2">수정</button>
-                    </a>
-                </div>
-                <div class="b_13_1">
-                    <button type="button" id="btn_1">삭제</button>
-                </div>
-
+            <div>
+                <button type="button" id="btn_1">회원탈퇴</button>
+                <button type="button" id="btn_2">수정</button>
+                <button type="button" id="btn_3">목록</button>
             </div>
-        </div>
+        </section>
     </div>
-    </div>
-</main>
 </body>
 </html>

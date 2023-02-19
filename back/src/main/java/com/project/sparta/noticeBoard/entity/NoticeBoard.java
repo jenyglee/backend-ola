@@ -1,9 +1,7 @@
 package com.project.sparta.noticeBoard.entity;
 
-import com.project.sparta.admin.entity.Timestamped;
-import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
+import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.user.entity.User;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

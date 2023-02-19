@@ -1,7 +1,6 @@
 package com.project.sparta.recommendCourse.entity;
 
-import com.project.sparta.admin.entity.Timestamped;
-import com.project.sparta.like.entity.CourseLike;
+import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
