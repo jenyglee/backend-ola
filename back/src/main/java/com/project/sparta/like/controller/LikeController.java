@@ -4,11 +4,14 @@ package com.project.sparta.like.controller;
 import com.project.sparta.like.service.*;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
+@Api(tags = {"라이크 API"})
 @RestController
 @RequiredArgsConstructor
 public class LikeController {
@@ -18,12 +21,14 @@ public class LikeController {
     private final RecommendCourseLikeService recommendCourseLikeService;
 
     //보드 라이크
+    @ApiOperation(value = "보드 라이크",response = Join.class)
     @PostMapping("/board_like")
     @ResponseStatus(HttpStatus.OK)
     public void likeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         boardLikeService.likeBoard(id,user);
     }
+    @ApiOperation(value = "보드 언라이크",response = Join.class)
     @DeleteMapping("/board_like")
     public void unLikeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();

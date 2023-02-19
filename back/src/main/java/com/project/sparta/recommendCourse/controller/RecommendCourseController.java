@@ -8,7 +8,10 @@ import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
+@Api(tags = {"코스추천 API"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")
@@ -29,6 +32,7 @@ public class RecommendCourseController {
 
     // TODO 이미지 업로드 API는 커뮤니티 쓸 때, 회원가입할 때도 사용하기 때문에 위치 변경이 필요
     //이미지 업로드 api
+    @ApiOperation(value = "이미지 업로드",response = Join.class)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/upload") //todo url 어떤것으로 할지 의논 후 수정
     public ImgUrlDto ImageUpload(@RequestPart(value = "image", required = false) List<MultipartFile> images)throws IOException{
@@ -48,6 +52,7 @@ public class RecommendCourseController {
      * @throws IOException
      */
 
+    @ApiOperation(value = "코스 추천 생성",response = Join.class)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/recommends")
     public ResponseEntity createRecommendCourse(@RequestBody RecommendRequestDto requestDto,
@@ -74,6 +79,7 @@ public class RecommendCourseController {
      * @return
      * @throws IOException
      */
+    @ApiOperation(value = "코스 추천 수정",response = Join.class)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
     @PatchMapping("/recommends/{boardId}")
     public ResponseEntity modifyRecommendCourse(@RequestBody RecommendRequestDto requestDto,
@@ -91,7 +97,7 @@ public class RecommendCourseController {
      * @param boardId : 삭제할 글번호
      * @param userDetail : 삭제하는 유저정보
      */
-
+    @ApiOperation(value = "코스 추천 삭제",response = Join.class)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
@@ -101,6 +107,7 @@ public class RecommendCourseController {
     }
 
     // 코스추천 단건 조회
+    @ApiOperation(value = "코스 추천 단건 조회",response = Join.class)
     @GetMapping("/recommends/{boardId}")
     public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
@@ -109,6 +116,7 @@ public class RecommendCourseController {
 
     // TODO 코스추천 전체 조회 -> 필터링 조회 구현 필요
     // 코스추천 전체 조회
+    @ApiOperation(value = "코스 추천 전체 조회",response = Join.class)
     @GetMapping("/recommends")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam(name = "page", defaultValue = "0") int page,
                                                                         @RequestParam(name = "size", defaultValue = "10") int size) {
