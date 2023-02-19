@@ -1,9 +1,9 @@
 package com.project.sparta.admin.controller;
-
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"어드민 커뮤니티 API"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
