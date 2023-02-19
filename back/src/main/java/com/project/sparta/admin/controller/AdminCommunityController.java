@@ -1,12 +1,13 @@
 package com.project.sparta.admin.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+@Api(tags = {"어드민 커뮤니티 API"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")

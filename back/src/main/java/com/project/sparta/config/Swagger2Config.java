@@ -26,11 +26,11 @@ public class Swagger2Config {
 
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("제목 작성")
-        .version("버전 작성")
-        .description("설명 작성")
+        .title("잠은 죽어서 자자")
+        .version("v1")
+        .description("산에 대한 사이트 입니다.")
         .license("라이센스 작성")
-        .licenseUrl("라이센스 URL 작성")
+        .licenseUrl("잠은 죽어서 자자 라이센스")
         .build();
   }
 }
