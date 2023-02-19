@@ -2,11 +2,13 @@ package com.project.sparta.noticeBoard.dto;
 
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
+@Data
 @NoArgsConstructor
 public class NoticeBoardRequestDto {
     private String title;

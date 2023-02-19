@@ -1,21 +1,13 @@
 package com.project.sparta.communityComment.entity;
 
-import com.project.sparta.admin.entity.Timestamped;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
+import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
