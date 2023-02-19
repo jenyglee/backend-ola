@@ -10,11 +10,10 @@ import com.project.sparta.recommendCourse.entity.QRecommendCourseImg;
 import com.project.sparta.user.entity.QUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,10 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
 public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardCustomRepository {
@@ -44,14 +39,16 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
     QRecommendCourseImg courseImg = new QRecommendCourseImg("courseImg");
 
 
-    //코스 전체 조회(검색 조건 제외)
+    //코스 전체 조회(+필터링)
     @Override
     public Page<RecommendResponseDto> allRecommendBoardList(PageRequest pageable,
         PostStatusEnum postStatusEnum, int score, String season, int altitude, String region,
         String orderByLike) {
 
         BooleanBuilder builder = new BooleanBuilder();
-        //StringPath aliasLike = Expressions.stringPath("likeCount");
+        StringPath aliasLike = Expressions.stringPath("likeCount");
+
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(orderByLike, aliasLike);
 
         if (score > 0) {
             builder.and(reBoard.score.loe(score));
@@ -79,6 +76,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
             .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
             .where(reBoard.postStatus.eq(postStatusEnum), builder)
+            .orderBy(orderSpecifiers)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -86,6 +84,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         return new PageImpl<>(boards, pageable, boards.size());
     }
 
+    //코스 단건 조회
     @Override
     public RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum) {
        return queryFactory.select(Projections.constructor(RecommendDetailResponseDto.class,
@@ -96,16 +95,31 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
                 reBoard.contents,
                 reBoard.region,
                 Projections.list(courseImg.url),
-                reBoard.modifiedAt.as("createDate"),
+                reBoard.modifiedAt,
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                    .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
-                user.nickName.as("nickName")))
+                user.nickName))
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
             .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
             .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
             .where(reBoard.postStatus.eq(postStatusEnum), reBoard.id.eq(boardId))
             .fetchOne();
+    }
+
+    //좋아요 필터링
+    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike) {
+
+        List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
+
+        if(orderByLike.equals("all")){
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC, reBoard.id));
+        }else if(orderByLike.equals("likeDesc")){
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC, aliasLike));
+        }else if(orderByLike.equals("likeAsc")){
+            orderSpecifiers.add(new OrderSpecifier(Order.ASC, aliasLike));
+        }
+        return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
 }
 
