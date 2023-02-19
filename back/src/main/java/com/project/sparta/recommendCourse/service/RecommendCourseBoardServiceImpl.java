@@ -166,43 +166,19 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     //단건 코스 조회
     @Override
-    public RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long id) {
-        //1. 아이디값으로 포스트 찾아서 포스트 만들고
-        RecommendCourseBoard recommendCourseBoard = recommendCourseBoardRepository.findById(id)
-            .orElseThrow();
-
-        //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌
-        List<String> dummyList = new ArrayList<>();
-        // ✨ s3 bucket에서 이미지 가져오기(가져올때 id 전달)
-        dummyList.add(
-            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
-        dummyList.add(
-            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
-        dummyList.add(
-            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
-        // List<String> imgRouteList = recommendCourseBoard.getImages().stream()
-        //         .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
-        Long userId = recommendCourseBoard.getUserId();
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
-        List<String> imgRouteList = dummyList;
-
-        //게시글의 라이크가 몇개인지 넣어준다.
-        Long likeCount = likeRecommendRepository.countByCourseBoard_Id(
-            recommendCourseBoard.getId());
-
-        //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
-        return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList,
-            user.getNickName(), likeCount);
+    public RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long boardId) {
+        return recommendCourseBoardRepository.getCourseBoard(boardId, VAILABLE);
     }
 
     //코스 추천 전체 조회
     @Override
-    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season,
-                                                    int altitude, String region, String orderByLike) {
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
+        int score, String season,int altitude, String region, String orderByLike) {
+
         PageRequest pageRequest = PageRequest.of(page, size);
+
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
-            pageRequest, VAILABLE, score, season, altitude, region);
+            pageRequest, VAILABLE, score, season, altitude, region, orderByLike);
 
         List<RecommendResponseDto> content = courseAllList.getContent();
         long totalCount = courseAllList.getTotalElements();
@@ -285,3 +261,27 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //        //4. 클라이언트에 응답.
 //        return new PageResponseDto<>(offset,totalElements,FindAllPostDtoList);
 //    }
+
+//    //2. 포스트 안에 들어있는 리스트 뽑아서 String<list>로 만들어줌 => 단건조회
+//    List<String> dummyList = new ArrayList<>();
+//// ✨ s3 bucket에서 이미지 가져오기(가져올때 id 전달)
+//        dummyList.add(
+//            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+//            dummyList.add(
+//            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+//            dummyList.add(
+//            "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202302/11/9e7dd875-5cd0-4776-9ca8-264c6fdb440a.jpg");
+//            // List<String> imgRouteList = recommendCourseBoard.getImages().stream()
+//            //         .map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
+//            Long userId = recommendCourseBoard.getUserId();
+//            User user = userRepository.findById(userId)
+//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
+//            List<String> imgRouteList = dummyList;
+//
+//    //게시글의 라이크가 몇개인지 넣어준다.
+//    Long likeCount = likeRecommendRepository.countByCourseBoard_Id(
+//    recommendCourseBoard.getId());
+//
+//    //3. 리스폰스엔티티에 담아서 클라이언트에게 응답
+//    return new RecommendDetailResponseDto(recommendCourseBoard, imgRouteList,
+//    user.getNickName(), likeCount);
