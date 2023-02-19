@@ -4,9 +4,12 @@ package com.project.sparta.chat.controller;
 import com.project.sparta.chat.dto.ChatDTO;
 import com.project.sparta.chat.dto.ChatDTO.MessageType;
 import com.project.sparta.chat.repository.ChatRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+@Api(tags = {"채팅 유저 API"})
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -45,6 +48,7 @@ public class ChatController {
     //MessageMapping을 통해 webSocket으로 들어오는 메세지를 발신 처리 한다.
     // 이때 클라이언트에서는 /pub/chat/message로 요청하게 되고 이것을 controller가 받아서 처리 한다.
     // 처리가 완료되면 /sub/chat/room/roomId로 메세지가 전송된다.
+    @ApiOperation(value = "유저입장",response = Join.class)
     @MessageMapping("/chat/enterUser")
     public void enterUser(@Payload ChatDTO chat, SimpMessageHeaderAccessor headerAccessor) {
 
