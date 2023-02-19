@@ -1,6 +1,8 @@
 package com.project.sparta.recommendCourse.service;
 
 
+import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
+
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
@@ -16,6 +18,7 @@ import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,12 +67,14 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         }
 
         RecommendCourseBoard board = RecommendCourseBoard.builder()
+            .score(requestPostDto.getScore())
             .title(requestPostDto.getTitle())
             .season(requestPostDto.getSeason())
             .altitude(requestPostDto.getAltitude())
             .contents(requestPostDto.getContents())
-            .score(requestPostDto.getScore())
+            .region(requestPostDto.getRegion())
             .userId(userId)
+            .postStatus(VAILABLE)
             // .images(imgUrlList)
             .build();
 
@@ -191,11 +196,13 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             user.getNickName(), likeCount);
     }
 
+    //코스 추천 전체 조회
     @Override
-    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size) {
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season,
+                                                    int altitude, String region, String orderByLike, UserDetailsImpl user) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
-            pageRequest, PostStatusEnum.VAILABLE);
+            pageRequest, VAILABLE, score, season, altitude, region, user);
 
         List<RecommendResponseDto> content = courseAllList.getContent();
         long totalCount = courseAllList.getTotalElements();
