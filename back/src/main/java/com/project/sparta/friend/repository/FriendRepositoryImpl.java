@@ -1,6 +1,6 @@
 package com.project.sparta.friend.repository;
 
-import com.project.sparta.admin.entity.StatusEnum;
+import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.user.entity.*;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor

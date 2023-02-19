@@ -3,10 +3,8 @@ package com.project.sparta.friend.service;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
-import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
-import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
+import static com.project.sparta.user.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
 import static com.project.sparta.exception.api.Status.INVALID_USER;
 
