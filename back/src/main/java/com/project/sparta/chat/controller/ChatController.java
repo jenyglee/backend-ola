@@ -67,6 +67,7 @@ public class ChatController {
     }
 
     //해당 유저
+    @ApiOperation(value = "해당 유저 전송",response = Join.class)
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload ChatDTO chat) {
         log.info("CHAT : ", chat);
@@ -75,6 +76,7 @@ public class ChatController {
     }
 
     //유저 퇴장 시에는 EventListener을 통해서 유저 퇴장을 확인
+    @ApiOperation(value = "유저 퇴장을 확인",response = Join.class)
     @EventListener
     public void webSocketDisconnectListener(SessionDisconnectEvent event) {
         log.info("DisConnEven : ", event);
@@ -109,6 +111,7 @@ public class ChatController {
     }
 
     //채팅에 참여한 유저 리스트 반환
+    @ApiOperation(value = "채팅에 참여한 유저 리스트",response = Join.class)
     @GetMapping("/chat/userlist")
     @ResponseBody
     public ArrayList<String> userList(String roomId){
@@ -116,6 +119,7 @@ public class ChatController {
     }
 
     //채팅에 참여한 유저 닉네임 중복 확인
+    @ApiOperation(value = "채팅에 참여한 유저 닉네임 중복 확인",response = Join.class)
     @GetMapping("/chat/duplicationName")
     @ResponseBody
     public String isDuplicatieName(@RequestParam("roomId") String roomId, @RequestParam("username") String username){

@@ -7,7 +7,10 @@ import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-
+@Api(tags = {"유저 API"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -25,6 +28,7 @@ public class UserController {
 
 
     //회원가입
+    @ApiOperation(value = "회원가입",response = Join.class)
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody UserSignupDto signupDto){
         userService.signup(signupDto);
@@ -32,6 +36,7 @@ public class UserController {
     }
 
     //로그인
+    @ApiOperation(value = "로그인",response = Join.class)
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto requestDto){
         // 어드민인지 확인하는 로직
@@ -40,6 +45,7 @@ public class UserController {
 
     // TODO 카카오, 네이버, 구글 로그인 API 제작
     //카카오 로그인(redirect-uri)
+    @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         // code: 카카오 서버로부터 받은 인가 코드
@@ -53,17 +59,20 @@ public class UserController {
         return "gello";
     }
 
+    @ApiOperation(value = "네이버 로그인",response = Join.class)
     //네이버 로그인
     @GetMapping("/login/naver")
     public void naverLogin() {
     }
 
     //구글 로그인
+    @ApiOperation(value = "구글 로그인",response = Join.class)
     @GetMapping("/login/google")
     public void googleLogin() {
     }
 
     //로그아웃
+    @ApiOperation(value = "로그아웃",response = Join.class)
     @PostMapping("/logout")
     public ResponseEntity login(@Validated @RequestBody TokenDto tokenRequestDto){
         // 어드민인지 확인하는 로직

@@ -8,7 +8,10 @@ import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -24,12 +27,14 @@ import java.util.List;
 
 import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 
+@Api(tags = {"해쉬태그 API"})
 @Controller
 @RequiredArgsConstructor
 public class HashtagController {
    private final HashtagService hashtagService;
 
    // 해시태그 추가
+   @ApiOperation(value = "해시태그 추가",response = Join.class)
    @PostMapping("/hashtags")
    public ResponseEntity createHashtag(@RequestBody String value, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        Hashtag hashtag = hashtagService.createHashtag(value, userDetail.getUser());
@@ -38,6 +43,7 @@ public class HashtagController {
    }
 
    //해시태그 삭제
+   @ApiOperation(value = "해시태그 삭제",response = Join.class)
    @DeleteMapping("/hashtags/{hashtagId}")
    public ResponseEntity deleteHashtag(@RequestBody Long hashtagId, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        hashtagService.deleteHashtag(hashtagId, userDetail.getUser());
@@ -45,6 +51,7 @@ public class HashtagController {
    }
 
    //해시태그 전체 조회
+   @ApiOperation(value = "해시태그 전체 조회",response = Join.class)
    @GetMapping("/hashtags")
    public ResponseEntity getHashtagList(@RequestBody int offset, int limit, @AuthenticationPrincipal UserDetailsImpl userDetail) {
        hashtagService.getHashtagList(offset, limit, userDetail.getUser());
@@ -52,6 +59,7 @@ public class HashtagController {
    }
 
    //기본 해시태그 조회
+   @ApiOperation(value = "기본 해시태그 조회",response = Join.class)
    @GetMapping("hashtags/default")
    public ResponseEntity getFixedHashtagList() {
        List<HashtagResponseDto> fixedHashtagList = hashtagService.getFixedHashtagList();

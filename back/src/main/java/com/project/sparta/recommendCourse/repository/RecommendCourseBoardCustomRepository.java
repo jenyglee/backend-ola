@@ -8,5 +8,5 @@ import org.springframework.data.domain.PageRequest;
 
 public interface RecommendCourseBoardCustomRepository {
 
-    Page<RecommendResponseDto> allRecommendBoardList(PageRequest pageRequest, PostStatusEnum postStatusEnum);
+    Page<RecommendResponseDto> allRecommendBoardList(PageRequest pageRequest, PostStatusEnum postStatusEnum, int score, String season, int altitude, String local);
 }
