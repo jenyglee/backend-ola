@@ -110,7 +110,8 @@ public class RecommendCourseController {
     // TODO 코스추천 전체 조회 -> 필터링 조회 구현 필요
     // 코스추천 전체 조회
     @GetMapping("/recommends")
-    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam int offset, @RequestParam int limit) {
-        return recommendCourseBoardService.allRecommendCourseBoard(offset, limit);
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
+        return recommendCourseBoardService.allRecommendCourseBoard(page, size);
     }
 }

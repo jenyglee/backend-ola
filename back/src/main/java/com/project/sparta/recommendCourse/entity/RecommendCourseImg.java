@@ -24,10 +24,10 @@ public class RecommendCourseImg {
     public RecommendCourseImg(String url) {
         this.url = url;
     }
-    // //파일 저장 게시글
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "recommandCourse_post_id")
-    // private RecommendCourseBoard recommendCourseBoard;
+     //파일 저장 게시글
+     @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "recommandCourse_post_id")
+     private RecommendCourseBoard recommendCourseBoard;
     //
     // //파일 원본명
     // @Column(nullable = false)

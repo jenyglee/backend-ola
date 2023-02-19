@@ -141,21 +141,6 @@
             border-radius: 5px;
         }
 
-        .b_9 {
-            width: 1700px;
-            height: 300px;
-        }
-
-        .b_9_1 {
-            display: inline-block;
-            float: left;
-        }
-
-        .b_9_2 {
-            display: inline-block;
-            float: left;
-        }
-
         .b_9_2 textarea {
             width: 1000px;
             display: inline-block;
@@ -164,27 +149,6 @@
             height: 250px;
             border: 1px solid #D2D2D2;
             border-radius: 5px;
-        }
-
-        .b_10 {
-            width: 1700px;
-            height: 60px;
-        }
-
-        .b_10 .b_10_1, .b_10 .b_10_2, .b_10 .b_10_3 {
-            width: 200px;
-            height: 50px;
-            display: inline-block;
-            float: right;
-            margin-top: 10px;
-        }
-
-        .b_10 .b_10_3 {
-            margin-right: 500px;
-        }
-
-        .b_10 .b_10_2, .b_10 .b_10_3 {
-            margin-left: 10px;
         }
 
         #btn_1 {
@@ -224,63 +188,162 @@
 <body>
 
 <main class="container">
-    <div class="wrap">
-        <div class="w_1">
-            <div class="b_1"></div>
-            <div class="b_2">
-                <div class="b_2_1">
+    <div style="display: flex">
+        <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
+            <div style="">
+                <div style="font-size: 26px; color: white">
                     <span>이재원</span>
                     <span>매니저</span>
                 </div>
-                <div class="b_2_2">
-                    <button type="button" class="logout" onclick="">로그아웃</button>
-                </div>
-            </div>
-            <div class="b_4"></div>
-            <div class="b_5">
-                <a href="#">회원관리</a><br><br>
-                <a href="#">등산 추천 코스 관리</a><br><br>
-                <a href="#">커뮤니티 관리</a><br><br>
-                <a href="#">공지사항 관리</a>
-            </div>
-        </div>
-        <div class="w_2">
-            <div class="b_6"></div>
-            <div class="b_7">
-                <span>카테고리 : &nbsp;</span>
-                <select class="form-select" aria-label="카테고리">
-                    <option value="1">서비스</option>
-                    <option value="2">업데이트</option>
-                    <option value="3">이벤트</option>
-                </select>
-            </div>
-            <div class="b_8">
-                <span>제목 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" class="address" id="address" value="제목 들어갈 자리임">
-            </div>
-            <div class="b_9">
-                <div class="b_9_1">내용 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                <div class="b_9_2">
-                    <textarea class="form-control" id="content" rows="10"></textarea>
-                </div>
-            </div>
-            <div class="b_10">
-                <div class="b_10_0"></div>
-                <div class="b_10_3">
-                    <button type="button" id="btn_3">목록</button>
-                </div>
 
-                <div class="b_10_2">
-                    <a href="" style="text-decoration: none; color : black;">
-                        <button type="button" id="btn_2">수정</button>
-                    </a>
-                </div>
-                <div class="b_10_1">
-                    <button type="button" id="btn_1">삭제</button>
-                </div>
+                <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
+                        type="button" class="logout" onclick="">로그아웃</button>
+            </div>
+            <div style="margin-top: 100px">
+                <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html">등산 추천 코스 관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html">커뮤니티 관리</a><br><br>
+                <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html"><b>공지사항 관리</b></a>
             </div>
         </div>
+        <section style="margin-left: 100px; margin-top:100px;">
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">작성자</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="username" disabled>
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">카테고리</p>
+            <select
+                class="form-serch-select form-select"
+                aria-label="Default select example"
+                style="margin-bottom: 30px"
+                onchange="setCategory(value)"
+            >
+                <option id="option-1" value="0">서비스</option>
+                <option id="option-2" value="1">업데이트</option>
+                <option id="option-3" value="2">이벤트</option>
+            </select>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
+            </div>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">게시일</p>
+            <div style="margin-bottom: 30px">
+                <input type="text" class="form-control" id="createAt" disabled>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
+                <textarea class="form-control" id="contents" rows="3" placeholder="내용을 입력하세요"></textarea>
+            </div>
+            <div>
+                <button type="button" id="btn_1" onclick="deleteNotice()">삭제</button>
+                <button type="button" id="btn_2" onclick="updateNotice()">수정</button>
+                <button type="button" id="btn_3">목록</button>
+            </div>
+        </section>
     </div>
 </main>
+<script>
+    let category;
+    $(document).ready(function () {
+        getNotice();
+        category = "0";
+    });
+
+    function getNotice(){
+        const id = localStorage.getItem("noticeId")
+        $.ajax({
+            type: "GET",
+            url: `http://localhost:8080/boards/notices/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            // data: {
+            //   name: "sasas",
+            // },
+            success: function (response) {
+                console.log("response : ", response)
+                const category = response.category;
+                const contents = response.contents;
+                const createdAt = response.createdAt.substring(0, 10);
+                const title = response.title;
+                const username = response.username;
+
+                // 카테고리가 영어로 들어와서 한글로 반환
+                switch (category) {
+                    case "SERVICE" :
+                        // $('#select').val(category)
+                        $('#option-1').attr("selected")
+                        break;
+                    case "UPDATE" :
+                        $('#option-2').attr("selected")
+                        break;
+                    case "EVENT" :
+                        $('#option-3').attr("selected")
+                        break;
+                }
+
+                $('#username').val(username);
+                $('#title').val(title);
+                $('#createAt').val(createdAt);
+                $('#contents').val(contents);
+            },
+        })
+    }
+
+    function updateNotice(){
+        const id = localStorage.getItem("noticeId")
+        // console.log("$(\"#title\").val() : ", $("#title").val())
+        // console.log("$(\"#contents\").val() : ", $("#contents").val())
+        // console.log("category : ", category)
+        // console.log("id : ", id)
+        $.ajax({
+            type: "PATCH",
+            url: `http://localhost:8080/admin/boards/notices/${id}`,
+            // dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            data: JSON.stringify({
+                "title" : $("#title").val(),
+                "contents" : $("#contents").val(),
+                "category" : category
+            }),
+            success: function (response) {
+                alert("수정 완료")
+                window.location.href = "n-1_manageNotice.html";
+            },
+            error: function(xhr) {
+                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            },
+        })
+    }
+
+    function deleteNotice(){
+        const id = localStorage.getItem("noticeId")
+        $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8080/admin/boards/notices/${id}`,
+            // dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            // data: JSON.stringify({
+            //     "title" : $("#title").val(),
+            //     "contents" : $("#contents").val(),
+            //     "category" : category
+            // }),
+            success: function (response) {
+                alert("삭제 완료")
+                window.location.href = "n-1_manageNotice.html";
+            },
+            error: function(xhr) {
+                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            },
+        })
+    }
+
+</script>
 </body>
 </html>

@@ -192,17 +192,14 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     }
 
     @Override
-    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int offset,
-        int limit) {
-        //1.페이징으로 요청해서
-        PageRequest pageRequest = PageRequest.of(offset, limit);
+    public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
             pageRequest, PostStatusEnum.VAILABLE);
 
         List<RecommendResponseDto> content = courseAllList.getContent();
         long totalCount = courseAllList.getTotalElements();
-        //4. 클라이언트에 응답.
-        return new PageResponseDto<>(offset, totalCount, content);
+        return new PageResponseDto<>(page, totalCount, content);
     }
 
     //내가 쓴 게시물 조회
@@ -233,12 +230,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     }
 
     // 필터링 도전
-
-
-
-
-
-
 
 }
 

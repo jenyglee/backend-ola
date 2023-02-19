@@ -20,31 +20,6 @@ import java.util.List;
 public class NoticeBoardController {
     private final NoticeBoardService noticeBoardService;
 
-    //공지사항 작성
-    @PostMapping("/notices")
-    public ResponseEntity createNoticeBoard(@RequestBody NoticeBoardRequestDto requestDto,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
-        noticeBoardService.createNoticeBoard(requestDto, userDetails.getUser());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    //공지사항 삭제
-    @DeleteMapping("/notices/{boardId}")
-    public ResponseEntity deleteNoticeBoard(@PathVariable Long boardId,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
-        noticeBoardService.deleteNoticeBoard(boardId, userDetails.getUser());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    //공지사항 수정
-    @PutMapping("/notices/{boardId}")
-    public ResponseEntity updateNoticeBoard(@PathVariable Long boardId,
-                                            @RequestBody NoticeBoardRequestDto requestDto,
-                                            @AuthenticationPrincipal UserDetailsImpl userDetails){
-        noticeBoardService.updateNoticeBoard(boardId, requestDto, userDetails.getUser());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     //공지글 단건조회
     @GetMapping("/notices/{boardId}")
     public ResponseEntity getNoticeBoard(@PathVariable Long boardId,
