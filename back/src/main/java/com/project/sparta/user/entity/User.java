@@ -1,6 +1,7 @@
 package com.project.sparta.user.entity;
 
 import com.project.sparta.admin.entity.StatusEnum;
+import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Entity(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User {
+public class User extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,5 +105,9 @@ public class User {
 
     public void changeGrade(UserGradeEnum gradeEnum){
         this.gradeEnum = gradeEnum;
+    }
+
+    public void changeStatus(StatusEnum status){
+        this.status = status;
     }
 }

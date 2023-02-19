@@ -1,8 +1,6 @@
 package com.project.sparta.communityBoard.dto;
 
 
-import com.project.sparta.admin.entity.Timestamped;
-
 import lombok.Builder;
 import lombok.Getter;
 
