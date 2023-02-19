@@ -1,20 +1,27 @@
 package com.project.sparta.user.service;
 
+import com.project.sparta.admin.dto.UserGradeDto;
+import com.project.sparta.admin.dto.UserStatusDto;
+import com.project.sparta.admin.entity.StatusEnum;
+import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
+import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -213,6 +220,80 @@ public class UserServiceImpl implements UserService {
             user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
         }else if(requestDto.getGrade().equals("GOD")){
             user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
+        }
+    }
+
+    //(어드민용) 회원 전체조회
+    @Override
+    public PageResponseDto<List<UserListResponseDto>> getUserList(int page, int size) {
+        // 1. 페이징으로 요청해서 조회
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<User> results = userRepository.findAll(pageRequest);
+
+        // 2. 데이터, 전체 개수 추출
+        List<User> userList = results.getContent();
+        long totalElements = results.getTotalElements();
+
+        // 3. 엔티티를 DTO로 변환
+        List<UserListResponseDto> userResponseDtoList = new ArrayList<>();
+        for (User user : userList) {
+            UserListResponseDto userResponseDto = UserListResponseDto.builder()
+                .id(user.getId())
+                .nickName(user.getNickName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .grade(user.getGradeEnum())
+                .createdAt(user.getCreateAt())
+                .build();
+            userResponseDtoList.add(userResponseDto);
+        }
+
+        //4. 클라이언트에 응답(현재페이지, 전체 건수, 데이터 포함)
+        return new PageResponseDto<>(page, totalElements, userResponseDtoList);
+    }
+
+    //(어드민용) 회원 단건조회
+    @Override
+    public UserOneResponseDto getUser(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        return UserOneResponseDto.builder()
+            .id(user.getId())
+            .nickName(user.getNickName())
+            .age(user.getAge())
+            .email(user.getEmail())
+            .phoneNumber(user.getPhoneNumber())
+            .userRoleEnum(user.getRole())
+            .createdAt(user.getCreateAt())
+            .modifiedAt(user.getModifiedAt())
+            .build();
+    }
+
+    //(어드민용) 회원 등급 변경
+    @Override
+    @Transactional
+    public void changeGrade(UserGradeDto gradeDto, Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        if(gradeDto.getGrade() == 0){
+            user.changeGrade(UserGradeEnum.MOUNTAIN_CHILDREN);
+        }else if(gradeDto.getGrade() == 1){
+            user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
+        }else if(gradeDto.getGrade() == 2){
+            user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
+        }
+    }
+
+    //(어드민용) 회원 탈퇴/복구
+    @Override
+    @Transactional
+    public void changeStatus(UserStatusDto statusDto, Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        if(statusDto.getStatus() == 0){
+            user.changeStatus(StatusEnum.USER_WITHDRAWAL);
+        }else if(statusDto.getStatus() == 1){
+            user.changeStatus(StatusEnum.USER_REGISTERED);
         }
     }
 }
