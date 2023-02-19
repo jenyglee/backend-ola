@@ -212,28 +212,9 @@
           }),
       };
       localStorage.setItem("signup1", settings.data);
-      var test_setting ={
-          "url": "http://localhost:8080/auth/comments/3",
-          "method": "POST",
-          "timeout": 0,
-          "headers": {
-              "Content-Type": "application/json",
-              // "Authurization" :""
-          },
-      }
-      var url = test_setting.url;
-      var parseurl = url.split('/');
-      console.log(parseurl[5])
-
-      var one_url = (test_setting.url).split('/')
-      console.log(one_url[5])
-
-      alert("이 알럿이 뜨고 로그인화면으로 이동")
-
-
-
       window.location.href = "c-2_singup.html";
   }
+
 
   function handleSignupAdmin(){
         console.log("어드민 회원가입")
