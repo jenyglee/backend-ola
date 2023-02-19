@@ -114,12 +114,16 @@ public class RecommendCourseController {
     }
 
 
-    // TODO 코스추천 전체 조회 -> 필터링 조회 구현 필요
+    // TODO 코스추천 전체 조회 -> "구현 완료"
     // 코스추천 전체 조회
     @ApiOperation(value = "코스 추천 전체 조회",response = Join.class)
     @GetMapping("/recommends")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
-        return recommendCourseBoardService.allRecommendCourseBoard(page, size);
+                                                                        @RequestParam(name = "size", defaultValue = "10") int size,
+        @RequestParam(name = "score") int score, @RequestParam(name="season") String season, @RequestParam(name = "altitude") int altitude,
+        @RequestParam(name = "region") String region, @RequestParam(name = "orderByLike") String orderByLike, UserDetailsImpl user) {
+
+        return recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, orderByLike, user);
     }
+
 }
