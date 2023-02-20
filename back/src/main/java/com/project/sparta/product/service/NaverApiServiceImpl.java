@@ -63,9 +63,11 @@ public class NaverApiServiceImpl implements NaverApiService {
         return fromJSONtoItems(response, offset);
     }
 
+
     public PageResponseDto<List<ProductResponseDto>> fromJSONtoItems(String response, int offset) {
 
         JSONObject rjson = new JSONObject(response);
+        
         JSONArray items  = rjson.getJSONArray("items");
         int total = rjson.getInt("total");
         List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
