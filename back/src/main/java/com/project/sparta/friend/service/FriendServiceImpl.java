@@ -123,6 +123,6 @@ public class FriendServiceImpl implements FriendService {
         long totalCount = searchFriendsMap.getTotalElements();
 
         //리스트 반환
-        return new PageResponseDto(page, totalCount, content);
+        return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
     }
 }

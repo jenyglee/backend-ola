@@ -47,7 +47,6 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        ////.join(user).on(userTag.userId.eq(user.Id))
         return new PageImpl<>(userList, pageable, userList.size());
     }
 
@@ -55,7 +54,9 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
         List<User> userList = queryFactory.select(user)
                 .from(user)
-                .where(user.nickName.startsWith(targetUserName))
+                .where(user.nickName.contains(targetUserName))
+                .orderBy(user.nickName.desc())
+                .distinct()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
