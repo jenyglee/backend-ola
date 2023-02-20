@@ -1,9 +1,7 @@
 package com.project.sparta.recommendCourse.controller;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.recommendCourse.dto.*;
-import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.security.UserDetailsImpl;
@@ -113,8 +111,8 @@ public class RecommendCourseController {
     }
 
     @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)     //api 문제인듯..에러남
-    @GetMapping("/recommends/{boardId}")
-    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable(name = "boardId") Long boardId) {
+    @GetMapping("/recommend")
+    public RecommendDetailResponseDto oneRecommendCourse(@RequestParam(name = "boardId") Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }
 

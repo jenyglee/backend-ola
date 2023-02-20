@@ -82,13 +82,4 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         return new PageImpl<>(boardList, pageable, boardList.size());
     }
 
-    @Override
-    public Page<CommunityBoardResponseDto> communityAllListOrderByLike(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Page<CommunityBoardResponseDto> communityAllListOrderByCreateDate(Pageable pageable) {
-        return null;
-    }
 }
