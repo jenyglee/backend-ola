@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-@RequiredArgsConstructor 
+@Api(tags = {"친구추천 API"})
+@RestController
+@RequiredArgsConstructor
 public class FriendController {
 
     private final FriendService friendService;

@@ -1,23 +1,16 @@
 package com.project.sparta.communityBoard.service;
 
 import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
-import static java.util.Arrays.stream;
-
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.dto.AllCommunityBoardResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
-import com.project.sparta.communityComment.dto.CommunityWithLikeResponseDto;
-import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.like.repository.LikeBoardRepository;
-import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 
 import java.util.ArrayList;
@@ -26,8 +19,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -106,27 +97,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         return new PageResponseDto<>(page, totalCount, content);
     }
 
-    //커뮤니티 전체조회(좋아요순 정렬)
-    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByLike(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CommunityBoardResponseDto> allCommunityBoardList = boardRepository.communityAllListOrderByLike(pageRequest);
-
-        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
-        long totalCount = allCommunityBoardList.getTotalElements();
-
-        return new PageResponseDto<>(page, totalCount, content);
-    }
-
-    //커뮤니티 전체조회(날짜순 정렬)
-    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByCreateDate(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CommunityBoardResponseDto> allCommunityBoardList =boardRepository.communityAllListOrderByCreateDate(pageRequest);
-
-        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
-        long totalCount = allCommunityBoardList.getTotalElements();
-
-        return new PageResponseDto<>(page, totalCount, content);
-    }
 
     //커뮤니티 (제목)검색
 
