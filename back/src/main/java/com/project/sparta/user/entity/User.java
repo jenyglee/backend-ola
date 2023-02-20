@@ -1,6 +1,5 @@
 package com.project.sparta.user.entity;
 
-import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 
