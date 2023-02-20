@@ -202,13 +202,6 @@
   function handleNext() {
     //유저 회원가입, 인풋값 저장 후 다음페이지로 이동
       var settings = {
-          "url": "http://localhost:8080/auth/signup",
-          "method": "POST",
-          "timeout": 0,
-          "headers": {
-              "Content-Type": "application/json",
-              // "Authurization" :""
-          },
           "data": JSON.stringify({
               "email": $('#email').val(),
               "password": $('#password').val(),
@@ -221,6 +214,7 @@
       localStorage.setItem("signup1", settings.data);
       window.location.href = "c-2_singup.html";
   }
+
 
   function handleSignupAdmin(){
         console.log("어드민 회원가입")

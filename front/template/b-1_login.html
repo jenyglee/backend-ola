@@ -173,6 +173,11 @@
     </section>
 </main>
 <script>
+    function decodeJWT(string){
+        var arr = string.split('.');
+        return { header: JSON.parse(atob(arr[0])), payload: JSON.parse(atob(arr[1])), secret: arr[2] }
+    }
+
     function handleLogin() {
         var settings = {
             "url": "http://localhost:8080/auth/login",
@@ -192,14 +197,20 @@
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
 
             // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
-            var keys = Object.values(response)
+            var get_token = xhr.getResponseHeader("Authorization")
+            var remove_bearer = get_token.toString().substring(6,get_token.length)
+            var result = decodeJWT(remove_bearer)
+
+            console.log(result.header)
+            console.log(result.payload)
+            console.log(result.secret)
+
             alert("로그인 성공")
-            if(keys[2]=="USER") {
+            if(result.payload.role=="USER") {
                 window.location.href = "../index.html";
             } else {
                 window.location.href = "k-1_manageUser.html";
             }
-
 
         }).fail(function (response){
             console.log(response);
