@@ -9,7 +9,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQueryFactory;
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -82,13 +81,4 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         return new PageImpl<>(boardList, pageable, boardList.size());
     }
 
-    @Override
-    public Page<CommunityBoardResponseDto> communityAllListOrderByLike(Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Page<CommunityBoardResponseDto> communityAllListOrderByCreateDate(Pageable pageable) {
-        return null;
-    }
 }
