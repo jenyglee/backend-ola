@@ -66,6 +66,7 @@ public class SecurityConfig {
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/boards/**").authenticated()
                 .antMatchers("/admin/**").authenticated()
+                .antMatchers("/friends/**").authenticated()
                 .anyRequest().permitAll()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 

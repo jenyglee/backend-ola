@@ -110,9 +110,9 @@ public class RecommendCourseController {
         recommendCourseBoardService.deleteRecommendCourseBoard(boardId, user.getId());
     }
 
-    @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)     //api 문제인듯..에러남
-    @GetMapping("/recommend")
-    public RecommendDetailResponseDto oneRecommendCourse(@RequestParam(name = "boardId") Long boardId) {
+    @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
+    @GetMapping("/recommends/{boardId}")
+    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }
 
