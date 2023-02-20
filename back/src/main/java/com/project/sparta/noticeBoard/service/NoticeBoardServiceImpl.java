@@ -49,6 +49,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 단건 조회
     @Override
+    @Transactional(readOnly = true)
     public NoticeBoardResponseDto getNoticeBoard(Long id, User user) {
 
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
@@ -59,6 +60,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 전체조회
     @Override
+    @Transactional(readOnly = true)
     public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, User user) {
         // 1. 페이징으로 요청해서 조회
         PageRequest pageRequest = PageRequest.of(page, size);
