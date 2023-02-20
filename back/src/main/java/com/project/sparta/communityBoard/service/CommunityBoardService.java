@@ -21,10 +21,6 @@ public interface CommunityBoardService {
 
     PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);
 
-    PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByLike(int page, int size);
-
-    PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByCreateDate(int page, int size);
-
     PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
 //   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);

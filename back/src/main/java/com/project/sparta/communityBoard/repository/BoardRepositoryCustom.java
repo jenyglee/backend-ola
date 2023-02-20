@@ -9,6 +9,4 @@ public interface BoardRepositoryCustom {
     Long countByUserId(Long userId);
     CommunityBoardResponseDto getBoard(Long boardId);
     Page<CommunityBoardResponseDto> communityAllList(Pageable pageable);
-    Page<CommunityBoardResponseDto> communityAllListOrderByLike(Pageable pageable);
-    Page<CommunityBoardResponseDto> communityAllListOrderByCreateDate(Pageable pageable);
 }
