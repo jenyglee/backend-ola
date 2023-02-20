@@ -57,11 +57,11 @@ public class UserServiceImpl implements UserService {
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
         User user1 = new User(signupDto.getEmail(), encodedPassword, signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
         User saveUser = userRepository.save(user1);
+
         System.out.println(signupDto.getEmail());
-        System.out.println(signupDto.getNickName());
         System.out.println(signupDto.getPassword());
+        System.out.println(signupDto.getNickName());
         System.out.println(signupDto.getPhoneNumber());
-        System.out.println(signupDto.getAge());
 
         // 2. 선택한 hashtag를 각각 Usertag로 테이블에 저장한다.
         List<Long> longList = signupDto.getTagList();
