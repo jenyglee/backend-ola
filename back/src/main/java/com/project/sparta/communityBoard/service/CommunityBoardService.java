@@ -1,9 +1,11 @@
 package com.project.sparta.communityBoard.service;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.user.entity.User;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -17,13 +19,13 @@ public interface CommunityBoardService {
 
     void deleteCommunityBoard(Long boardId, User user);
 
-    CommunityBoardResponseDto getCommunityBoard(Long boardId);
+    CommunityBoardOneResponseDto getCommunityBoard(Long boardId);
 
-    PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoard(int page, int size);
+    PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size);
 
     PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
-//   PageResponseDto<List<CommunityBoardResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+//   PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,  User user);
     void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto);
 
     void adminDeleteCommunityBoard(Long boardId);

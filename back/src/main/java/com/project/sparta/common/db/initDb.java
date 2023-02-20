@@ -10,6 +10,7 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.like.service.BoardLikeService;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
@@ -44,6 +45,7 @@ public class initDb {
         initService.recommendInit();
         initService.communityInit();
         initService.communityCommentInit();
+        initService.communityLike();
         initService.noticeInit();
     }
 
@@ -63,6 +65,8 @@ public class initDb {
         CommunityCommentService communityCommentService;
         @Autowired
         NoticeBoardService noticeBoardService;
+        @Autowired
+        BoardLikeService boardLikeService;
 
         @Transactional
         public void hashtagInit(){
@@ -235,18 +239,10 @@ public class initDb {
 
         @Transactional
         public void communityInit(){
-            User user = em.find(User.class, 1L);
-
-            communityBoardService.createCommunityBoard(
-                CommunityBoardRequestDto.builder()
-                    .title("커뮤니티")
-                    .contents("커뮤니티 콘텐츠")
-                    .chatStatus("N")
-                    .chatMemCnt(0)
-                    .tagList(Arrays.asList(7L, 8L, 9L))
-                    .build(),
-                user
-            );
+            User user1 = em.find(User.class, 1L);
+            User user2 = em.find(User.class, 2L);
+            User user3 = em.find(User.class, 3L);
+            User user4 = em.find(User.class, 4L);
             for (int i=0; i<5; i++){
                 communityBoardService.createCommunityBoard(
                     CommunityBoardRequestDto.builder()
@@ -256,7 +252,7 @@ public class initDb {
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
-                    user
+                    user1
                 );
             }
             for (int i=5; i<10; i++){
@@ -268,7 +264,7 @@ public class initDb {
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
-                    user
+                    user2
                 );
             }
             for (int i=10; i<15; i++){
@@ -280,7 +276,7 @@ public class initDb {
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
-                    user
+                    user3
                 );
             }
             for (int i=15; i<20; i++){
@@ -292,7 +288,7 @@ public class initDb {
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
                         .build(),
-                    user
+                    user4
                 );
             }
         }
@@ -302,8 +298,14 @@ public class initDb {
             User user = em.find(User.class, 2L);
             for (int i=0; i<22; i++){
                 CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
-                communityCommentService.createCommunityComments(5L, requestDto, user);
+                communityCommentService.createCommunityComments(1L, requestDto, user);
             }
+        }
+
+        @Transactional
+        public void communityLike(){
+            User user = em.find(User.class, 2L);
+            boardLikeService.likeBoard(1L, user);
         }
 
         @Transactional

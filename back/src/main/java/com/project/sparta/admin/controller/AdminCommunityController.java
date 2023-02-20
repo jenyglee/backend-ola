@@ -1,7 +1,9 @@
 package com.project.sparta.admin.controller;
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,8 @@ public class AdminCommunityController {
     // 커뮤니티 전체 조회
     @GetMapping("/boards/communities")
     public ResponseEntity getCommunityList(@RequestParam int page, @RequestParam int size){
-        PageResponseDto<List<CommunityBoardResponseDto>> result = communityBoardService.getAllCommunityBoard(page, size);
+        PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
+            page, size);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
@@ -29,7 +32,7 @@ public class AdminCommunityController {
     // 커뮤니티 단건 조회
     @GetMapping("/boards/communities/{boardId}")
     public ResponseEntity getCommunity(@PathVariable Long boardId){
-        CommunityBoardResponseDto result = communityBoardService.getCommunityBoard(boardId);
+        CommunityBoardOneResponseDto result = communityBoardService.getCommunityBoard(boardId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
