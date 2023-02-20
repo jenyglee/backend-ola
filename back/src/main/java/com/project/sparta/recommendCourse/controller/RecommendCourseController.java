@@ -112,16 +112,13 @@ public class RecommendCourseController {
         recommendCourseBoardService.deleteRecommendCourseBoard(boardId, user.getId());
     }
 
-    // 코스추천 단건 조회
-    @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
+    @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)     //api 문제인듯..에러남
     @GetMapping("/recommends/{boardId}")
-    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
+    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable(name = "boardId") Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }
 
-
     // TODO 코스추천 전체 조회 -> "구현 완료"
-    // 코스추천 전체 조회
     @ApiOperation(value = "코스 추천 전체 조회", response = Join.class)
     @GetMapping("/recommends")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(
