@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor 
 public class FriendController {
 
     private final FriendService friendService;
