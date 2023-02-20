@@ -75,7 +75,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             .region(requestPostDto.getRegion())
             .userId(userId)
             .postStatus(VAILABLE)
-            // .images(imgUrlList)
+//            .images(imgUrlList)
             .build();
 
         //이미지에 포스트 담아주고
