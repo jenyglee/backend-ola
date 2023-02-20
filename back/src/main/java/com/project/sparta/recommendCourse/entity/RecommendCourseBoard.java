@@ -2,6 +2,7 @@ package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,8 +40,8 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    //@OneToMany
-    //private List<RecommendCourseImg> images = new ArrayList<>();
+//    @OneToMany
+//    private List<RecommendCourseImg> images = new ArrayList<>();
 
     // @ManyToOne
     // @JoinColumn(name = "user_id")
@@ -61,19 +62,19 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-    @Builder
-    public RecommendCourseBoard(String title, String contents, int score, String season,
-        int altitude, Long userId // List<RecommendCourseImg> images
-    ) {
-        this.title = title;
-        this.contents = contents;
-        this.season = season;
-        this.score = score;
-        this.altitude = altitude;
-        this.postStatus = PostStatusEnum.VAILABLE;
-        this.userId = userId;
-        // this.images = images;
-    }
+//    @Builder
+//    public RecommendCourseBoard(String title, String contents, int score, String season,
+//        int altitude, Long userId, List<RecommendCourseImg> images
+//    ) {
+//        this.title = title;
+//        this.contents = contents;
+//        this.season = season;
+//        this.score = score;
+//        this.altitude = altitude;
+//        this.postStatus = PostStatusEnum.VAILABLE;
+//        this.userId = userId;
+//        this.images = images;
+//    }
 
     public void modifyRecommendCourseBoard(RecommendRequestDto requestDto, Long userId,
         List<RecommendCourseImg> images
