@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
     // 다중이미지 업로드

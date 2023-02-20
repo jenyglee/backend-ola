@@ -32,9 +32,9 @@ public class FriendServiceImpl implements FriendService {
     //내 친구목록 전체조회
     @Transactional(readOnly = true)
     @Override
-    public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int offset, int limit, Long userId) {
+    public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int page, int size, Long userId) {
 
-        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
         List<FriendInfoReponseDto> friendInfoList = new ArrayList<>();
 
         Page<Friend> friendsList = friendRepository.findAllByUserId(userId, pageRequest);
@@ -45,15 +45,15 @@ public class FriendServiceImpl implements FriendService {
         }
         long totalCount = friendInfoList.size();
 
-        return new PageResponseDto(offset, totalCount, friendInfoList);
+        return new PageResponseDto(page, totalCount, friendInfoList);
     }
 
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int offset, int limit, Long userId) {
+    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int page, int size, Long userId) {
 
-        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
 
         //해당 유저의 회원가입 태그 정보 긁어오기
         User userInfo = userRepository.findById(userId).orElseThrow(() -> new CustomException(INVALID_USER));
@@ -69,7 +69,7 @@ public class FriendServiceImpl implements FriendService {
         long totalCount = searchFriendsMap.getTotalElements();
 
         //리스트 반환
-        return new PageResponseDto(offset, totalCount, content.stream().distinct().collect(Collectors.toList()));
+        return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
     }
 
     //친구 추가
@@ -106,10 +106,10 @@ public class FriendServiceImpl implements FriendService {
     //친구 검색(내친구 포함 모든친구)
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int offset, int limit, String targetUserName) {
+    public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int page, int size, String targetUserName) {
 
-        //offset , limit 값 임의로 넣기
-        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "id"));
+        //page , size 값 임의로 넣기
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
 
         //친구 이름으로 검색(+with paging 처리)
         Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
@@ -120,6 +120,6 @@ public class FriendServiceImpl implements FriendService {
         long totalCount = searchFriendsMap.getTotalElements();
 
         //리스트 반환
-        return new PageResponseDto(offset, totalCount, content);
+        return new PageResponseDto(page, totalCount, content);
     }
 }

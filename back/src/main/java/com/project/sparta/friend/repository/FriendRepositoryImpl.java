@@ -20,7 +20,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     QUserTag userTag = new QUserTag("userTag");
 
     @Override
-    public PageImpl<User> randomUser(User userinfo, Pageable pageable, StatusEnum statusEnum) {
+    public PageImpl<User> randomUser(User userInfo, Pageable pageable, StatusEnum statusEnum) {
 
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
         // 현재 회원의 태그와 맞는 회원 추출
@@ -28,12 +28,12 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 .from(userTag)
                 .join(userTag.user, user)
                 .where(user.status.eq(statusEnum),
-                        user.Id.ne(userinfo.getId()),
-                        userTag.tag.in(userinfo.getTags().get(0).getTag(),
-                                userinfo.getTags().get(1).getTag(),
-                                userinfo.getTags().get(2).getTag(),
-                                userinfo.getTags().get(3).getTag(),
-                                userinfo.getTags().get(4).getTag()))
+                        user.Id.ne(userInfo.getId()),
+                        userTag.tag.in(userInfo.getTags().get(0).getTag(),
+                            userInfo.getTags().get(1).getTag(),
+                            userInfo.getTags().get(2).getTag(),
+                            userInfo.getTags().get(3).getTag(),
+                            userInfo.getTags().get(4).getTag()))
                 .orderBy(NumberExpression.random().asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

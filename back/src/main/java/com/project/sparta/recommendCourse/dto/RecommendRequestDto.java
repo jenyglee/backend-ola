@@ -1,6 +1,5 @@
 package com.project.sparta.recommendCourse.dto;
 
-import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,22 +10,23 @@ import java.util.List;
 @NoArgsConstructor
 public class RecommendRequestDto {
 
-    private String title;
     private int score;
+    private String title;
     private String season;
     private int altitude;
     private String contents;
+    private String region;
     private List<String> imgList;
 
     @Builder
-    public RecommendRequestDto(String title, int score, String season, int altitude,
-        String contents,
-        List<String> imgList) {
-        this.title = title;
+    public RecommendRequestDto(int score, String title, String season, int altitude,
+        String contents, String region, List<String> imgList) {
         this.score = score;
+        this.title = title;
         this.season = season;
         this.altitude = altitude;
         this.contents = contents;
+        this.region = region;
         this.imgList = imgList;
     }
 }

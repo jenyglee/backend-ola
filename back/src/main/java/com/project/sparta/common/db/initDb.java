@@ -169,14 +169,15 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(1)
+                        .title("코스추천" + i)
                         .season("가을")
                         .altitude((int) (Math.random() * 100) + 100)
                         .contents("추천해요!" + i)
+                        .region("서울")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 10L
                 );
             }
             for (int i=5; i<10; i++){
@@ -185,11 +186,12 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(2)
+                        .title("코스추천" + i)
                         .season("여름")
                         .altitude((int) (Math.random() * 100) + 200)
                         .contents("추천해요!" + i)
+                        .region("경기도")
                         .imgList(imgList)
                         .build()
                     , 9L
@@ -201,14 +203,15 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(3)
+                        .title("코스추천" + i)
                         .season("봄")
                         .altitude((int) (Math.random() * 100) + 300)
                         .contents("추천해요!" + i)
+                        .region("전라도")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 8L
                 );
             }
             for (int i=15; i<20; i++){
@@ -217,14 +220,15 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(4)
+                        .title("코스추천" + i)
                         .season("겨울")
                         .altitude((int) (Math.random() * 100) + 400)
                         .contents("추천해요!" + i)
+                        .region("강원도")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 7L
                 );
             }
         }

@@ -21,8 +21,16 @@ public class AdminRecommendCourseController {
 
     // 코스추천 전체 조회
     @GetMapping("/boards/recommends")
-    public ResponseEntity getRecommendList(@RequestParam int page, @RequestParam int size){
-        PageResponseDto<List<RecommendResponseDto>> result = recommendCourseBoardService.allRecommendCourseBoard(page, size);
+    public ResponseEntity getRecommendList(
+        @RequestParam int page,
+        @RequestParam int size,
+        @RequestParam int score,
+        @RequestParam String season,
+        @RequestParam int altitude,
+        @RequestParam String region,
+        @RequestParam String orderByLike
+    ){
+        PageResponseDto<List<RecommendResponseDto>> result = recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, orderByLike);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
