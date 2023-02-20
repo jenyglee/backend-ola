@@ -1,30 +1,8 @@
 package com.project.sparta.friend.service;
 
-import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.exception.CustomException;
-import com.project.sparta.friend.dto.FriendInfoReponseDto;
-import com.project.sparta.friend.entity.Friend;
-import com.project.sparta.friend.repository.FriendRepository;
-import com.project.sparta.hashtag.entity.Hashtag;
-import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.user.entity.*;
-import com.project.sparta.user.repository.UserRepository;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static com.project.sparta.exception.api.Status.INVALID_USER;
 
 @SpringBootTest
 @Transactional

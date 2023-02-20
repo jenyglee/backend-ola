@@ -1,10 +1,8 @@
 package com.project.sparta.friend.service;
 
 
-import com.project.sparta.admin.entity.StatusEnum;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
-import com.project.sparta.friend.dto.RecommentFriendResponseDto;
 
 import java.util.List;
 
