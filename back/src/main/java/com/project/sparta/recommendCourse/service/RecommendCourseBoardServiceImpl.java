@@ -211,6 +211,40 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     }
 
+    //(어드민) 코스 수정
+    @Override
+    public void adminModifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto) {
+        RecommendCourseBoard board = recommendCourseBoardRepository.findById(id)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+
+        // if (!board.getUserId().equals(userId)) {
+        //     throw new CustomException(Status.NO_PERMISSIONS_POST);
+        // }
+
+        List<RecommendCourseImg> imgUrlList = new ArrayList<>();
+        for (String imgUrl : requestDto.getImgList()) {
+            RecommendCourseImg recommendCourseImg = new RecommendCourseImg(imgUrl);
+            imgUrlList.add(recommendCourseImg);
+        }
+
+        // 스트림으로 이미지 각각의 경로를 뽑아내서
+        //        List<String> imgRouteList = imgList.stream().map(RecommendCourseImg::getImgRoute).collect(Collectors.toList());
+
+        board.modifyRecommendCourseBoard(requestDto, board.getUserId(), imgUrlList);
+
+        // //포스트 다시 세이브 하면 수정 로직 완료
+        // recommendCourseBoardRepository.save(board);
+    }
+
+    // (어드민) 코스 삭제
+    @Override
+    public void adminDeleteRecommendCourseBoard(Long id) {
+        RecommendCourseBoard board = recommendCourseBoardRepository.findById(id)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+
+        recommendCourseBoardRepository.delete(board);
+    }
+
     // 필터링 도전
 
 }

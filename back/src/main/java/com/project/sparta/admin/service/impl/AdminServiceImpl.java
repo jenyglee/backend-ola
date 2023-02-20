@@ -1,7 +1,6 @@
 package com.project.sparta.admin.service.impl;
 
 import com.project.sparta.admin.dto.AdminSignupDto;
-import com.project.sparta.admin.dto.ManagerPersonResponseDto;
 import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;

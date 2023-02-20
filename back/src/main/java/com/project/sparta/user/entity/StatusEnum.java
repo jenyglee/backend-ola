@@ -1,4 +1,4 @@
-package com.project.sparta.admin.entity;
+package com.project.sparta.user.entity;
 
 import com.project.sparta.user.entity.UserRoleEnum;
 

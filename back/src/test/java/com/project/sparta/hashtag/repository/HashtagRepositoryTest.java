@@ -1,23 +1,7 @@
 package com.project.sparta.hashtag.repository;
 
-import com.project.sparta.exception.CustomException;
-import com.project.sparta.hashtag.dto.HashtagRequestDto;
-import com.project.sparta.hashtag.entity.Hashtag;
-import com.project.sparta.hashtag.service.HashtagService;
-import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
