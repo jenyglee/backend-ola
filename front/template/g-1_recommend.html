@@ -563,19 +563,13 @@
 </main>
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-    window.ga = function () {
-        ga.q.push(arguments)
-    };
-    ga.q = [];
-    ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto');
-    ga('set', 'anonymizeIp', true);
-    ga('set', 'transport', 'beacon');
-    ga('send', 'pageview')
-</script>
 <!--<script src="https://www.google-analytics.com/analytics.js" async></script>-->
 <script>
+        
+        $(document).ready(function () {
+        getRecommendList(0,"10",5,"봄",123456,"얍얍",123586);
+    });
+
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
@@ -591,17 +585,8 @@
         $(".bell-dropbox").hide();
     }
 
-    function chat() {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/chat", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-            data: {},
-            success: function (response) {
-                console.log(response)
-                alert(response.msc)
-                //window.location.reload();
-            },
-        })
+    function setRecommendId(id){
+        localStorage.setItem("noticeId", id);
     }
 
     function getRecommendList(page, size, score, season, altitude, region, orderByLike) {
