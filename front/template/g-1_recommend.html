@@ -591,18 +591,48 @@
         $(".bell-dropbox").hide();
     }
 
-    function chat() {
+    $(document).ready(function () {
+        getNoticeList(0,"");
+    });
+    function setRecommendId(id){
+        localStorage.setItem("noticeId", id);
+    }
+    function getNoticeList(page, categoryStr) {
+        // 1. 데이터 초기화를 해야됨.
+        $('tbody').empty();
+        const accessToken = localStorage.getItem("accessToken");
+        // 2. 통신해서 불러오기
+
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/chat", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-            data: {},
+            url: "http://localhost:8080/boards/recommends?page=0&size=10&score=0&season=&altitude=0&region=&orderByLike=all",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            // data: {
+            //  title: "sasas",
+            // },
             success: function (response) {
+                console.log("호출완료");
                 console.log(response)
-                alert(response.msc)
-                //window.location.reload();
+                for (let i = 0; i < response.data.length; i++) {
+                    // console.log(i+1)
+                    // console.log(response.data[i].title)
+                    // 데이터 바인딩
+                    const temp =
+                        `
+                  <tr>
+                    <th scope="row">${i+1}</th>
+                    <td class="td_2"><a href="l-2_manageRecommendDetail.html" onclick="setRecommendId(${i+1})">${response.data[i].title}</a></td>
+                    <td class="td_3">${response.data[i].createDate.substring(0, 10)}</td>
+                  </tr>
+              `
+                    $('tbody').append(temp)
+                }
             },
         })
     }
+
 </script>
 </body>
 </html>
