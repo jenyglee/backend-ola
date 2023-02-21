@@ -1,18 +1,10 @@
 package com.project.sparta.communityBoard.controller;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.dto.AllCommunityBoardResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
-import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
-//import com.project.sparta.communityComment.controller.CommunityCommnetController;
-import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.communityComment.dto.CommunityResponseDto;
-import com.project.sparta.communityComment.dto.CommunityWithLikeResponseDto;
-import com.project.sparta.communityComment.entity.CommunityComment;
-import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,20 +44,21 @@ public class CommunityBoardController {
     //커뮤니티 단건 조회
     @ApiOperation(value = "커뮤니티 단건 조회",response = Join.class)
     @GetMapping("/communities/{boardId}")
-    public ResponseEntity getCommunityBoard(@PathVariable Long boardId) {
-        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(
-            boardId);
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    public ResponseEntity getCommunityBoard(@PathVariable Long boardId, @RequestParam int commentPage, int commentSize) {
+        CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.getCommunityBoard(
+            boardId, commentPage, commentSize);
+        return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 
     // TODO 커뮤니티 전체 조회 -> 필터링 기능 구현
     //커뮤니티 전체 조회
     @ApiOperation(value = "커뮤니티 전체 조회",response = Join.class)
     @GetMapping("/communities")
-    public ResponseEntity getAllCommunityBoard(@RequestParam("page") int page, @RequestParam("size") int size) {
-        PageResponseDto<List<CommunityBoardResponseDto>> communityBoardResponseDto = communityBoardService.getAllCommunityBoard(
-            page, size);
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+    public ResponseEntity getAllCommunityBoard(@RequestParam("page") int page, @RequestParam("size") int size,
+        @RequestParam String title, @RequestParam String contents, @RequestParam String nickname) {
+        PageResponseDto<List<CommunityBoardAllResponseDto>> CommunityBoardOneResponseDto = communityBoardService.getAllCommunityBoard(
+            page, size, title, contents, nickname);
+        return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 
     //커뮤니티 수정

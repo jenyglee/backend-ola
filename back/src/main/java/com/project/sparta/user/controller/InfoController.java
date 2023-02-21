@@ -66,8 +66,8 @@ public class InfoController {
         @RequestParam("page") int page,
         @RequestParam("size") int size,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        PageResponseDto<List<GetMyBoardResponseDto>> communityBoardResponseDto = communityBoardService.getMyCommunityBoard(page, size, userDetails.getUser());
-        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
+        PageResponseDto<List<GetMyBoardResponseDto>> CommunityBoardOneResponseDto = communityBoardService.getMyCommunityBoard(page, size, userDetails.getUser());
+        return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 
     //TODO 내 알람 전체 조회 API 제작

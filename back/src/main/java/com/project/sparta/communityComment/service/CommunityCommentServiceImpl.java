@@ -3,7 +3,7 @@ package com.project.sparta.communityComment.service;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.communityComment.dto.CommunityResponseDto;
+import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
@@ -24,7 +24,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   @Override
   @Transactional
-  public CommunityResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
+  public CommentResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
       User user) {
     CommunityBoard communityBoard = boardRepository.findById(boardId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
@@ -32,18 +32,17 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
     commentRepository.saveAndFlush(communityComment);
-    CommunityResponseDto communityResponseDto = new CommunityResponseDto().builder()
-        .contents(communityComment.getContents())
-        .nickName(communityComment.getNickName())
+    return CommentResponseDto.builder()
         .id(communityComment.getId())
-        .communityBoardId(boardId)
+        .nickName(communityComment.getNickName())
+        .contents(communityComment.getContents())
+        .createAt(communityComment.getCreateAt())
         .build();
-    return communityResponseDto;
   }
 
   @Override
   @Transactional
-  public CommunityResponseDto updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
+  public void updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
       User user) {
     boardRepository.findById(boardId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
@@ -51,10 +50,10 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
     communityComment.updateComment(communityRequestDto.getContents());
     commentRepository.saveAndFlush(communityComment);
-    CommunityResponseDto communityResponseDto = new CommunityResponseDto().builder()
-        .contents(communityComment.getContents())
-        .build();
-    return communityResponseDto;
+//    CommentResponseDto communityResponseDto = new CommentResponseDto().builder()
+//        .contents(communityComment.getContents())
+//        .build();
+//    return communityResponseDto;
   }
 
   @Override
@@ -66,8 +65,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     CommunityComment communityComment = commentRepository.findById(commentsId)
         .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
 
-    if(communityComment.getNickName() != user.getNickName())
-    {
+    if(communityComment.getNickName() != user.getNickName()) {
       new CustomException(Status.INVALID_USER);
     }
 
