@@ -22,8 +22,8 @@ public class Hashtag {
 
     private String name;
 
-    @OneToMany(mappedBy = "hashtag", cascade = CascadeType.ALL)
-    private List<CommunityTag> communityTags = new ArrayList<>();
+//    @OneToMany(mappedBy = "hashtag", cascade = CascadeType.ALL)
+//    private List<CommunityTag> communityTags = new ArrayList<>();
 
     public Hashtag(String name) {
         this.name = name;

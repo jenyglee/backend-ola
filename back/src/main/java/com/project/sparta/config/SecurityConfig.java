@@ -37,6 +37,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+    // 필터를 타지 않게 하는 부분
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring()
@@ -51,6 +53,7 @@ public class SecurityConfig {
 
     }
 
+    // 필터를 타게 하는 부분
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
 

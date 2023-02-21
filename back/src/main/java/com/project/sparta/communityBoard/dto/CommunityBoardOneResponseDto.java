@@ -1,6 +1,9 @@
 package com.project.sparta.communityBoard.dto;
 
 
+import com.project.sparta.communityBoard.entity.CommunityTag;
+import com.project.sparta.communityComment.dto.CommentResponseDto;
+import com.project.sparta.hashtag.entity.Hashtag;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,28 +19,31 @@ public class CommunityBoardOneResponseDto {
     private String title;
     private String nickName;
     private String contents;
-//    private List<String> imgList;
-    private List<String> tagList = new ArrayList<>(); // TODO List<HashtagDto>로 변환필요
-//    private List<String> commentList;  // TODO List<CommentDto>로 변환필요
+    private Long likeCount;
+    private List<String> imgList = new ArrayList<>();
+    private List<Hashtag> tagList = new ArrayList<>();
+    private List<CommentResponseDto> commentList = new ArrayList<>();
 
 //    private int boardLikeCount;
 
 //    private LocalDateTime createdAt;
 
-//    @Builder
+    @Builder
     public CommunityBoardOneResponseDto(String title, String nickName, String contents,
-//        List<String> imgList,
-        List<String> tagList
-//        List<String> commentList,
+        Long likeCount,
+        List<String> imgList,
+        List<Hashtag> tagList,
+        List<CommentResponseDto> commentList
 //        int boardLikeCount,
 //        LocalDateTime createdAt
     ) {
         this.title = title;
         this.nickName = nickName;
         this.contents = contents;
-//        this.imgList = imgList;
+        this.likeCount = likeCount;
+        this.imgList = imgList;
         this.tagList = tagList;
-//        this.commentList = commentList;
+        this.commentList = commentList;
 //        this.boardLikeCount = boardLikeCount;
 //        this.createdAt = createdAt;
     }

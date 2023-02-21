@@ -1,6 +1,7 @@
 package com.project.sparta.communityBoard.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,14 +14,17 @@ public class CommunityBoardAllResponseDto {
     private String nickName;
     private String title;
     private Long communityLikeCnt;
+    private List<String> imgList;
 
     @Builder
-    @QueryProjection
     public CommunityBoardAllResponseDto(Long boardId, String nickName, String title,
-        Long communityLikeCnt) {
+        Long communityLikeCnt,
+        List<String> imgList
+    ) {
         this.boardId = boardId;
         this.nickName = nickName;
         this.title = title;
         this.communityLikeCnt = communityLikeCnt;
+        this.imgList = imgList;
     }
 }

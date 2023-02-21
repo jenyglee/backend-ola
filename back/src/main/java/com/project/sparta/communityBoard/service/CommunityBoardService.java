@@ -19,13 +19,14 @@ public interface CommunityBoardService {
 
     void deleteCommunityBoard(Long boardId, User user);
 
-    CommunityBoardOneResponseDto getCommunityBoard(Long boardId);
+    CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int page, int size);
 
-    PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size);
+    PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
+        String titleCond, String contentsCond, String nicknameCond);
 
     PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
-//   PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+    //   PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,  User user);
     void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto);
 
     void adminDeleteCommunityBoard(Long boardId);

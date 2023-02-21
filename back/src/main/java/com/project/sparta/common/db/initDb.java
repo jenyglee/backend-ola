@@ -11,6 +11,7 @@ import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.like.service.BoardLikeService;
+import com.project.sparta.like.service.CommentLikeService;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
@@ -67,6 +68,9 @@ public class initDb {
         NoticeBoardService noticeBoardService;
         @Autowired
         BoardLikeService boardLikeService;
+
+        @Autowired
+        CommentLikeService commentLikeService;
 
         @Transactional
         public void hashtagInit(){
@@ -243,6 +247,9 @@ public class initDb {
             User user2 = em.find(User.class, 2L);
             User user3 = em.find(User.class, 3L);
             User user4 = em.find(User.class, 4L);
+            List<String> imgList = new ArrayList<>();
+            imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
+            imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
             for (int i=0; i<5; i++){
                 communityBoardService.createCommunityBoard(
                     CommunityBoardRequestDto.builder()
@@ -251,6 +258,7 @@ public class initDb {
                         .chatStatus("N")
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
+                        .imgList(imgList)
                         .build(),
                     user1
                 );
@@ -263,6 +271,7 @@ public class initDb {
                         .chatStatus("N")
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
+                        .imgList(imgList)
                         .build(),
                     user2
                 );
@@ -275,6 +284,7 @@ public class initDb {
                         .chatStatus("N")
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
+                        .imgList(imgList)
                         .build(),
                     user3
                 );
@@ -287,6 +297,7 @@ public class initDb {
                         .chatStatus("N")
                         .chatMemCnt(0)
                         .tagList(Arrays.asList(7L, 8L, 9L))
+                        .imgList(imgList)
                         .build(),
                     user4
                 );
@@ -304,8 +315,11 @@ public class initDb {
 
         @Transactional
         public void communityLike(){
-            User user = em.find(User.class, 2L);
-            boardLikeService.likeBoard(1L, user);
+            User user1 = em.find(User.class, 1L);
+            User user2 = em.find(User.class, 2L);
+            boardLikeService.likeBoard(1L, user1);
+            commentLikeService.likeComment(1L, user1);
+            commentLikeService.likeComment(1L, user2);
         }
 
         @Transactional

@@ -44,9 +44,9 @@ public class CommunityBoardController {
     //커뮤니티 단건 조회
     @ApiOperation(value = "커뮤니티 단건 조회",response = Join.class)
     @GetMapping("/communities/{boardId}")
-    public ResponseEntity getCommunityBoard(@PathVariable Long boardId) {
+    public ResponseEntity getCommunityBoard(@PathVariable Long boardId, @RequestParam int commentPage, int commentSize) {
         CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.getCommunityBoard(
-            boardId);
+            boardId, commentPage, commentSize);
         return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 
@@ -54,9 +54,10 @@ public class CommunityBoardController {
     //커뮤니티 전체 조회
     @ApiOperation(value = "커뮤니티 전체 조회",response = Join.class)
     @GetMapping("/communities")
-    public ResponseEntity getAllCommunityBoard(@RequestParam("page") int page, @RequestParam("size") int size) {
+    public ResponseEntity getAllCommunityBoard(@RequestParam("page") int page, @RequestParam("size") int size,
+        @RequestParam String title, @RequestParam String contents, @RequestParam String nickname) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> CommunityBoardOneResponseDto = communityBoardService.getAllCommunityBoard(
-            page, size);
+            page, size, title, contents, nickname);
         return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 
