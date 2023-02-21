@@ -1,26 +1,7 @@
 package com.project.sparta.communityComment.service;
 
-import static com.project.sparta.admin.entity.StatusEnum.USER_REGISTERED;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.project.sparta.admin.entity.StatusEnum;
-import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
-import com.project.sparta.communityBoard.repository.BoardRepository;
-import com.project.sparta.communityBoard.service.CommunityBoardService;
-import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.communityComment.dto.CommunityResponseDto;
-import com.project.sparta.communityComment.entity.CommunityComment;
-import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.security.UserDetailsImpl;
-import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
-import com.project.sparta.user.repository.UserRepository;
-import jdk.jfr.Name;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;

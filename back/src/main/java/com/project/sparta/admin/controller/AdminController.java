@@ -20,18 +20,4 @@ public class AdminController {
         adminService.signup(signupDto);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-//    @GetMapping("/community_boards/{community_board_id}")
-//    public ResponseEntity getCommunityBoard(@PathVariable Long community_board_id) {
-//        CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.getCommunityBoard(community_board_id);
-//        return new ResponseEntity<>(communityBoardResponseDto, HttpStatus.OK);
-//    }
-
-//    @GetMapping("/get/one/person")
-//    public ResponseEntity getOnePerson(@PathVariable Long id) {
-//        ManagerPersonResponseDto managerPersonResponseDto = adminService.getOneUser(id);
-//        return new ResponseEntity<>(managerPersonResponseDto, HttpStatus.OK);
-//    }
-
-
 }

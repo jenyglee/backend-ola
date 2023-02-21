@@ -1,35 +1,28 @@
 package com.project.sparta.communityBoard.service;
-
-import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
-import static java.util.Arrays.stream;
-
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.dto.AllCommunityBoardResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
+import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
-import com.project.sparta.communityComment.dto.CommunityWithLikeResponseDto;
-import com.project.sparta.communityComment.entity.CommunityComment;
-import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.like.repository.LikeBoardRepository;
-import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
 
 @Service
 @RequiredArgsConstructor
@@ -62,15 +55,14 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     //커뮤니티 게시글 수정
     @Override
     @Transactional
-    public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto commRequestDto, User user) {
-
-        List<Hashtag> newTagList = addHashTag(commRequestDto.getTagList());
+    public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto, User user) {
+        List<Hashtag> newTagList = addHashTag(requestDto.getTagList());
         CommunityBoard communityBoard = new CommunityBoard();
 
         CommunityBoard commBoard = boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
-        communityBoard.updateBoard(commBoard.getTitle(), commBoard.getContents(), newTagList);
+        communityBoard.updateBoard(requestDto.getTitle(), requestDto.getContents(), newTagList);
         boardRepository.saveAndFlush(communityBoard);
     }
 
@@ -106,27 +98,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         return new PageResponseDto<>(page, totalCount, content);
     }
 
-    //커뮤니티 전체조회(좋아요순 정렬)
-    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByLike(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CommunityBoardResponseDto> allCommunityBoardList = boardRepository.communityAllListOrderByLike(pageRequest);
-
-        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
-        long totalCount = allCommunityBoardList.getTotalElements();
-
-        return new PageResponseDto<>(page, totalCount, content);
-    }
-
-    //커뮤니티 전체조회(날짜순 정렬)
-    public PageResponseDto<List<CommunityBoardResponseDto>> getAllCommunityBoardOrderByCreateDate(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CommunityBoardResponseDto> allCommunityBoardList =boardRepository.communityAllListOrderByCreateDate(pageRequest);
-
-        List<CommunityBoardResponseDto> content = allCommunityBoardList.getContent();
-        long totalCount = allCommunityBoardList.getTotalElements();
-
-        return new PageResponseDto<>(page, totalCount, content);
-    }
 
     //커뮤니티 (제목)검색
 
@@ -142,22 +113,42 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         return null;
     }
 
+    // (어드민) 커뮤니티 수정
+    @Override
+    @Transactional
+    public void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto) {
+        CommunityBoard commBoard = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+        List<Hashtag> newTagList = addHashTag(requestDto.getTagList());
 
+        commBoard.updateBoard(requestDto.getTitle(), requestDto.getContents(), newTagList);
+        // boardRepository.saveAndFlush(communityBoard);
+    }
+
+    // (어드민) 커뮤니티 삭제
+    @Override
+    @Transactional
+    public void adminDeleteCommunityBoard(Long boardId) {
+        CommunityBoard commBoard = boardRepository.findById(boardId)
+                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+        boardRepository.delete(commBoard);
+    }
 
 
     //새로운 태그 리스트 생성하기 => 커뮤니티 생성, 수정 시 필요함
-    public List<Hashtag> addHashTag(List tagDtoList) {
+    public List<Hashtag> addHashTag(List<Long> tagIdList) {
 
         List<Hashtag> tagList = new ArrayList<>();
 
         for (int i = 0; i < tagList.size(); i++) {
             Hashtag hashtag = hashtagRepository.findByName(
-                    tagDtoList.get(i).toString())
+                    tagIdList.get(i).toString())
                 .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
             tagList.add(hashtag);
         }
         return tagList;
     }
+
 
 }
 
