@@ -43,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             (response).addHeader("Access-Control-Allow-Origin", requestOrigin);
             (response).addHeader("Access-Control-Allow-Headers", "*");
             (response).addHeader("Access-Control-Allow-Methods",
-                "GET, OPTIONS, HEAD, PUT, POST, DELETE");
+                "GET, OPTIONS, HEAD, PUT, POST, DELETE, PATCH");
 
             HttpServletResponse resp = response;
 
