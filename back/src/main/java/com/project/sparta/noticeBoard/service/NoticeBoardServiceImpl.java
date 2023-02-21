@@ -35,7 +35,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     public void createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // 0: SERVICE, 1: UPDATE, 2: EVENT
         NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
-            requestDto.getContents(), requestDto.getCategory());
+                requestDto.getContents(), requestDto.getCategory());
         noticeBoardRepository.saveAndFlush(noticeBoard);
     }
 
@@ -43,7 +43,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     @Override
     public void deleteNoticeBoard(Long id, User user) {
         NoticeBoard noticeBoard = noticeBoardRepository.findByIdAndUser_NickName(id,
-            user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+                user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         noticeBoardRepository.delete(noticeBoard);
     }
 
@@ -51,9 +51,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     @Override
     public void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user) {
         NoticeBoard noticeBoard = noticeBoardRepository.findByIdAndUser_NickName(id,
-            user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+                user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         noticeBoard.update(requestDto.getTitle(), requestDto.getContents(),
-            requestDto.getCategory());
+                requestDto.getCategory());
     }
 
     //공지글 단건 조회
@@ -61,18 +61,18 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     public NoticeBoardResponseDto getNoticeBoard(Long id, User user) {
 
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-            .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+                .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
         return new NoticeBoardResponseDto(noticeBoard.getId(), noticeBoard.getUser().getNickName(),
-            noticeBoard.getTitle(),
-            noticeBoard.getContents(), noticeBoard.getCategory(), noticeBoard.getModifiedAt(),
-            noticeBoard.getCreateAt());
+                noticeBoard.getTitle(),
+                noticeBoard.getContents(), noticeBoard.getCategory(), noticeBoard.getModifiedAt(),
+                noticeBoard.getCreateAt());
     }
 
     //공지글 전체조회
     @Override
     public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size,
-        String category, User user) {
+                                                                           String category, User user) {
         long total;
         List<NoticeBoardResponseDto> content = new ArrayList<>();
         if (!category.isEmpty()) {
@@ -89,7 +89,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
             // 1. 페이징으로 요청해서 조회
             //        PageRequest pageRequest = PageRequest.of(page, size);
             QueryResults<NoticeBoardResponseDto> noticeBoardList = noticeBoardRepository.findAllByCategory(
-                categoryEnum, page, size);
+                    categoryEnum, page, size);
 
             // 2. 데이터, 전체 개수 추출
 //            Page<NoticeBoardResponseDto> allList = results.map(noticeBoard -> new NoticeBoardResponseDto(noticeBoard.getId(), noticeBoard.getUser().getNickName(), noticeBoard.getTitle(),
@@ -108,17 +108,17 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
             //        .map(CommunityBoardResponseDto::new)
             //        .collect(Collectors.toList());
             content = boardList.getContent()
-                .stream()
-                .map((obj) -> new NoticeBoardResponseDto(
-                    obj.getId(),
-                    obj.getUser().getNickName(),
-                    obj.getTitle(),
-                    obj.getContents(),
-                    obj.getCategory(),
-                    obj.getCreateAt(),
-                    obj.getModifiedAt()
-                ))
-                .collect(Collectors.toList());
+                    .stream()
+                    .map((obj) -> new NoticeBoardResponseDto(
+                            obj.getId(),
+                            obj.getUser().getNickName(),
+                            obj.getTitle(),
+                            obj.getContents(),
+                            obj.getCategory(),
+                            obj.getCreateAt(),
+                            obj.getModifiedAt()
+                    ))
+                    .collect(Collectors.toList());
 //            Long id, String username, String title, String contents, NoticeCategoryEnum category, LocalDateTime
 //            createdAt, LocalDateTime modifiedAt
         }
