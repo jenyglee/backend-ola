@@ -14,50 +14,56 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"라이크 API"})
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/like")
 public class LikeController {
-
     private final BoardLikeService boardLikeService;
     private final CommentLikeService commentLikeService;
     private final RecommendCourseLikeService recommendCourseLikeService;
 
-    //보드 라이크
+    //커뮤니티 좋아요
     @ApiOperation(value = "보드 라이크",response = Join.class)
-    @PostMapping("/board_like")
+    @PostMapping("/communities")
     @ResponseStatus(HttpStatus.OK)
     public void likeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        boardLikeService.likeBoard(id,user);
+        boardLikeService.likeBoard(id, user);
     }
+
+    //커뮤니티 좋아요 해제
     @ApiOperation(value = "보드 언라이크",response = Join.class)
-    @DeleteMapping("/board_like")
+    @DeleteMapping("/communities")
     public void unLikeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        boardLikeService.unLikeBoard(id,user);
+        boardLikeService.unLikeBoard(id, user);
     }
 
-    //댓글 라이크
-    @PostMapping("/comment_like")
+    //댓글 좋아요
+    @PostMapping("/comments/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public void likeComment(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void likeComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        commentLikeService.likeComment(id,user);
-    }
-    @DeleteMapping("/comment_like")
-    public void unLikeComment(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        User user = userDetails.getUser();
-        commentLikeService.unLikeComment(id,user);
+        commentLikeService.likeComment(commentId, user);
     }
 
-    //코스추천 라이크
-    @PostMapping("/recommend_like")
-    @ResponseStatus(HttpStatus.OK)
-    public void likeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    //댓글 좋아요 해제
+    @DeleteMapping("/comments/{commentId}")
+    public void unLikeComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        recommendCourseLikeService.likeRecommendCourse(id,user);
+        commentLikeService.unLikeComment(commentId, user);
     }
-    @DeleteMapping("/recommend_like")
-    public void unlikeRecommendCourse(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+    //코스추천 좋아요
+    @PostMapping("/recommends/{recommendId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void likeRecommendCourse(@PathVariable Long recommendId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        recommendCourseLikeService.unLikeRecommendCourse(id,user);
+        recommendCourseLikeService.likeRecommendCourse(recommendId, user);
+    }
+
+    //코스추천 좋아요 해제
+    @DeleteMapping("/recommends/{recommendId}")
+    public void unlikeRecommendCourse(@PathVariable Long recommendId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user = userDetails.getUser();
+        recommendCourseLikeService.unLikeRecommendCourse(recommendId, user);
     }
 }

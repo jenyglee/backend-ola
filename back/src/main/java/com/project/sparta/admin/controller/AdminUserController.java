@@ -22,7 +22,6 @@ import java.util.List;
 public class AdminUserController {
     private final UserService userService;
 
-    // TODO 어드민 User API 제작
     // 회원 전체 조회
     @ApiOperation(value = "유저 리스트 조회",response = Join.class)
     @GetMapping("/users")

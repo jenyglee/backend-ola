@@ -19,13 +19,15 @@ public class CommunityBoardRequestDto {
     private int chatMemCnt;
 
     private List<Long> tagList;
+    private List<String> imgList;
 
     @Builder
-    public CommunityBoardRequestDto(String contents, String title, String chatStatus, int chatMemCnt, List<Long> tagList) {
+    public CommunityBoardRequestDto(String contents, String title, String chatStatus, int chatMemCnt, List<Long> tagList, List<String> imgList) {
         this.contents = contents;
         this.title = title;
         this.chatStatus = chatStatus;
         this.chatMemCnt = chatMemCnt;
         this.tagList = tagList;
+        this.imgList = imgList;
     }
 }

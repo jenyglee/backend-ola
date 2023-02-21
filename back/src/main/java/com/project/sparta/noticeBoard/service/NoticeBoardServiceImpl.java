@@ -110,9 +110,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
             Page<NoticeBoard> boardList = noticeBoardRepository.findAll(pageRequest);
             total = boardList.getTotalElements();
             //    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
-            //    List<CommunityBoardResponseDto> CommunityBoardResponseDtoList = boards.getContent()
+            //    List<CommunityBoardOneResponseDto> CommunityBoardOneResponseDtoList = boards.getContent()
             //        .stream()
-            //        .map(CommunityBoardResponseDto::new)
+            //        .map(CommunityBoardOneResponseDto::new)
             //        .collect(Collectors.toList());
             content = boardList.getContent()
                     .stream()
