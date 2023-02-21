@@ -230,3 +230,4 @@ gradle-app.setting
 *.idea/
 application.properties
 application.yml
+application-.yml
