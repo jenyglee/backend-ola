@@ -161,7 +161,72 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .limit(pageable.getPageSize())
             .fetch();
 
-        return new PageImpl<>(boards, pageable, boards.size());
+        // 전체 개수 추출
+        long total = queryFactory
+            .select(Projections.constructor(CommunityBoardAllResponseDto.class,
+                    communityBoard.id,
+                    communityBoard.user.nickName,
+                    communityBoard.title,
+                    ExpressionUtils.as(
+                        JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                            .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
+                    Projections.list(communityBoardImg.url)
+                )
+            )
+            .from(communityBoard)
+            .leftJoin(communityBoardImg)
+            .on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
+            .where(
+                tileEq(condition.getTitle()),
+                contentsEq(condition.getContents()),
+                nicknameEq(condition.getNickname())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchCount();
+
+        return new PageImpl<>(boards, pageable, total);
+    }
+
+    @Override
+    public Page<CommunityBoardAllResponseDto> communityMyList(Pageable pageable, Long userId) {
+        List<CommunityBoardAllResponseDto> boards = queryFactory
+            .select(Projections.constructor(CommunityBoardAllResponseDto.class,
+                    communityBoard.id,
+                    communityBoard.user.nickName,
+                    communityBoard.title,
+                    ExpressionUtils.as(
+                        JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                            .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
+                    Projections.list(communityBoardImg.url)
+                )
+            )
+            .from(communityBoard)
+            .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
+            .where(communityBoard.user.Id.eq(userId))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        // 전체 개수 추출
+        long total = queryFactory
+            .select(Projections.constructor(CommunityBoardAllResponseDto.class,
+                    communityBoard.id,
+                    communityBoard.user.nickName,
+                    communityBoard.title,
+                    ExpressionUtils.as(
+                        JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                            .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
+                    Projections.list(communityBoardImg.url)
+                )
+            )
+            .from(communityBoard)
+            .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
+            .where(communityBoard.user.Id.eq(userId))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchCount();
+        return new PageImpl<>(boards, pageable, total);
     }
 
     private Predicate tileEq(String title) {
