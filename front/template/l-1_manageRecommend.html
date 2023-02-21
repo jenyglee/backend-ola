@@ -238,9 +238,9 @@
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0)">1</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1)">2</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2)">3</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -257,12 +257,12 @@
 <script>
 
   $(document).ready(function () {
-    getRecommendList(0,"");
+    getRecommendList(0);
   });
   function setRecommendId(id){
     localStorage.setItem("recommendId", id);
   }
-  function getRecommendList(page, categoryStr) {
+  function getRecommendList(page) {
     // 1. 데이터 초기화를 해야됨.
     $('tbody').empty();
     const accessToken = localStorage.getItem("accessToken");
@@ -270,7 +270,7 @@
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/admin/boards/recommends?page=0&size=10&score=0&season=&altitude=0&region=&orderByLike=all",
+      url: "http://localhost:8080/admin/boards/recommends?page="+page+"&size=10&score=0&season=&altitude=0&region=&orderByLike=all",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },

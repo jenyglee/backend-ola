@@ -237,7 +237,7 @@
             <div>
                 <button type="button" id="btn_1" onclick="deleteNotice()">삭제</button>
                 <button type="button" id="btn_2" onclick="updateNotice()">수정</button>
-                <button type="button" id="btn_3">목록</button>
+                <button type="button" id="btn_3" onclick="listNotice()">목록</button>
             </div>
         </section>
     </div>
@@ -248,6 +248,10 @@
         getNotice();
         category = "0";
     });
+
+    function listNotice(){
+        window.location.href="n-1_manageNotice.html"
+    }
 
     function getNotice(){
         const id = localStorage.getItem("noticeId")
