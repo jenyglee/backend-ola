@@ -81,24 +81,36 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto, User user) {
-//        CommunityBoard commBoard = boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
-//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-////        List<Hashtag> newTagList = addHashTag(requestDto.getTagList());
-//        List<CommunityTag> communityTagList = new ArrayList<>();
-//        for (Long tagNum : requestDto.getTagList()) {
-//            Hashtag hashtag = hashtagRepository.findById(tagNum)
-//                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-//            CommunityTag communityTag = new CommunityTag(commBoard, hashtag);
-//            communityTagRepository.save(communityTag);
-//            communityTagList.add(communityTag);
-//        }
-//
-//        CommunityBoard communityBoard = new CommunityBoard();
-//
-//
-//
-//        communityBoard.updateBoard(requestDto.getTitle(), requestDto.getContents(), communityTagList);
-//        boardRepository.saveAndFlush(communityBoard);
+        CommunityBoard community = boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+
+        // 커뮤니티에 있는 태그를 전부 지우고 새로 저장한다.
+        communityTagRepository.deleteAllByCommunityBoard_Id(boardId);
+        List<CommunityTag> communityTags = new ArrayList<>();
+        for (Long tag : requestDto.getTagList()) {
+            Hashtag hashtag = hashtagRepository.findById(tag)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+            CommunityTag communityTag = new CommunityTag(community, hashtag);
+            communityTagRepository.save(communityTag);
+            communityTags.add(communityTag);
+        }
+
+        // 커뮤니티에 있는 이미지를 전부 지우고 새로 저장한다.
+        communityBoardImgRepository.deleteAllByCommunityBoard_Id(boardId);
+        List<CommunityBoardImg> communityImgList = new ArrayList<>();
+        for (String imgUrl : requestDto.getImgList()) {
+            CommunityBoardImg communityImg = new CommunityBoardImg(imgUrl, community);
+            communityBoardImgRepository.save(communityImg);
+            communityImgList.add(communityImg);
+        }
+
+        community.updateBoard(
+            requestDto.getTitle(),
+            requestDto.getContents(),
+            communityTags,
+            communityImgList,
+            requestDto.getChatStatus()
+        );
     }
 
     //커뮤니티 게시글 삭제
@@ -124,31 +136,21 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page,
         int size, String titleCond, String contentsCond, String nicknameCond) {
-
+        // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
             contentsCond, nicknameCond);
 
+        // 2. 검색조건을 포함하여 전체조회
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.communityAllList(
             searchCondition, pageRequest);
 
+        //3. 결과를 반환
         List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
-        System.out.println("content.size() = " + content.size());
-//
         long totalCount = allCommunityBoardList.getTotalElements();
 
         return new PageResponseDto<>(page, totalCount, content);
-//        return null;
-        //        List<CommunityBoardOneResponseDto> content = allCommunityBoardList.getContent();
-        //        long totalCount = allCommunityBoardList.getTotalElements();
     }
-
-    //커뮤니티 (제목)검색
-
-    //커뮤니티 (내용)검색
-
-    //커뮤니티 (작성자)검색
-
 
     @Override
     @Transactional
@@ -161,19 +163,36 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto) {
-//        CommunityBoard commBoard = boardRepository.findById(boardId)
-//                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-////        List<Hashtag> newTagList = addHashTag(requestDto.getTagList());
-//        List<CommunityTag> communityTagList = new ArrayList<>();
-//        for (Long tagNum : requestDto.getTagList()) {
-//            Hashtag hashtag = hashtagRepository.findById(tagNum)
-//                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-//            CommunityTag communityTag = new CommunityTag(commBoard, hashtag);
-//            communityTagRepository.save(communityTag);
-//            communityTagList.add(communityTag);
-//        }
-//        commBoard.updateBoard(requestDto.getTitle(), requestDto.getContents(), communityTagList);
-//        // boardRepository.saveAndFlush(communityBoard);
+        CommunityBoard community = boardRepository.findById(boardId)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+
+        // 커뮤니티에 있는 태그를 전부 지우고 새로 저장한다.
+        communityTagRepository.deleteAllByCommunityBoard_Id(boardId);
+        List<CommunityTag> communityTags = new ArrayList<>();
+        for (Long tag : requestDto.getTagList()) {
+            Hashtag hashtag = hashtagRepository.findById(tag)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+            CommunityTag communityTag = new CommunityTag(community, hashtag);
+            communityTagRepository.save(communityTag);
+            communityTags.add(communityTag);
+        }
+
+        // 커뮤니티에 있는 이미지를 전부 지우고 새로 저장한다.
+        communityBoardImgRepository.deleteAllByCommunityBoard_Id(boardId);
+        List<CommunityBoardImg> communityImgList = new ArrayList<>();
+        for (String imgUrl : requestDto.getImgList()) {
+            CommunityBoardImg communityImg = new CommunityBoardImg(imgUrl, community);
+            communityBoardImgRepository.save(communityImg);
+            communityImgList.add(communityImg);
+        }
+
+        community.updateBoard(
+            requestDto.getTitle(),
+            requestDto.getContents(),
+            communityTags,
+            communityImgList,
+            requestDto.getChatStatus()
+        );
     }
 
     // (어드민) 커뮤니티 삭제
@@ -184,23 +203,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
         boardRepository.delete(commBoard);
     }
-
-
-    //새로운 태그 리스트 생성하기 => 커뮤니티 생성, 수정 시 필요함
-    public List<Hashtag> addHashTag(List<Long> tagIdList) {
-
-        List<Hashtag> tagList = new ArrayList<>();
-
-        for (int i = 0; i < tagList.size(); i++) {
-            Hashtag hashtag = hashtagRepository.findByName(
-                    tagIdList.get(i).toString())
-                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-            tagList.add(hashtag);
-        }
-        return tagList;
-    }
-
-
 }
 
 //주성님의 고민의 흔적들..

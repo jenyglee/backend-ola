@@ -68,16 +68,17 @@ public class CommunityBoard extends Timestamped {
         this.tagList = tagList;
     }
 
-    public void updateCommunityImg(List<CommunityBoardImg> imgList){
+    public void updateCommunityImg(List<CommunityBoardImg> imgList) {
         this.imgList = imgList;
     }
 
-    public void updateBoard(String title, String contents
-//        List<CommunityTag> tagList
-    ) {
+    public void updateBoard(String title, String contents, List<CommunityTag> tagList,
+        List<CommunityBoardImg> imgList, String chatStatus) {
         this.title = title;
         this.contents = contents;
-//        this.tagList = tagList;
+        this.tagList = tagList;
+        this.imgList = imgList;
+        this.chatStatus = chatStatus;
     }
 
 }
