@@ -36,6 +36,7 @@ public class AdminServiceImpl implements AdminService {
 //        if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
 //            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
 //        }
+
         User admin = User.adminBuilder()
             .email(adminRequestSignupDto.getEmail())
             .password(encoder.encode(adminRequestSignupDto.getPassword()))
