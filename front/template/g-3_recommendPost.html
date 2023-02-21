@@ -405,10 +405,11 @@
           // dataType: "text",
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
-            xlr.setRequestHeader(
+            var token = xlr.setRequestHeader(
               "Authorization",
               localStorage.getItem("accessToken")
             );
+            console.log(token);
           },
           data: JSON.stringify({
             score: $("#recommendBoardScore").val(),

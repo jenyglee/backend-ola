@@ -27,7 +27,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final RedisTemplate<String, String> redisTemplate;
 
     private static final String[] allowedOrigins = {
-        "http://localhost:8080", "http://localhost:63342",
+        "http://localhost:8080", "http://localhost:63342","http://127.0.0.1:5500"
     };
 
 
@@ -98,5 +98,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
         return false;
     }
+
 }
 

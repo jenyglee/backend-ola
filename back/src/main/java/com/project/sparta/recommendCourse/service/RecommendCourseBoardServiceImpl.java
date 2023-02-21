@@ -78,6 +78,8 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //            .images(imgUrlList)
             .build();
 
+        //todo recommendBoard엔티티에 imagesList 필드 추가해야함.
+
         //이미지에 포스트 담아주고
 //        for (RecommendCourseImg image:requestPostDto.getImgList()) {
 //            image.addPost(recommendCourseBoard);

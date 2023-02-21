@@ -481,6 +481,115 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
       }
+      // 단건 코스조회
+      function getRecommend() {
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+          type: "GET",
+          url: `http://localhost:8080/boards/recommend/${id}`,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          // data: {
+          //   name: "sasas",
+          // },
+          success: function (response) {
+            console.log("response : ", response);
+            const score = response.score;
+            const title = response.title;
+            const createDate = response.createDate.substring(0, 10);
+            const season = response.season;
+            const altitude = response.altitude;
+            const contents = response.contents;
+            const region = response.region;
+            const imgList = response.imgList;
+            const likeCount = response.likeCount;
+            const nickName = response.nickName;
+
+            for (let i = 0; i < response.data.length; i++) {
+              // 데이터 바인딩
+              const temp = `
+              <div class="wrap">
+          <div class="w_1">
+            <div class="w_1_1"></div>
+            <div class="score">
+              <b style="color: #f46b3f">${score}</b>
+            </div>
+            <div class="title">
+              <h3>${title}</h3>
+            </div>
+            <div class="season">
+              <b style="color: #f46b3f">${season}</b>
+              <b>이 최고의 계절</b>
+            </div>
+            <div class="above">
+              <b>해발 ${altitude}/b>
+            </div>
+            <div class="w_1_1"></div>
+          </div>
+          <div class="w_2">
+            <img src=${imgList[0]} />
+          </div>
+
+          <hr />
+          <div class="w_3">
+            <div class="address">
+              <b>주소 : &nbsp;</b>
+              <span
+                >${region}
+              </span>
+            </div>
+            <br />
+            <div>
+              <span>
+                ${contents}
+              </span>
+            </div>
+          </div>
+          <br />
+              `;
+              $("tbody").append(temp);
+            }
+          },
+        });
+      }
+
+      function updateNotice() {
+        const id = localStorage.getItem("noticeId");
+        // console.log("$(\"#title\").val() : ", $("#title").val())
+        // console.log("$(\"#contents\").val() : ", $("#contents").val())
+        // console.log("category : ", category)
+        // console.log("id : ", id)
+        $.ajax({
+          type: "PATCH",
+          url: `http://localhost:8080/admin/boards/notices/${id}`,
+          // dataType: "text",
+          contentType: "application/json; charset=utf-8",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          data: JSON.stringify({
+            title: $("#title").val(),
+            contents: $("#contents").val(),
+            category: category,
+          }),
+          success: function (response) {
+            alert("수정 완료");
+            window.location.href = "n-1_manageNotice.html";
+          },
+          error: function (xhr) {
+            console.log(
+              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+            );
+          },
+        });
+      }
 
       function deleteRecommend() {
         const id = localStorage.getItem("recommendId");
