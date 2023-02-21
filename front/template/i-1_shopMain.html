@@ -1,502 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <link rel="manifest" href="site.webmanifest"/>
-  <link rel="apple-touch-icon" href="icon.png"/>
-  <!-- Place favicon.ico in the root directory -->
+    <meta charset="UTF-8"/>
+    <link rel="manifest" href="site.webmanifest"/>
+    <link rel="apple-touch-icon" href="icon.png"/>
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css"/>
-  <link rel="stylesheet" href="../css/main.css"/>
-  <link rel="stylesheet" href="../css/reset.css"/>
-  <link rel="stylesheet" href="../css/menu.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <title>올라 쇼핑몰</title>
-  <style>
-    .container {
-      width: 1200px;
-      /*height: 1000px;*/
-      padding: 0;
-    }
+    <link rel="stylesheet" href="../css/normalize.css"/>
+    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="stylesheet" href="../css/reset.css"/>
+    <link rel="stylesheet" href="../css/menu.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="theme-color" content="#fafafa">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <title>올라 쇼핑몰</title>
+    <style>
+        .container {
+            width: 1200px;
+            /*height: 1000px;*/
+            padding: 0;
+        }
 
-    /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
-    .btn:active,
-    .btn:focus,
-    .btn:hover {
-      outline: none !important;
-      /* box-shadow:none !important; */
-      background-color: #f46b3f;
-      border: 1px solid #f46b3f;
-    }
-
-
-    /* 헤더 */
-
-    /* 라디오버튼 체크시 색 변경 */
-    .form-check-input:focus,
-    .form-check-input:checked {
-      background-color: #f46b3f;
-      border: 1px solid #f46b3f;
-      appearance: none;
-    }
-
-    /* 카테고리 정렬 */
-    .search-category-wrap > span {
-      width: 100px;
-    }
-
-    /* 브랜드 정렬 */
-    .brand-box-wrap > span {
-      width: 100px;
-    }
-
-    /* 가격정렬 */
+        /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+        .btn:active,
+        .btn:focus,
+        .btn:hover {
+            outline: none !important;
+            /* box-shadow:none !important; */
+            background-color: #f46b3f;
+            border: 1px solid #f46b3f;
+        }
 
 
-    .price-box-wrap > span {
-      width: 100px;
-    }
+        /* 헤더 */
 
-    /* 날짜정렬 */
+        /* 라디오버튼 체크시 색 변경 */
+        .form-check-input:focus,
+        .form-check-input:checked {
+            background-color: #f46b3f;
+            border: 1px solid #f46b3f;
+            appearance: none;
+        }
 
-    .registration-wrap > span {
-      width: 100px;
-    }
+        /* 카테고리 정렬 */
+        .search-category-wrap > span {
+            width: 100px;
+        }
 
-    /* 검색창 */
-    .form-control {
-      width: 600px;
-      height: 50px;
-      margin: 0 15px 0 0;
-    }
+        /* 브랜드 정렬 */
+        .brand-box-wrap > span {
+            width: 100px;
+        }
+
+        /* 가격정렬 */
 
 
-    /* 카드 */
+        .price-box-wrap > span {
+            width: 100px;
+        }
 
-    .card-wrap {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+        /* 날짜정렬 */
 
-    .wrap_4 {
-      margin-top: 40px;
-      height: 50px;
-      width: 1200px;
-    }
+        .registration-wrap > span {
+            width: 100px;
+        }
 
-    .page-link,
-    .page-link:hover,
-    .page-link:active,
-    .page-link:focus {
-      color: #F46B3F;
-    }
+        /* 검색창 */
+        .form-control {
+            width: 600px;
+            height: 50px;
+            margin: 0 15px 0 0;
+        }
 
-    .wrap_1_2 {
-      height: 38px;
-    }
-  </style>
+
+        /* 카드 */
+
+        .card-wrap {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .wrap_4 {
+            margin-top: 40px;
+            height: 50px;
+            width: 1200px;
+        }
+
+        .page-link,
+        .page-link:hover,
+        .page-link:active,
+        .page-link:focus {
+            color: #F46B3F;
+        }
+
+        .wrap_1_2 {
+            height: 38px;
+        }
+    </style>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-  </div>
-  <div class="item-list">
-    <a href="./g-1_recommend.html">코스추천</a>
-    <a href="h-1_communityMain.html">커뮤니티</a>
-    <a href="./i-1_shopMain.html" style="font-weight: bold; color: #F46B3F">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png"/>
-      </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput1"
-                   placeholder="닉네임 검색">
-          </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn">검색</button>
-          </div>
+    <div class="bg-line"></div>
+    <div class="logo-wrap">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+    </div>
+    <div class="item-list">
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html" style="font-weight: bold; color: #F46B3F">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
+    </div>
+    <div class="right">
+        <div class="friend">
+            <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                <img class="img" src="./../static/img/icon_friends.png"/>
+            </div>
+            <div class="friend-dropbox">
+                <div class="search-area">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                               placeholder="닉네임 검색">
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn btn-primary search-btn">검색</button>
+                    </div>
+                </div>
+                <ul class="friend-list">
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">1:1 채팅</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">1:1 채팅</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">1:1 채팅</button>
+                        </div>
+                    </li>
+                </ul>
+                <div class="line"></div>
+                <p class="recommend-title">추천 친구</p>
+                <ul class="friend-list">
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left">
+                            <div class="img-wrap">
+                                <img class="img" src="./../static/img/icon_profile_default.png"/>
+                            </div>
+                            <p class="name">오메가오메오메</p>
+                            <button type="button" class="btn btn-link">친구 추가</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+        <div class="bell">
+            <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                <img class="img" src="./../static/img/icon_bell.png"/>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+            <div class="bell-dropbox">
+                <p>알람</p>
+                <ul>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+                </ul>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+        </div>
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
+            <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
-          </li>
-        </ul>
-        <div class="line"></div>
-        <p class="recommend-title">추천 친구</p>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-        </ul>
-      </div>
+            <p class="text">나와바리나와바님</p>
+        </a>
     </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-        </ul>
-      </div>
-    </div>
-    <a class="my-profile-wrap" href="./f-1_myPage.html">
-      <div class="img-wrap">
-        <img class="img" src="./../static/img/icon_profile_default.png "/>
-      </div>
-      <p class="text">나와바리나와바님</p>
-    </a>
-  </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
 <main class="container">
-  <section>
-    <!--   라디오박스 헤더   -->
-    <div class="wrap_1_2" style="margin-top: 100px;">
-      <span><b>카테고리</b> &nbsp;&nbsp;</span>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-               id="inlineRadioCategory1"
-               value="all" checked>
-        <label class="form-check-label" for="inlineRadioCategory1">전체</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-               id="inlineRadioCategory1-1" value="shoes">
-        <label class="form-check-label" for="inlineRadioCategory1-1">등산화</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-               id="inlineRadioCategory2"
-               value="clothes">
-        <label class="form-check-label" for="inlineRadioCategory2">등산복</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-               id="inlineRadioCategory3"
-               value="bag">
-        <label class="form-check-label" for="inlineRadioCategory3">등산배낭</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-               id="inlineRadioCategory4"
-               value="product">
-        <label class="form-check-label" for="inlineRadioCategory4">등산용품</label>
-      </div>
+    <section>
+        <!--   라디오박스 헤더   -->
+        <div class="wrap_1_2" style="margin-top: 100px;">
+            <span><b>카테고리</b> &nbsp;&nbsp;</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                       id="inlineRadioCategory1"
+                       value="all" checked>
+                <label class="form-check-label" for="inlineRadioCategory1">전체</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                       id="inlineRadioCategory1-1" value="shoes">
+                <label class="form-check-label" for="inlineRadioCategory1-1">등산화</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                       id="inlineRadioCategory2"
+                       value="clothes">
+                <label class="form-check-label" for="inlineRadioCategory2">등산복</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                       id="inlineRadioCategory3"
+                       value="bag">
+                <label class="form-check-label" for="inlineRadioCategory3">등산배낭</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                       id="inlineRadioCategory4"
+                       value="product">
+                <label class="form-check-label" for="inlineRadioCategory4">등산용품</label>
+            </div>
+        </div>
+        <div class="wrap_1_2">
+            <span><b>브랜드</b> &nbsp;&nbsp;</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand5"
+                       value="all" checked>
+                <label class="form-check-label" for="inlineRadioBrand5">전체</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand6" value="nepa">
+                <label class="form-check-label" for="inlineRadioBrand6">네파</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand7"
+                       value="blackyak">
+                <label class="form-check-label" for="inlineRadioBrand7">블랙야크</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand8"
+                       value="northpace">
+                <label class="form-check-label" for="inlineRadioBrand8">노스페이스</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand9"
+                       value="millet">
+                <label class="form-check-label" for="inlineRadioBrand9">밀레</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
+                       id="inlineRadioBrand10"
+                       value="descente">
+                <label class="form-check-label" for="inlineRadioBrand10">데상트</label>
+            </div>
+        </div>
+        <div class="wrap_1_2">
+            <span><b>가격순</b> &nbsp;&nbsp;</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
+                       id="inlineRadioPrice11"
+                       value="asc" checked>
+                <label class="form-check-label" for="inlineRadioPrice11">최고가순</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
+                       id="inlineRadioPrice12" value="desc">
+                <label class="form-check-label" for="inlineRadioPrice12">최저가순</label>
+            </div>
+        </div>
+        <div class="wrap_1_2">
+            <span><b>등록순</b> &nbsp;&nbsp;</span>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
+                       id="inlineRadioRegist13"
+                       value="asc" checked>
+                <label class="form-check-label" for="inlineRadioRegist13">최신순</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
+                       id="inlineRadioRegist14" value="desc">
+                <label class="form-check-label" for="inlineRadioRegist14">마지막순</label>
+            </div>
+        </div>
+        <div style="display: flex; margin-top: 20px; margin-bottom: 50px;">
+            <input type="text" class="form-control" id="Products" placeholder="입력"/>
+            <button type="button" class="btn search-btn"
+                    style="width: 170px; background-color: #F46B3F; color:#ffffff" onclick="search()">검색
+            </button>
+        </div>
+    </section>
+<!--    <section class="card-wrap">-->
+<!--        <div class="article-wrap"-->
+<!--             style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <a href="./i-2_shopDetails.html" class="article"-->
+<!--               style="text-decoration: none; color: #000000">-->
+<!--                <div class="img-wrap"-->
+<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
+<!--                </div>-->
+<!--                <div class="text-wrap" style="font-size: 14px;">-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
+<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!--   페이지네이션/작성버튼     -->
+    <div class="wrap_4" style="position: relative; margin-bottom: 100px;">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <div class="wrap_1_2">
-      <span><b>브랜드</b> &nbsp;&nbsp;</span>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand5"
-               value="all" checked>
-        <label class="form-check-label" for="inlineRadioBrand5">전체</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand6" value="nepa">
-        <label class="form-check-label" for="inlineRadioBrand6">네파</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand7"
-               value="blackyak">
-        <label class="form-check-label" for="inlineRadioBrand7">블랙야크</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand8"
-               value="northpace">
-        <label class="form-check-label" for="inlineRadioBrand8">노스페이스</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand9"
-               value="millet">
-        <label class="form-check-label" for="inlineRadioBrand9">밀레</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-               id="inlineRadioBrand10"
-               value="descente">
-        <label class="form-check-label" for="inlineRadioBrand10">데상트</label>
-      </div>
-    </div>
-    <div class="wrap_1_2">
-      <span><b>가격순</b> &nbsp;&nbsp;</span>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
-               id="inlineRadioPrice11"
-               value="asc" checked>
-        <label class="form-check-label" for="inlineRadioPrice11">최고가순</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
-               id="inlineRadioPrice12" value="desc">
-        <label class="form-check-label" for="inlineRadioPrice12">최저가순</label>
-      </div>
-    </div>
-    <div class="wrap_1_2">
-      <span><b>등록순</b> &nbsp;&nbsp;</span>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
-               id="inlineRadioRegist13"
-               value="asc" checked>
-        <label class="form-check-label" for="inlineRadioRegist13">최신순</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
-               id="inlineRadioRegist14" value="desc">
-        <label class="form-check-label" for="inlineRadioRegist14">마지막순</label>
-      </div>
-    </div>
-    <div style="display: flex; margin-top: 20px; margin-bottom: 50px;">
-      <input type="text" class="form-control" id="Products" placeholder="입력"/>
-      <button type="button" class="btn search-btn"
-              style="width: 170px; background-color: #F46B3F; color:#ffffff" onclick="search()">검색
-      </button>
-    </div>
-  </section>
-      <section class="card-wrap">
-          <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px" id="cardBox">
-          </div>
-      </section>
-  <!--   페이지네이션/작성버튼     -->
-  <div class="wrap_4" style="position: relative; margin-bottom: 100px;">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
 </main>
 <script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-  });
+    $(document).ready(function () {
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
+    });
 
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
-
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
-
-  function handleCreateGuestBook() {
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-      data: {
-        name: "sasas",
-      },
-      success: function (response) {
-        console.log(response)
-        alert(response.msc)
-        window.location.reload();
-      },
-    })
-  }
-
-  // <input className="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-  //        id="inlineRadioCategory1-1" value="shoes">
-  //     <label className="form-check-label" htmlFor="inlineRadioCategory1-1">등산화</label>
-  //
-
-  // const filter = $('input:radio[name="form-check-input"]').is(':checked'); // 체크 여부(checked)
-  // console.log(filter);
-  //
-  // const query = document.getElementById('inlineRadioCategory1-1').value;
-  // console.log(query);
-
-  // const accessToken = localStorage.getItem("accessToken");
-  //
-  // if (filter) {
-  //   $.ajax({
-  //     type: "GET",
-  //     url: "http://localhost:8080/product/search?query=" + query + "&limit=" + 10 + "&offset=" + 0,
-  //     beforeSend: function (xlr) {
-  //       xlr.setRequestHeader("Authorization", accessToken)
-  //     },
-  //     success: function (response) {
-  //       console.log(response);
-  //     }
-  //   });
-  //
-  // }
-
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  $(document).ready(function () {
-
-
-  });
-
-  function search() {
-    // 1. 검색창의 입력값을 가져온다.
-    const accessToken = localStorage.getItem("accessToken");
-    let products = $('#Products').val();
-
-    console.log(products);
-
-    // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
-    if (products == '') {
-      alert('검색어를 입력해주세요');
-      $('#Products').focus();
-      return;
+    function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
     }
-    // 3. GET /api/search?query=${query} 요청
 
-    $.ajax({
-      contentType : "application/json",
-      dataType	: "json",
-      type: 'GET',
-      url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=0`,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
+    function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+    }
 
-        console.log(response["data"]);
-        console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
-        console.log(response.data.length);
+    function handleCreateGuestBook() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
+            data: {
+                name: "sasas",
+            },
+            success: function (response) {
+                console.log(response)
+                alert(response.msc)
+                window.location.reload();
+            },
+        })
+    }
+
+    // <input className="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+    //        id="inlineRadioCategory1-1" value="shoes">
+    //     <label className="form-check-label" htmlFor="inlineRadioCategory1-1">등산화</label>
+    //
 
 
-        // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
-        for (let i = 0; i < response.data.length; i++) {
+    // const filter = $('input:radio[name="form-check-input"]').is(':checked'); // 체크 여부(checked)
+    // console.log(filter);
+    //
+    // const query = document.getElementById('inlineRadioCategory1-1').value;
+    // console.log(query);
 
-          let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
-                                <div className="img-wrap"
-                                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                    <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
-                                </div>
-                                <div className="text-wrap" style="font-size: 14px;">
-                                    <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-                                    <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
-                                </div>
-                            </a>`;
-          $('#cardBox').append(result);
+    // const accessToken = localStorage.getItem("accessToken");
+    //
+    // if (filter) {
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "http://localhost:8080/product/search?query=" + query + "&limit=" + 10 + "&offset=" + 0,
+    //     beforeSend: function (xlr) {
+    //       xlr.setRequestHeader("Authorization", accessToken)
+    //     },
+    //     success: function (response) {
+    //       console.log(response);
+    //     }
+    //   });
+    //
+    // }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    $(document).ready(function () {
+
+    });
+
+    function search() {
+        // 1. 검색창의 입력값을 가져온다.
+        let products = $('#Products').val();
+
+        console.log(products);
+
+        // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
+        if (products == '') {
+            alert('검색어를 입력해주세요');
+            $('#Products').focus();
+            return;
         }
-      }
-    })
+        // 3. GET /api/search?query=${query} 요청
 
-  }
+        $.ajax({
+            type: 'GET',
+            url: `http://localhost:8080/product/search?query=` + products + `&limit=100&offset=0`,
+            // beforeSend: function (xlr) {
+            //     xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+            // },
+            success: function (response) {
+
+                console.log(response["data"]);
+                console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
+
+                // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+                for (let i = 0; i < response.data.length; i++) {
+
+                    let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+    <div className="img-wrap"
+         style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+        <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+    </div>
+    <div className="text-wrap" style="font-size: 14px;">
+        <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+        <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+    </div>
+</a>`;
+                    $('#cardBox').append(result);
+                }
+            }
+        })
+
+    }
 </script>
 </body>
 </html>
