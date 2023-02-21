@@ -8,6 +8,8 @@ import com.project.sparta.noticeBoard.entity.NoticeBoard;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.user.entity.UserRoleEnum.Authority;
 import com.querydsl.core.QueryResults;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -34,26 +36,31 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     @Override
     public void createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // 0: SERVICE, 1: UPDATE, 2: EVENT
-        NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
+        if(user.getRole()== UserRoleEnum.ADMIN) {
+            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
                 requestDto.getContents(), requestDto.getCategory());
-        noticeBoardRepository.saveAndFlush(noticeBoard);
+            noticeBoardRepository.saveAndFlush(noticeBoard);
+        }
     }
 
     //공지글 삭제
     @Override
     public void deleteNoticeBoard(Long id, User user) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findByIdAndUser_NickName(id,
-                user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
-        noticeBoardRepository.delete(noticeBoard);
+        if(user.getRole()== UserRoleEnum.ADMIN) {
+            NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+            noticeBoardRepository.delete(noticeBoard);
+        }
     }
 
     //공지글 수정
     @Override
     public void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findByIdAndUser_NickName(id,
-                user.getNickName()).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
-        noticeBoard.update(requestDto.getTitle(), requestDto.getContents(),
-                requestDto.getCategory());
+        if(user.getRole()== UserRoleEnum.ADMIN)
+        {
+            NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+            noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
+        }
     }
 
     //공지글 단건 조회
