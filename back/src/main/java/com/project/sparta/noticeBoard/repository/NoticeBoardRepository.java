@@ -9,5 +9,4 @@ import java.util.Optional;
 
 public interface NoticeBoardRepository extends JpaRepository<NoticeBoard,Long>, NoticeBoardRepositoryCustom{
      Optional<NoticeBoard> findById(Long id);
-     Optional<NoticeBoard> findByIdAndUser_NickName(Long id, String nickName);
 }

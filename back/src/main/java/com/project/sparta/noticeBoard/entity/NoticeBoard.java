@@ -16,7 +16,7 @@ import static javax.persistence.FetchType.*;
 public class NoticeBoard extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="noticeBoard_id")
+    @Column(name ="notice_board_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)

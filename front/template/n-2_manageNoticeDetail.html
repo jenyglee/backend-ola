@@ -253,7 +253,7 @@
         const id = localStorage.getItem("noticeId")
         $.ajax({
             type: "GET",
-            url: `http://localhost:8080/boards/notices/${id}`,
+            url: `http://localhost:8080/admin/boards/notices/${id}`,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },

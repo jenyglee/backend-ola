@@ -26,11 +26,33 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final RedisTemplate<String, String> redisTemplate;
 
+    private static final String[] allowedOrigins = {
+        "http://localhost:8080", "http://localhost:63342",
+    };
+
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+        FilterChain filterChain) throws ServletException, IOException {
 
         String token = jwtUtil.resolveToken(request);
+
+        String requestOrigin = request.getHeader("Origin");
+        if (isAllowedOrigin(requestOrigin)) {
+            // Authorize the origin, all headers, and all methods
+            (response).addHeader("Access-Control-Allow-Origin", requestOrigin);
+            (response).addHeader("Access-Control-Allow-Headers", "*");
+            (response).addHeader("Access-Control-Allow-Methods",
+                "GET, OPTIONS, HEAD, PUT, POST, DELETE, PATCH");
+
+            HttpServletResponse resp = response;
+
+            // CORS handshake (pre-flight request)
+            if (request.getMethod().equals("OPTIONS")) {
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+                return;
+            }
+        }
 
         try {
             if (!Objects.isNull(token)) {
@@ -60,11 +82,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         response.setStatus(statusCode);
         response.setContentType("application/json");
         try {
-            String json = new ObjectMapper().writeValueAsString(new SecurityExceptionDto(statusCode, msg));
+            String json = new ObjectMapper().writeValueAsString(
+                new SecurityExceptionDto(statusCode, msg));
             response.getWriter().write(json);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
     }
 
+    private boolean isAllowedOrigin(String origin) {
+        for (String allowedOrigin : allowedOrigins) {
+            if (origin.equals(allowedOrigin)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+

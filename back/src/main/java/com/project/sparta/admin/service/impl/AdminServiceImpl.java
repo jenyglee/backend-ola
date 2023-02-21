@@ -33,9 +33,10 @@ public class AdminServiceImpl implements AdminService {
     // 어드민 회원가입
     @Override
     public void signup(AdminSignupDto adminRequestSignupDto) {
-        if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
-            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
-        }
+//        if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
+//            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
+//        }
+
         User admin = User.adminBuilder()
             .email(adminRequestSignupDto.getEmail())
             .password(encoder.encode(adminRequestSignupDto.getPassword()))
