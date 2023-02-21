@@ -1,725 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
+  <meta charset="UTF-8">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/menu.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="theme-color" content="#fafafa">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <title>Title</title>
-    <style>
-        p{
-            margin-bottom: 0;
-        }
-        .container{
-            width: 1200px;
-            padding: 0;
-        }
-        .w_1{
-            height: 80px;
-            width: 1200px;
-        }
-        .w_2{
-            width: 895px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .w_2 .b_1{
-            height: 60px;
-            display: flex;
-        }
-        .w_2 .b_1 .title,
-        .w_2 .b_1 .name,
-        .w_5 .b_7 .title{
-            font-size: 28px;
-        }
-        .w_2 .b_1 .name{
-            font-weight: bold;
-        }
-        .w_2 .b_2 .btn-link,
-        .w_5 .b_8 .btn-link{
-            color: #F46B3F;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .w_3{
-            margin-bottom: 50px;
-            width: 895px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap : 20px;
-        }
-        .w_3 .title{
-            font-size: 16px;
-            font-weight: normal;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .w_3 .count{
-            font-size: 26px;
-            font-weight: bold;
-            color: #ffffff;
-        }
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/menu.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <title>Title</title>
+  <style>
+    p {
+      margin-bottom: 0;
+    }
 
-        .w_3 .b_3,
-        .w_3 .b_4,
-        .w_3 .b_5,
-        .w_3 .b_6{
-            /*width: 290px;*/
-            width: 100%;
-            height: 120px;
-            display: inline-block;
-        }
-        .w_3 .b_3{
-            /*margin-left: 10px;*/
-            background-color: #F46B3F;
-            border-radius: 20px;
-            padding-top: 20px;
-            padding-left: 20px;
-        }
+    .container {
+      width: 1200px;
+      padding: 0;
+    }
 
-        .w_3 .b_4{
-            background-color: #93961E;
-            border-radius: 20px;
-            padding-top: 20px;
-            padding-left: 20px;
-        }
-        .w_3 .b_5{
-            background-color: #F4553F;
-            border-radius: 20px;
-            padding-top: 20px;
-            padding-left: 20px;
-        }
-        .w_3 .b_6{
-            background-color: #EB984C;
-            border-radius: 20px;
-            padding-top: 20px;
-            padding-left: 20px;
-        }
+    .w_1 {
+      height: 80px;
+      width: 1200px;
+    }
 
-        .w_4{
-            height: 10px;
-            width: 1200px;
-            line-height: 50px;
-        }
+    .w_2 {
+      width: 895px;
+      display: flex;
+      justify-content: space-between;
+    }
 
-        .w_5, .w_6{
-            height: 60px;
-            width: 1200px;
-            line-height: 50px;
-        }
+    .w_2 .b_1 {
+      height: 60px;
+      display: flex;
+    }
 
-        .w_5{
-            display: flex;
-            justify-content: space-between;
-            width: 895px;
-        }
+    .w_2 .b_1 .title,
+    .w_2 .b_1 .name,
+    .w_5 .b_7 .title {
+      font-size: 28px;
+    }
 
-        .w_5 .b_7{
-            line-height: 34px;
-        }
+    .w_2 .b_1 .name {
+      font-weight: bold;
+    }
 
-        .w_6 .b_9{
-            height: 60px;
-            width: 200px;
-            display: inline-block;
-            float: left;
-        }
-        .w_6 .b_15{
-            height: 60px;
-            width: 180px;
-            display: inline-block;
-            float: right;
-        }
+    .w_2 .b_2 .btn-link,
+    .w_5 .b_8 .btn-link {
+      color: #F46B3F;
+      font-weight: bold;
+      text-decoration: none;
+    }
 
-        .w_6 .b_10, .w_6 .b_11, .w_6 .b_12, .w_6 .b_13, .w_6 .b_14{
-            height: 50px;
-            width: 150px;
-            display: inline-block;
-            border-radius: 30px;
-            background-color: #F46B3F;
-            color : white;
-            text-align: center;
-            font-size: 18px;
-            margin-left: 10px;
-        }
-        .w_7{
-            height: 30px;
-            width: 1200px;
-            line-height: 50px;
-        }
+    .w_3 {
+      margin-bottom: 50px;
+      width: 895px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
 
-        .w_8{
-            height: 310px;
-            width: 1200px;
-            background-color: #FFFBF4;
-            margin-bottom: 100px;
-        }
+    .w_3 .title {
+      font-size: 16px;
+      font-weight: normal;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
 
-        .w_8 .b_16{
-            display: flex;
-            justify-content: space-between;
-        }
-        .w_8 .b_16 .b_16_1{
-            padding-left: 30px;
-            padding-top: 20px;
-            margin-bottom: 20px;
-        }
+    .w_3 .count {
+      font-size: 26px;
+      font-weight: bold;
+      color: #ffffff;
+    }
 
-        .w_8 .b_16 .b_16_2{
-            padding-top: 20px;
-            margin: 0;
-        }
-        .w_8 .b_16 p{
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .w_8 .b_17{
-            width: 1200px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-        }
+    .w_3 .b_3,
+    .w_3 .b_4,
+    .w_3 .b_5,
+    .w_3 .b_6 {
+      /*width: 290px;*/
+      width: 100%;
+      height: 120px;
+      display: inline-block;
+    }
+
+    .w_3 .b_3 {
+      /*margin-left: 10px;*/
+      background-color: #F46B3F;
+      border-radius: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+
+    .w_3 .b_4 {
+      background-color: #93961E;
+      border-radius: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+
+    .w_3 .b_5 {
+      background-color: #F4553F;
+      border-radius: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+
+    .w_3 .b_6 {
+      background-color: #EB984C;
+      border-radius: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+    }
+
+    .w_4 {
+      height: 10px;
+      width: 1200px;
+      line-height: 50px;
+    }
+
+    .w_5, .w_6 {
+      height: 60px;
+      width: 1200px;
+      line-height: 50px;
+    }
+
+    .w_5 {
+      display: flex;
+      justify-content: space-between;
+      width: 895px;
+    }
+
+    .w_5 .b_7 {
+      line-height: 34px;
+    }
+
+    .w_6 .b_9 {
+      height: 60px;
+      width: 200px;
+      display: inline-block;
+      float: left;
+    }
+
+    .w_6 .b_15 {
+      height: 60px;
+      width: 180px;
+      display: inline-block;
+      float: right;
+    }
+
+    .w_6 .b_10, .w_6 .b_11, .w_6 .b_12, .w_6 .b_13, .w_6 .b_14 {
+      height: 50px;
+      width: 150px;
+      display: inline-block;
+      border-radius: 30px;
+      background-color: #F46B3F;
+      color: white;
+      text-align: center;
+      font-size: 18px;
+      margin-left: 10px;
+    }
+
+    .w_7 {
+      height: 30px;
+      width: 1200px;
+      line-height: 50px;
+    }
+
+    .w_8 {
+      height: 310px;
+      width: 1200px;
+      background-color: #FFFBF4;
+      margin-bottom: 100px;
+    }
+
+    .w_8 .b_16 {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .w_8 .b_16 .b_16_1 {
+      padding-left: 30px;
+      padding-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .w_8 .b_16 .b_16_2 {
+      padding-top: 20px;
+      margin: 0;
+    }
+
+    .w_8 .b_16 p {
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .w_8 .b_17 {
+      width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
 
 
-        /*-1-*/
-        .w_8 .b_17 .b_17_1 .b_17_1_1{
-            width: 395px;
-            height: 55px;
-            display: inline-block;
-        }
+    /*-1-*/
+    .w_8 .b_17 .b_17_1 .b_17_1_1 {
+      width: 395px;
+      height: 55px;
+      display: inline-block;
+    }
 
-        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_profile{
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            border-radius: 100%;
-            margin-left: 30px;
-            display: inline-block;
-            overflow: hidden;
-            justify-content: center;
-            float: left;
-        }
-        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_nickName{
-            width: 230px;
-            height: 55px;
-            display: inline-block;
-            line-height: 40px;
-            padding-left: 10px;
-            float: left;
-            color: black;
-            font-weight: bolder;
-        }
-        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn{
-            width: 80px;
-            height: 55px;
-            display: inline-block;
-            line-height: 40px;
-        }
-        .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn a{
-            float: right;
-            text-decoration: none;
-            color: #666666;
-            display: inline-block;
-            margin-right: 20px;
-        }
-        /*-2-*/
-        .w_8 .b_17 .b_17_2 {
-            width: 395px;
-            height: 55px;
-            display: inline-block;
-        }
+    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_profile {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      border-radius: 100%;
+      margin-left: 30px;
+      display: inline-block;
+      overflow: hidden;
+      justify-content: center;
+      float: left;
+    }
 
-        .w_8 .b_17 .b_17_2 .b_17_1_profile{
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            border-radius: 100%;
-            margin-left: 30px;
-            display: inline-block;
-            overflow: hidden;
-            justify-content: center;
-            float: left;
-        }
-        .w_8 .b_17 .b_17_2 .b_17_1_nickName{
-            width: 230px;
-            height: 55px;
-            display: inline-block;
-            padding-left: 10px;
-            line-height: 40px;
-            float: left;
-            color: black;
-            font-weight: bolder;
-        }
-        .w_8 .b_17 .b_17_2 .b_17_1_addBtn{
-            width: 80px;
-            height: 55px;
-            display: inline-block;
-            line-height: 40px;
-        }
-        .w_8 .b_17 .b_17_2 .b_17_1_addBtn a{
-            float: right;
-            text-decoration: none;
-            color: #666666;
-            display: inline-block;
-            margin-right: 20px;
-        }
-        /*-3-*/
+    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_nickName {
+      width: 230px;
+      height: 55px;
+      display: inline-block;
+      line-height: 40px;
+      padding-left: 10px;
+      float: left;
+      color: black;
+      font-weight: bolder;
+    }
 
-        .w_8 .b_17 .b_17_3 .b_17_1_1{
-            width: 395px;
-            height: 55px;
-            display: inline-block;
-        }
+    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn {
+      width: 80px;
+      height: 55px;
+      display: inline-block;
+      line-height: 40px;
+    }
 
-        .w_8 .b_17 .b_17_3 .b_17_1_profile{
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            border-radius: 100%;
-            margin-left: 30px;
-            display: inline-block;
-            overflow: hidden;
-            justify-content: center;
-            float: left;
-        }
-        .w_8 .b_17 .b_17_3 .b_17_1_nickName{
-            width: 230px;
-            height: 55px;
-            display: inline-block;
-            padding-left: 10px;
-            line-height: 40px;
-            float: left;
-            color: black;
-            font-weight: bolder;
-        }
-        .w_8 .b_17 .b_17_3 .b_17_1_addBtn{
-            width: 80px;
-            height: 55px;
-            display: inline-block;
-            line-height: 40px;
-        }
-        .w_8 .b_17 .b_17_3 .b_17_1_addBtn a{
-            float: right;
-            text-decoration: none;
-            color: #666666;
-            display: inline-block;
-            margin-right: 20px;
-        }
-        #btn_1{
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 10px;
-            color: #F46B3F;
-            line-height: 40px;
-            float: right;
-            font-weight: bolder;
-        }
-        #btn_2{
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 10px;
-            color: #F46B3F;
-            line-height: 40px;
-            float: right;
-            font-weight: bolder;
-        }
-    </style>
+    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn a {
+      float: right;
+      text-decoration: none;
+      color: #666666;
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    /*-2-*/
+    .w_8 .b_17 .b_17_2 {
+      width: 395px;
+      height: 55px;
+      display: inline-block;
+    }
+
+    .w_8 .b_17 .b_17_2 .b_17_1_profile {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      border-radius: 100%;
+      margin-left: 30px;
+      display: inline-block;
+      overflow: hidden;
+      justify-content: center;
+      float: left;
+    }
+
+    .w_8 .b_17 .b_17_2 .b_17_1_nickName {
+      width: 230px;
+      height: 55px;
+      display: inline-block;
+      padding-left: 10px;
+      line-height: 40px;
+      float: left;
+      color: black;
+      font-weight: bolder;
+    }
+
+    .w_8 .b_17 .b_17_2 .b_17_1_addBtn {
+      width: 80px;
+      height: 55px;
+      display: inline-block;
+      line-height: 40px;
+    }
+
+    .w_8 .b_17 .b_17_2 .b_17_1_addBtn a {
+      float: right;
+      text-decoration: none;
+      color: #666666;
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    /*-3-*/
+
+    .w_8 .b_17 .b_17_3 .b_17_1_1 {
+      width: 395px;
+      height: 55px;
+      display: inline-block;
+    }
+
+    .w_8 .b_17 .b_17_3 .b_17_1_profile {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      border-radius: 100%;
+      margin-left: 30px;
+      display: inline-block;
+      overflow: hidden;
+      justify-content: center;
+      float: left;
+    }
+
+    .w_8 .b_17 .b_17_3 .b_17_1_nickName {
+      width: 230px;
+      height: 55px;
+      display: inline-block;
+      padding-left: 10px;
+      line-height: 40px;
+      float: left;
+      color: black;
+      font-weight: bolder;
+    }
+
+    .w_8 .b_17 .b_17_3 .b_17_1_addBtn {
+      width: 80px;
+      height: 55px;
+      display: inline-block;
+      line-height: 40px;
+    }
+
+    .w_8 .b_17 .b_17_3 .b_17_1_addBtn a {
+      float: right;
+      text-decoration: none;
+      color: #666666;
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    #btn_1 {
+      width: 180px;
+      height: 50px;
+      border: 1px solid #F46B3F;
+      background-color: white;
+      border-radius: 10px;
+      color: #F46B3F;
+      line-height: 40px;
+      float: right;
+      font-weight: bolder;
+    }
+
+    #btn_2 {
+      width: 180px;
+      height: 50px;
+      border: 1px solid #F46B3F;
+      background-color: white;
+      border-radius: 10px;
+      color: #F46B3F;
+      line-height: 40px;
+      float: right;
+      font-weight: bolder;
+    }
+  </style>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
-    <div class="bg-line"></div>
-    <div class="logo-wrap">
-        <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-    </div>
-    <div class="item-list">
-        <a href="./g-1_recommend.html">코스추천</a>
-        <a href="h-1_communityMain.html">커뮤니티</a>
-        <a href="./i-1_shopMain.html">쇼핑몰</a>
-        <a href="./j-1_noticeMain.html">공지사항</a>
-    </div>
-    <div class="right">
-        <div class="friend">
-            <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-                <img class="img" src="./../static/img/icon_friends.png"/>
-            </div>
-            <div class="friend-dropbox">
-                <div class="search-area">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary search-btn">검색</button>
-                    </div>
-                </div>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                </ul>
-                <div class="line"></div>
-                <p class="recommend-title">추천 친구</p>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+  <div class="bg-line"></div>
+  <div class="logo-wrap">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  </div>
+  <div class="item-list">
+    <a href="./g-1_recommend.html">코스추천</a>
+    <a href="h-1_communityMain.html">커뮤니티</a>
+    <a href="./i-1_shopMain.html">쇼핑몰</a>
+    <a href="./j-1_noticeMain.html">공지사항</a>
+  </div>
+  <div class="right">
+    <div class="friend">
+      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+        <img class="img" src="./../static/img/icon_friends.png"/>
+      </div>
+      <div class="friend-dropbox">
+        <div class="search-area">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색">
+          </div>
+          <div class="btn-wrap">
+            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()">검색
+            </button>
+          </div>
         </div>
-        <div class="bell">
-            <div class="icon-bell" onclick="handleToggleBellDropBox()">
-                <img class="img" src="./../static/img/icon_bell.png"/>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link" onclick="searchFriend()">1:1 채팅</button>
             </div>
-            <div class="bell-dropbox">
-                <p>알람</p>
-                <ul>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                </ul>
-            </div>
-        </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-            <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png "/>
-            </div>
-            <p class="text">나와바리나와바님</p>
-        </a>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class="bell">
+      <div class="icon-bell" onclick="handleToggleBellDropBox()">
+        <img class="img" src="./../static/img/icon_bell.png"/>
+      </div>
+      <div class="bell-dropbox">
+        <p>알람</p>
+        <ul>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+        </ul>
+      </div>
+    </div>
+    <a class="my-profile-wrap" href="./f-1_myPage.html">
+      <div class="img-wrap">
+        <img class="img" src="./../static/img/icon_profile_default.png "/>
+      </div>
+      <p class="text">나와바리나와바님</p>
+    </a>
+  </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
 <main class="container">
-    <section class="">
-        <div class="w_1"></div>
-        <div class="w_2">
-            <div class="b_1">
-                <p class="title">이 구역의 등산 매니아, </p>
-                <p class="name">이재원님</p>
-            </div>
-            <div class="b_2">
-                <button type="button" class="btn btn-link">등업조건 보기</button>
-            </div>
+  <section class="">
+    <div class="w_1"></div>
+    <div class="w_2">
+      <div class="b_1">
+        <p class="title">이 구역의 등산 매니아, </p>
+        <p class="name">이재원님</p>
+      </div>
+      <div class="b_2">
+        <button type="button" class="btn btn-link">등업조건 보기</button>
+      </div>
+    </div>
+    <div class="w_3">
+      <a href="f-2_myPageDetail.html">
+        <div class="b_3" style="cursor: pointer">
+          <p class="title">내가 쓴 커뮤니티</p>
+          <p class="count">18건 <span style="font-size: 14px;">></span></p>
         </div>
-        <div class="w_3">
-            <a href="f-2_myPageDetail.html">
-                <div class="b_3" style="cursor: pointer">
-                    <p class="title">내가 쓴 커뮤니티</p>
-                    <p class="count">18건 <span style="font-size: 14px;">></span></p>
-                </div>
-            </a>
-            <a href="f-2_myPageDetail.html">
-                <div class="b_4" style="cursor: pointer">
-                    <p class="title">내가 쓴 코스추천</p>
-                    <p class="count">18건 <span style="font-size: 14px;">></span></p>
-                </div>
-            </a>
-            <a href="f-2_myPageDetail.html">
-                <div class="b_5" style="cursor: pointer">
-                    <p class="title">내가 참여한 크루</p>
-                    <p class="count">6개 <span style="font-size: 14px;">></span></p>
-                </div>
-            </a>
-            <a href="f-2_myPageDetail.html">
-                <div class="b_6" style="cursor: pointer">
-                    <p class="title">내가 만든 크루</p>
-                    <p class="count">3개 <span style="font-size: 14px;">></span></p>
-                </div>
-            </a>
+      </a>
+      <a href="f-2_myPageDetail.html">
+        <div class="b_4" style="cursor: pointer">
+          <p class="title">내가 쓴 코스추천</p>
+          <p class="count">18건 <span style="font-size: 14px;">></span></p>
         </div>
-        <div class="w_4"></div>
-        <div class="w_5">
-            <div class="b_7">
-                <p class="title">나의 해시태그</p>
-                <span>나와 비슷한 해시태그를 가진 친구를 추천해드립니다.</span>
-            </div>
-            <div class="b_8">
-                <button type="button" class="btn btn-link">변경하기</button>
-            </div>
+      </a>
+      <a href="f-2_myPageDetail.html">
+        <div class="b_5" style="cursor: pointer">
+          <p class="title">내가 참여한 크루</p>
+          <p class="count">6개 <span style="font-size: 14px;">></span></p>
         </div>
-        <div class="w_7"></div>
-        <div class="w_6">
-            <div class="b_10">
-                <p>#등산데이트</p>
-            </div>
-            <div class="b_11">
-                <p>#등산입문자</p>
-            </div>
-            <div class="b_12">
-                <p>#가을산</p>
-            </div>
-            <div class="b_13">
-                <p>#30대40대</p>
-            </div>
-            <div class="b_14">
-                #주변맛집
-            </div>
-            <div class="b_15"></div>
+      </a>
+      <a href="f-2_myPageDetail.html">
+        <div class="b_6" style="cursor: pointer">
+          <p class="title">내가 만든 크루</p>
+          <p class="count">3개 <span style="font-size: 14px;">></span></p>
         </div>
-        <div class="w_7"></div>
-        <div class="w_8">
-            <div class="b_16">
-                <div class="b_16_1">
-                    <p>추천친구</p>
-                </div>
-                <div class="b_16_2" style=" display: flex; justify-content: space-between">
-                    <a href="#" style="text-decoration: none; display: flex">
-                        <div style="width: 30px; height: 30px; margin-right: 10px">
-                            <img style="width: 100%;" src="./../static/img/icon_recycle.png" alt="새로고침 아이콘"/>
-                        </div>
-                        <p style="color: #F46B3F; padding-right: 30px; line-height: 30px">새로고침</p>
-                    </a>
-                </div>
+      </a>
+    </div>
+    <div class="w_4"></div>
+    <div class="w_5">
+      <div class="b_7">
+        <p class="title">나의 해시태그</p>
+        <span>나와 비슷한 해시태그를 가진 친구를 추천해드립니다.</span>
+      </div>
+      <div class="b_8">
+        <button type="button" class="btn btn-link">변경하기</button>
+      </div>
+    </div>
+    <div class="w_7"></div>
+    <div class="w_6">
+      <div class="b_10">
+        <p>#등산데이트</p>
+      </div>
+      <div class="b_11">
+        <p>#등산입문자</p>
+      </div>
+      <div class="b_12">
+        <p>#가을산</p>
+      </div>
+      <div class="b_13">
+        <p>#30대40대</p>
+      </div>
+      <div class="b_14">
+        #주변맛집
+      </div>
+      <div class="b_15"></div>
+    </div>
+    <div class="w_7"></div>
+    <div class="w_8">
+      <div class="b_16">
+        <div class="b_16_1">
+          <p>추천친구</p>
+        </div>
+        <div class="b_16_2" style=" display: flex; justify-content: space-between">
+          <a href="#" style="text-decoration: none; display: flex">
+            <div style="width: 30px; height: 30px; margin-right: 10px">
+              <img style="width: 100%;" src="./../static/img/icon_recycle.png" alt="새로고침 아이콘"/>
             </div>
-            <div class="b_17">
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
-                <div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                    <div class="left" style="display: flex; align-items: center">
-                        <div class="img-wrap" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                            <img class="img" style="width: 100%" src="../static/img/profile.png" />
-                        </div>
-                        <p>내가바로등산왕</p>
-                    </div>
-                    <div class="right">
-                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
-                    </div>
-                </div>
+            <p style="color: #F46B3F; padding-right: 30px; line-height: 30px">새로고침</p>
+          </a>
+        </div>
+      </div>
+      <div class="b_17">
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link"
+                    style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가
+            </button>
+          </div>
+        </div>
+        <div class=""
+             style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+          <div class="left" style="display: flex; align-items: center">
+            <div class="img-wrap"
+                 style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+              <img class="img" style="width: 100%" src="../static/img/profile.png"/>
+            </div>
+            <p>내가바로등산왕</p>
+          </div>
+          <div class="right">
+            <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; font-weight: bold">친구추가</button>
+          </div>
+        </div>
 
-                </div>
-            </div>
-            <div class="b_18"></div>
-        </div>
-    </section>
+      </div>
+    </div>
+    <div class="b_18"></div>
+    </div>
+  </section>
 </main>
 <script>
-    $(document).ready(function () {
-        $(".friend-dropbox").hide();
-        $(".bell-dropbox").hide();
+  $(document).ready(function () {
+    $(".friend-dropbox").hide();
+    $(".bell-dropbox").hide();
+  });
+
+  function handleToggleBellDropBox() {
+    $(".bell-dropbox").toggle();
+    $(".friend-dropbox").hide();
+  }
+
+  function handleToggleFriendDropBox() {
+    $(".friend-dropbox").toggle();
+    $(".bell-dropbox").hide();
+  }
+
+  // <ul className="friend-list">
+  // <li>
+  //   <div className="left">
+  //     <div className="img-wrap">
+  //       <img className="img" src="./../static/img/icon_profile_default.png"/>
+  //     </div>
+  //     <p className="name">오메가오메오메</p>
+  //     <button type="button" className="btn btn-link" onClick="searchFriend()">1:1 채팅</button>
+  //   </div>
+  // </li>
+  // </ul>
+
+  function searchFriend() {
+
+    let targetNickname = document.getElementById('searchNickName').value;
+    const accessToken = localStorage.getItem("accessToken");
+
+    $.ajax({
+      type: "GET",
+      contentType : "application/json",
+      dataType	: "json",
+      url: "http://localhost:8080/friend?page=0&size=5&targetNickname=" + targetNickname,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success: function (response) {
+
+        $(".friend-list").empty();
+
+        for (let i = 0; i < response.data.length; i++) {
+          let image = response.data[0].friendImage;
+          let name = response.data[0].friendName;
+
+          let result = `<li>
+                        <div className="left">
+                          <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
+                            <img className="img" src="${image}"/>
+                          </div>
+                        </div>
+                        <p className="name" style="margin-left: 10px; margin-top: 2px">${name}</p>
+                      </li>`
+
+          $(".friend-list").append(result);
+        }
+      }
     });
-
-    function handleToggleBellDropBox() {
-        $(".bell-dropbox").toggle();
-        $(".friend-dropbox").hide();
-    }
-
-    function handleToggleFriendDropBox() {
-        $(".friend-dropbox").toggle();
-        $(".bell-dropbox").hide();
-    }
+  }
 </script>
 </body>
 
