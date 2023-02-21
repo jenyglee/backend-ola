@@ -1,19 +1,33 @@
 package com.project.sparta.communityBoard.repository;
 
-import com.project.sparta.communityBoard.dto.CommunityBoardResponseDto;
+import static com.project.sparta.communityBoard.entity.QCommunityBoard.communityBoard;
+import static com.project.sparta.communityBoard.entity.QCommunityBoardImg.*;
+import static com.project.sparta.communityBoard.entity.QCommunityTag.communityTag;
+import static com.project.sparta.user.entity.QUser.user;
+
+import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
+import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
+import com.project.sparta.communityBoard.entity.CommunityBoardImg;
+import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.entity.QCommunityComment;
+import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.like.entity.CommentLike;
 import com.project.sparta.like.entity.QBoardLike;
 import com.project.sparta.like.entity.QCommentLike;
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQueryFactory;
+import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
-import static com.project.sparta.communityBoard.entity.QCommunityBoard.*;
 
 @Repository
 public class BoardRepositoryImpl implements BoardRepositoryCustom {
@@ -24,7 +38,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         this.queryFactory = queryFactory;
     }
 
-    private final QBoardLike boarLike = new QBoardLike("boardLike");
+    private final QBoardLike boardLike = new QBoardLike("boardLike");
 
     private final QCommunityComment communityComment = new QCommunityComment("comment");
 
@@ -41,44 +55,124 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public CommunityBoardResponseDto getBoard(Long boardId) {
-
-        return queryFactory.select(Projections.constructor(CommunityBoardResponseDto.class,
-                communityBoard.id.as("boardId"),
-                communityBoard.user.nickName.as("nickName"),
-                communityBoard.title.as("title"),
-                communityBoard.contents.as("contents"),
-                communityBoard.tagList.as("tagList"),
-                ExpressionUtils.as(JPAExpressions.select(boarLike.board.count()).from(boarLike).groupBy(boarLike.board), "communityLikeCnt"),
-                communityBoard.communityComment.as("communityComments"),
-                ExpressionUtils.as(JPAExpressions.select(commentLike.comment.count()).from(commentLike).groupBy(commentLike.comment), "commentLikeCnt")))
-            .from(communityBoard, communityComment)
-            .join(communityBoard.communityComment, communityComment).fetchJoin()
-            .join(commentLike).on(communityComment.eq(commentLike.comment)).fetchJoin()
-            .join(boarLike).on(communityBoard.eq(boarLike.board)).fetchJoin()
-            .where(communityBoard.id.eq(boardId))
-            .orderBy(communityBoard.id.desc())
+    public CommunityBoardOneResponseDto getBoard(Long boardId, int page, int size) {
+        // 커뮤니티 조회
+        Tuple boardCol = queryFactory.select(
+                communityBoard.title,
+                communityBoard.user.nickName,
+                communityBoard.contents,
+                JPAExpressions.select(boardLike.count())
+                    .from(boardLike)
+                    .where(boardLike.board.id.eq(communityBoard.id))
+            )
+            .from(communityBoard)
+            .join(communityBoard.user, user)
+            .where(
+                communityBoard.id.eq(boardId)
+            )
+            .distinct()
             .fetchOne();
+
+        String title = boardCol.get(communityBoard.title);
+        String nickname = boardCol.get(communityBoard.user.nickName);
+        String contents = boardCol.get(communityBoard.contents);
+        Long communityLikeCount = boardCol.get(JPAExpressions.select(boardLike.count())
+            .from(boardLike)
+            .where(boardLike.board.id.eq(communityBoard.id)));
+
+        // 관련 이미지 조회
+        List<String> imgCol = queryFactory.select(communityBoardImg.url)
+            .from(communityBoardImg, communityBoard)
+            .where(
+                communityBoard.id.eq(boardId),
+                communityBoard.id.eq(communityBoardImg.communityBoard.id)
+            )
+            .fetch();
+
+        // 관련 해시태그 조회
+        List<Hashtag> tagCol = queryFactory.select(communityTag.hashtag)
+            .from(communityTag, communityBoard)
+            .where(
+                communityBoard.id.eq(boardId),
+                communityBoard.id.eq(communityTag.communityBoard.id)
+            )
+            .fetch();
+
+        // 관련 댓글/좋아요 조회
+        List<CommentResponseDto> commentCol = queryFactory.select(
+                Projections.constructor(CommentResponseDto.class,
+                    communityComment.Id,
+                    communityComment.nickName,
+                    communityComment.contents,
+                    communityComment.createAt,
+                    JPAExpressions
+                        .select(commentLike.count())
+                        .from(commentLike)
+                        .where(commentLike.comment.Id.eq(communityComment.Id))
+                )
+            )
+            .from(communityBoard, communityComment, commentLike)
+            .where(
+                communityBoard.id.eq(boardId),
+                communityComment.communityBoardId.eq(communityBoard.id)
+            )
+            .distinct()
+            .offset(page)
+            .limit(size)
+            .fetch();
+
+
+        CommunityBoardOneResponseDto build = CommunityBoardOneResponseDto.builder()
+            .title(title)
+            .nickName(nickname)
+            .contents(contents)
+            .likeCount(communityLikeCount)
+            .imgList(imgCol)
+            .tagList(tagCol)
+            .commentList(commentCol)
+            .build();
+        return build;
     }
 
     //커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징
+    //🔥 중복제거 해결 필요
     @Override
-    public PageImpl<CommunityBoardResponseDto> communityAllList(Pageable pageable) {
-
-        List<CommunityBoardResponseDto> boardList = queryFactory.select(Projections.constructor(CommunityBoardResponseDto.class,
-                communityBoard.id.as("boardId"),
-                communityBoard.user.nickName.as("nickName"),
-                communityBoard.title.as("title"),
-                communityBoard.tagList.as("tagList"),
-                ExpressionUtils.as(JPAExpressions.select(boarLike.board.count()).from(boarLike).groupBy(boarLike.board), "communityLikeCnt")))
-            .from(communityBoard, boarLike)
-            .join(boarLike).on(communityBoard.eq(boarLike.board)).fetchJoin()
-            .orderBy(communityBoard.id.desc())
+    public Page<CommunityBoardAllResponseDto> communityAllList(
+        CommunitySearchCondition condition, Pageable pageable) {
+        List<CommunityBoardAllResponseDto> boards = queryFactory
+            .select(Projections.constructor(CommunityBoardAllResponseDto.class,
+                    communityBoard.id,
+                    communityBoard.user.nickName,
+                    communityBoard.title,
+                    ExpressionUtils.as(
+                        JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                            .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
+                    Projections.list(communityBoardImg.url)
+                )
+            )
+            .from(communityBoard)
+            .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
+            .where(
+                tileEq(condition.getTitle()),
+                contentsEq(condition.getContents()),
+                nicknameEq(condition.getNickname())
+            )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
 
-        return new PageImpl<>(boardList, pageable, boardList.size());
+        return new PageImpl<>(boards, pageable, boards.size());
     }
+
+    private Predicate tileEq(String title) {
+        return title != "" ? communityBoard.title.eq(title) : null;
+    }
+    private Predicate contentsEq(String contents) {
+        return contents != "" ? communityBoard.contents.eq(contents) : null;
+    }
+    private Predicate nicknameEq(String nickname) {
+        return nickname != "" ? communityBoard.user.nickName.eq(nickname) : null;
+    }
+
 
 }

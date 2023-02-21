@@ -218,8 +218,33 @@
 
   function handleSignupAdmin(){
         console.log("어드민 회원가입")
-      alert("이 알럿이 뜨고 로그인화면으로 이동")
-      window.location.href = "b-1_login.html";
+      var admin_settings = {
+          "url": "http://localhost:8080/auth/signup/admin",
+          "method": "POST",
+          "timeout": 0,
+          "headers": {
+              "Content-Type": "application/json"
+          },
+          "data": JSON.stringify({
+              "email": $('#email').val(),
+              "password": $('#password').val(),
+              "nickName": $('#nickname').val()
+          }),
+      };
+      if($('#adminPassword').val() == "0206")
+      {
+          $.ajax(admin_settings).done(function (response) {
+              alert("관리자를 확인했습니다.")
+              window.location.href = "b-1_login.html";
+          })
+          .fail(function (response){
+              alert("입력값을 확인해주세요.")
+          });
+      }
+      else
+      {
+          alert("관리자 비밀번호를 확인해주세요")
+      }
   }
 </script>
 </body>

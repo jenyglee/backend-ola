@@ -6,12 +6,14 @@ import com.project.sparta.noticeBoard.dto.NoticeBoardResponseDto;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserRoleEnum.Authority;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
