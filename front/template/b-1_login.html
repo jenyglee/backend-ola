@@ -191,6 +191,8 @@
                 "password": $('#inputPassword').val()
             }),
         };
+        console.log($('#inputEmail').val())
+        console.log( $('#inputPassword').val())
 
         $.ajax(settings).done(function (response,status,xhr) {
             console.log(xhr.getResponseHeader("Authorization"))

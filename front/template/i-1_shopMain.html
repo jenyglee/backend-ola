@@ -254,77 +254,40 @@
         <div class="wrap_1_2" style="margin-top: 100px;">
             <span><b>카테고리</b> &nbsp;&nbsp;</span>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
+                <input class="form-check-input" type="radio" name="radio_name"
                        id="inlineRadioCategory1"
                        value="all" checked>
                 <label class="form-check-label" for="inlineRadioCategory1">전체</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-                       id="inlineRadioCategory1-1" value="shoes">
-                <label class="form-check-label" for="inlineRadioCategory1-1">등산화</label>
+                <input class="form-check-input" type="radio" name="radio_name"
+                       id="radio1" value="shoes" onclick="radioName()" >
+                <label class="form-check-label" for="radio1">등산화</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-                       id="inlineRadioCategory2"
+                <input class="form-check-input" type="radio" name="radio_name"
+                       id="radio2"
                        value="clothes">
-                <label class="form-check-label" for="inlineRadioCategory2">등산복</label>
+                <label class="form-check-label" for="radio2">등산복</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-                       id="inlineRadioCategory3"
+                <input class="form-check-input" type="radio" name="radio_name"
+                       id="radio3"
                        value="bag">
-                <label class="form-check-label" for="inlineRadioCategory3">등산배낭</label>
+                <label class="form-check-label" for="radio3">등산배낭</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-                       id="inlineRadioCategory4"
+                <input class="form-check-input" type="radio" name="radio_name"
+                       id="radio4"
                        value="product">
-                <label class="form-check-label" for="inlineRadioCategory4">등산용품</label>
+                <label class="form-check-label" for="radio4">등산용품</label>
             </div>
         </div>
-        <div class="wrap_1_2">
-            <span><b>브랜드</b> &nbsp;&nbsp;</span>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand5"
-                       value="all" checked>
-                <label class="form-check-label" for="inlineRadioBrand5">전체</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand6" value="nepa">
-                <label class="form-check-label" for="inlineRadioBrand6">네파</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand7"
-                       value="blackyak">
-                <label class="form-check-label" for="inlineRadioBrand7">블랙야크</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand8"
-                       value="northpace">
-                <label class="form-check-label" for="inlineRadioBrand8">노스페이스</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand9"
-                       value="millet">
-                <label class="form-check-label" for="inlineRadioBrand9">밀레</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand10"
-                       value="descente">
-                <label class="form-check-label" for="inlineRadioBrand10">데상트</label>
-            </div>
-        </div>
+
         <div class="wrap_1_2">
             <span><b>가격순</b> &nbsp;&nbsp;</span>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
+                <input class="form-check-input" type="radio"  name="inlineRadioPriceOptions"
                        id="inlineRadioPrice11"
                        value="asc" checked>
                 <label class="form-check-label" for="inlineRadioPrice11">최고가순</label>
@@ -334,9 +297,6 @@
                        id="inlineRadioPrice12" value="desc">
                 <label class="form-check-label" for="inlineRadioPrice12">최저가순</label>
             </div>
-        </div>
-        <div class="wrap_1_2">
-            <span><b>등록순</b> &nbsp;&nbsp;</span>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
                        id="inlineRadioRegist13"
@@ -349,123 +309,21 @@
                 <label class="form-check-label" for="inlineRadioRegist14">마지막순</label>
             </div>
         </div>
+
         <div style="display: flex; margin-top: 20px; margin-bottom: 50px;">
-            <input type="text" class="form-control" id="Products" placeholder="입력"/>
+            <input type="text" name="inputNm" value="" class="form-control" id="Products" placeholder="입력"/>
             <button type="button" class="btn search-btn"
                     style="width: 170px; background-color: #F46B3F; color:#ffffff" onclick="search()">검색
             </button>
         </div>
     </section>
-<!--    <section class="card-wrap">-->
-<!--        <div class="article-wrap"-->
-<!--             style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--            <a href="./i-2_shopDetails.html" class="article"-->
-<!--               style="text-decoration: none; color: #000000">-->
-<!--                <div class="img-wrap"-->
-<!--                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
-<!--                    <img style="width: 100%" src="/static/img/7JC7606_J00_01.jpg" alt="상품 이미지"/>-->
-<!--                </div>-->
-<!--                <div class="text-wrap" style="font-size: 14px;">-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">노스페이스에서 나온 등골브레이커들만 산다는 바로 그 등산할 때 신...</p>-->
-<!--                    <p style="margin-bottom: 10px; width: 90%">109,000원</p>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--    </section>-->
+    <section class="card-wrap">
+        <div class="article-wrap"  id ="cardBox" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px "></div>
+    </section>
     <!--   페이지네이션/작성버튼     -->
-    <div class="wrap_4" style="position: relative; margin-bottom: 100px;">
+    <div class="wrap_4" style="position: relative; margin-bottom: 100px;" id = "displayCount">
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+            <ul class="pagination justify-content-center" id="pagingul">
             </ul>
         </nav>
     </div>
@@ -500,11 +358,16 @@
             },
         })
     }
+    function radioName(){
+        var radioId = $('input[name="radio_name"]:checked').val();
+         var radioNm = $("label[for='"+radioId+"']").text(); // 라벨값을 불러온다.
+        console.log(radioNm)
+        $('input[name=inputNm]').attr('value',radioNm);
+    }
 
-    // <input className="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-    //        id="inlineRadioCategory1-1" value="shoes">
-    //     <label className="form-check-label" htmlFor="inlineRadioCategory1-1">등산화</label>
-    //
+
+
+
 
 
     // const filter = $('input:radio[name="form-check-input"]').is(':checked'); // 체크 여부(checked)
@@ -534,29 +397,14 @@
     }
 
     $(document).ready(function () {
-
-    });
-
-    function search() {
-        // 1. 검색창의 입력값을 가져온다.
-        let products = $('#Products').val();
-
-        console.log(products);
-
-        // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
-        if (products == '') {
-            alert('검색어를 입력해주세요');
-            $('#Products').focus();
-            return;
-        }
-        // 3. GET /api/search?query=${query} 요청
-
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
             type: 'GET',
-            url: `http://localhost:8080/product/search?query=` + products + `&limit=100&offset=0`,
-            // beforeSend: function (xlr) {
-            //     xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
-            // },
+            url: "http://localhost:8080/product/search?query=shoes&limit=8&offset=0",
+            // url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=10`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
             success: function (response) {
 
                 console.log(response["data"]);
@@ -566,21 +414,282 @@
                 for (let i = 0; i < response.data.length; i++) {
 
                     let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
-    <div className="img-wrap"
-         style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-        <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
-    </div>
-    <div className="text-wrap" style="font-size: 14px;">
-        <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-        <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
-    </div>
-</a>`;
+                        <div className="img-wrap"
+                             style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                            <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+                        </div>
+                        <div className="text-wrap" style="font-size: 14px;">
+                            <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                            <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+                        </div>
+                    </a>`;
                     $('#cardBox').append(result);
                 }
             }
         })
+    });
+    // function showProducts(){
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: `http://localhost:8080/product/search?query=&limit=8&offset=0`,
+    //         // beforeSend: function (xlr) {
+    //         //     xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+    //         // },
+    //         success: function (response) {
+    //
+    //             console.log(response["data"]);
+    //             console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
+    //
+    //             // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+    //             for (let i = 0; i < response.data.length; i++) {
+    //
+    //                 let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+    //                     <div className="img-wrap"
+    //                          style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    //                         <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+    //                     </div>
+    //                     <div className="text-wrap" style="font-size: 14px;">
+    //                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+    //                         <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+    //                     </div>
+    //                 </a>`;
+    //                 $('#cardBox').append(result);
+    //             }
+    //         }
+    //     })
+    //
+    // }
 
-    }
+
+    // function search(page) {
+    //     // 1. 검색창의 입력값을 가져온다.
+    //     let products = $('#Products').val();
+    //
+    //
+    //     console.log(products);
+    //
+    //     // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
+    //     if (products == '') {
+    //         alert('검색어를 입력해주세요');
+    //         $('#Products').focus();
+    //         return;
+    //     }
+    //     // 3. GET /api/search?query=${query} 요청
+    //
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: `http://localhost:8080/product/search?query=` + products + "&limit=" + page + "&offset=10",
+    //         // url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=10`,
+    //         // beforeSend: function (xlr) {
+    //         //     xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+    //         // },
+    //         success: function (response) {
+    //
+    //             console.log(response["data"]);
+    //             console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
+    //
+    //             // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+    //             for (let i = 0; i < response.data.length; i++) {
+    //
+    //                 let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+    //                     <div className="img-wrap"
+    //                          style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    //                         <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+    //                     </div>
+    //                     <div className="text-wrap" style="font-size: 14px;">
+    //                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+    //                         <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+    //                     </div>
+    //                 </a>`;
+    //                 $('#cardBox').append(result);
+    //             }
+    //         }
+    //     })
+    //
+    // }
+    // function search(limit,query,start,sort) {
+    //     // 1. 검색창의 입력값을 가져온다.
+    //     let products = $('#Products').val();
+    //
+    //
+    //     console.log(products);
+    //
+    //     // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
+    //     if (products == '') {
+    //         alert('검색어를 입력해주세요');
+    //         $('#Products').focus();
+    //         return;
+    //     }
+    //     // 3. GET /api/search?query=${query} 요청
+    //
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "https://openapi.naver.com/v1/search/shop.json?" +
+    //             "display=8" + limit + // 몇개씩 노출
+    //             "&query=" + query + // 상품 검색어
+    //             "&start=" + start + // 몇번째 상품부터 노출
+    //             "&sort=" + sort, // 정렬 기준,
+    //         // url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=10`,
+    //         // beforeSend: function (xlr) {
+    //         //     xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+    //         // },
+    //         success: function (response) {
+    //
+    //             console.log(response["data"]);
+    //             console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
+    //
+    //             // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+    //             for (let i = 0; i < response.data.length; i++) {
+    //
+    //                 let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+    //                     <div className="img-wrap"
+    //                          style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    //                         <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+    //                     </div>
+    //                     <div className="text-wrap" style="font-size: 14px;">
+    //                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+    //                         <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+    //                     </div>
+    //                 </a>`;
+    //                 $('#cardBox').append(result);
+    //             }
+    //         }
+    //     })
+    //
+    // }
+
+
+
+
+
+    // let totalData; // 총 데이터수
+    // let dataPerPage; //한 페이지에 나타낼 글 수
+    // let pageCount = 10; //페이징에 나타낼 페이지 수
+    // let globalCurrentPage=1; //현재 페이지
+    // let dataList; //표시하려하는 데이터 리스트
+    //
+    //
+    // $(document).ready(function () {
+    //     //dataPerPage 선택값 가져오기
+    //     dataPerPage = $("#Products").val();
+    //
+    //     $.ajax({ // ajax로 데이터 가져오기
+    //         method: "GET",
+    //         url: "http://localhost:8080/product/search?query=등산화&limit=8&offset=0",
+    //         dataType: "json",
+    //         success: function (response) {
+    //             //totalData(총 데이터 수) 구하기
+    //             totalData = response.data.length;
+    //             //데이터 대입
+    //             dataList=response.data;
+    //         }
+    //     });
+    //     //글 목록 표시 호출 (테이블 생성)
+    //     displayData(1, dataPerPage);
+    //
+    //     //페이징 표시 호출
+    //     paging(totalData, dataPerPage, pageCount, 1);
+    // });
+    //
+    //     //글 목록 표시 함수
+    //     //현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
+    //     function displayData(currentPage, dataPerPage) {
+    //
+    //         let chartHtml = "";
+    //
+    //         //Number로 변환하지 않으면 아래에서 +를 할 경우 스트링 결합이 되어버림..
+    //         currentPage = Number(currentPage);
+    //         dataPerPage = Number(dataPerPage);
+    //
+    //         for (
+    //             var i = (currentPage - 1) * dataPerPage;
+    //             i < (currentPage - 1) * dataPerPage + dataPerPage;
+    //             i++
+    //         ) {
+    //             chartHtml +=
+    //                 `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+    //                     <div className="img-wrap"
+    //                          style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    //                         <img style="width: 100%" alt="상품 이미지" src="${dataList[i].image}"/>
+    //                     </div>
+    //                     <div className="text-wrap" style="font-size: 14px;">
+    //                         <p style="margin-bottom: 10px; width: 90%">${dataList[i].title}</p>
+    //                         <p style="margin-bottom: 10px; width: 90%">${dataList[i].lprice}</p>
+    //                     </div>
+    //                 </a>`;
+    //         } //dataList는 임의의 데이터임.. 각 소스에 맞게 변수를 넣어주면 됨...
+    //         $("#cardBox").html(chartHtml);
+    //     }
+    //     //페이징 표시 함수
+    //     function paging(totalData, dataPerPage, pageCount, currentPage) {
+    //         console.log("currentPage : " + currentPage);
+    //
+    //         totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수
+    //
+    //         console.log("totalPage : " + totalPage);
+    //
+    //         if (totalPage < pageCount) {
+    //             pageCount = totalPage;
+    //         }
+    //
+    //         let pageGroup = Math.ceil(currentPage / pageCount); // 페이지 그룹
+    //         let last = pageGroup * pageCount; //화면에 보여질 마지막 페이지 번호
+    //
+    //         if (last > totalPage) {
+    //             last = totalPage;
+    //         }
+    //
+    //         let first = last - (pageCount - 1); //화면에 보여질 첫번째 페이지 번호
+    //         let next = last + 1;
+    //         let prev = first - 1;
+    //
+    //         let pageHtml = "";
+    //
+    //         if (prev > 0) {
+    //             pageHtml += ` <li className="page-item">
+    //                             <a class="page-link" href="#" aria-label="Previous" id='prev'>
+    //                             <span aria-hidden="true">&laquo;</span>
+    //                             </a>
+    //                         </li>`;
+    //         }
+    //
+    //         //페이징 번호 표시
+    //         for (var i = first; i <= last; i++) {
+    //             if (currentPage == i) {
+    //                 pageHtml += `<li className="page-item"><a className="page-link" href="#" id='" + i + "'>i</a></li>`;
+    //             } else {
+    //                 pageHtml += "<li><a href='#' id='" + i + "'>" + i + "</a></li>";
+    //             }
+    //         }
+    //
+    //         if (last < totalPage) {
+    //             pageHtml += `<a class="page-link" href="#" aria-label="Next">
+    //                            <span aria-hidden="true">&raquo;</span>
+    //                         </a>`;
+    //         }
+    //
+    //         $("#pagingul").html(pageHtml);
+    //         let displayCount = "";
+    //         displayCount = "현재 1 - " + totalPage + " 페이지 / " + totalData + "건";
+    //         $("#cardBox").text(displayCount);
+    //
+    //
+    //         //페이징 번호 클릭 이벤트
+    //         $("#pagingli li a").click(function () {
+    //             let $id = $(this).attr("id");
+    //             selectedPage = $(this).text();
+    //
+    //             if ($id == "next") selectedPage = next;
+    //             if ($id == "prev") selectedPage = prev;
+    //
+    //             //전역변수에 선택한 페이지 번호를 담는다...
+    //             globalCurrentPage = selectedPage;
+    //             //페이징 표시 재호출
+    //             paging(totalData, dataPerPage, pageCount, selectedPage);
+    //             //글 목록 표시 재호출
+    //             displayData(selectedPage, dataPerPage);
+    //         });
+    //     }
 </script>
 </body>
 </html>
