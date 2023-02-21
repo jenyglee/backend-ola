@@ -232,9 +232,23 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void adminDeleteCommunityBoard(Long boardId) {
-        CommunityBoard commBoard = boardRepository.findById(boardId)
+        CommunityBoard communityBoard = boardRepository.findById(boardId)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        boardRepository.delete(commBoard);
+
+        // 1. Comment Id에 해당하는 Like를 전부 지운다.
+        List<Long> commentIds = commentRepository.findIdsByCommunityBoardId(boardId);
+        likeCommentRepository.deleteLikeAllByInCommentId(commentIds);
+
+        // 2. Comment를 전부 지운다.
+        commentRepository.deleteCommentAllByInBoardId(boardId);
+
+        // 3. Tag, Img, CommunityLike를 전부 지운다.
+        communityTagRepository.deleteTagAllByBoardId(communityBoard.getId());
+        communityBoardImgRepository.deleteImgAllByBoardId(communityBoard.getId());
+        likeBoardRepository.deleteLikeAllByInBoardId(boardId);
+
+        // 4. 모든 연관관계를 지웠으니 이제 게시글을 지운다.
+        boardRepository.deleteById(communityBoard.getId());
     }
 }
 
