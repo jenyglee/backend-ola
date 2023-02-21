@@ -6,6 +6,7 @@ import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.security.UserDetailsImpl;
+import com.project.sparta.user.dto.InfoResponseDto;
 import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -34,8 +35,8 @@ public class InfoController {
     @ApiOperation(value = "내 정보 조회",response = Join.class)
     @GetMapping("/me")
     public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        userService.getMyInfo(userDetails.getUser());
-        return new ResponseEntity(HttpStatus.OK);
+        InfoResponseDto result = userService.getMyInfo(userDetails.getUser());
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     //TODO 자동 등업 API 제작
