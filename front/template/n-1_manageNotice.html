@@ -126,7 +126,7 @@
     // 2. 통신해서 불러오기
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
+      url: "http://localhost:8080/admin/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },

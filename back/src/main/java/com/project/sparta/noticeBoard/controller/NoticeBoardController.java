@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")
-@PreAuthorize(Authority.ADMIN)
 public class NoticeBoardController {
     private final NoticeBoardService noticeBoardService;
 
