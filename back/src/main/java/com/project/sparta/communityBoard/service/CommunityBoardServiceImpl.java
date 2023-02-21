@@ -42,7 +42,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     private final CommunityBoardImgRepository communityBoardImgRepository;
 
 
-    //커뮤니티 게시글 생성
+    //커뮤니티 생성
     @Override
     @Transactional
     public void createCommunityBoard(CommunityBoardRequestDto requestDto,
@@ -77,11 +77,12 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         communityBoard.updateCommunityImg(communityImgList);
     }
 
-    //커뮤니티 게시글 수정
+    //커뮤니티 수정
     @Override
     @Transactional
     public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto, User user) {
-        CommunityBoard community = boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
+        CommunityBoard community = boardRepository.findByIdAndUser_NickName(boardId,
+                user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
         // 커뮤니티에 있는 태그를 전부 지우고 새로 저장한다.
@@ -113,17 +114,20 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         );
     }
 
-    //커뮤니티 게시글 삭제
+    //커뮤니티 삭제
     @Override
     @Transactional
     public void deleteCommunityBoard(Long boardId, User user) {
-        boardRepository.findByIdAndUser_NickName(boardId, user.getNickName())
+        CommunityBoard communityBoard = boardRepository.findByIdAndUser_NickName(boardId,
+                user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        boardRepository.deleteById(boardId);
+        System.out.println("communityBoard = " + communityBoard.getTitle());
+        System.out.println("communityBoard = " + communityBoard.getUser().getNickName());
+        boardRepository.delete(communityBoard);
     }
 
 
-    //커뮤니티 게시글 단건 조회(커뮤니티 게시글 + 커뮤 좋아요 + 커뮤니티 댓글 + 커뮤니티 댓글 좋아요)
+    //커뮤니티 단건 조회(커뮤니티 게시글 + 커뮤 좋아요 + 커뮤니티 댓글 + 커뮤니티 댓글 좋아요)
     @Override
     @Transactional(readOnly = true)
     public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int page, int size) {
@@ -154,10 +158,18 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
     @Override
     @Transactional
-    public PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size,
+    public PageResponseDto<List<CommunityBoardAllResponseDto>> getMyCommunityBoard(int page, int size,
         User user) {
-        return null;
+        // 2. 검색조건을 포함하여 전체조회
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.communityMyList(pageRequest, user.getId());
+
+        //3. 결과를 반환
+        List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+        return new PageResponseDto<>(page, totalCount, content);
     }
+
 
     // (어드민) 커뮤니티 수정
     @Override
