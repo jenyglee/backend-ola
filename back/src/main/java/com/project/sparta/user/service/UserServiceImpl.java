@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
         TokenDto tokenDto = new TokenDto(
-                jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
+                jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
                 refresh_token,
                 user.getRole()
         );
@@ -181,6 +181,7 @@ public class UserServiceImpl implements UserService {
         }
 
         return InfoResponseDto.builder()
+            .nickName(user.getNickName())
             .communityCount(communityCount)
             .recommendCount(recommendCount)
             .enterCount(enterCount)
@@ -212,7 +213,7 @@ public class UserServiceImpl implements UserService {
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
             TokenDto new_tokenDto = new TokenDto(
-                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
+                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
                     new_refresh_token,
                     user.getRole()
             );
