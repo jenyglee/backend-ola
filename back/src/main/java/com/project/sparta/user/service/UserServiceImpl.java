@@ -16,6 +16,7 @@ import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
+import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
@@ -56,8 +57,16 @@ public class UserServiceImpl implements UserService {
     public void signup(UserSignupDto signupDto) {
         // 1. User를 생성해서 repository에 저장한다.
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
-        User user1 = new User(signupDto.getEmail(), encodedPassword, signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
-        User saveUser = userRepository.save(user1);
+        User user = User.userBuilder()
+            .email(signupDto.getEmail())
+            .password(encodedPassword)
+            .nickName(signupDto.getNickName())
+            .age(signupDto.getAge())
+            .phoneNumber(signupDto.getPhoneNumber())
+            .userImageUrl(signupDto.getImageUrl())
+            .build();
+
+        User saveUser = userRepository.save(user);
 
         System.out.println(signupDto.getEmail());
         System.out.println(signupDto.getPassword());
@@ -177,6 +186,7 @@ public class UserServiceImpl implements UserService {
             .enterCount(enterCount)
             .makeCount(makeCount)
             .tagList(hashtagList)
+            .userGradeEnum(user.getGradeEnum())
             .build();
     }
 
@@ -277,6 +287,7 @@ public class UserServiceImpl implements UserService {
             .userGradeEnum(user.getGradeEnum())
             .createdAt(user.getCreateAt())
             .modifiedAt(user.getModifiedAt())
+            .profileImage(user.getUserImageUrl())
             .build();
     }
 

@@ -20,6 +20,7 @@ public class UserOneResponseDto {
     private String email;
 
     private String phoneNumber;
+    private String profileImage;
 
     private UserGradeEnum userGradeEnum;
     private LocalDateTime createdAt;
@@ -27,12 +28,13 @@ public class UserOneResponseDto {
 
     @QueryProjection
     @Builder
-    public UserOneResponseDto(Long id, String nickName, int age, String email, String phoneNumber, UserGradeEnum userGradeEnum, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public UserOneResponseDto(Long id, String nickName, int age, String email, String phoneNumber, String profileImage, UserGradeEnum userGradeEnum, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.nickName = nickName;
         this.age = age;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.profileImage = profileImage;
         this.userGradeEnum = userGradeEnum;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
