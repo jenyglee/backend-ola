@@ -15,11 +15,15 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 
 import com.project.sparta.communityBoard.repository.CommunityBoardImgRepository;
 import com.project.sparta.communityBoard.repository.CommunityTagRepository;
+import com.project.sparta.communityComment.entity.CommunityComment;
+import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.communityBoard.entity.CommunityTag;
+import com.project.sparta.like.repository.LikeBoardRepository;
+import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +44,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     private final HashtagRepository hashtagRepository;
     private final CommunityTagRepository communityTagRepository;
     private final CommunityBoardImgRepository communityBoardImgRepository;
+    private final CommentRepository commentRepository;
+    private final LikeCommentRepository likeCommentRepository;
+    private final LikeBoardRepository likeBoardRepository;
 
 
     //커뮤니티 생성
@@ -86,7 +93,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
         // 커뮤니티에 있는 태그를 전부 지우고 새로 저장한다.
-        communityTagRepository.deleteAllByCommunityBoard_Id(boardId);
+        communityTagRepository.deleteTagAllByBoardId(boardId);
         List<CommunityTag> communityTags = new ArrayList<>();
         for (Long tag : requestDto.getTagList()) {
             Hashtag hashtag = hashtagRepository.findById(tag)
@@ -97,7 +104,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         }
 
         // 커뮤니티에 있는 이미지를 전부 지우고 새로 저장한다.
-        communityBoardImgRepository.deleteAllByCommunityBoard_Id(boardId);
+        communityBoardImgRepository.deleteImgAllByBoardId(boardId);
         List<CommunityBoardImg> communityImgList = new ArrayList<>();
         for (String imgUrl : requestDto.getImgList()) {
             CommunityBoardImg communityImg = new CommunityBoardImg(imgUrl, community);
@@ -121,9 +128,21 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         CommunityBoard communityBoard = boardRepository.findByIdAndUser_NickName(boardId,
                 user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        System.out.println("communityBoard = " + communityBoard.getTitle());
-        System.out.println("communityBoard = " + communityBoard.getUser().getNickName());
-        boardRepository.delete(communityBoard);
+
+        // 1. Comment Id에 해당하는 Like를 전부 지운다.
+        List<Long> commentIds = commentRepository.findIdsByCommunityBoardId(boardId);
+        likeCommentRepository.deleteLikeAllByInCommentId(commentIds);
+
+        // 2. Comment를 전부 지운다.
+        commentRepository.deleteCommentAllByInBoardId(boardId);
+
+        // 3. Tag, Img, CommunityLike를 전부 지운다.
+        communityTagRepository.deleteTagAllByBoardId(communityBoard.getId());
+        communityBoardImgRepository.deleteImgAllByBoardId(communityBoard.getId());
+        likeBoardRepository.deleteLikeAllByInBoardId(boardId);
+
+        // 4. 모든 연관관계를 지웠으니 이제 게시글을 지운다.
+        boardRepository.deleteById(communityBoard.getId());
     }
 
 
@@ -131,6 +150,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional(readOnly = true)
     public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int page, int size) {
+
+
         CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, page, size);
         return communityBoard;
     }
@@ -179,7 +200,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
         // 커뮤니티에 있는 태그를 전부 지우고 새로 저장한다.
-        communityTagRepository.deleteAllByCommunityBoard_Id(boardId);
+        communityTagRepository.deleteTagAllByBoardId(boardId);
         List<CommunityTag> communityTags = new ArrayList<>();
         for (Long tag : requestDto.getTagList()) {
             Hashtag hashtag = hashtagRepository.findById(tag)
@@ -190,7 +211,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         }
 
         // 커뮤니티에 있는 이미지를 전부 지우고 새로 저장한다.
-        communityBoardImgRepository.deleteAllByCommunityBoard_Id(boardId);
+        communityBoardImgRepository.deleteImgAllByBoardId(boardId);
         List<CommunityBoardImg> communityImgList = new ArrayList<>();
         for (String imgUrl : requestDto.getImgList()) {
             CommunityBoardImg communityImg = new CommunityBoardImg(imgUrl, community);

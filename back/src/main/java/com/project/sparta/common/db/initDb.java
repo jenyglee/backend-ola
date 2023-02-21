@@ -317,9 +317,26 @@ public class initDb {
         public void communityLike(){
             User user1 = em.find(User.class, 1L);
             User user2 = em.find(User.class, 2L);
+            User user3 = em.find(User.class, 3L);
+            User user4 = em.find(User.class, 4L);
+            User user5 = em.find(User.class, 5L);
+            User user6 = em.find(User.class, 6L);
+            User user7 = em.find(User.class, 7L);
+            User user8 = em.find(User.class, 8L);
+
             boardLikeService.likeBoard(1L, user1);
+            boardLikeService.likeBoard(1L, user2);
+            boardLikeService.likeBoard(1L, user3);
+            boardLikeService.likeBoard(1L, user4);
+            boardLikeService.likeBoard(1L, user5);
             commentLikeService.likeComment(1L, user1);
             commentLikeService.likeComment(1L, user2);
+            commentLikeService.likeComment(1L, user3);
+            commentLikeService.likeComment(1L, user4);
+            commentLikeService.likeComment(2L, user5);
+            commentLikeService.likeComment(2L, user6);
+            commentLikeService.likeComment(2L, user7);
+            commentLikeService.likeComment(2L, user8);
         }
 
         @Transactional

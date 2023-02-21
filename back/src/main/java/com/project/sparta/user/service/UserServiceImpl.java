@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
             .age(user.getAge())
             .email(user.getEmail())
             .phoneNumber(user.getPhoneNumber())
-            .userRoleEnum(user.getRole())
+            .userGradeEnum(user.getGradeEnum())
             .createdAt(user.getCreateAt())
             .modifiedAt(user.getModifiedAt())
             .build();
