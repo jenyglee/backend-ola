@@ -32,8 +32,9 @@ public class RecommendCourseController {
 
     // TODO 이미지 업로드 API는 커뮤니티 쓸 때, 회원가입할 때도 사용하기 때문에 위치 변경이 필요
     //이미지 업로드 api
+    @CrossOrigin(origins="http://localhost:8080", maxAge=3600)
     @ApiOperation(value = "이미지 업로드", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
     @PostMapping("/upload") //todo url 어떤것으로 할지 의논 후 수정
     public ImgUrlDto ImageUpload(
         @RequestPart(value = "image", required = false) List<MultipartFile> images)
@@ -56,7 +57,7 @@ public class RecommendCourseController {
      */
 
     @ApiOperation(value = "코스 추천 생성", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
     @PostMapping("/recommends")
     public ResponseEntity createRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -83,7 +84,7 @@ public class RecommendCourseController {
      * @throws IOException
      */
     @ApiOperation(value = "코스 추천 수정", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
     @PatchMapping("/recommends/{boardId}")
     public ResponseEntity modifyRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @PathVariable Long boardId,
@@ -102,7 +103,7 @@ public class RecommendCourseController {
      * @param userDetail : 삭제하는 유저정보
      */
     @ApiOperation(value = "코스 추천 삭제", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_CHILDREN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -111,7 +112,7 @@ public class RecommendCourseController {
     }
 
     @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
-    @GetMapping("/recommends/{boardId}")
+    @GetMapping("/recommend/{boardId}")
     public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }

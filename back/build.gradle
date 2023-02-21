@@ -38,8 +38,16 @@ dependencies {
 
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
-    // 다중이미지 업로드
-    implementation 'commons-io:commons-io:2.6'
+
+    //S3 의존성 추가
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
+
+    // aws-sdk-java-v2 (s3에 Multipart 업로드를 위함)
+    implementation platform('software.amazon.awssdk:bom:2.17.53')
+    implementation 'software.amazon.awssdk:s3'
+
+
     // 웹 소켓
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     // sockjs
