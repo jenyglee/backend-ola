@@ -2,30 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/normalize.css" />
-    <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/reset.css" />
-    <link rel="stylesheet" href="../css/menu.css" />
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/menu.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="theme-color" content="#fafafa">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-    <title>올라 공지사항</title>
+    <title>Title</title>
+    <style>
+        .container {
+            width: 1200px;
+            padding: 0;
+        }
 
+        .w_1 {
+            width: 1200px;
+            height: 100px;
+        }
+
+
+        .w_3 {
+            width: 1200px;
+            height: 30px;
+        }
+
+        .w_4 {
+            width: 1200px;
+            height: 550px;
+        }
+
+        .w_4 .table th{
+            padding-left: 30px;
+        }
+        .w_4 .table tr{
+            text-align: left;
+        }
+        .w_4 .table td{
+            padding-left: 30px;
+        }
+
+        .w_5 {
+            width: 1200px;
+            height: 40px;
+        }
+
+        .w_4 .table{
+            text-align: center;
+        }
+
+
+
+        .btn-group .btn{
+            color: #F46B3F;
+            border: 1px solid #F46B3F;
+        }
+        .btn-group .btn:hover{
+            background-color: #F46B3F;
+            color: white;
+        }
+        .btn-check:active+.btn-outline-primary,
+        .btn-check:checked+.btn-outline-primary,
+        .btn-outline-primary:active{
+            background-color: #F46B3F;
+            border: 1px solid #F46B3F;
+        }
+
+        .page-link,
+        .page-link:hover,
+        .page-link:active,
+        .page-link:focus{
+            color: #F46B3F;
+        }
+    </style>
 </head>
 <body>
-<!-- ############# 네비게이션 #############-->
 <header class="menu">
     <div class="bg-line"></div>
     <div class="logo-wrap">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="./template/g-1_recommend.html">코스추천</a>
+        <a href="./g-1_recommend.html">코스추천</a>
         <a href="h-1_communityMain.html">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html" style="font-weight: bold; color: #F46B3F">공지사항</a>
     </div>
     <div class="right">
         <div class="friend">
@@ -148,35 +214,184 @@
                 </ul>
             </div>
         </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
             <p class="text">나와바리나와바님</p>
-        </div>
+        </a>
     </div>
 
 </header>
+<main class="container">
+    <section class="">
+        <!--   작업공간   -->
+        <div class="w_1"></div>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="btnradio1" onclick="getNoticeList(0, '')">전체</label>
 
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio2" onclick="getNoticeList(0, 'SERVICE')">서비스</label>
 
-<!-- ############# 작업공간 #############-->
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio3" onclick="getNoticeList(0, 'UPDATE')">업데이트</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio4" onclick="getNoticeList(0, 'EVENT')">이벤트</label>
+        </div>
+
+        <div class="w_3"></div>
+        <div class="w_4">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 120px">카테고리</th>
+                    <th scope="col" style="width: 500px">제목</th>
+                    <th scope="col" style="width: 200px">날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>서비스</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>업데이트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>이벤트</td>-->
+<!--                        <td><a href="j-2_noticeDetail.html" style="color: #F46B3F">22000</a></td>-->
+<!--                        <td>2023-02-11</td>-->
+<!--                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+        <div class="w_5">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(0, '')">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(1, '')">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getNoticeList(2, '')">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        </div>
+    </section>
+</main>
 <script>
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+        getNoticeList(0,"");
     });
+
     function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
         $(".friend-dropbox").hide();
     }
-
     function handleToggleFriendDropBox() {
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
     }
 
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+    function getNoticeList(page, categoryStr) {
+        // 1. 데이터 초기화를 해야됨.
+        $('tbody').empty();
+        const accessToken = localStorage.getItem("accessToken");
+        // 2. 통신해서 불러오기
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            // data: {
+            //  title: "sasas",
+            // },
+            success: function (response) {
+                console.log("호출완료");
+                console.log(response)
+                for (let i = 0; i < response.data.length; i++) {
+
+                    // 영어로 되어있는 카테고리를 한글로 변환
+                    let formatCategory = ""
+                    if(response.data[i].category == "SERVICE"){
+                        formatCategory = "서비스"
+                    }else if(response.data[i].category == "EVENT"){
+                        formatCategory = "이벤트"
+                    }else if(response.data[i].category == "UPDATE"){
+                        formatCategory = "업데이트"
+                    }
+
+                    // 데이터 바인딩
+                    const temp =
+                        `
+                            <tr>
+                                <td>${formatCategory}</td>
+                                  <td><a href="j-2_noticeDetail.html" onclick="setNoticeId(${response.data[i].id})">${response.data[i].title}</a></td>
+                                <td>${response.data[i].createdAt.substring(0, 10)}</td>
+                            </tr>
+                        `
+                    $('tbody').append(temp)
+                }
+            },
+        })
+    }
+
+    function setNoticeId(id){
+        localStorage.setItem("noticeId", id);
+    }
+
 </script>
 </body>
+
 </html>

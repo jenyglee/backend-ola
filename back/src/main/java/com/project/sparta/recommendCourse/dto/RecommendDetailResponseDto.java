@@ -1,36 +1,46 @@
 package com.project.sparta.recommendCourse.dto;
 
-import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Data
+@NoArgsConstructor
 public class RecommendDetailResponseDto {
 
-    private String nickName;
-    private String title;
-
     private int score;
+    private String title;
     private String season;
     private int altitude;
-
     private String contents;
-
+    private String region;
     private List<String> imgList;
+    private LocalDateTime createDate;
 
+    //TODO: 나중에 좋아요 개수 추가해야 함. => OK
     private Long likeCount;
+    private String nickName;
 
-    public RecommendDetailResponseDto(RecommendCourseBoard post, List<String> imgList, String nickName,Long likeCount) {
-        this.nickName = nickName;
-        this.title = post.getTitle();
-        this.contents = post.getContents();
-        this.score = post.getScore();
-        this.season = post.getSeason();
-        this.altitude = post.getAltitude();
+    @Builder
+    public RecommendDetailResponseDto(int score, String title, String season, int altitude,
+        String contents,
+        String region, List<String> imgList, LocalDateTime createDate, Long likeCount,
+        String nickName) {
+        this.score = score;
+        this.title = title;
+        this.season = season;
+        this.altitude = altitude;
+        this.contents = contents;
+        this.region = region;
         this.imgList = imgList;
+        this.createDate = createDate;
         this.likeCount = likeCount;
-
-
+        this.nickName = nickName;
     }
+
 }

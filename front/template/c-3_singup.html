@@ -89,40 +89,14 @@
   </section>
 </main>
 <script>
-  let result1 = localStorage.getItem("signup1")
-  const temp = localStorage.getItem("signup2")
-  let result3 = result1.substring(0,result1.length-1) + ',' + '"' + "tagList" + '"' + ':' + '['+ temp.toString() + "]}"
-  console.log(result3)
   function login()
   {
-    var settings = {
-      "url": "http://localhost:8080/auth/signup",
-      "method": "POST",
-      "timeout": 0,
-      "headers": {
-        "Content-Type": "application/json"
-      },
-      "data": result1
-    };
-    $.ajax(settings).done(function (response) {
-      localStorage.setItem("signup3",result3)
-      console.log(response);
-      alert("회원가입 완료")
-      window.location.href = "b-1_login.html";
-    })
-    .fail(function (response){
-      console.log(result1)
-      console.log(settings.data)
-      console.log(response);
-      alert("회원가입 실패")
-    });
+    window.location.href = "b-1_login.html";
   }
   function community()
   {
-
+    window.location.href ="h-1_communityMain.html";
   }
-  // let result = Array.from(new Set(list))
-  // localStorage.setItem("signup2",result)
 </script>
 </body>
 

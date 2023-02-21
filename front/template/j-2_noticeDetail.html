@@ -13,6 +13,31 @@
           crossorigin="anonymous">
     <title>올라 공지사항</title>
 
+    <style>
+
+        .container{
+            width: 1200px;
+            padding: 0;
+        }
+        .inputLabel{
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .w_2,
+        .w_3,
+        .w_7{
+            height: 55px;
+        }
+        #btn_1{
+            width: 200px;
+            height : 50px;
+            border: 1px solid white;
+            background-color: #F46B3F;
+            border-radius: 5px;
+            color: white;
+            float: right;
+        }
+    </style>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
@@ -22,10 +47,10 @@
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
-        <a href="./template/g-1_recommend.html">코스추천</a>
+        <a href="./g-1_recommend.html">코스추천</a>
         <a href="h-1_communityMain.html">커뮤니티</a>
-        <a href="#">쇼핑몰</a>
-        <a href="#">공지사항</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html" style="font-weight: bold; color: #F46B3F">공지사항</a>
     </div>
     <div class="right">
         <div class="friend">
@@ -148,38 +173,93 @@
                 </ul>
             </div>
         </div>
-        <div class="my-profile-wrap">
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
             <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png " />
+                <img class="img" src="./../static/img/icon_profile_default.png "/>
             </div>
             <p class="text">나와바리나와바님</p>
-        </div>
+        </a>
     </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
+<main class="container">
+    <h3 style="margin: 30px 0; font-weight: bold;">공지사항</h3>
+    <section style="margin-bottom: 250px">
+        <p class="inputLabel" >카테고리</p>
+        <div class="w_3" style="width: 200px">
+            <input id="category" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >게시날짜</p>
+        <div class="w_3" style="width: 200px">
+            <input id="createAt" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >작성자</p>
+        <div class="w_3" style="width: 200px">
+            <input id="username" type="text" class="form-control" disabled />
+        </div>
+        <p class="inputLabel" >제목</p>
+        <div class="w_3">
+            <input id="title" type="text" class="form-control" disabled />
+        </div>
+
+        <p class="inputLabel">내용</p>
+        <div class="w_7" style="margin-bottom: 100px; height: 200px">
+            <textarea class="form-control" id="contents" rows="10" disabled></textarea>
+        </div>
+        <a href="j-1_noticeMain.html">
+            <div class="w_9" style="">
+                <div class="b_1">
+                    <button type="button" id="btn_1">목록</button>
+                </div>
+            </div>
+        </a>
+    </section>
+</main>
+
 
 <script>
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
 
-        const id = localStorage.getItem("boardId")
+        const id = localStorage.getItem("noticeId")
         $.ajax({
             type: "GET",
-            url: `http://localhost:8080/notice-boards/${id}`,
+            url: `http://localhost:8080/boards/notices/${id}`,
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNzI5MTYsImlhdCI6MTY3NjI2OTMxNn0.cZFNpXaQR8ymhnusH1KSvxTIIf0rWP71X50-q3RbXbA")
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
-            data: {
-              name: "sasas",
-            },
+            // data: {
+            //   name: "sasas",
+            // },
             success: function (response) {
+                console.log("response : ", response)
+                const category = response.category;
+                const contents = response.contents;
+                const createdAt = response.createdAt.substring(0, 10);
+                const modifiedAt = response.modifiedAt.substring(0, 10);
+                const title = response.title;
+                const username = response.username;
 
-                temp = `
-                <div></div>
-                `
+                // 카테고리가 영어로 들어와서 한글로 반환
+                switch (category) {
+                    case "SERVICE" :
+                        $('#category').val("서비스");
+                        break;
+                    case "EVENT" :
+                        $('#category').val("이벤트");
+                        break;
+                    case "UPDATE" :
+                        $('#category').val("업데이트");
+                        break;
+                }
+
+                $('#title').val(title);
+                $('#contents').val(contents);
+                $('#createAt').val(createdAt);
+                $('#username').val(username);
             },
         })
     });
@@ -192,6 +272,7 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
     }
+
 
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')

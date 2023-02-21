@@ -1,7 +1,8 @@
-package com.project.sparta.admin.service;
+package com.project.sparta.admin.service.impl;
 
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.dto.ManagerPersonResponseDto;
+import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
     // ADMIN_TOKEN
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final UserRepository userRepository;
@@ -27,11 +28,11 @@ public class AdminServiceImpl implements AdminService{
     private final RecommendCourseImgService recommendCourseImgService;
 
     // 어드민 회원가입
-// ADMIN_TOKEN
     private final PasswordEncoder encoder;
     private final LikeBoardRepository likeBoardRepository;
 
     // 어드민 회원가입
+    @Override
     public void signup(AdminSignupDto adminRequestSignupDto) {
         if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
             throw new CustomException(Status.INVALID_ADMIN_TOKEN);
@@ -43,21 +44,21 @@ public class AdminServiceImpl implements AdminService{
             .build();
         userRepository.save(admin);
     }
-
-    @Override
-    @Transactional
-    public void deleteCommunityBoard(Long community_board_id) {
-        boardRepository.findById(community_board_id)
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-        boardRepository.deleteById(community_board_id);
-    }
-
-    @Override
-    public ManagerPersonResponseDto getOneUser(Long id){
-        User user = userRepository.findById(id).orElseThrow(()-> new CustomException(Status.INVALID_USER));
-        ManagerPersonResponseDto managerPersonResponseDto = new ManagerPersonResponseDto(user);
-        return managerPersonResponseDto;
-    }
+//
+//    @Override
+//    @Transactional
+//    public void deleteCommunityBoard(Long community_board_id) {
+//        boardRepository.findById(community_board_id)
+//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+//        boardRepository.deleteById(community_board_id);
+//    }
+//
+//    @Override
+//    public ManagerPersonResponseDto getOneUser(Long id){
+//        User user = userRepository.findById(id).orElseThrow(()-> new CustomException(Status.INVALID_USER));
+//        ManagerPersonResponseDto managerPersonResponseDto = new ManagerPersonResponseDto(user);
+//        return managerPersonResponseDto;
+//    }
 
 }
 

@@ -4,8 +4,10 @@ package com.project.sparta.common.db;
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
+import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
@@ -167,14 +169,15 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(1)
+                        .title("코스추천" + i)
                         .season("가을")
                         .altitude((int) (Math.random() * 100) + 100)
                         .contents("추천해요!" + i)
+                        .region("서울")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 10L
                 );
             }
             for (int i=5; i<10; i++){
@@ -183,11 +186,12 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(2)
+                        .title("코스추천" + i)
                         .season("여름")
                         .altitude((int) (Math.random() * 100) + 200)
                         .contents("추천해요!" + i)
+                        .region("경기도")
                         .imgList(imgList)
                         .build()
                     , 9L
@@ -199,14 +203,15 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(3)
+                        .title("코스추천" + i)
                         .season("봄")
                         .altitude((int) (Math.random() * 100) + 300)
                         .contents("추천해요!" + i)
+                        .region("전라도")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 8L
                 );
             }
             for (int i=15; i<20; i++){
@@ -215,67 +220,90 @@ public class initDb {
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
-                        .title("코스추천" + i)
                         .score(4)
+                        .title("코스추천" + i)
                         .season("겨울")
                         .altitude((int) (Math.random() * 100) + 400)
                         .contents("추천해요!" + i)
+                        .region("강원도")
                         .imgList(imgList)
                         .build()
-                    , 9L
+                    , 7L
                 );
             }
         }
 
-        //TODO communityInit 커뮤니티에 해시태그 추가되면 변경해야함
         @Transactional
         public void communityInit(){
-//            User user = em.find(User.class, 1L);
-//            for (int i=0; i<5; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=5; i<10; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=10; i<15; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
-//            for (int i=15; i<20; i++){
-//                communityBoardService.createCommunityBoard(
-//                    CommunityBoardRequestDto.builder()
-//                        .title("커뮤니티" + i)
-//                        .contents("커뮤니티 콘텐츠" + i)
-//                        .build(),
-//                    user
-//                );
-//            }
+            User user = em.find(User.class, 1L);
+
+            communityBoardService.createCommunityBoard(
+                CommunityBoardRequestDto.builder()
+                    .title("커뮤니티")
+                    .contents("커뮤니티 콘텐츠")
+                    .chatStatus("N")
+                    .chatMemCnt(0)
+                    .tagList(Arrays.asList(7L, 8L, 9L))
+                    .build(),
+                user
+            );
+            for (int i=0; i<5; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
+                        .build(),
+                    user
+                );
+            }
+            for (int i=5; i<10; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
+                        .build(),
+                    user
+                );
+            }
+            for (int i=10; i<15; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
+                        .build(),
+                    user
+                );
+            }
+            for (int i=15; i<20; i++){
+                communityBoardService.createCommunityBoard(
+                    CommunityBoardRequestDto.builder()
+                        .title("커뮤니티" + i)
+                        .contents("커뮤니티 콘텐츠" + i)
+                        .chatStatus("N")
+                        .chatMemCnt(0)
+                        .tagList(Arrays.asList(7L, 8L, 9L))
+                        .build(),
+                    user
+                );
+            }
         }
 
         @Transactional
         public void communityCommentInit(){
-//            User user = em.find(User.class, 2L);
-//            for (int i=0; i<22; i++){
-//                CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
-//                communityCommentService.createCommunityComments(5L, requestDto, user);
-//            }
+            User user = em.find(User.class, 2L);
+            for (int i=0; i<22; i++){
+                CommunityRequestDto requestDto = new CommunityRequestDto("너무너무가고싶당!" + i);
+                communityCommentService.createCommunityComments(5L, requestDto, user);
+            }
         }
 
         @Transactional
