@@ -128,11 +128,11 @@
         <div class="icon-friend">
             <img class="img" src="../static/img/icon_friends.png"/>
         </div>
-        <div class="my-profile-wrap">
-            <div class="img-wrap">
-                <img class="img" src="../static/img/icon_profile_default.png "/>
-            </div>
-            <p class="text">나와바리나와바님</p>
+        <div id="my-profile" class="my-profile-wrap">
+<!--            <div class="img-wrap">-->
+<!--                <img class="img" src="../static/img/icon_profile_default.png "/>-->
+<!--            </div>-->
+<!--            <p class="text">나와바리나와바님</p>-->
         </div>
     </div>
     <div class="line"></div>
@@ -248,7 +248,19 @@
     //이 화면 들어올때 자동으로 호출
     $(document).ready(function () {
         getNoticeList(0);
+        getMenuProfile();
     });
+
+    function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+          </div>
+          <p class="text">${menuProfile.sub}님</p>
+`
+        $("#my-profile").append(tempProfile);
+    }
   function getNoticeList(offset) {
       // 1. 데이터 초기화를 해야됨.
       $('tbody').empty();

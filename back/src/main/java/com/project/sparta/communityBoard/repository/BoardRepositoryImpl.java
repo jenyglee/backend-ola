@@ -147,7 +147,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     ExpressionUtils.as(
                         JPAExpressions.select(boardLike.board.count()).from(boardLike)
                             .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                    Projections.list(communityBoardImg.url)
+                    Projections.list(communityBoardImg.url),
+                    communityBoard.createAt
                 )
             )
             .from(communityBoard)
@@ -170,7 +171,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     ExpressionUtils.as(
                         JPAExpressions.select(boardLike.board.count()).from(boardLike)
                             .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                    Projections.list(communityBoardImg.url)
+                    Projections.list(communityBoardImg.url),
+                    communityBoard.createAt
                 )
             )
             .from(communityBoard)
@@ -198,7 +200,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     ExpressionUtils.as(
                         JPAExpressions.select(boardLike.board.count()).from(boardLike)
                             .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                    Projections.list(communityBoardImg.url)
+                    Projections.list(communityBoardImg.url),
+                    communityBoard.createAt
                 )
             )
             .from(communityBoard)
@@ -217,7 +220,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     ExpressionUtils.as(
                         JPAExpressions.select(boardLike.board.count()).from(boardLike)
                             .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                    Projections.list(communityBoardImg.url)
+                    Projections.list(communityBoardImg.url),
+                    communityBoard.createAt
                 )
             )
             .from(communityBoard)

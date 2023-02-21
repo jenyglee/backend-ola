@@ -249,7 +249,7 @@
     <a href="./i-1_shopMain.html">쇼핑몰</a>
     <a href="./j-1_noticeMain.html">공지사항</a>
   </div>
-  <div class="right">
+  <div class="right" style="margin-top: 10px">
     <div class="friend">
       <div class="icon-friend" onclick="handleToggleFriendDropBox()">
         <img class="img" src="./../static/img/icon_friends.png"/>
@@ -295,11 +295,11 @@
         </ul>
       </div>
     </div>
-    <a class="my-profile-wrap" href="./f-1_myPage.html">
-      <div class="img-wrap">
-        <img class="img" src="./../static/img/icon_profile_default.png "/>
-      </div>
-      <p class="text">나와바리나와바님</p>
+    <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--      <div class="img-wrap">-->
+<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--      </div>-->
+<!--      <p class="text">나와바리나와바님</p>-->
     </a>
   </div>
 
@@ -310,9 +310,9 @@
   <section class="">
     <div class="w_1"></div>
     <div class="w_2">
-      <div class="b_1">
-        <p class="title">이 구역의 등산 매니아, </p>
-        <p class="name">이재원님</p>
+      <div id="myGrade" class="b_1">
+<!--        <p class="title">이 구역의 등산 매니아, </p>-->
+<!--        <p class="name">이재원님</p>-->
       </div>
       <div class="b_2">
         <button type="button" class="btn btn-link">등업조건 보기</button>
@@ -572,10 +572,22 @@
 </main>
 <script>
   $(document).ready(function () {
-    $(".friend-dropbox").hide();
     $(".bell-dropbox").hide();
+    $(".friend-dropbox").hide();
+    getMenuProfile()
     getMyInfo();
   });
+
+  function getMenuProfile(){
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    var tempProfile = `
+        <div class="img-wrap">
+          <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+        </div>
+        <p class="text" style="padding-top: 0">${menuProfile.sub}님</p>
+    `
+    $("#my-profile").append(tempProfile);
+  }
 
   function handleToggleBellDropBox() {
     $(".bell-dropbox").toggle();
@@ -588,7 +600,6 @@
   }
 
   function getMyInfo(){
-
     const accessToken = localStorage.getItem("accessToken")
 
     $.ajax({
@@ -601,6 +612,20 @@
       },
       success: function (response) {
         console.log("response : ", response)
+        var gradeText = ""
+        if(response.userGradeEnum == "MOUNTAIN_CHILDREN"){
+          gradeText = "뚜벅뚜벅 등린이, "
+        }else if(response.userGradeEnum == "MOUNTAIN_MANIA"){
+          gradeText = "이 구역의 등산매니아, "
+        }else if(response.userGradeEnum == "MOUNTAIN_GOD"){
+          gradeText = "통달한 산신령, "
+        }
+        var tempMyGrade =`
+          <p class="title">${gradeText}</p>
+          <p class="name">${response.nickName}님</p>
+        `
+        $("#myGrade").append(tempMyGrade);
+
         var tempCommunity = `
           <p class="title">내가 쓴 커뮤니티</p>
           <p class="count">${response.communityCount}건 <span style="font-size: 14px;">></span></p>
@@ -636,6 +661,7 @@
   }
 
   function searchFriend() {
+    console.log("asdasd")
     let targetNickname = document.getElementById('searchNickName').value;
     const accessToken = localStorage.getItem("accessToken");
 

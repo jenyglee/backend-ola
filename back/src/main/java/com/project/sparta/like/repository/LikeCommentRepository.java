@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.xml.stream.events.Comment;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
@@ -18,6 +21,7 @@ public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
 
     long countByComment(CommunityComment comment);
 
-//    List<CommentLike> findByComment(CommunityComment comment);
-
+    @Query("delete from CommentLike cl where cl.comment.Id in :commentIds")
+    @Modifying
+    void deleteLikeAllByInCommentId(@Param("commentIds") List<Long> commentIds);
 }
