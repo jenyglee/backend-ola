@@ -32,6 +32,7 @@ public class RecommendCourseController {
 
     // TODO 이미지 업로드 API는 커뮤니티 쓸 때, 회원가입할 때도 사용하기 때문에 위치 변경이 필요
     //이미지 업로드 api
+    @CrossOrigin(origins="http://localhost:8080", maxAge=3600)
     @ApiOperation(value = "이미지 업로드", response = Join.class)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
     @PostMapping("/upload") //todo url 어떤것으로 할지 의논 후 수정

@@ -341,16 +341,16 @@
             placeholder="내용을 입력하세요"
           ></textarea>
         </div>
-        <!--        &lt;!&ndash; 이미지업로드 쪽 레이아웃 &ndash;&gt;-->
-        <!--        <div class="img-upload-box">-->
-        <!--            <div class="mb-3">-->
-        <!--                <div class="filebox">-->
-        <!--                    <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
-        <!--                    <label for="file" class="upload-label">파일찾기</label>-->
-        <!--                    <input type="file" id="file">-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+                <!-- 이미지업로드 쪽 레이아웃 -->
+<!--        <div class="img-upload-box">-->
+<!--          <div class="mb-3">-->
+<!--            <div class="filebox">-->
+<!--              <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
+<!--              <label for="file" class="upload-label">파일찾기</label>-->
+<!--              <input type="file" id="file">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div class="w_8">
           <input
@@ -399,17 +399,23 @@
       }
 
       function createRecommendBoaed() {
+        const accessToken = localStorage.getItem("accessToken");
+
         $.ajax({
           type: "POST",
           url: `http://localhost:8080/boards/recommends`,
-          // dataType: "text",
+          dataType	: "json",
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
+<<<<<<< HEAD
             var token = xlr.setRequestHeader(
               "Authorization",
               localStorage.getItem("accessToken")
             );
             console.log(token);
+=======
+            xlr.setRequestHeader("Authorization", accessToken)
+>>>>>>> 2115bbd3d7e7c639cc0d7c6bd91128a855f63809
           },
           data: JSON.stringify({
             score: $("#recommendBoardScore").val(),
@@ -418,18 +424,17 @@
             altitude: $("#recommendBoardAltitude").val(),
             contents: $("#recommendBoardContents").val(),
             region: $("#recommendBoardRegion").val(),
-            imgList: $("#recommendBoardImgList").val(),
+            imgList: null,
           }),
+          xhrFields: {
+            withCredentials: true // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
           success: function (response) {
             alert("작성 완료");
             window.location.href = "g-1_recommend.html";
           },
           error: function (xhr) {
-            console.log("");
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
-            console.log("");
+            ("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
           },
         });
 

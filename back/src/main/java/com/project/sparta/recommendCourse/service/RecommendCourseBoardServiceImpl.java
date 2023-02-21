@@ -78,7 +78,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 //            .images(imgUrlList)
             .build();
 
-        //todo recommendBoard엔티티에 imagesList 필드 추가해야함.
+
 
         //이미지에 포스트 담아주고
 //        for (RecommendCourseImg image:requestPostDto.getImgList()) {
@@ -91,6 +91,8 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //레파지토리에 저장하기.
 
         recommendCourseBoardRepository.save(board);
+
+        //todo imgUrlList 이미지 레파지토리에 얘를 저장해야 할 듯. 여기에 아이디 값이랑 같이 저장.
 
         // ✨ s3 bucket에 있는 이미지에 Post ID 저장
     }

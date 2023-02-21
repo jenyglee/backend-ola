@@ -22,7 +22,7 @@ public class CommunityComment extends Timestamped {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "communityCommentId")
+  @Column(name = "comment_id")
   private Long Id;
   private Long communityBoardId;
   private String nickName;

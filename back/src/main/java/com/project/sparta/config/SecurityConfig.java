@@ -5,7 +5,6 @@ import com.project.sparta.security.JwtAccessDeniedHandler;
 import com.project.sparta.security.JwtAuthenticationEntryPoint;
 import com.project.sparta.security.jwt.JwtAuthFilter;
 import com.project.sparta.security.jwt.JwtUtil;
-import com.project.sparta.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
@@ -37,6 +39,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+    // 필터를 타지 않게 하는 부분
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring()
@@ -51,10 +55,11 @@ public class SecurityConfig {
 
     }
 
+    // 필터를 타게 하는 부분
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
 
-        httpSecurity.csrf().disable();
+        httpSecurity.csrf().disable().cors();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);        //세션을 만들지도 않고, 기존것을 사용하지 않겠다. -> JWT 토큰을 사용할 떄 주로 사용함.
 
         // exception handling for jwt
@@ -75,6 +80,16 @@ public class SecurityConfig {
 
         return httpSecurity.build();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
 
-
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

@@ -24,7 +24,7 @@ public class CommentLike {
     private String userNickName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "communityCommentId")
+    @JoinColumn(name = "comment_id")
     private CommunityComment comment;
 
     @Builder

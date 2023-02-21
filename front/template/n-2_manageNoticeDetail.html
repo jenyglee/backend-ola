@@ -318,24 +318,21 @@
       function getNotice() {
         const id = localStorage.getItem("noticeId");
         $.ajax({
-          type: "GET",
-          url: `http://localhost:8080/boards/notices/${id}`,
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
-          },
-          // data: {
-          //   name: "sasas",
-          // },
-          success: function (response) {
-            console.log("response : ", response);
-            const category = response.category;
-            const contents = response.contents;
-            const createdAt = response.createdAt.substring(0, 10);
-            const title = response.title;
-            const username = response.username;
+            type: "GET",
+            url: `http://localhost:8080/admin/boards/notices/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            // data: {
+            //   name: "sasas",
+            // },
+            success: function (response) {
+                console.log("response : ", response)
+                const category = response.category;
+                const contents = response.contents;
+                const createdAt = response.createdAt.substring(0, 10);
+                const title = response.title;
+                const username = response.username;
 
             // 카테고리가 영어로 들어와서 한글로 반환
             switch (category) {

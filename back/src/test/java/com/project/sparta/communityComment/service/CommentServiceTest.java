@@ -29,10 +29,10 @@ public class CommentServiceTest {
   //   userRepository.saveAndFlush(user1);
   //
   //   CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
-  //   CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
+  //   CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
   //
-  //   assertThat(communityBoardResponseDto.getNickName()).isEqualTo("이재원");
-  //   System.out.println(communityBoardResponseDto);
+  //   assertThat(CommunityBoardOneResponseDto.getNickName()).isEqualTo("이재원");
+  //   System.out.println(CommunityBoardOneResponseDto);
   // }
   //
   //
@@ -44,10 +44,10 @@ public class CommentServiceTest {
   //   //    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
   //   userRepository.saveAndFlush(user1);
   //   CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("보드 하이", "첫번쨰 보드");
-  //   CommunityBoardResponseDto communityBoardResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
+  //   CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
   //
   //   CommunityRequestDto communityRequestDto = new CommunityRequestDto("하이");
-  //   CommunityResponseDto communityResponseDto = commentService.createCommunityComments(communityBoardResponseDto.getId(), communityRequestDto,
+  //   CommunityResponseDto communityResponseDto = commentService.createCommunityComments(CommunityBoardOneResponseDto.getId(), communityRequestDto,
   //       user1);
   //
   //
