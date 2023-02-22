@@ -34,7 +34,7 @@ public class RecommendCourseController {
     //이미지 업로드 api
     @CrossOrigin(origins="http://localhost:8080", maxAge=3600)
     @ApiOperation(value = "이미지 업로드", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/upload") //todo url 어떤것으로 할지 의논 후 수정
     public ImgUrlDto ImageUpload(
         @RequestPart(value = "image", required = false) List<MultipartFile> images)
@@ -57,7 +57,7 @@ public class RecommendCourseController {
      */
 
     @ApiOperation(value = "코스 추천 생성", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/recommends")
     public ResponseEntity createRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -84,7 +84,7 @@ public class RecommendCourseController {
      * @throws IOException
      */
     @ApiOperation(value = "코스 추천 수정", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PatchMapping("/recommends/{boardId}")
     public ResponseEntity modifyRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @PathVariable Long boardId,
@@ -103,7 +103,7 @@ public class RecommendCourseController {
      * @param userDetail : 삭제하는 유저정보
      */
     @ApiOperation(value = "코스 추천 삭제", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {

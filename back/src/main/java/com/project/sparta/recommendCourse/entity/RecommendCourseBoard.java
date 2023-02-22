@@ -40,8 +40,11 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
+
+
     //    @OneToMany
     //    private List<RecommendCourseImg> images = new ArrayList<>();
+
 
     // @ManyToOne
     // @JoinColumn(name = "user_id")
@@ -88,6 +91,8 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
         // this.images = images;
     }
+
+
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;
