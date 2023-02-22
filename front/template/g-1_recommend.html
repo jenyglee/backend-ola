@@ -237,11 +237,11 @@
                 </ul>
             </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-            <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png "/>
-            </div>
-            <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--            <div class="img-wrap">-->
+<!--                <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--            </div>-->
+<!--            <p class="text">나와바리나와바님</p>-->
         </a>
     </div>
 
@@ -576,6 +576,16 @@
         $(document).ready(function () {
         getRecommendList(0,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike);
     });
+    function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+            <div class="img-wrap">
+              <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+            </div>
+            <p class="text">${menuProfile.sub}님</p>
+        `
+        $("#my-profile").append(tempProfile);
+    }
 
 
     $(document).ready(function () {

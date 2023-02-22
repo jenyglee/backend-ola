@@ -188,31 +188,36 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         return new PageResponseDto<>(page, totalCount, content);
     }
 
-    //내가 쓴 게시물 조회
+    //내가 쓴 코스 추천 조회
     @Override
     public PageResponseDto<List<GetMyRecommendCourseResponseDto>> getMyRecommendCourseBoard(
         int page, int size, User user) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of(page, size, sort);
-        Page<RecommendCourseBoard> boards = recommendCourseBoardRepository.findByUserId(pageable,
-            user.getId());
-
-        List<GetMyRecommendCourseResponseDto> getMyBoardResponseDtoList = new ArrayList<>();
-        for (RecommendCourseBoard recommendBoard : boards) {
-            //todo userid 변수를 User 객체로 변경해야 됨
-            User user1 = userRepository.findById(recommendBoard.getUserId())
-                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
-            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(recommendBoard.getId());
-            GetMyRecommendCourseResponseDto getMyBoardResponse = GetMyRecommendCourseResponseDto.builder()
-                .localDateTime(recommendBoard.getCreateAt())
-                .title(recommendBoard.getTitle())
-                .likeCount(likeCount)
-                .nickName(user1.getNickName())
-                .build();
-            getMyBoardResponseDtoList.add(getMyBoardResponse);
-        }
-        return new PageResponseDto<>(page, boards.getTotalElements(), getMyBoardResponseDtoList);
-
+//        PageRequest pageRequest = PageRequest.of(page, size);
+//        Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
+//            pageRequest, VAILABLE, 10, "가을", 100, "원미구", "all");
+//        List<RecommendResponseDto> content = courseAllList.getContent();
+//        long totalCount = courseAllList.getTotalElements();
+//        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//        Page<RecommendCourseBoard> boards = recommendCourseBoardRepository.findByUserId(pageable,
+//            user.getId());
+//
+//        List<GetMyRecommendCourseResponseDto> getMyBoardResponseDtoList = new ArrayList<>();
+//        for (RecommendCourseBoard recommendBoard : boards) {
+//            //todo userid 변수를 User 객체로 변경해야 됨
+//            User user1 = userRepository.findById(recommendBoard.getUserId())
+//                .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
+//            Long likeCount = likeRecommendRepository.countByCourseBoard_Id(recommendBoard.getId());
+//            GetMyRecommendCourseResponseDto getMyBoardResponse = GetMyRecommendCourseResponseDto.builder()
+//                .localDateTime(recommendBoard.getCreateAt())
+//                .title(recommendBoard.getTitle())
+//                .likeCount(likeCount)
+//                .nickName(user1.getNickName())
+//                .build();
+//            getMyBoardResponseDtoList.add(getMyBoardResponse);
+//        }
+//        return new PageResponseDto<>(page, boards.getTotalElements(), getMyBoardResponseDtoList);
+          return null;
     }
 
     //(어드민) 코스 수정

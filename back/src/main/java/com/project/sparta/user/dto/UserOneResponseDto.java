@@ -1,5 +1,6 @@
 package com.project.sparta.user.dto;
 
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.querydsl.core.annotations.QueryProjection;
 import java.time.LocalDateTime;
@@ -19,20 +20,22 @@ public class UserOneResponseDto {
     private String email;
 
     private String phoneNumber;
+    private String profileImage;
 
-    private UserRoleEnum userRoleEnum;
+    private UserGradeEnum userGradeEnum;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     @QueryProjection
     @Builder
-    public UserOneResponseDto(Long id, String nickName, int age, String email, String phoneNumber, UserRoleEnum userRoleEnum, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public UserOneResponseDto(Long id, String nickName, int age, String email, String phoneNumber, String profileImage, UserGradeEnum userGradeEnum, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.nickName = nickName;
         this.age = age;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.userRoleEnum = userRoleEnum;
+        this.profileImage = profileImage;
+        this.userGradeEnum = userGradeEnum;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }

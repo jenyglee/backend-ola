@@ -42,7 +42,7 @@ public class KakaoServiceImpl implements KakaoService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
 
         //4. JWT 토큰 반환
-        String createToken = jwtUtil.generateAccessToken(kakaoUser.getNickName(), kakaoUser.getRole());
+        String createToken = jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl());
         return createToken;
     }
 

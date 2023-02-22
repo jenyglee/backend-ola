@@ -209,86 +209,12 @@
     }
 
 
-    /*-1-*/
-    .w_8 .b_17 .b_17_1 .b_17_1_1 {
-      width: 395px;
-      height: 55px;
-      display: inline-block;
-    }
-
-    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_profile {
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      border-radius: 100%;
-      margin-left: 30px;
-      display: inline-block;
-      overflow: hidden;
-      justify-content: center;
-      float: left;
-    }
-
-    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_nickName {
-      width: 230px;
-      height: 55px;
-      display: inline-block;
-      line-height: 40px;
-      padding-left: 10px;
-      float: left;
-      color: black;
-      font-weight: bolder;
-    }
-
-    .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn {
-      width: 80px;
-      height: 55px;
-      display: inline-block;
-      line-height: 40px;
-    }
-
     .w_8 .b_17 .b_17_1 .b_17_1_1 .b_17_1_addBtn a {
       float: right;
       text-decoration: none;
       color: #666666;
       display: inline-block;
       margin-right: 20px;
-    }
-
-    /*-2-*/
-    .w_8 .b_17 .b_17_2 {
-      width: 395px;
-      height: 55px;
-      display: inline-block;
-    }
-
-    .w_8 .b_17 .b_17_2 .b_17_1_profile {
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      border-radius: 100%;
-      margin-left: 30px;
-      display: inline-block;
-      overflow: hidden;
-      justify-content: center;
-      float: left;
-    }
-
-    .w_8 .b_17 .b_17_2 .b_17_1_nickName {
-      width: 230px;
-      height: 55px;
-      display: inline-block;
-      padding-left: 10px;
-      line-height: 40px;
-      float: left;
-      color: black;
-      font-weight: bolder;
-    }
-
-    .w_8 .b_17 .b_17_2 .b_17_1_addBtn {
-      width: 80px;
-      height: 55px;
-      display: inline-block;
-      line-height: 40px;
     }
 
     .w_8 .b_17 .b_17_2 .b_17_1_addBtn a {
@@ -299,43 +225,6 @@
       margin-right: 20px;
     }
 
-    /*-3-*/
-
-    .w_8 .b_17 .b_17_3 .b_17_1_1 {
-      width: 395px;
-      height: 55px;
-      display: inline-block;
-    }
-
-    .w_8 .b_17 .b_17_3 .b_17_1_profile {
-      width: 40px;
-      height: 40px;
-      text-align: center;
-      border-radius: 100%;
-      margin-left: 30px;
-      display: inline-block;
-      overflow: hidden;
-      justify-content: center;
-      float: left;
-    }
-
-    .w_8 .b_17 .b_17_3 .b_17_1_nickName {
-      width: 230px;
-      height: 55px;
-      display: inline-block;
-      padding-left: 10px;
-      line-height: 40px;
-      float: left;
-      color: black;
-      font-weight: bolder;
-    }
-
-    .w_8 .b_17 .b_17_3 .b_17_1_addBtn {
-      width: 80px;
-      height: 55px;
-      display: inline-block;
-      line-height: 40px;
-    }
 
     .w_8 .b_17 .b_17_3 .b_17_1_addBtn a {
       float: right;
@@ -345,29 +234,6 @@
       margin-right: 20px;
     }
 
-    #btn_1 {
-      width: 180px;
-      height: 50px;
-      border: 1px solid #F46B3F;
-      background-color: white;
-      border-radius: 10px;
-      color: #F46B3F;
-      line-height: 40px;
-      float: right;
-      font-weight: bolder;
-    }
-
-    #btn_2 {
-      width: 180px;
-      height: 50px;
-      border: 1px solid #F46B3F;
-      background-color: white;
-      border-radius: 10px;
-      color: #F46B3F;
-      line-height: 40px;
-      float: right;
-      font-weight: bolder;
-    }
   </style>
 </head>
 <body>
@@ -383,7 +249,7 @@
     <a href="./i-1_shopMain.html">쇼핑몰</a>
     <a href="./j-1_noticeMain.html">공지사항</a>
   </div>
-  <div class="right">
+  <div class="right" style="margin-top: 10px">
     <div class="friend">
       <div class="icon-friend" onclick="handleToggleFriendDropBox()">
         <img class="img" src="./../static/img/icon_friends.png"/>
@@ -429,11 +295,11 @@
         </ul>
       </div>
     </div>
-    <a class="my-profile-wrap" href="./f-1_myPage.html">
-      <div class="img-wrap">
-        <img class="img" src="./../static/img/icon_profile_default.png "/>
-      </div>
-      <p class="text">나와바리나와바님</p>
+    <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--      <div class="img-wrap">-->
+<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--      </div>-->
+<!--      <p class="text">나와바리나와바님</p>-->
     </a>
   </div>
 
@@ -444,9 +310,9 @@
   <section class="">
     <div class="w_1"></div>
     <div class="w_2">
-      <div class="b_1">
-        <p class="title">이 구역의 등산 매니아, </p>
-        <p class="name">이재원님</p>
+      <div id="myGrade" class="b_1">
+<!--        <p class="title">이 구역의 등산 매니아, </p>-->
+<!--        <p class="name">이재원님</p>-->
       </div>
       <div class="b_2">
         <button type="button" class="btn btn-link">등업조건 보기</button>
@@ -454,27 +320,23 @@
     </div>
     <div class="w_3">
       <a href="f-2_myPageDetail.html">
-        <div class="b_3" style="cursor: pointer">
-          <p class="title">내가 쓴 커뮤니티</p>
-          <p class="count">18건 <span style="font-size: 14px;">></span></p>
+        <div id="community" class="b_3" style="cursor: pointer">
+
         </div>
       </a>
       <a href="f-2_myPageDetail.html">
-        <div class="b_4" style="cursor: pointer">
-          <p class="title">내가 쓴 코스추천</p>
-          <p class="count">18건 <span style="font-size: 14px;">></span></p>
+        <div id="recommend" class="b_4" style="cursor: pointer">
+
         </div>
       </a>
       <a href="f-2_myPageDetail.html">
-        <div class="b_5" style="cursor: pointer">
-          <p class="title">내가 참여한 크루</p>
-          <p class="count">6개 <span style="font-size: 14px;">></span></p>
+        <div id="enter" class="b_5" style="cursor: pointer">
+
         </div>
       </a>
       <a href="f-2_myPageDetail.html">
-        <div class="b_6" style="cursor: pointer">
-          <p class="title">내가 만든 크루</p>
-          <p class="count">3개 <span style="font-size: 14px;">></span></p>
+        <div id="make" class="b_6" style="cursor: pointer">
+
         </div>
       </a>
     </div>
@@ -489,22 +351,22 @@
       </div>
     </div>
     <div class="w_7"></div>
-    <div class="w_6">
-      <div class="b_10">
-        <p>#등산데이트</p>
-      </div>
-      <div class="b_11">
-        <p>#등산입문자</p>
-      </div>
-      <div class="b_12">
-        <p>#가을산</p>
-      </div>
-      <div class="b_13">
-        <p>#30대40대</p>
-      </div>
-      <div class="b_14">
-        #주변맛집
-      </div>
+    <div id="tagList" class="w_6">
+<!--      <div class="b_10">-->
+<!--        <p>#등산데이트</p>-->
+<!--      </div>-->
+<!--      <div class="b_11">-->
+<!--        <p>#등산입문자</p>-->
+<!--      </div>-->
+<!--      <div class="b_12">-->
+<!--        <p>#가을산</p>-->
+<!--      </div>-->
+<!--      <div class="b_13">-->
+<!--        <p>#30대40대</p>-->
+<!--      </div>-->
+<!--      <div class="b_14">-->
+<!--        #주변맛집-->
+<!--      </div>-->
       <div class="b_15"></div>
     </div>
     <div class="w_7"></div>
@@ -710,9 +572,22 @@
 </main>
 <script>
   $(document).ready(function () {
-    $(".friend-dropbox").hide();
     $(".bell-dropbox").hide();
+    $(".friend-dropbox").hide();
+    getMenuProfile()
+    getMyInfo();
   });
+
+  function getMenuProfile(){
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    var tempProfile = `
+        <div class="img-wrap">
+          <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+        </div>
+        <p class="text" style="padding-top: 0">${menuProfile.sub}님</p>
+    `
+    $("#my-profile").append(tempProfile);
+  }
 
   function handleToggleBellDropBox() {
     $(".bell-dropbox").toggle();
@@ -724,20 +599,69 @@
     $(".bell-dropbox").hide();
   }
 
-  // <ul className="friend-list">
-  // <li>
-  //   <div className="left">
-  //     <div className="img-wrap">
-  //       <img className="img" src="./../static/img/icon_profile_default.png"/>
-  //     </div>
-  //     <p className="name">오메가오메오메</p>
-  //     <button type="button" className="btn btn-link" onClick="searchFriend()">1:1 채팅</button>
-  //   </div>
-  // </li>
-  // </ul>
+  function getMyInfo(){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "GET",
+      contentType : "application/json",
+      dataType	: "json",
+      url: "http://localhost:8080/info/me",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success: function (response) {
+        console.log("response : ", response)
+        var gradeText = ""
+        if(response.userGradeEnum == "MOUNTAIN_CHILDREN"){
+          gradeText = "뚜벅뚜벅 등린이, "
+        }else if(response.userGradeEnum == "MOUNTAIN_MANIA"){
+          gradeText = "이 구역의 등산매니아, "
+        }else if(response.userGradeEnum == "MOUNTAIN_GOD"){
+          gradeText = "통달한 산신령, "
+        }
+        var tempMyGrade =`
+          <p class="title">${gradeText}</p>
+          <p class="name">${response.nickName}님</p>
+        `
+        $("#myGrade").append(tempMyGrade);
+
+        var tempCommunity = `
+          <p class="title">내가 쓴 커뮤니티</p>
+          <p class="count">${response.communityCount}건 <span style="font-size: 14px;">></span></p>
+        `
+        var tempRecommend = `
+          <p class="title">내가 쓴 코스추천</p>
+          <p class="count">${response.recommendCount}건 <span style="font-size: 14px;">></span></p>
+        `
+        var tempEnter = `
+          <p class="title">내가 참여한 크루</p>
+          <p class="count">${response.enterCount}개 <span style="font-size: 14px;">></span></p>
+        `
+        var tempMake = `
+          <p class="title">내가 만든 크루</p>
+          <p class="count">${response.makeCount}개 <span style="font-size: 14px;">></span></p>
+        `
+
+        $("#community").append(tempCommunity);
+        $("#recommend").append(tempRecommend);
+        $("#enter").append(tempEnter);
+        $("#make").append(tempMake);
+
+        for (let i=0; i<response.tagList.length; i++){
+          var tempTag = `
+            <div class="b_10">
+              <p>#${response.tagList[i].name}</p>
+            </div>
+          `
+          $("#tagList").append(tempTag);
+        }
+      }
+    });
+  }
 
   function searchFriend() {
-
+    console.log("asdasd")
     let targetNickname = document.getElementById('searchNickName').value;
     const accessToken = localStorage.getItem("accessToken");
 
