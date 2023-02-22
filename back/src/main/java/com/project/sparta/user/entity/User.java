@@ -60,6 +60,11 @@ public class User extends Timestamped {
         this.tags = userTagList;
     }
 
+    public void getUserTagList(List<UserTag> userTagList){
+        this.tags = userTagList;
+    }
+
+
     @Builder(builderClassName = "user", builderMethodName = "userBuilder")
     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {
         this.password = password;

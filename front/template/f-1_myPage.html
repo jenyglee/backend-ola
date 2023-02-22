@@ -677,9 +677,21 @@
 
         $(".friend-list").empty();
 
+        console.log(response);
+
+        let tagName = [];
+
         for (let i = 0; i < response.data.length; i++) {
-          let image = response.data[0].friendImage;
-          let name = response.data[0].friendName;
+          let image = response.data[i].friendImage;
+          let name = response.data[i].friendName;
+          let tags = response.data[i].hashtagList;
+
+          console.log(response.data[i].hashtagList.length);
+          console.log(response.data[i].hashtagList[0].name);
+
+          for(let j=0; j<tags.length; j++) {
+            tagName.push(tags[j].name);
+          }
 
           let result = `<li>
                         <div className="left">
@@ -687,7 +699,9 @@
                             <img className="img" src="${image}"/>
                           </div>
                         </div>
-                        <p className="name" style="margin-left: 10px; margin-top: 2px">${name}</p>
+                          <p className="name" style="margin-left: 10px; margin-top: 2px">${name}</p>
+                         <p style="font-size: 10px; color: #666666; margin-left: 20px; width : 500px; display: inline-block; padding: 0px">${tagName}</p>
+                        <button type="button" class="btn btn-link" style="text-decoration: none; color: #F46B3F; padding: 0px; margin-left: 10px; font-size: 12px">친구추가</button>
                       </li>`
 
           $(".friend-list").append(result);
