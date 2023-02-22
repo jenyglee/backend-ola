@@ -97,22 +97,22 @@
   border: none;
 }
 
-.friend-list-1{
+.friend-div .friend-list-1{
   padding: 0;
 
 }
 
-.friend-list-1 li{
+.friend-div .friend-list-1 li{
   display: flex;
   margin-bottom: 10px;
 }
-.friend-list-1 li .left{
+.friend-div .friend-list-1 li .left{
   display: flex;
   /*justify-content: space-between;*/
   align-items: center;
   width: 100%;
 }
-.friend-list-1 li .left .img-wrap{
+.friend-div .friend-list-1 li .left .img-wrap{
   width: 32px;
   height: 32px;
   background-color: yellow;
@@ -120,36 +120,36 @@
   overflow: hidden;
   border-radius: 100%;
 }
-.friend-list-1 li .left .img-wrap .img{
+.friend-div .friend-list-1 li .left .img-wrap .img{
   width: 100%;
 }
-.friend-list-1 li .left .name{
+.friend-div .friend-list-1 li .left .name{
   margin-bottom: 0;
 }
 
-.friend-list-1 li .left .btn-link{
+.friend-div .friend-list-1 li .left .btn-link{
   text-decoration: none;
   color: #F46B3F;
 }
-.friend-list-1 li .right{
+.friend-div .friend-list-1 li .right{
   /*background-color: #2FB403;*/
 }
 
-.friend-list-2{
+.friend-div .friend-list-2{
   padding: 0;
 
 }
-.friend-list-2 li{
+.friend-div .friend-list-2 li{
   display: flex;
   margin-bottom: 10px;
 }
-.friend-list-2 li .left{
+.friend-div .friend-list-2 li .left{
   display: flex;
   /*justify-content: space-between;*/
   align-items: center;
   width: 100%;
 }
-.friend-list-2 li .left .img-wrap{
+.friend-div .friend-list-2 li .left .img-wrap{
   width: 32px;
   height: 32px;
   background-color: yellow;
@@ -157,18 +157,57 @@
   overflow: hidden;
   border-radius: 100%;
 }
-.friend-list-2 li .left .img-wrap .img{
+.friend-div .friend-list-2 li .left .img-wrap .img{
   width: 100%;
 }
-.friend-list-2 li .left .name{
+.friend-div .friend-list-2 li .left .name{
   margin-bottom: 0;
 }
 
-.friend-list-2 li .left .btn-link{
+.friend-div .friend-list-2 li .left .btn-link{
   text-decoration: none;
   color: #F46B3F;
 }
-.friend-list-2 li .right{
+.friend-div .friend-list-2 li .right{
+  /*background-color: #2FB403;*/
+}
+
+
+
+.friend-list-3{
+  padding: 0;
+
+}
+.friend-list-3 li{
+  display: flex;
+  margin-bottom: 10px;
+}
+.friend-list-3 li .left{
+  display: flex;
+  /*justify-content: space-between;*/
+  align-items: center;
+  width: 100%;
+}
+.friend-list-3 li .left .img-wrap{
+  width: 32px;
+  height: 32px;
+  background-color: yellow;
+  margin-right: 10px;
+  overflow: hidden;
+  border-radius: 100%;
+}
+.friend-list-3 li .left .img-wrap .img{
+  width: 100%;
+}
+.friend-list-3 li .left .name{
+  margin-bottom: 0;
+}
+
+.friend-list-3 li .left .btn-link{
+  text-decoration: none;
+  color: #F46B3F;
+}
+.friend-list-3 li .right{
   /*background-color: #2FB403;*/
 }
 
