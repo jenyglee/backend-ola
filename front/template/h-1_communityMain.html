@@ -300,53 +300,53 @@
         </div>
         <!-- 태그 모음 -->
         <div class="tag-box">
-          <div style="text-align: center">
-            <button type="button" class="btn btn-tag">#등산</button>
-            <button type="button" class="btn btn-tag">#파전</button>
-            <button type="button" class="btn btn-tag">#정상</button>
-            <button type="button" class="btn btn-tag">#야호</button>
-            <button type="button" class="btn btn-tag">#맛집</button>
-            <button type="button" class="btn btn-tag">
-              #막걸리
-            </button>
-            <button type="button" class="btn btn-tag">
-              #등린이
-            </button>
-            <button type="button" class="btn btn-tag">
-              #등산복
-            </button>
-            <button type="button" class="btn btn-tag">
-              #겨울산
-            </button>
-            <button type="button" class="btn btn-tag">
-              #산악회
-            </button>
-            <button type="button" class="btn btn-tag">
-              #등산용품
-            </button>
-            <button type="button" class="btn btn-tag">
-              #등산코스
-            </button>
-            <button type="button" class="btn btn-tag">
-              #금강산
-            </button>
-            <button type="button" class="btn btn-tag">
-              #등산데이트코스
-            </button>
-            <button type="button" class="btn btn-tag">
-              #계절별등산추천
-            </button>
-            <button type="button" class="btn btn-tag">
-              #가을산추천
-            </button>
-            <button type="button" class="btn btn-tag">
-              #금강산도식후경
-            </button>
-            <button type="button" class="btn btn-tag">
-              #야간등산
-            </button>
+          <div id="tag-btn-wrap" style="text-align: center">
+<!--            <button type="button" class="btn btn-tag">#등산</button>-->
+<!--            <button type="button" class="btn btn-tag">#파전</button>-->
+<!--            <button type="button" class="btn btn-tag">#정상</button>-->
+<!--            <button type="button" class="btn btn-tag">#야호</button>-->
+<!--            <button type="button" class="btn btn-tag">#맛집</button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #막걸리-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #등린이-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #등산복-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #겨울산-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #산악회-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #등산용품-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #등산코스-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #금강산-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #등산데이트코스-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #계절별등산추천-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #가을산추천-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #금강산도식후경-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-tag">-->
+<!--              #야간등산-->
+<!--            </button>-->
           </div>
-          <button type="button" class="btn btn-link" style="color: #F46B3F; text-decoration: none;">더보기</button>
+          <button type="button" class="btn btn-link" style="color: #F46B3F; text-decoration: none;" onclick="more()" >더보기</button>
         </div>
       </section>
       <!-- 메인 컨텐츠 -->
@@ -491,10 +491,15 @@
               </a>
             </li>
             <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(0)">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(1)">2</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(2)">3</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(3)">4</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(4)">5</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(5)">6</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(6)">7</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(7)">8</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(8)">9</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(9)">10</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -502,7 +507,7 @@
             </li>
           </ul>
         </nav>
-        <a href="g-3_recommendPost.html" style="text-decoration: none; color : black; position: absolute; bottom: 0; right: 0;">
+        <a href="h-3_communityCreate.html" style="text-decoration: none; color : black; position: absolute; bottom: 0; right: 0;">
           <button type="button" id="btn_1">게시글 작성</button>
         </a>
       </div>
@@ -520,6 +525,7 @@
         $(".bell-dropbox").hide();
         getMenuProfile();
         getCommunityList(0);
+        getHashtagList(0);
         category="0"
       });
       function getMenuProfile(){
@@ -543,20 +549,12 @@
       }
 
 
-
       function getCommunityList(page) {
         formatSearchText();
-        console.log("title : ", title);
-        console.log("contents : ", contents);
-        console.log("nickname : ", nickname);
-
-        // 1. 데이터 초기화를 해야됨.
-
-
         // 2. 통신해서 불러오기
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
+          url: "http://localhost:8080/boards/communities?page=" + page + "&size=16&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
@@ -583,6 +581,8 @@
                 `
               $('#post-list').append(tempBoard);
             }
+
+            $("#total-count").empty();
             let tempTotalCount = `
                 <b>총 <span style="color: #F46B3F">${response.totalCount}</span> 건&nbsp;</b>
               `
@@ -590,6 +590,34 @@
           },
         })
       }
+
+      var morePage = 0;
+      function more(){
+        morePage++;
+        getHashtagList(morePage);
+      }
+
+
+      function getHashtagList(page){
+        console.log("page : ", page)
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/hashtags?offset=" + page + "&limit=10&name=",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success: function (response) {
+            console.log("해시태그 response : ", response);
+            for (let i=0; i<response.data.length; i++){
+              var temp = `
+                <button type="button" class="btn btn-tag">${response.data[i].name}</button>
+              `
+              $("#tag-btn-wrap").append(temp)
+            }
+          },
+        })
+      }
+
       function setCategory(value) {
         category = value;
       }

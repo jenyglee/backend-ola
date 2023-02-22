@@ -392,7 +392,7 @@
                  style="height: 50px; padding-top: 15px; display: flex; justify-content: space-between;">
                 <div class="wrap_2_1_1_1">
                     <div style="height: 50px;">
-                        <b style="font-weight: bold">총 <span style="color : #F46B3F">100</span> 건&nbsp;</b>
+                        <b style="font-weight: bold">총 <span style="color : #F46B3F">32</span> 건&nbsp;</b>
                     </div>
                 </div>
                 <!-- 좋아요 셀렉트박스 -->
@@ -404,7 +404,8 @@
 
             </div>
             <!-- 카드 -->
-            <div class="article-wrap"style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+            <div class="article-wrap" id="cardBody"
+            style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
 <!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
 <!--                    <div class="img-wrap"-->
 <!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
@@ -544,10 +545,10 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(3,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(3,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">4</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -565,8 +566,8 @@
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <!--<script src="https://www.google-analytics.com/analytics.js" async></script>-->
 <script>
-    var searchRegion = "all";
-    var searchSeason = "all";
+    var searchRegion = "";
+    var searchSeason = "";
     var searchScore = 0;
     var searchAltitude = 0;
     var searchOrderByLike = "likeDesc"
@@ -603,7 +604,7 @@
     }
 
     function setRecommendId(id){
-        localStorage.setItem("noticeId", id);
+        localStorage.setItem("recommendId", id);
     }
 
     //파라미터 변수가 이상함..ㅠㅠ
@@ -611,7 +612,7 @@
     //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..? 
     function getRecommendList(page, size, score, season, altitude, region, orderByLike) {
     // 1. 데이터 초기화를 해야됨.
-    $('tbody').empty();
+    $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
     console.log(page, size, score, season, altitude, region, orderByLike)
     // 2. 통신해서 불러오기
@@ -630,30 +631,40 @@
         console.log(response)
         for (let i = 0; i < response.data.length; i++) {
 
+            var imgUrl = response.data[i].imgList[0]
+            if (imgUrl === null) {
+                imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
+            }else if(imgUrl.includes(".png")){
+                imgUrl= "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
+            }
+
+            console.log("response",response)
+            console.log("보드아이디 : ",response.data[i].boardId)
+
           // 데이터 바인딩
-          const temp = `<a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
+          const temp =
+              `
+              <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
+                    <div class="img-wrap"
+                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                        <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                        <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                        <div style="display: flex;">
                             <div class="img-wrap"
-                                 style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                <img style="width: 100%" src=${response.data.imgList[0]} alt="디폴트 산 이미지"/>
+                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
                             </div>
-                            <div class="text-wrap" style="font-size: 14px;">
-                                <p style="margin-bottom: 10px; width: 90%">${response.data.title}</p>
-                                <div style="display: flex;">
-                                    <div class="img-wrap"
-                                         style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                        <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                                    </div>
-                                    <p style="margin-bottom: 0; font-size: 14px;">${response.data.likeCount}</p>
-                                </div>
-                            </div>
-                        </a>`
-          $('.article-wrap').append(temp)
+                            <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
+                        </div>
+                    </div>
+                </a>
+              `
+          $('#cardBody').append(temp)
         }
       },
     })
-  }
-  function setRecommendId(id){
-    localStorage.setItem("recommendId", id);
   }
 
   function regionChoice(value){
@@ -682,7 +693,6 @@
     }
     searchRegion = value
   }
-
   
 </script>
 </body>

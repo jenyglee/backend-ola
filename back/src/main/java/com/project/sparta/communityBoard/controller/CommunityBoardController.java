@@ -62,7 +62,9 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "8") int size,
         @RequestParam String title,
         @RequestParam String contents,
-        @RequestParam String nickname) {
+        @RequestParam String nickname
+        //@RequestParam Long hashtagId
+    ) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
             page, size, title, contents, nickname);
         return new ResponseEntity<>(result, HttpStatus.OK);

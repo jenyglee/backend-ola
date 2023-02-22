@@ -79,10 +79,12 @@
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
       <div class="item-list">
-        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f"
-          >코스추천</a
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a
+          href="./h-1_communityMain.html"
+          style="font-weight: bold; color: #f46b3f"
+          >커뮤니티</a
         >
-        <a href="h-1_communityMain.html">커뮤니티</a>
         <a href="./i-1_shopMain.html">쇼핑몰</a>
         <a href="./j-1_noticeMain.html">공지사항</a>
       </div>
@@ -97,7 +99,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="exampleFormControlInput0"
+                  id="exampleFormControlInput1"
                   placeholder="닉네임 검색"
                 />
               </div>
@@ -273,41 +275,14 @@
             </ul>
           </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-          <div class="img-wrap">
-            <img class="img" src="./../static/img/icon_profile_default.png " />
-          </div>
-          <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+          <!--        <div class="img-wrap">-->
+          <!--          <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+          <!--        </div>-->
+          <!--        <p class="text">나와바리나와바님</p>-->
         </a>
       </div>
     </header>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png" />
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
-<!--      <div class="img-wrap">-->
-<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-<!--      </div>-->
-<!--      <p class="text">나와바리나와바님</p>-->
-    </a>
-  </div>
-
     <!-- ############# 작업공간 #############-->
     <main class="container">
       <h3 style="margin: 30px 0; font-weight: bold">코스추천 수정</h3>
@@ -358,7 +333,7 @@
           />
         </div>
         <p class="inputLabel">내용</p>
-        <div class="w_7">
+        <div class="w_7" id="contentswrap">
           <textarea
             class="form-control"
             id="recommend-contents"
@@ -378,50 +353,59 @@
         <!--        </div>-->
 
         <div class="w_8">
-          <input
-            class="form-control"
-            type="file"
-            id="formFileMultiple"
-            multiple
-          />
+          <form method="post" enctype="multipart/form-data">
+            <input
+              type="file"
+              id="chooseFile"
+              name="chooseFile"
+              accept="image/*"
+              multiple
+              onchange="imgUpload()"
+            />
+            <div id="img-wrap" style="display: flex; gap: 5px">
+              <!-- 이미지 들어가는 자리 -->
+            </div>
+          </form>
         </div>
         <div class="w_9">
           <div class="b_1">
-            <button type="button" id="btn_1">게시글 등록</button>
+            <button type="button" id="btn_1" onclick="updateRecommend()">
+              게시글 등록
+            </button>
           </div>
         </div>
       </section>
     </main>
-
-
-<script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-    getMenuProfile();
-  });
-  function getMenuProfile(){
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
-          </div>
-          <p class="text">${menuProfile.sub}님</p>
-`
-    $("#my-profile").append(tempProfile);
-  }
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
+    <script>
+      $(document).ready(function () {
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
+        getRecommend();
+        getMenuProfile();
+      });
+      function getMenuProfile() {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+                <div class="img-wrap">
+                  <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+                </div>
+                <p class="text">${menuProfile.sub}님</p>
+      `;
+        $("#my-profile").append(tempProfile);
+      }
+      function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+      }
 
       //단건조회로 글 내용 파싱해주고
 
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
+        console.log(id);
         $.ajax({
           type: "GET",
-          url: `http://localhost:8080/boards/recommend/${id}`,
+          url: `http://localhost:8080/boards/recommends/${id}`,
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
@@ -444,72 +428,34 @@
             const likeCount = response.likeCount;
             const nickName = response.nickName;
 
-            for (let i = 0; i < response.data.length; i++) {
-              // 데이터 바인딩
-              const temp = ` <p class="inputLabel">제목</p>
-        <div class="w_2">
-          <input
-            type="text"
-            class="form-control"
-            id="recommend-title"
-          />
-        </div>
-        <p class="inputLabel">점수</p>
-        <div class="w_3">
-          <input
-            type="text"
-            class="form-control"
-            id="recommend-score"
-          />
-        </div>
-        <p class="inputLabel">계절</p>
-        <div class="w_4">
-          <input
-            type="text"
-            class="form-control"
-            id="recommend-season"
-          />
-        </div>
-        <p class="inputLabel">높이</p>
-        <div class="w_5">
-          <input
-            type="text"
-            class="form-control"
-            id="recommend-altitude"
-          />
-        </div>
-        <p class="inputLabel">주소</p>
-        <div class="w_6">
-          <input
-            type="text"
-            class="form-control"
-            id="recommend-region"
-          />
-        </div>
-        <p class="inputLabel">내용</p>
-        <div class="w_7">
-          <textarea
-            class="form-control"
-            id="recommend-contents"
-            rows="3"
-          ></textarea>
-        </div>
+            $("#recommend-title").attr("value", title);
+            $("#recommend-score").attr("value", score);
+            $("#recommend-season").attr("value", season);
+            $("#recommend-altitude").attr("value", altitude);
+            $("#recommend-contents").val(contents);
+            $("#recommend-region").attr("value", region);
+            $("#recommend-likeCount").attr("value", likeCount);
+            $("#recommend-nickName").attr("value", nickName);
 
-              `;
-              $("tbody").append(temp);
+            //사진넣기
+            $("#img-wrap").empty();
+            for (let i = 0; i < response.imgList.length; i++) {
+              var temp = `
+            <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+              <img src=${response.imgList[i]} alt="코스추천 사진" style="width: 100%"/>
+              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                onclick="removeImage(${i})"
+              >
+                <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+              </div>
+            </div>
+          `;
+              $("#img-wrap").append(tempProfile);
+              imageUrlList.push(response.imgList[i]);
             }
           },
         });
 
-        $("#recommend-title").val(title);
-        $("#recommend-score").val(score);
-        $("#recommend-season").val(season);
-        $("#recommend-altitude").val(altitude);
-        $("#recommend-contents").val(contents);
-        $("#recommend-region").val(region);
-        $("#recommend-likeCount").val(likeCount);
-        $("#recommend-nickName").val(nickName);
-        $("#recommend-imgList").val(imgList);
         //값 가져오기
         // $("#exampleFormControlInput1").val();
       }
@@ -522,36 +468,97 @@
         // console.log("$(\"#contents\").val() : ", $("#contents").val())
         // console.log("category : ", category)
         // console.log("id : ", id)
+        console.log("수정 id :" + id);
         $.ajax({
           type: "PATCH",
-          url: `http://localhost:8080/admin/boards/recommends/${id}`,
-          // dataType: "text",
-          contentType: "application/json; charset=utf-8",
+          url: "http://localhost:8080/admin/boards/recommends/" + id,
+          // dataType: "jason",
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
               localStorage.getItem("accessToken")
             );
           },
+          contentType: "application/json; charset=utf-8",
           data: JSON.stringify({
-            title: $("#title").val(),
-            score: $("#score").val(),
-            season: $("#season").val(),
-            altitude: $("#altitude").val(),
-            contents: $("#contents").val(),
-            region: $("#region").val(),
-            likeCount: $("#likeCount").val(),
-            nickName: $("#nickName").val(),
-            imgList: $("#imgList").val(),
+            title: $("#recommend-title").val(),
+            score: $("#recommend-score").val(),
+            season: $("#recommend-season").val(),
+            altitude: $("#recommend-altitude").val(),
+            contents: $("#recommend-contents").val(),
+            region: $("#recommend-region").val(),
+            imgList: imageUrlList,
+
+            // title: "제목",
+            // score: 3,
+            // season: "ㅁㅇ리ㅏㅓㄴㅇ",
+            // altitude: 3234,
+            // contents: "ㄴㅁ이ㅓㅣㅏㄴ어라ㅓㄴㅇ리ㅏㅓ",
+            // region: "ㄴ아ㅣㅓㅏㅣㅁㄴㄹ",
+            // imgList: ["ㄴㄹ어ㅣ마널ㄴㄹㅇㄴㄹ", "너롬나ㅓ로ㅓㅗㄴ라ㅓ나"],
           }),
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
           success: function (response) {
+            console.log("여기뜨니?");
             alert("수정 완료");
             window.location.href = "g-1_recommend.html";
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (request, status, error) {
+            console.log("여기가뜨니?2");
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+            console.log(request, status, error);
+          },
+        });
+      }
+
+      var imageUrlList = [];
+
+      function imgUpload(input) {
+        const accessToken = localStorage.getItem("accessToken");
+
+        const imageInput = $("#chooseFile")[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        console.log("$('#chooseFile'): ", $("#chooseFile"));
+        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+        var formData = new FormData();
+        for (var i = 0; i < imageInput.files.length; i++) {
+          // formData.append("image", imageInput.files[i]);
+          formData.append("multipartFile", imageInput.files[i]);
+          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `http://localhost:8080/s3/file`,
+          // dataType: "json",
+          // dataType: "multipart",
+          enctype: "multipart/form-data",
+          // contentType: "application/json; charset=utf-8",
+          processData: false,
+          contentType: false,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: formData,
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
+          success: function (response) {
+            console.log("여긴 찍혀? 1");
+            console.log("response", response);
+            for (let i = 0; i < response.length; i++) {
+              // imageUrlList.push(response[i].imgList[i]);
+              imageUrlList.push(response[i]);
+            }
+            console.log("imageUrlList : ", imageUrlList);
+            return imageUrlList;
+          },
+          error: function (request, status, error) {
+            console.log(error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
       }

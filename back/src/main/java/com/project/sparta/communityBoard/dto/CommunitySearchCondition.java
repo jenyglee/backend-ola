@@ -9,10 +9,14 @@ public class CommunitySearchCondition {
     private String title;
     private String contents;
     private String nickname;
+    //private Long hashtagId;
 
-    public CommunitySearchCondition(String title, String contents, String nickname) {
+    public CommunitySearchCondition(String title, String contents, String nickname
+        //Long hashtagId
+    ) {
         this.title = title;
         this.contents = contents;
         this.nickname = nickname;
+        //this.hashtagId = hashtagId;
     }
 }
