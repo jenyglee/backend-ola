@@ -200,10 +200,11 @@
             var get_token = xhr.getResponseHeader("Authorization")
             var remove_bearer = get_token.toString().substring(6,get_token.length)
             var result = decodeJWT(remove_bearer)
-
             console.log(result.header)
             console.log(result.payload)
             console.log(result.secret)
+
+            localStorage.setItem("menuProfile", JSON.stringify(result.payload));
 
             alert("로그인 성공")
             if(result.payload.role=="USER") {

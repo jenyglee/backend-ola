@@ -191,9 +191,9 @@
     </style>
   </head>
   <body>
-    <main class="container">
-      <div style="display: flex">
-        <div
+  <main class="container">
+    <div style="display: flex">
+      <div
           style="
             width: 300px;
             height: 100vh;
@@ -201,14 +201,14 @@
             padding-left: 50px;
             background-color: #f46b3f;
           "
-        >
-          <div style="">
-            <div style="font-size: 26px; color: white">
-              <span>이재원</span>
-              <span>매니저</span>
-            </div>
+      >
+        <div style="">
+          <div style="font-size: 26px; color: white">
+            <span>이재원</span>
+            <span>매니저</span>
+          </div>
 
-            <button
+          <button
               style="
                 width: 84px;
                 height: 36px;
@@ -221,93 +221,93 @@
               type="button"
               class="logout"
               onclick=""
-            >
-              로그아웃
-            </button>
-          </div>
-          <div style="margin-top: 100px">
-            <a
+          >
+            로그아웃
+          </button>
+        </div>
+        <div style="margin-top: 100px">
+          <a
               style="text-decoration: none; color: white"
               href="./k-1_manageUser.html"
-              >회원관리</a
-            ><br /><br />
-            <a
+          >회원관리</a
+          ><br /><br />
+          <a
               style="text-decoration: none; color: white"
               href="./l-1_manageRecommend.html"
-              >등산 추천 코스 관리</a
-            ><br /><br />
-            <a
+          >등산 추천 코스 관리</a
+          ><br /><br />
+          <a
               style="text-decoration: none; color: white"
               href="./m-1_manageCommunity.html"
-              >커뮤니티 관리</a
-            ><br /><br />
-            <a
+          >커뮤니티 관리</a
+          ><br /><br />
+          <a
               style="text-decoration: none; color: white"
               href="./n-1_manageNotice.html"
-              ><b>공지사항 관리</b></a
-            >
-          </div>
+          ><b>공지사항 관리</b></a
+          >
         </div>
-        <section style="margin-left: 100px; margin-top: 100px">
-          <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-            작성자
-          </p>
-          <div style="margin-bottom: 30px">
-            <input type="text" class="form-control" id="username" disabled />
-          </div>
-          <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-            카테고리
-          </p>
-          <select
+      </div>
+      <section style="margin-left: 100px; margin-top: 100px">
+        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+          작성자
+        </p>
+        <div style="margin-bottom: 30px">
+          <input type="text" class="form-control" id="username" disabled />
+        </div>
+        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+          카테고리
+        </p>
+        <select
             class="form-serch-select form-select"
             aria-label="Default select example"
             style="margin-bottom: 30px"
             onchange="setCategory(value)"
-          >
-            <option id="option-1" value="0">서비스</option>
-            <option id="option-2" value="1">업데이트</option>
-            <option id="option-3" value="2">이벤트</option>
-          </select>
-          <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-            제목
-          </p>
-          <div style="margin-bottom: 30px">
-            <input
+        >
+          <option id="option-1" value="0">서비스</option>
+          <option id="option-2" value="1">업데이트</option>
+          <option id="option-3" value="2">이벤트</option>
+        </select>
+        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+          제목
+        </p>
+        <div style="margin-bottom: 30px">
+          <input
               type="text"
               class="form-control"
               id="title"
               placeholder="제목을 입력하세요"
-            />
-          </div>
+          />
+        </div>
+        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+          게시일
+        </p>
+        <div style="margin-bottom: 30px">
+          <input type="text" class="form-control" id="createAt" disabled />
+        </div>
+        <div style="margin-bottom: 30px">
           <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-            게시일
+            내용
           </p>
-          <div style="margin-bottom: 30px">
-            <input type="text" class="form-control" id="createAt" disabled />
-          </div>
-          <div style="margin-bottom: 30px">
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-              내용
-            </p>
-            <textarea
+          <textarea
               class="form-control"
               id="contents"
               rows="3"
               placeholder="내용을 입력하세요"
-            ></textarea>
-          </div>
-          <div>
-            <button type="button" id="btn_1" onclick="deleteNotice()">
-              삭제
-            </button>
-            <button type="button" id="btn_2" onclick="updateNotice()">
-              수정
-            </button>
-            <button type="button" id="btn_3">목록</button>
-          </div>
-        </section>
-      </div>
-    </main>
+          ></textarea>
+        </div>
+        <div>
+          <button type="button" id="btn_1" onclick="deleteNotice()">
+            삭제
+          </button>
+          <button type="button" id="btn_2" onclick="updateNotice()">
+            수정
+          </button>
+          <button type="button" id="btn_3">목록</button>
+        </div>
+      </section>
+    </div>
+  </main>
     <script>
       let category;
       $(document).ready(function () {
@@ -315,8 +315,13 @@
         category = "0";
       });
 
-      function getNotice() {
-        const id = localStorage.getItem("noticeId");
+    function listNotice(){
+        window.location.href="n-1_manageNotice.html"
+    }
+
+    function getNotice(){
+        const id = localStorage.getItem("noticeId")
+
         $.ajax({
             type: "GET",
             url: `http://localhost:8080/admin/boards/notices/${id}`,
@@ -354,6 +359,10 @@
             $("#contents").val(contents);
           },
         });
+      }
+      function setCategory(value)
+      {
+        console.log(value)
       }
 
       function updateNotice() {

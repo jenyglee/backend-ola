@@ -4,37 +4,26 @@ package com.project.sparta.recommendCourse.service;
 import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.friend.dto.FriendInfoReponseDto;
 import com.project.sparta.like.repository.LikeRecommendRepository;
-import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
-import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
-import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,6 +61,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             recommendCourseBoardImgRepository.save(courseImg);
         }
         recommendCourseBoardRepository.save(board);
+
     }
 
 
@@ -86,7 +76,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     //코스 수정
     @Override
     public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
-
         //수정하고자 하는 board 있는지 확인
         RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
@@ -117,10 +106,12 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         //게시글 다시 등록
         recommendCourseBoardRepository.saveAndFlush(board);
+
     }
 
     /**
      * 코스추천 삭제 메서드
+     *
      * @param id : 삭제할 게시글 아이디
      */
 
@@ -130,7 +121,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //삭제하려는 board 있는지 확인
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
-        
+
         //board의 작성자 맞는지 확인
         if (!post.getUserId().equals(userId)) {
             throw new CustomException(Status.NO_PERMISSIONS_POST);
@@ -164,7 +155,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             Collectors.toList()));
     }
 
-    //내가 쓴 게시물 조회
+    //내가 쓴 코스 추천 조회
     @Override
     public PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user) {
 
@@ -225,6 +216,4 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());
     }
-
-
 }
