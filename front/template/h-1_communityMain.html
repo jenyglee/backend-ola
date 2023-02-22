@@ -282,6 +282,7 @@
           <select
             class="form-serch-select form-select"
             aria-label="Default select example"
+            onchange="setCategory(value)"
           >
             <option value="0">제목</option>
             <option value="1">내용</option>
@@ -291,11 +292,11 @@
           <input
             type="text"
             class="form-control"
-            id="textFormControlInput1"
+            id="serch-text"
             placeholder="검색어를 입력해주세요"
           />
           <!-- 검색버튼 -->
-          <button type="button" class="btn btn-primary btn-search">검색</button>
+          <button type="button" class="btn btn-primary btn-search" onclick="getCommunityList(0)">검색</button>
         </div>
         <!-- 태그 모음 -->
         <div class="tag-box">
@@ -352,8 +353,8 @@
       <section class="content">
         <div class="select-like-div" style="display: flex; justify-content: space-between;">
           <!-- 좋아요 셀렉트박스 -->
-          <div>
-            <b>총 <span style="color: #F46B3F">100</span> 건&nbsp;</b>
+          <div id="total-count">
+<!--            <b>총 <span style="color: #F46B3F">100</span> 건&nbsp;</b>-->
           </div>
           <select
             class="select-like form-serch-select form-select"
@@ -364,119 +365,119 @@
           </select>
         </div>
         <!-- 카드 -->
-        <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px " id="postList">
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
-          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
-            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />
-            </div>
-            <div class="text-wrap" style="font-size: 14px;">
-              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>
-              <div style="display: flex;">
-                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                </div>
-                <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-              </div>
-            </div>
-          </a>
+        <div id="post-list" class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--              <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지" />-->
+<!--            </div>-->
+<!--            <div class="text-wrap" style="font-size: 14px;">-->
+<!--              <p style="margin-bottom: 10px; width: 90%">같이 등산해요~같이 등산해요~같이 등산해요~같이 등산해요~</p>-->
+<!--              <div style="display: flex;">-->
+<!--                <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                  <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />-->
+<!--                </div>-->
+<!--                <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a>-->
 
         </div>
       </section>
@@ -489,9 +490,11 @@
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(0)">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -507,11 +510,17 @@
       </section>
     </main>
     <script>
+      const accessToken = localStorage.getItem("accessToken")
+      var category = ""
+      var title = ""
+      var contents = ""
+      var nickname = ""
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
-        handleDataTest();
         getMenuProfile();
+        getCommunityList(0);
+        category="0"
       });
       function getMenuProfile(){
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
@@ -533,57 +542,74 @@
         $(".bell-dropbox").hide();
       }
 
-      function handleDataTest() {
-        var params = "offset=0&limit=2";
-        $.ajax({
-          type: "GET",
-          url: "http://localhost:8080/notice-boards?offset=0&limit=2",
-          beforeSend: function (xlr){
-            xlr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEyIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYyNTQzOTMsImlhdCI6MTY3NjI1MDc5M30.T9Wz7j9JnhRA7CxXU1npadUg_2Fp32AWlxBEL7tIp1A")
-          },
-          // data: {
-          //   name: "sasas",
-          // },
-          success: function (response) {
-            console.log("response.currentPage : ", response.currentPage)
-            console.log("response.totalCount : ", response.totalCount)
-            console.log("response.data : ", response.data)
 
 
+      function getCommunityList(page) {
+        formatSearchText();
+        console.log("title : ", title);
+        console.log("contents : ", contents);
+        console.log("nickname : ", nickname);
 
-            // alert(response.msc)
-            // window.location.reload();
-          },
-        })
-      }
-      function getCommunityList(offset) {
         // 1. 데이터 초기화를 해야됨.
-        $('#postList').empty();
+
 
         // 2. 통신해서 불러오기
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/community_boards?offset=" + offset + "&limit=10",
+          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
           beforeSend: function (xlr) {
-            xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
+            xlr.setRequestHeader("Authorization", accessToken)
           },
-          data: {},
           success: function (response) {
+            console.log("response", response);
+            $('#post-list').empty();
             for (let i = 0; i < response.data.length; i++) {
-              let temp =
-                      `
-                <tr>
-                    <td>서비스</td>
-                   <td><a href="h-2_communityDetail.html">22000</a></td> // 누르면 이 게시글의 ID를 localStorage.set("boardId", "내가누른 게시글ID")
-                    <td>2023-02-11</td>
-                </tr>
-                        `
-              $('#PostList').append(temp)
+              let tempBoard =
+                `
+                  <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setCommunityId(${response.data[i].boardId})">
+                    <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                      <img style="width: 100%" src=${response.data[i].imgList[0]} alt="산 이미지" />
+                    </div>
+                    <div class="text-wrap" style="font-size: 14px;">
+                      <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                      <div style="display: flex;">
+                        <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                          <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                        </div>
+                        <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].communityLikeCnt}</p>
+                      </div>
+                    </div>
+                  </a>
+                `
+              $('#post-list').append(tempBoard);
             }
+            let tempTotalCount = `
+                <b>총 <span style="color: #F46B3F">${response.totalCount}</span> 건&nbsp;</b>
+              `
+            $("#total-count").append(tempTotalCount)
           },
         })
       }
+      function setCategory(value) {
+        category = value;
+      }
 
+      function formatSearchText(){
+        title = "";
+        contents = "";
+        nickname = "";
+        if(category == "0"){
+          title = $("#serch-text").val();
+        }else if(category == "1"){
+          contents = $("#serch-text").val();
+        }else if(category == "2"){
+          nickname = $("#serch-text").val();
+        }
+      }
+
+      function setCommunityId(id){
+        localStorage.setItem("communityId", id)
+      }
 
     </script>
   </body>

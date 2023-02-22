@@ -110,7 +110,6 @@ public class RecommendCourseController {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }
 
-    // TODO 코스추천 전체 조회 -> "구현 완료"
     @ApiOperation(value = "코스 추천 전체 조회", response = Join.class)
     @GetMapping("/recommends")
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(
