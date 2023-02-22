@@ -12,5 +12,5 @@ public interface RecommendCourseBoardImgRepository extends JpaRepository<Recomme
 
     @Modifying
     @Query("delete from RecommendCourseImg r where r.recommendCourseBoard.id=:boardId")
-    void deleteBoard(Long boardId);
+    void deleteBoard(@Param("boardId") Long boardId);
 }
