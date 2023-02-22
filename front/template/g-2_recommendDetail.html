@@ -373,8 +373,8 @@
     <main class="container">
       <section class="detailBoard">
         <!--   작업공간   -->
-        <!-- <div class="wrap">
-          <div class="w_1">
+        <div class="wrap" id="boardWrap">
+          <!-- <div class="w_1">
             <div class="w_1_1"></div>
             <div class="score">
               <b style="color: #f46b3f">4.0</b>
@@ -442,8 +442,9 @@
           <!--                    <button type="button" id="btn_2">삭제</button>-->
           <!--                </div>-->
           <!--            </div>-->
+        </div>
           <div class="btns">
-            <button type="button" class="modifyBtn btn btn-primary btn-search" onclick="moveModifyPage()">
+            <button type="button" class="modifyBtn btn btn-primary btn-search" onclick="location.href='g-4_recommendModify.html'">
               수정
             </button>
             <button
@@ -468,7 +469,6 @@
     <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
     <script>
       $(document).ready(function () {
-       
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getMenuProfile();
@@ -497,10 +497,10 @@
       // 단건 코스조회
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
-        console.log("보드아이디 : ", id)
+        console.log("보드아이디 : ", id);
         $.ajax({
           type: "GET",
-          url: `http://localhost:8080/boards/recommend/` + id,
+          url: `http://localhost:8080/boards/recommends/${id}`,
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
@@ -523,29 +523,29 @@
             const likeCount = response.likeCount;
             const nickName = response.nickName;
 
-            for (let i = 0; i < response.data.length; i++) {
-              // 데이터 바인딩
-              const temp = `
-              <div class="wrap">
+            // for (let i = 0; i < response.data.length; i++) {
+            console.log("이거 되니?");
+            // 데이터 바인딩
+            const temp = `
               <div class="w_1">
-              <div class="w_1_1"></div>
-              <div class="score">
-              <b style="color: #f46b3f">${score}</b>
-              </div>
-              <div class="title">
-              <h3>${title}</h3>
-              </div>
-              <div class="season">
+            <div class="w_1_1"></div>
+            <div class="score">
+              <b style="color: #f46b3f">4.0</b>
+            </div>
+            <div class="title">
+              <h3>북한산 최정상 코스!</h3>
+            </div>
+            <div class="season">
               <b style="color: #f46b3f">${season}</b>
               <b>이 최고의 계절</b>
-              </div>
-              <div class="above">
-              <b>해발 ${altitude}/b>
+            </div>
+            <div class="above">
+              <b>해발 ${altitude}</b>
             </div>
             <div class="w_1_1"></div>
           </div>
           <div class="w_2">
-            <img src=${imgList[0]} />
+            <img src=${imgList[0]} alt = "이미지" />
           </div>
 
           <hr />
@@ -565,8 +565,7 @@
           </div>
           <br />
               `;
-              $("tbody").append(temp);
-            }
+            $("#boardWrap").append(temp);
           },
         });
       }
@@ -598,6 +597,58 @@
             console.log(
               "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
             );
+          },
+        });
+      }
+
+
+
+       var imageUrlList = [];
+
+      function imgUpload(input) {
+        const accessToken = localStorage.getItem("accessToken");
+
+        const imageInput = $("#chooseFile")[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        console.log("$('#chooseFile'): ", $("#chooseFile"));
+        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+        var formData = new FormData();
+        for (var i = 0; i < imageInput.files.length; i++) {
+          // formData.append("image", imageInput.files[i]);
+          formData.append("multipartFile", imageInput.files[i]);
+          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `http://localhost:8080/s3/file`,
+          // dataType: "json",
+          // dataType: "multipart",
+          enctype: "multipart/form-data",
+          // contentType: "application/json; charset=utf-8",
+          processData: false,
+          contentType: false,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: formData,
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
+          success: function (response) {
+            console.log("여긴 찍혀? 1");
+            console.log("response", response);
+            for (let i = 0; i < response.length; i++) {
+              // imageUrlList.push(response[i].imgList[i]);
+              imageUrlList.push(response[i]);
+            }
+            console.log("imageUrlList : ", imageUrlList);
+            return imageUrlList;
+          },
+          error: function (request, status, error) {
+            console.log(error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
       }
