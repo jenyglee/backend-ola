@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class GetMyRecommendCourseResponseDto {
     private String title;
     private LocalDateTime localDateTime;
-
     private String nickName;
 
     private Long likeCount;
