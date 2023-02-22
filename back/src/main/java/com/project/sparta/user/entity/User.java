@@ -45,10 +45,10 @@ public class User extends Timestamped {
     private StatusEnum status;
 
     @Column
-    private Long enterCount;
+    private int enterCount = 0;
 
     @Column
-    private Long makeCount;
+    private int makeCount = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();

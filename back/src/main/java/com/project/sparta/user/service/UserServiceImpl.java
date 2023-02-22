@@ -2,6 +2,8 @@ package com.project.sparta.user.service;
 
 import com.project.sparta.admin.dto.UserGradeDto;
 import com.project.sparta.admin.dto.UserStatusDto;
+import com.project.sparta.hashtag.dto.HashtagResponseDto;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.repository.BoardRepository;
@@ -14,6 +16,7 @@ import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
+import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
     private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
     private final BoardRepository boardRepository;
+    private final RecommendCourseBoardRepository recommendRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtUtil jwtUtil;
 
@@ -53,8 +57,16 @@ public class UserServiceImpl implements UserService {
     public void signup(UserSignupDto signupDto) {
         // 1. User를 생성해서 repository에 저장한다.
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
-        User user1 = new User(signupDto.getEmail(), encodedPassword, signupDto.getNickName(), signupDto.getAge(), signupDto.getPhoneNumber(), signupDto.getImageUrl());
-        User saveUser = userRepository.save(user1);
+        User user = User.userBuilder()
+            .email(signupDto.getEmail())
+            .password(encodedPassword)
+            .nickName(signupDto.getNickName())
+            .age(signupDto.getAge())
+            .phoneNumber(signupDto.getPhoneNumber())
+            .userImageUrl(signupDto.getImageUrl())
+            .build();
+
+        User saveUser = userRepository.save(user);
 
         System.out.println(signupDto.getEmail());
         System.out.println(signupDto.getPassword());
@@ -90,7 +102,7 @@ public class UserServiceImpl implements UserService {
         String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
         TokenDto tokenDto = new TokenDto(
-                jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
+                jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
                 refresh_token,
                 user.getRole()
         );
@@ -148,23 +160,35 @@ public class UserServiceImpl implements UserService {
 
     // 내 정보 조회
     @Override
-    public void getMyInfo(User user) {
+    public InfoResponseDto getMyInfo(User user) {
         // 내가 쓴 커뮤니티 글 개수
-        Long aLong = boardRepository.countByUserId(user.getId());
-        System.out.println("aLong = " + aLong);
+        Long communityCount = boardRepository.countByUserId(user.getId());
 
         // 내가 쓴 코스추천 글 개수
-        // Long aLong1 = recommandCoursePostRepository.co(user.getId());
-        // System.out.println("aLong1 = " + aLong1);
+        Long recommendCount = recommendRepository.countByUserId(user.getId());
 
         // 내가 참여한 크루 수
-        System.out.println("user.getEnterCount() = " + user.getEnterCount());
-        //
+        int enterCount = user.getEnterCount();
+
         // 내가 만든 크루 수
-        System.out.println("user.getMakeCount() = " + user.getMakeCount());
-        //
-        // 내 해시태그 리스트
-        System.out.println("user.getTags() = " + user.getTags());
+        int makeCount = user.getMakeCount();
+
+        // 나의 해시태그
+        List<UserTag> userTags = userTagRepository.findAllByUser(user);
+        List<HashtagResponseDto> hashtagList = new ArrayList<>();
+        for (UserTag tag : userTags) {
+            hashtagList.add(new HashtagResponseDto(tag.getTag().getId(), tag.getTag().getName()));
+        }
+
+        return InfoResponseDto.builder()
+            .nickName(user.getNickName())
+            .communityCount(communityCount)
+            .recommendCount(recommendCount)
+            .enterCount(enterCount)
+            .makeCount(makeCount)
+            .tagList(hashtagList)
+            .userGradeEnum(user.getGradeEnum())
+            .build();
     }
 
     @Override
@@ -189,7 +213,7 @@ public class UserServiceImpl implements UserService {
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
             TokenDto new_tokenDto = new TokenDto(
-                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole()),
+                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
                     new_refresh_token,
                     user.getRole()
             );
@@ -261,9 +285,10 @@ public class UserServiceImpl implements UserService {
             .age(user.getAge())
             .email(user.getEmail())
             .phoneNumber(user.getPhoneNumber())
-            .userRoleEnum(user.getRole())
+            .userGradeEnum(user.getGradeEnum())
             .createdAt(user.getCreateAt())
             .modifiedAt(user.getModifiedAt())
+            .profileImage(user.getUserImageUrl())
             .build();
     }
 
