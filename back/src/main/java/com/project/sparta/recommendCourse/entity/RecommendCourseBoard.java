@@ -65,19 +65,7 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-//    @Builder
-//    public RecommendCourseBoard(String title, String contents, int score, String season,
-//        int altitude, Long userId, List<RecommendCourseImg> images
-//    ) {
-//        this.title = title;
-//        this.contents = contents;
-//        this.season = season;
-//        this.score = score;
-//        this.altitude = altitude;
-//        this.postStatus = PostStatusEnum.VAILABLE;
-//        this.userId = userId;
-//        this.images = images;
-//    }
+
 
     public void modifyRecommendCourseBoard(RecommendRequestDto requestDto, Long userId,
         List<RecommendCourseImg> images
@@ -91,8 +79,6 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
         // this.images = images;
     }
-
-
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;

@@ -1,6 +1,8 @@
 package com.project.sparta.recommendCourse.repository;
 
 
+import static com.project.sparta.communityBoard.entity.QCommunityBoard.communityBoard;
+
 import com.project.sparta.like.entity.CourseLike;
 import com.project.sparta.like.entity.QCourseLike;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
@@ -15,6 +17,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberPath;
@@ -52,8 +55,9 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
         BooleanBuilder builder = new BooleanBuilder();
         StringPath aliasLike = Expressions.stringPath("likeCount");
+        StringPath boardId = Expressions.stringPath("boardId");
 
-        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(orderByLike, aliasLike);
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(orderByLike, aliasLike, boardId);
 
         if (score > 0) {
             builder.and(reBoard.score.loe(score));
@@ -67,11 +71,12 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         if (region != null) {
             builder.and(reBoard.region.contains(region));
         }
-
+//Projections.list(
         List<RecommendResponseDto> boards = queryFactory
             .select(Projections.constructor(RecommendResponseDto.class,
+                reBoard.id.as("boardId"),
                 reBoard.title.as("title"),
-                Projections.list(courseImg.url),
+                JPAExpressions.select(courseImg.url).from(reBoard, courseImg).where(reBoard.id.eq(courseImg.recommendCourseBoard.id)),
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
                 user.nickName.as("nickName"),
@@ -81,11 +86,11 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
             .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
             .where(reBoard.postStatus.eq(postStatusEnum), builder)
-            .distinct()
             .orderBy(orderSpecifiers)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
+
 
         return new PageImpl<>(boards, pageable, boards.size());
     }
@@ -95,6 +100,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
     public RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum) {
 
         Tuple result = queryFactory.select(
+                reBoard.id,
                 reBoard.score,
                 reBoard.title,
                 reBoard.season,
@@ -108,6 +114,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .where(reBoard.postStatus.eq(postStatusEnum), reBoard.id.eq(boardId))
             .fetchOne();
 
+        Long id = result.get(reBoard.id);
         int score = result.get(reBoard.score);
         String title = result.get(reBoard.title);
         String season = result.get(reBoard.season);
@@ -129,6 +136,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .fetch();
 
         RecommendDetailResponseDto recommendDto = RecommendDetailResponseDto.builder()
+            .boardId(id)
             .score(score)
             .title(title)
             .season(season)
@@ -144,19 +152,46 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         return recommendDto;
     }
 
+    // 나의 코스추천 글 조회
+    @Override
+    public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable, PostStatusEnum postStatusEnum, Long userId) {
+
+        List<RecommendResponseDto> boards = queryFactory
+            .select(Projections.constructor(RecommendResponseDto.class,
+                reBoard.id.as("boardId"),
+                reBoard.title.as("title"),
+                courseImg.url.as("img"),
+                ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
+                    .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
+                user.nickName.as("nickName"),
+                reBoard.modifiedAt.as("createDate")))
+            .from(reBoard)
+            .leftJoin(user).on(reBoard.userId.eq(user.Id))
+            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
+            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
+            .where(reBoard.postStatus.eq(postStatusEnum), reBoard.userId.eq(userId))
+            .distinct()
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        return new PageImpl<>(boards, pageable, boards.size());
+    }
+
     //좋아요 필터링
-    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike) {
+    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike, StringPath boardId) {
 
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
-        if (orderByLike.equals("all")) {
-            orderSpecifiers.add(new OrderSpecifier(Order.DESC, reBoard.id));
-        } else if (orderByLike.equals("likeDesc")) {
+        if (orderByLike.equals("likeDesc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC, aliasLike));
         } else if (orderByLike.equals("likeAsc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.ASC, aliasLike));
+        } else if (orderByLike.equals("idDesc")){
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC, boardId));
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
+
 }
 
