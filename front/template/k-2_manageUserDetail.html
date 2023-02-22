@@ -137,11 +137,11 @@
         <section style="margin-left: 100px; margin-top:100px;">
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이메일</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="이메일을 입력하세요">
+                <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요">
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">닉네임</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="닉네임을 입력하세요">
+                <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요">
             </div>
 
 
@@ -150,22 +150,23 @@
                 class="form-serch-select form-select"
                 aria-label="Default select example"
                 style="margin-bottom: 30px"
+                onchange="setValue(value)"
             >
-                <option value="0">등린이</option>
-                <option value="1">등산매니아</option>
-                <option value="2">산신령</option>
+                <option id = "option-0" value="0">등린이</option>
+                <option id = "option-1" value="1">등산매니아</option>
+                <option id = "option-2" value="2">산신령</option>
             </select>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">휴대폰번호</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="휴대폰번호를 입력하세요(-제외)">
+                <input type="text" class="form-control" id="phone" placeholder="휴대폰번호를 입력하세요(-제외)">
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">나이</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="나이를 입력하세요">
+                <input type="text" class="form-control" id="age" placeholder="나이를 입력하세요">
             </div>
             <div style="margin-bottom: 50px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">프로필이미지</p>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                <input class="form-control" type="file" id="img" multiple>
             </div>
             <div>
                 <button type="button" id="btn_1">회원탈퇴</button>
@@ -177,4 +178,107 @@
 </main>
 
 </body>
+<script>
+    $(document).ready(function () {
+        getUser(0,"");
+    });
+    function setValue(value){
+        console.log(value)
+    }
+
+    function listUser(){
+        window.location.href="n-1_manageNotice.html"
+    }
+
+    function getUser(){
+        const id = localStorage.getItem("userId")
+        $.ajax({
+            type: "GET",
+            url: `http://localhost:8080/admin/users/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            // data: {
+            //   name: "sasas",
+            // },
+            success: function (response) {
+                console.log("response : ", response)
+                // 카테고리가 영어로 들어와서 한글로 반환
+
+                $('#email').val(response.email)
+                $('#nickname').val(response.nickName)
+                $('#phone').val(response.phoneNumber)
+                $('#age').val(response.age)
+                $('#img').val(response.img)
+
+                switch (response.grade) {
+                    case 0:
+                        $("#option-0").attr("selected");
+                    case 1:
+                        $("#option-1").attr("selected");
+                    case 2:
+                        $("#option-2").attr("selected");
+                }
+
+            },
+        })
+    }
+// 등급변경
+    function updateUser(){
+        const id = localStorage.getItem("userId")
+        // console.log("$(\"#title\").val() : ", $("#title").val())
+        // console.log("$(\"#contents\").val() : ", $("#contents").val())
+        // console.log("category : ", category)
+        // console.log("id : ", id)
+        $.ajax({
+            type: "PATCH",
+            url: `http://localhost:8080/admin/users/${id}/grade`,
+            // dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            data: JSON.stringify({
+                score : $('#score').val(),
+                title :  $('#title').val(),
+                altitude : $('#altitude').val(),
+                contents : $('#contents').val(),
+                season : $('#season').val(),
+                address : $('#address').val()
+            }),
+            success: function (response) {
+                alert("수정 완료")
+                window.location.href = "n-1_manageNotice.html";
+            },
+            error: function(xhr) {
+                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            },
+        })
+    }
+// 회원 탈퇴 복구
+    function deleteUser(){
+        const id = localStorage.getItem("userId")
+        $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8080/admin/users/${id}/status`,
+            // dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+            },
+            // data: JSON.stringify({
+            //     "title" : $("#title").val(),
+            //     "contents" : $("#contents").val(),
+            //     "category" : category
+            // }),
+            success: function (response) {
+                alert("삭제 완료")
+                window.location.href = "n-1_manageNotice.html";
+            },
+            error: function(xhr) {
+                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            },
+        })
+    }
+</script>
 </html>
