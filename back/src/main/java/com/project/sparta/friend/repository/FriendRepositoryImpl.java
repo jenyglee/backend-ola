@@ -1,5 +1,7 @@
 package com.project.sparta.friend.repository;
 
+import com.project.sparta.friend.entity.Friend;
+import com.project.sparta.friend.entity.QFriend;
 import com.project.sparta.hashtag.entity.QHashtag;
 import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.user.entity.*;
@@ -25,6 +27,8 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
 
     QHashtag hashtag = new QHashtag("Hashtag");
 
+    QFriend friend = new QFriend("friend");
+
     @Override
     public PageImpl<User> randomUser(User userInfo, Pageable pageable, StatusEnum statusEnum) {
 
@@ -40,14 +44,17 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
         // 현재 회원의 태그와 맞는 회원 추출
         List<User> userList = queryFactory.select(user)
             .from(userTag)
-            .join(userTag.user, user)
+            .leftJoin(userTag.user, user)
             .where(user.status.eq(statusEnum),
-                user.Id.ne(userInfo.getId()), builder)
+                    user.Id.ne(userInfo.getId()),
+                    builder)
             .distinct()
             .orderBy(NumberExpression.random().asc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
+
+        getUserTagList(userList);
 
         return new PageImpl<>(userList, pageable, userList.size());
     }
@@ -56,7 +63,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
         List<User> userList = queryFactory.select(user)
             .from(user)
-            .where(user.nickName.eq(targetUserName))
+            .where(user.nickName.contains(targetUserName))
             .orderBy(user.nickName.desc())
             .distinct()
             .offset(pageable.getOffset())

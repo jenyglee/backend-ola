@@ -12,8 +12,8 @@ public interface FriendService {
 
     PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int page, int size, Long userId);  //추천 친구 전체조회
 
-    void addFriend(Long userId, String targetUsername); //친구 추가
-    void deleteFriend(Long targetId);    // 친구 삭제
+    void addFriend(Long userId, Long targetId); //친구 추가
+    void deleteFriend(Long userId, Long targetId);    // 친구 삭제
     PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int page, int size, String targetUsername);    //친구 검색(내친구 포함 모든친구)
 
 }
