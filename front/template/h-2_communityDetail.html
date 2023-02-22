@@ -196,11 +196,11 @@
         display: flex;
         justify-content: center;
         position: relative;
-        margin-bottom: 100px;
+        margin-bottom: 200px;
       }
       .btns {
         position: absolute;
-        bottom: 0;
+        bottom: -100px;
         right: 0;
       }
       .btns > button {
@@ -731,14 +731,24 @@
               <button
                 type="button"
                 class="modifyBtn btn btn-primary btn-search"
+                onclick="moveModifyPage()"
               >
                 수정
               </button>
               <button
                 type="button"
                 class="deleteBtn btn btn-primary btn-search"
+                onclick="deleteCommunity()"
               >
                 삭제
+              </button>
+              <button
+                  type="button"
+                  class="btn btn-primary btn-search"
+                  style="background-color: #f46b3f; border: none; color: white"
+                  onclick="moveMainPage()"
+              >
+                목록
               </button>
             </div>
           </div>
@@ -754,6 +764,7 @@
     </script>
     <script>
       var communityId = localStorage.getItem("communityId");
+      console.log("communityId : ", communityId)
       var accessToken = localStorage.getItem("accessToken");
       $(document).ready(function () {
         $(".friend-dropbox").hide();
@@ -857,7 +868,7 @@
                       <span>${response.commentList[i].contents}</span>
                     </div>
                     <!-- 좋아요 -->
-                    TODO
+                    <!-- TODO 내가 좋아요 누른것만 빨간 하트로 뜨게 수정 -->
                     <div
                       class="commetn-like-box"
                       style="cursor: pointer"
@@ -870,7 +881,7 @@
                   <!-- 날짜 -->
                   <div class="btn-date-wrap">
                     <div class="comment-btn-box">
-
+                      <!-- TODO 자기 userId만 수정 삭제 버튼이 뜨게 수정 -->
                       <button type="button" class="comment-btn">수정</button>
                       <button type="button" class="comment-btn">삭제</button>
                     </div>
@@ -885,6 +896,26 @@
             }
           },
         })
+      }
+
+      function deleteCommunity(){
+        $.ajax({
+          type: "DELETE",
+          url: `http://localhost:8080/boards/communities/${communityId}`,
+          contentType: "application/json; charset=utf-8",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
+          },
+          success: function (response) {
+            alert("삭제 완료");
+            window.location.href = "h-1_communityMain.html";
+          },
+          error: function (xhr) {
+            console.log(
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+            );
+          },
+        });
       }
 
       function deleteCommunityComment() {
@@ -904,11 +935,6 @@
               localStorage.getItem("accessToken")
             );
           },
-          // data: JSON.stringify({
-          //     "title" : $("#title").val(),
-          //     "contents" : $("#contents").val(),
-          //     "category" : category
-          // }),
           success: function (response) {
             alert("삭제 완료");
             window.location.href = "h-1_communityMain.html";
@@ -919,6 +945,14 @@
             );
           },
         });
+      }
+
+      function moveModifyPage(){
+        window.location.href = "h-5_communityModify.html";
+      }
+
+      function moveMainPage(){
+        window.location.href = "h-1_communityMain.html";
       }
     </script>
   </body>

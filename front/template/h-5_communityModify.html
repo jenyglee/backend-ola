@@ -1,486 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="manifest" href="site.webmanifest"/>
-  <link rel="apple-touch-icon" href="icon.png"/>
-  <!-- Place favicon.ico in the root directory -->
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css"/>
-  <link rel="stylesheet" href="../css/main.css"/>
-  <link rel="stylesheet" href="../css/reset.css"/>
-  <link rel="stylesheet" href="../css/menu.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <title>올라 커뮤니티</title>
-  <style>
-    .container {
-      width: 1200px;
-      height: 1200px;
-      padding: 0;
-      /* background-color: #fffbf4; */
-    }
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/menu.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="theme-color" content="#fafafa" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>올라 커뮤니티</title>
+    <style>
+      .container {
+        width: 1200px;
+        padding: 0;
+        margin-bottom: 150px;
+      }
 
-    /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
-    .btn:active, .btn:focus, .btn:hover {
-      outline: none !important;
-      /* box-shadow:none !important; */
-      background-color: #F46B3F;
-      border: 1px solid #F46B3F;
-    }
+      /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+      .btn:active,
+      .btn:focus,
+      .btn:hover {
+        outline: none !important;
+        /* box-shadow:none !important; */
+        background-color: #f46b3f;
+        border: 1px solid #f46b3f;
+      }
 
+      .cteate-post > label {
+        position: absolute;
+        top: 17px;
+        left: 20px;
+        transition: all 0.5s;
+        font-size: 16px;
+        color: gray;
+      }
 
-    /* 제목 및 컨텐츠박스 css */
-    .create-post-box {
-      padding: 100px 0 0 0;
-    }
+      .cteate-content > label {
+        position: absolute;
+        top: 17px;
+        left: 20px;
+        transition: all 0.5s;
+        font-size: 16px;
+        color: gray;
+      }
 
-    .post-title {
-      height: 50px;
-    }
+      .tag-upload-box > span {
+        width: 70px;
+        height: 50px;
+        font-size: 20px;
+        margin: 0;
+      }
 
-    .post-content {
-      height: 300px;
-    }
+      .creat-tag > label {
+        position: absolute;
+        left: 20px;
+        transition: all 0.5s;
+        font-size: 16px;
+        color: gray;
+      }
 
-    .cteate-post, .cteate-content, .creat-tag {
-      position: relative;
-    }
+      .creat-tag > input {
+        width: 1130px;
+        height: 50px;
+      }
 
-    .cteate-post > label {
-      position: absolute;
-      top: 17px;
-      left: 20px;
-      transition: all .5s;
-      font-size: 16px;
-      color: gray;
-    }
+      .b_10_1 input {
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        display: inline-block;
+        border: 1px solid #d2d2d2;
+        margin-left: 10px;
+        top: 30px;
+      }
 
-    .cteate-content > label {
-      position: absolute;
-      top: 17px;
-      left: 20px;
-      transition: all .5s;
-      font-size: 16px;
-      color: gray;
-    }
+      .chatCnt-input {
+        border: 1px solid #d2d2d2;
+        border-radius: 5px;
+      }
 
-    /* 태그 업로드 css */
-    .tag-upload-box {
-      display: flex;
-      justify-content: space-between;
-    }
+      /* 업로드 파일 css */
+      .filebox input[type="file"] {
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+      }
+      .w_2,
+      .w_4,
+      .w_8,
+      .w_9 {
+        padding: 0px;
+        width: 1200px;
+        margin-bottom: 20px;
+      }
+      .w_7 {
+        width: 1200px;
+        /*height: 400px;*/
+      }
+      #btn_1 {
+        width: 200px;
+        height: 50px;
+        border: 1px solid white;
+        background-color: #f46b3f;
+        border-radius: 5px;
+        color: white;
+        float: right;
+      }
+      #btn_2,
+      #btn_3 {
+        width: 100px;
+        height: 100%;
+        border: 1px solid white;
+        color: white;
+        background-color: #f46b3f;
+        border-radius: 5px;
+      }
+      .w_3 input,
+      .w_4 input,
+      .w_5 input {
+        width: 350px;
+      }
+      .w_7 textarea {
+        height: 150px;
+        resize: none;
+      }
+      .w_8 input {
+        width: 500px;
+      }
+      .inputLabel {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .form-control {
+        margin-bottom: 5px;
+      }
+      #tag-search-input {
+        width: 200px;
+      }
 
-    .tag-upload-box > span {
-      width: 70px;
-      height: 50px;
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .creat-tag {
-      width: 1150px;
-    }
-
-    .creat-tag > label {
-      position: absolute;
-      left: 20px;
-      transition: all .5s;
-      font-size: 16px;
-      color: gray;
-    }
-
-    .creat-tag > input {
-      width: 1130px;
-      height: 50px;
-    }
-
-    .b_10_1 input {
-      width: 100px;
-      height: 30px;
-      border-radius: 5px;
-      display: inline-block;
-      border: 1px solid #D2D2D2;
-      margin-left: 10px;
-      top: 30px;
-    }
-
-    .chatCnt-input{
-      border: 1px solid #D2D2D2;
-      border-radius: 5px;
-    }
-
-    /* 업로드 파일 css */
-    .filebox input[type="file"] {
-      position: absolute;
-      width: 0;
-      height: 0;
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-    }
-
-    .filebox .upload-name {
-      display: inline-block;
-      height: 40px;
-      padding: 0 10px;
-      vertical-align: middle;
-      border: 1px solid #dddddd;
-      width: 500px;
-      color: #999999;
-    }
-
-    .upload-label {
-      color: #F46B3F
-    }
-
-    /* 게시글 작성 버튼 css */
-    .create-post {
-      position: relative;
-    }
-
-    .btn-create-post {
-      width: 200px;
-      background-color: #F46B3F;
-      border: 1px solid #F46B3F;
-      position: absolute;
-      right: 10px;
-    }
-
-    /* 태크 셀렉트박스 */
-    .reccomend-tag {
-      display: none;
-    }
-
-  </style>
-</head>
-<body>
-<!-- ############# 네비게이션 #############-->
-<header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-  </div>
-  <div class="item-list">
-    <a href="./g-1_recommend.html">코스추천</a>
-    <a href="h-1_communityMain.html" style="font-weight: bold; color: #F46B3F">커뮤니티</a>
-    <a href="./i-1_shopMain.html">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png"/>
+      .tag-select-box {
+        width: 370px;
+        height: 200px;
+        padding: 20px 20px 0;
+        overflow: scroll;
+        background-color: white;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        margin-top: 10px;
+      }
+      .tag-select-box .item {
+        width: 100%;
+        margin-bottom: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ############# 네비게이션 #############-->
+    <header class="menu">
+      <div class="bg-line"></div>
+      <div class="logo-wrap">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput1"
-                   placeholder="닉네임 검색">
+      <div class="item-list">
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a
+          href="h-1_communityMain.html"
+          style="font-weight: bold; color: #f46b3f"
+          >커뮤니티</a
+        >
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
+      </div>
+      <div class="right">
+        <div class="friend">
+          <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+            <img class="img" src="./../static/img/icon_friends.png" />
           </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn">검색</button>
+          <div class="friend-dropbox">
+            <div class="search-area">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="닉네임 검색"
+                />
+              </div>
+              <div class="btn-wrap">
+                <button type="button" class="btn btn-primary search-btn">
+                  검색
+                </button>
+              </div>
+            </div>
+            <ul class="friend-list">
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+            </ul>
+            <div class="line"></div>
+            <p class="recommend-title">추천 친구</p>
+            <ul class="friend-list">
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-        </ul>
-        <div class="line"></div>
-        <p class="recommend-title">추천 친구</p>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-        </ul>
+        <div class="bell">
+          <div class="icon-bell" onclick="handleToggleBellDropBox()">
+            <img class="img" src="./../static/img/icon_bell.png" />
+          </div>
+          <div class="bell-dropbox">
+            <p>알람</p>
+            <ul>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+          <!--      <div class="img-wrap">-->
+          <!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+          <!--      </div>-->
+          <!--      <p class="text">나와바리나와바님</p>-->
+        </a>
       </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
-<!--      <div class="img-wrap">-->
-<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-<!--      </div>-->
-<!--      <p class="text">나와바리나와바님</p>-->
-    </a>
-  </div>
+    </header>
 
-</header>
-
-<!-- ############# 작업공간 #############-->
-<!-- 메인 컨테이너 -->
-<main class="container">
-  <section class="header">
-    <div class="create-post-box">
-      <div class="mb-3 cteate-post">
-        <label for="titleFormControlInput">채팅방 이름 겸 제목임</label>
-        <input
+    <!-- ############# 작업공간 #############-->
+    <!-- 메인 컨테이너 -->
+    <main class="container">
+      <h3 style="margin: 30px 0; font-weight: bold">커뮤니티 수정</h3>
+      <section>
+        <p class="inputLabel">제목</p>
+        <div class="w_2">
+          <input
             type="text"
-            class="form-control post-title"
-            id="titleFormControlInput"
-        />
-      </div>
-      <div class="mb-3 cteate-content">
-        <!--        <label for="contentFormControlInput">내용</label>-->
-        <textarea type="text"
-                  class="form-control post-content"
-                  id="contentFormControlInput" placeholder="내용"></textarea>
-      </div>
-    </div>
-    <!-- 이미지업로드 쪽 레이아웃 -->
-    <div class="img-upload-box">
-      <div class="mb-3">
-        <div class="filebox">
-          <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">
-          <label for="fileImg" class="upload-label">파일찾기</label>
-          <input type="file" id="fileImg">
+            class="form-control"
+            id="title"
+            placeholder="제목을 입력하세요"
+          />
         </div>
-      </div>
-      <!-- 태그 레이아웃 -->
-      <div class="tag-upload-box">
-        <span>태그</span>
-        <div class="mb-3 creat-tag">
-          <div class="b_10_1">
-            <input type="text" class="tag" id="tag1" value="" placeholder="태그1">
-            <input type="text" class="tag" id="tag2" value="" placeholder="태그2">
-            <input type="text" class="tag" id="tag3" value="" placeholder="태그3">
-            <input type="text" class="tag" id="tag4" value="" placeholder="태그4">
-            <input type="text" class="tag" id="tag5" value="" placeholder="태그5">
-          </div>
-
-          <!--            <input-->
-          <!--              type="text"-->
-          <!--              class="form-control post-content"-->
-          <!--              id="tagFormControlInput"-->
-
-          <!--            />-->
-          <!-- 태그추천 display none -->
-          <div class="reccomend-tag">
-            <select class="form-select" multiple aria-label="multiple select example">
-              <option value="0">#산악회</option>
-              <option value="1">#산속캠핑</option>
-              <option value="2">#산장</option>
-            </select>
+        <p class="inputLabel">내용</p>
+        <div class="w_7">
+          <textarea
+            class="form-control"
+            id="contents"
+            rows="3"
+            placeholder="내용을 입력하세요"
+          ></textarea>
+        </div>
+        <div class="w_8" style="margin-top: 30px">
+          <!--      <input-->
+          <!--          class="form-control"-->
+          <!--          type="file"-->
+          <!--          id="formFileMultiple"-->
+          <!--          multiple-->
+          <!--      />-->
+          <form method="post" enctype="multipart/form-data">
+            <input
+              type="file"
+              id="chooseFile"
+              class="form-control"
+              name="chooseFile"
+              accept="image/*"
+              multiple
+              onchange="imgUpload()"
+            />
+          </form>
+          <div id="img-wrap" style="display: flex; gap: 5px">
+            <!-- 이미지 들어가는 자리 -->
           </div>
         </div>
-      </div>
-      <!-- 크루원 구하기 라디오 박스 -->
-      <div class="creat-post-box">
-        <div class="form-check">
-          <label class="form-check-label" for="flexRadioDefault1">
+        <div
+          style="
+            display: flex;
+            height: 35px;
+            align-items: center;
+            margin-top: 20px;
+          "
+        >
+          <p class="inputLabel" style="margin-right: 20px">태그</p>
+          <input
+            type="text"
+            class="form-control"
+            id="tag-search-input"
+            style="height: 100%; margin-right: 10px; margin-bottom: 0"
+            placeholder="태그를 입력하세요"
+          />
+          <button id="btn_2" type="button" onclick="searchTags()">검색</button>
+          <div
+            id="tag-select-list"
+            style="display: flex; margin-left: 20px"
+          ></div>
+          <p
+            style="
+              margin: 0;
+              font-size: 12px;
+              font-weight: bold;
+              color: #f46b3f;
+              margin-left: 10px;
+              cursor: pointer;
+            "
+            onclick="removeTag()"
+          >
+            전체 지우기
+          </p>
+        </div>
+        <ul class="tag-select-box">
+          <!--      <li class="item">봄산</li>-->
+          <!--      <li class="item">봄산</li>-->
+          <!--      <li class="item">봄산</li>-->
+        </ul>
+        <!--    <div id="tag-wrap" class="w_4">-->
+        <!--      <input-->
+        <!--          type="text"-->
+        <!--          class="form-control"-->
+        <!--          placeholder="태그를 입력하세요"-->
+        <!--      />-->
+        <!--    </div>-->
+
+        <p class="inputLabel" style="margin-right: 20px">태그 직접 추가</p>
+        <div style="display: flex">
+          <input
+            type="text"
+            class="form-control"
+            id="tag-add"
+            style="
+              width: 250px;
+              height: 100%;
+              margin-right: 10px;
+              margin-bottom: 0;
+            "
+            placeholder="태그를 입력하세요"
+          />
+          <button id="btn_3" type="button" onclick="addTag()">추가</button>
+        </div>
+        <div class="form-check" style="margin-top: 40px">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            onchange="checkChat()"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
             크루원 구하기
           </label>
-          <input class="form-check-input" type="radio" name="flexRadioDefault"
-                 id="flexRadioDefault1" value="y">
-          / 참여 인원 : <input class="chatCnt-input" type="number" max="10" min="0" id="chatCnt-input"
-                           style="width: 50px" placeholder="0"> 명(※최대 인원 10명)
+          <p style="font-size: 12px; font-weight: bold">
+            참여 인원 :
+            <input
+              class="chatCnt-input"
+              type="number"
+              max="10"
+              min="0"
+              id="chatCnt-input"
+              style="width: 50px"
+              placeholder="0"
+            />명 (※최대 인원 10명)
+          </p>
         </div>
-        <div>
 
+        <div class="w_9">
+          <div class="b_1">
+            <button type="button" id="btn_1" onclick="updateCommunity()">
+              게시글 수정
+            </button>
+          </div>
         </div>
-        <!-- 게시글 작성 버튼 -->
-        <div class="create-post">
-          <button type="button" class="btn btn-primary btn-create-post" onclick="createPost()">
-            게시글 작성
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-<script>
-  // 파일 업로드 스크립트 설정
-  $("#file").on('change', function () {
-    var fileName = $("#file").val();
-    $(".upload-name").val(fileName);
-  });
-</script>
-<script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-    getMenuProfile();
-  });
+      </section>
+    </main>
+    <script>
+      // 파일 업로드 스크립트 설정
+      $("#file").on("change", function () {
+        var fileName = $("#file").val();
+        $(".upload-name").val(fileName);
+      });
+    </script>
+    <script>
+      var communityId = localStorage.getItem("communityId");
+      var accessToken = localStorage.getItem("accessToken");
+      var imageUrlList = [];
+      var tags = [];
+      var isChat = false;
 
-  function getMenuProfile(){
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    var tempProfile = `
+      $(document).ready(function () {
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
+        getMenuProfile();
+        getCommunity();
+        searchTags();
+        console.log("communityId : ", communityId);
+      });
+
+      function getMenuProfile() {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
           </div>
           <p class="text">${menuProfile.sub}님</p>
-`
-    $("#my-profile").append(tempProfile);
-  }
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
-
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
-
-
-  $('.form-check-input').on('click', function() {
-
-    var valueCheck = $('.form-check-input:checked').val(); // 체크된 Radio 버튼의 값을 가져옵니다.
-
-    if ( valueCheck == 'y' ) {
-      $('.chatCnt-input').attr('disabled', false); // 과일 종류를 입력하는 input 을 활성화합니다.
-      $('.chatCnt-input').focus(); // 과일 종류를 입력하는 input 에 커서를 이동시킵니다.
-    } else {
-      $('.chatCnt-input').val(''); // 입력된 과일 종류 값이 있으면, 초기화합니다.
-      $('.chatCnt-input').attr('disabled', true); // 과일 종류를 입력하는 input 을 비활성화합니다.
-    }
-  });
-
-  function handleCreateGuestBook() {
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-      data: {
-        name: "sasas",
-      },
-      success: function (response) {
-        console.log(response)
-        alert(response.msc)
-        window.location.reload();
-      },
-    })
-  }
-
-  function createPost() {
-    // 1. 데이터 초기화를 해야됨.
-    $('tbody').empty();
-
-    // 2. 통신해서 불러오기
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/community_boards",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader(
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWE0IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzODY1NjQsImlhdCI6MTY3NjM4Mjk2NH0.aLtex_d1IDDAuGBSTD89RGBfaMbMfCDP0vhpKtvyhjI")
-      },
-      data: {
-        title: $('#titleFormControlInput').val(),
-        contents: $('#titleFormControlInput').val(),
-        file: $('#fileImg').val(),
-        tag: Number($('#tagFormControlInput').val()),
-      },
-      success: function (response) {
-        console.log(response);
-        window.location.reload()
+`;
+        $("#my-profile").append(tempProfile);
       }
-    });
-  }
+      function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+      }
 
-  // function donePost(num){
-  // $.ajax({
-  //   type:"POST",
-  //   url: "http://localhost:8080/community_boards",
-  //   data:{numGive :num},
-  // })
-  // }
+      function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+      }
 
+      $(".form-check-input").on("click", function () {
+        var valueCheck = $(".form-check-input:checked").val(); // 체크된 Radio 버튼의 값을 가져옵니다.
 
-</script>
-</body>
+        if (valueCheck == "y") {
+          $(".chatCnt-input").attr("disabled", false); // 과일 종류를 입력하는 input 을 활성화합니다.
+          $(".chatCnt-input").focus(); // 과일 종류를 입력하는 input 에 커서를 이동시킵니다.
+        } else {
+          $(".chatCnt-input").val(""); // 입력된 과일 종류 값이 있으면, 초기화합니다.
+          $(".chatCnt-input").attr("disabled", true); // 과일 종류를 입력하는 input 을 비활성화합니다.
+        }
+      });
+      function getCommunity() {
+        console.log("communityId : ", communityId);
+        console.log("accessToken : ", accessToken);
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/boards/communities/" + communityId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          success: function (response) {
+            console.log("response : ", response);
+            // 제목 넣기
+            $("#title").attr("value", response.title);
+
+            // 내용 넣기
+            $("#contents").val(response.contents);
+
+            // 사진 넣기
+            for (let i = 0; i < response.imgList.length; i++) {
+              var temp = `
+            <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+              <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
+              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                onclick="removeImage(${i})"
+              >
+                <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+              </div>
+            </div>
+          `;
+              $("#img-wrap").append(temp);
+              imageUrlList.push(response.imgList[i]);
+            }
+
+            // 태그 넣기
+            for (let i = 0; i < response.tagList.length; i++) {
+              var temp = `
+            <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+              ${response.tagList[i].id}
+            </div>
+          `;
+              $("#tag-select-list").append(temp);
+              tags.push(response.tagList[i].id);
+            }
+
+            // TODO 크루원 값 받아온 뒤 체크박스에 넣어주기
+          },
+        });
+      }
+
+      function searchTags() {
+        var tagName = $("#tag-search-input").val();
+        console.log("tagName : ", tagName);
+        $.ajax({
+          type: "GET",
+          url:
+            "http://localhost:8080/hashtags?offset=0&limit=20&name=" + tagName,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          success: function (response) {
+            console.log("response : ", response);
+            $(".tag-select-box").empty();
+            for (let i = 0; i < response.data.length; i++) {
+              var temp = `
+            <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+          `;
+              $(".tag-select-box").append(temp);
+            }
+          },
+        });
+      }
+
+      // 수정하기
+      function updateCommunity() {
+        $.ajax({
+          type: "PATCH",
+          url: "http://localhost:8080/boards/communities/" + communityId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify({
+            title: $("#title").val(),
+            contents: $("#contents").val(),
+            chatStatus: "N", // TODO 채팅 구현 후
+            chatMemCnt: 0, // TODO 채팅 구현 후
+            tagList: tags,
+            imgList: imageUrlList,
+          }),
+          success: function (response) {
+            alert("수정완료");
+            window.location.href = "h-1_communityMain.html";
+          },
+        });
+      }
+
+      function removeImage(index) {
+        imageUrlList.splice(index, 1);
+        $("#img-wrap").empty();
+        for (let i = 0; i < imageUrlList.length; i++) {
+          var temp = `
+            <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+              <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
+              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                onclick="removeImage(${i})"
+              >
+                <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+              </div>
+            </div>
+          `;
+          $("#img-wrap").append(temp);
+        }
+      }
+      function addTagList(id) {
+        for (let i = 0; i < tags.length; i++) {
+          if (tags[i] == id) {
+            alert("이미 선택했습니다.");
+            return;
+          }
+        }
+        tags.push(id);
+        $("#tag-select-list").empty();
+        for (let i = 0; i < tags.length; i++) {
+          var temp = `
+        <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+          ${tags[i]}
+        </div>
+      `;
+          $("#tag-select-list").append(temp);
+        }
+      }
+
+      function addTag() {
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/hashtags?name=" + $("#tag-add").val(),
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          success: function (response) {
+            alert("추가 완료");
+            $("#tag-add").empty();
+            searchTags();
+          },
+        });
+      }
+
+      function removeTag() {
+        tags = [];
+        $("#tag-select-list").empty();
+      }
+
+      function checkChat() {}
+
+      function imgUpload(input) {
+        const accessToken = localStorage.getItem("accessToken");
+
+        const imageInput = $("#chooseFile")[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        console.log("$('#chooseFile'): ", $("#chooseFile"));
+        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+        var formData = new FormData();
+        for (var i = 0; i < imageInput.files.length; i++) {
+          // formData.append("image", imageInput.files[i]);
+          formData.append("multipartFile", imageInput.files[i]);
+          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `http://localhost:8080/s3/file`,
+          // dataType: "json",
+          // dataType: "multipart",
+          enctype: "multipart/form-data",
+          // contentType: "application/json; charset=utf-8",
+          processData: false,
+          contentType: false,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: formData,
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
+          success: function (response) {
+            console.log("여긴 찍혀? 1");
+            console.log("response", response);
+            for (let i = 0; i < response.length; i++) {
+              // imageUrlList.push(response[i].imgList[i]);
+              imageUrlList.push(response[i]);
+            }
+            console.log("imageUrlList : ", imageUrlList);
+            return imageUrlList;
+          },
+          error: function (request, status, error) {
+            console.log(error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+          },
+        });
+      }
+    </script>
+  </body>
 </html>
