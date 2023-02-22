@@ -15,6 +15,6 @@ public interface BoardRepositoryCustom {
     CommunityBoardOneResponseDto getBoard(Long boardId, int page, int size);
     Page<CommunityBoardAllResponseDto> communityAllList(
         CommunitySearchCondition condition, Pageable pageable);
-
     Page<CommunityBoardAllResponseDto> communityMyList(Pageable pageable, Long userId);
+
 }
