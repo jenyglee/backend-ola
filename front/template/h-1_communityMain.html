@@ -495,6 +495,11 @@
             <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(2)">3</a></li>
             <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(3)">4</a></li>
             <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(4)">5</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(5)">6</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(6)">7</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(7)">8</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(8)">9</a></li>
+            <li class="page-item"><a class="page-link" href="#" onclick="getCommunityList(9)">10</a></li>
             <li class="page-item">
               <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -556,7 +561,7 @@
         // 2. 통신해서 불러오기
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/boards/communities?page=" + page + "&size=50&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
+          url: "http://localhost:8080/boards/communities?page=" + page + "&size=16&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },

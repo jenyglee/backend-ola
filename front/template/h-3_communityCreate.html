@@ -323,12 +323,23 @@
           ></textarea>
     </div>
     <div class="w_8" style="margin-top: 30px">
-      <input
-          class="form-control"
-          type="file"
-          id="formFileMultiple"
-          multiple
-      />
+<!--      <input-->
+<!--          class="form-control"-->
+<!--          type="file"-->
+<!--          id="formFileMultiple"-->
+<!--          multiple-->
+<!--      />-->
+      <form method="post" enctype="multipart/form-data">
+        <input
+            type="file"
+            id="chooseFile"
+            class="form-control"
+            name="chooseFile"
+            accept="image/*"
+            multiple
+            onchange="imgUpload()"
+        />
+      </form>
       <div id="img-wrap" style="display: flex; gap: 5px">
         <!-- 이미지 들어가는 자리 -->
       </div>
@@ -404,7 +415,7 @@
 <script>
   var communityId = localStorage.getItem("communityId");
   var accessToken = localStorage.getItem("accessToken");
-  var imgUrls = [];
+  var imageUrlList = [];
   var tags = [];
   var isChat = false;
 
@@ -468,7 +479,8 @@
         chatStatus : "N", // TODO 채팅 구현 후
         chatMemCnt : 0,  // TODO 채팅 구현 후
         tagList : tags,
-        imgList : imgUrls
+        // imgList : imageUrlList
+        imgList: imageUrlList,
       }),
       success: function (response) {
         alert("작성완료")
@@ -478,12 +490,12 @@
   }
 
   function removeImage(index){
-    imgUrls.splice(index,1);
+    imageUrlList.splice(index,1);
     $("#img-wrap").empty();
-    for(let i=0; i<imgUrls.length; i++) {
+    for(let i=0; i<imageUrlList.length; i++) {
       var temp = `
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-              <img src=${imgUrls[i]} alt="커뮤니티 사진" style="width: 100%" />
+              <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
               <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
                 onclick="removeImage(${i})"
               >
@@ -549,6 +561,54 @@
         }
       },
     })
+  }
+
+  function imgUpload(input) {
+    const accessToken = localStorage.getItem("accessToken");
+
+    const imageInput = $("#chooseFile")[0];
+    // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+    console.log("$('#chooseFile'): ", $("#chooseFile"));
+    console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+    var formData = new FormData();
+    for (var i = 0; i < imageInput.files.length; i++) {
+      // formData.append("image", imageInput.files[i]);
+      formData.append("multipartFile", imageInput.files[i]);
+      console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+    }
+
+    $.ajax({
+      type: "POST",
+      url: `http://localhost:8080/s3/file`,
+      // dataType: "json",
+      // dataType: "multipart",
+      enctype: "multipart/form-data",
+      // contentType: "application/json; charset=utf-8",
+      processData: false,
+      contentType: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
+      data: formData,
+      xhrFields: {
+        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      },
+      success: function (response) {
+        console.log("여긴 찍혀? 1");
+        console.log("response", response);
+        for (let i = 0; i < response.length; i++) {
+          // imageUrlList.push(response[i].imgList[i]);
+          imageUrlList.push(response[i]);
+        }
+        console.log("imageUrlList : ", imageUrlList);
+        return imageUrlList;
+      },
+      error: function (request, status, error) {
+        console.log(error);
+        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      },
+    });
   }
 
   function removeTag(){
