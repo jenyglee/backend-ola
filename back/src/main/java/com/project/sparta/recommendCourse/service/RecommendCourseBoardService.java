@@ -37,7 +37,7 @@ public interface RecommendCourseBoardService {
     PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user);
 
     //어드민 코스 수정
-    void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto, Long userId);
+    void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto);
 
     //어드민 코스 삭제
     void adminRecommendBoardDelete(Long id);

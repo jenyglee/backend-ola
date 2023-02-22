@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RecommendCourseBoardImgRepository extends JpaRepository<RecommendCourseImg,Long> {
 
-    @Modifying
     @Query("delete from RecommendCourseImg r where r.recommendCourseBoard.id=:boardId")
-    void deleteBoard(Long boardId);
+    @Modifying
+    void deleteBoard(@Param("boardId") Long boardId);
 }

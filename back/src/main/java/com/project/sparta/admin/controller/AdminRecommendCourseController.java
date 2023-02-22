@@ -41,16 +41,16 @@ public class AdminRecommendCourseController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 //
-//    // 코스추천 수정
-//    @PatchMapping("/boards/recommends/{boardId}")
-//    public ResponseEntity updateRecommend(@PathVariable Long boardId, @RequestBody RecommendRequestDto requestDto){
-//        recommendCourseBoardService.adminModifyRecommendCourseBoard(boardId, requestDto);
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
-//
-//    // 코스추천 삭제
-//    @DeleteMapping("/boards/recommends/{boardId}")
-//    public void deleteRecommend(@PathVariable Long boardId){
-//        recommendCourseBoardService.adminDeleteRecommendCourseBoard(boardId);
-//    }
+    // 코스추천 수정
+    @PatchMapping("/boards/recommends/{boardId}")
+    public ResponseEntity updateRecommend(@PathVariable Long boardId, @RequestBody RecommendRequestDto requestDto){
+        recommendCourseBoardService.adminRecommendBoardUpdate(boardId, requestDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    // 코스추천 삭제
+    @DeleteMapping("/boards/recommends/{boardId}")
+    public void deleteRecommend(@PathVariable Long boardId){
+        recommendCourseBoardService.adminRecommendBoardDelete(boardId);
+    }
 }
