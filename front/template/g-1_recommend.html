@@ -237,11 +237,11 @@
                 </ul>
             </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-            <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png "/>
-            </div>
-            <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--            <div class="img-wrap">-->
+<!--                <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--            </div>-->
+<!--            <p class="text">나와바리나와바님</p>-->
         </a>
     </div>
 
@@ -255,27 +255,27 @@
                 <span><b>높이별</b> &nbsp;&nbsp;</span>
                 <div class="form-check form-check-inline" style="width: 65px">
                     <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight1"
-                           value="all" checked>
+                           value="all" onclick="altitudeChoice(0)">
                     <label class="form-check-label" for="inlineRadioHeight1">전체</label>
                 </div>
                 <div class="form-check form-check-inline" style="width: 115px">
                     <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
-                           id="inlineRadioHeight1-1" value="all" checked>
+                           id="inlineRadioHeight1-1" value="all" onclick="altitudeChoice(100)">
                     <label class="form-check-label" for="inlineRadioHeight1-1">100m 이상</label>
                 </div>
                 <div class="form-check form-check-inline" style="width: 115px">
                     <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight2"
-                           value="200">
+                           value="200" onclick="altitudeChoice(200)">
                     <label class="form-check-label" for="inlineRadioHeight2">200m 이상</label>
                 </div>
                 <div class="form-check form-check-inline" style="width: 115px">
                     <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight3"
-                           value="300">
+                           value="300" onclick="altitudeChoice(300)">
                     <label class="form-check-label" for="inlineRadioHeight3">300m 이상</label>
                 </div>
                 <div class="form-check form-check-inline" style="width: 115px">
                     <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight4"
-                           value="400">
+                           value="400" onclick="altitudeChoice(400)">
                     <label class="form-check-label" for="inlineRadioHeight4">400m 이상</label>
                 </div>
             </div>
@@ -283,32 +283,32 @@
                 <span><b>별점순</b> &nbsp;&nbsp;</span>
                 <div class="form-check form-check-inline" style="width: 65px">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadio5"
-                           value="all" checked>
+                           value="all" onclick="scoreChoice(0)">
                     <label class="form-check-label" for="inlineRadio5">전체</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore5-1"
-                           value="1">
+                           value="1" onclick="scoreChoice(1)">
                     <label class="form-check-label" for="inlineRadioScore5-1">1점</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore6"
-                           value="2">
+                           value="2" onclick="scoreChoice(2)">
                     <label class="form-check-label" for="inlineRadioScore6">2점</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore7"
-                           value="3">
+                           value="3" onclick="scoreChoice(3)">
                     <label class="form-check-label" for="inlineRadioScore7">3점</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore8"
-                           value="4">
+                           value="4" onclick="scoreChoice(4)">
                     <label class="form-check-label" for="inlineRadioScore8">4점</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore9"
-                           value="5">
+                           value="5" onclick="scoreChoice(5)">
                     <label class="form-check-label" for="inlineRadioScore9">5점</label>
                 </div>
             </div>
@@ -316,42 +316,42 @@
                 <span><b>지역별</b> &nbsp;&nbsp;</span>
                 <div class="form-check form-check-inline" style="width: 65px">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation10" value="all" checked>
+                           id="inlineRadioLocation10" value="all"  onclick="regionChoice('all')">
                     <label class="form-check-label" for="inlineRadioLocation10">전체</label>
                 </div>
                 <div class="form-check form-check-inline" style="width: 110px">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation10-1" value="서울특별시">
+                           id="inlineRadioLocation10-1" value="서울특별시" onclick="regionChoice('서울특별시')">
                     <label class="form-check-label" for="inlineRadioLocation10-1">서울특별시</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation11" value="경기도">
+                           id="inlineRadioLocation11" value="경기도" onclick="regionChoice('경기도')">
                     <label class="form-check-label" for="inlineRadioLocation11">경기도</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation12" value="강원도">
+                           id="inlineRadioLocation12" value="강원도" onclick="regionChoice('강원도')">
                     <label class="form-check-label" for="inlineRadioLocation12">강원도</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation13" value="충청도">
+                           id="inlineRadioLocation13" value="충청도" onclick="regionChoice('충청도')">
                     <label class="form-check-label" for="inlineRadioLocation13">충청도</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation14" value="전라도">
+                           id="inlineRadioLocation14" value="전라도" onclick="regionChoice('전라도')">
                     <label class="form-check-label" for="inlineRadioLocation14">전라도</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation15" value="경상도">
+                           id="inlineRadioLocation15" value="경상도" onclick="regionChoice('경상도')">
                     <label class="form-check-label" for="inlineRadioLocation15">경상도</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation16" value="제주도">
+                           id="inlineRadioLocation16" value="제주도" onclick="regionChoice('제주도')">
                     <label class="form-check-label" for="inlineRadioLocation16">제주도</label>
                 </div>
             </div>
@@ -359,33 +359,33 @@
                 <span><b>계절별</b> &nbsp;&nbsp;</span>
                 <div class="form-check form-check-inline" style="width: 65px">
                     <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason17" value="all" checked>
+                           id="inlineRadioSeason17" value="all" onclick="seasonChoice('all')">
                     <label class="form-check-label" for="inlineRadioSeason17">전체</label>
                 </div>
 
                 <div class="form-check form-check-inline" style="width: 55px">
                     <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason17-1" value="봄">
+                           id="inlineRadioSeason17-1" value="봄" onclick="seasonChoice('봄')" >
                     <label class="form-check-label" for="inlineRadioSeason17-1">봄</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason18" value="여름">
+                           id="inlineRadioSeason18" value="여름" onclick="seasonChoice('여름')">
                     <label class="form-check-label" for="inlineRadioSeason18">여름</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason19" value="가을">
+                           id="inlineRadioSeason19" value="가을" onclick="seasonChoice('가을')">
                     <label class="form-check-label" for="inlineRadioSeason19">가을</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason20" value="겨울">
+                           id="inlineRadioSeason20" value="겨울" onclick="seasonChoice('겨울')">
                     <label class="form-check-label" for="inlineRadioSeason20">겨울</label>
                 </div>
             </div>
         </div>
-        <div class="wrap_1_5"></div>
+        <div class="wrap_1_5"><button onclick="getRecommendList(0,8,searchScore,searchRegion,searchAltitude,searchSeason,searchOrderByLike)">검색</button></div>
         </div>
         <div class="wrap_2">
             <div class="wrap_2_1_1"
@@ -396,144 +396,143 @@
                     </div>
                 </div>
                 <!-- 좋아요 셀렉트박스 -->
-                <select class="select-like form-serch-select form-select" aria-label="Default select example"
-                        style="width: 130px">
-                    <option value="0">좋아요순</option>
-                    <option value="1">날짜 순</option>
+                <select class="select-like form-serch-select form-select" aria-label="Default select example" id="likeChoice"
+                        style="width: 130px" onclick="orderByLikeChoice(value)">
+                    <option value="0" >좋아요순</option>
+                    <option value="1" >날짜 순</option>
                 </select>
 
             </div>
             <!-- 카드 -->
-            <div class="article-wrap"
-                 style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                    <div class="img-wrap"
-                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
-                    </div>
-                    <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
-                        <div style="display: flex;">
-                            <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                            </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
-                        </div>
-                    </div>
-                </a>
+            <div class="article-wrap"style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--                <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">-->
+<!--                    <div class="img-wrap"-->
+<!--                         style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">-->
+<!--                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>-->
+<!--                    </div>-->
+<!--                    <div class="text-wrap" style="font-size: 14px;">-->
+<!--                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>-->
+<!--                        <div style="display: flex;">-->
+<!--                            <div class="img-wrap"-->
+<!--                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">-->
+<!--                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>-->
+<!--                            </div>-->
+<!--                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </a>-->
             </div>
         </div>
         <!--   페이지네이션/작성버튼     -->
@@ -545,9 +544,10 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(3,8,searchSeason,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">4</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -565,10 +565,27 @@
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <!--<script src="https://www.google-analytics.com/analytics.js" async></script>-->
 <script>
-        
-        $(document).ready(function () {
-        getRecommendList(0,"10",5,"봄",123456,"얍얍",123586);
+    var searchRegion = "all";
+    var searchSeason = "all";
+    var searchScore = 0;
+    var searchAltitude = 0;
+    var searchOrderByLike = "likeDesc"
+
+
+    $(document).ready(function () {
+        getRecommendList(0,8,0,"",0,"","boardId");
     });
+    function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+            <div class="img-wrap">
+              <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+            </div>
+            <p class="text">${menuProfile.sub}님</p>
+        `
+        $("#my-profile").append(tempProfile);
+    }
+
 
     $(document).ready(function () {
         $(".friend-dropbox").hide();
@@ -589,10 +606,14 @@
         localStorage.setItem("noticeId", id);
     }
 
+    //파라미터 변수가 이상함..ㅠㅠ
+    //http://localhost:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
+    //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..? 
     function getRecommendList(page, size, score, season, altitude, region, orderByLike) {
     // 1. 데이터 초기화를 해야됨.
-    $('tbody').empty();
+    $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
+    console.log(page, size, score, season, altitude, region, orderByLike)
     // 2. 통신해서 불러오기
     $.ajax({
       type: "GET",
@@ -608,33 +629,61 @@
         console.log("호출완료");
         console.log(response)
         for (let i = 0; i < response.data.length; i++) {
-
           // 데이터 바인딩
           const temp =
               `
               <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src="/static/img/DefaultMountain.png" alt="디폴트 산 이미지"/>
+                        <img style="width: 100%" src=${response.data[i].imgList[0]} alt="디폴트 산 이미지"/>
                     </div>
                     <div class="text-wrap" style="font-size: 14px;">
-                        <p style="margin-bottom: 10px; width: 90%">월간산이 추천하는 5월에 갈 만한 산 BEST 4</p>
+                        <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
                         <div style="display: flex;">
                             <div class="img-wrap"
-                                 style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
+                                 style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                <img style="width: 100%" src=${response.data.imgList[0]} alt="디폴트 산 이미지"/>
                             </div>
-                            <p style="margin-bottom: 0; font-size: 14px;">5165</p>
+                            <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
                         </div>
                     </div>
                 </a>
               `
-          $('tbody').append(temp)
+          $('#cardBody').append(temp)
         }
       },
     })
   }
+  function setRecommendId(id){
+    localStorage.setItem("recommendId", id);
+  }
 
+  function regionChoice(value){
+    console.log(value)
+    searchRegion = value
+  }
+  function seasonChoice(value){
+    console.log(value)
+    searchSeason = value
+  }
+  function scoreChoice(value){
+    console.log(value)
+    searchScore = value
+  }
+  function altitudeChoice(value){
+    console.log(value)
+    searchAltitude = value
+  }
+
+  function orderByLikeChoice(value){
+    console.log(value)
+    if(value==="0"){
+        searchOrderByLike = "likeDesc"
+    }else{
+        searchOrderByLike = "dateDesc"
+    }
+    searchRegion = value
+  }
   
 </script>
 </body>

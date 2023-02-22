@@ -16,6 +16,9 @@ import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepositoryImpl;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.dto.UserSignupDto;
@@ -60,6 +63,10 @@ public class initDb {
         AdminService adminService;
         @Autowired
         RecommendCourseBoardService recommendCourseBoardService;
+
+        @Autowired
+        RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
+
         @Autowired
         CommunityBoardService communityBoardService;
         @Autowired
@@ -175,6 +182,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(1)
@@ -192,6 +200,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(2)
@@ -317,9 +326,26 @@ public class initDb {
         public void communityLike(){
             User user1 = em.find(User.class, 1L);
             User user2 = em.find(User.class, 2L);
+            User user3 = em.find(User.class, 3L);
+            User user4 = em.find(User.class, 4L);
+            User user5 = em.find(User.class, 5L);
+            User user6 = em.find(User.class, 6L);
+            User user7 = em.find(User.class, 7L);
+            User user8 = em.find(User.class, 8L);
+
             boardLikeService.likeBoard(1L, user1);
+            boardLikeService.likeBoard(1L, user2);
+            boardLikeService.likeBoard(1L, user3);
+            boardLikeService.likeBoard(1L, user4);
+            boardLikeService.likeBoard(1L, user5);
             commentLikeService.likeComment(1L, user1);
             commentLikeService.likeComment(1L, user2);
+            commentLikeService.likeComment(1L, user3);
+            commentLikeService.likeComment(1L, user4);
+            commentLikeService.likeComment(2L, user5);
+            commentLikeService.likeComment(2L, user6);
+            commentLikeService.likeComment(2L, user7);
+            commentLikeService.likeComment(2L, user8);
         }
 
         @Transactional

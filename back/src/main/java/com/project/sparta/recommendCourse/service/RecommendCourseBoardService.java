@@ -8,6 +8,7 @@ import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,13 +34,12 @@ public interface RecommendCourseBoardService {
     PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season, int altitude, String region, String orderByLike);
 
     //내가 쓴 코스추천 전체 조회
-    PageResponseDto<List<GetMyRecommendCourseResponseDto>> getMyRecommendCourseBoard(int page, int size, User user);
+    PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user);
 
+    //어드민 코스 수정
+    void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto);
 
-    //(어드민) 코스 수정
-    void adminModifyRecommendCourseBoard(Long id, RecommendRequestDto requestPostDto);
-
-    //(어드민) 코스 삭제
-    void adminDeleteRecommendCourseBoard(Long id);
+    //어드민 코스 삭제
+    void adminRecommendBoardDelete(Long id);
 
 }

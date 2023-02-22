@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface NaverApiService {
     PageResponseDto<List<ProductResponseDto>> searchItems(String query , int limit, int offset, String sort);
-
-    PageResponseDto<List<ProductResponseDto>> fromJSONtoItems(String response, int offset);
 }

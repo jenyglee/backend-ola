@@ -45,10 +45,10 @@ public class User extends Timestamped {
     private StatusEnum status;
 
     @Column
-    private Long enterCount;
+    private int enterCount = 0;
 
     @Column
-    private Long makeCount;
+    private int makeCount = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
@@ -59,6 +59,11 @@ public class User extends Timestamped {
     public void updateUserTags(List<UserTag> userTagList){
         this.tags = userTagList;
     }
+
+    public void getUserTagList(List<UserTag> userTagList){
+        this.tags = userTagList;
+    }
+
 
     @Builder(builderClassName = "user", builderMethodName = "userBuilder")
     public User(String email, String password, String nickName, int age, String phoneNumber, String userImageUrl) {

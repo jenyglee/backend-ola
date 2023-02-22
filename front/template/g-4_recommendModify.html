@@ -1,180 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css">
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/reset.css">
-  <link rel="stylesheet" href="../css/menu.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <title>올라 코스추천</title>
-  <style>
-    .container{
-      width: 1200px;
-      padding: 0;
-    }
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/menu.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="theme-color" content="#fafafa" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>올라 코스추천</title>
+    <style>
+      .container {
+        width: 1200px;
+        padding: 0;
+      }
 
-    .w_1{
-      width: 1200px;
-      height: 130px;
-    }
-    .w_2, .w_3, .w_4, .w_5, .w_6, .w_8, .w_9{
-      padding: 0px;
-      width: 1200px;
-      height: 55px;
-    }
-    .w_7{
-      width: 1200px;
-      height: 400px;
-    }
-    #btn_1{
-      width: 200px;
-      height : 50px;
-      border: 1px solid white;
-      background-color: #F46B3F;
-      border-radius: 5px;
-      color: white;
-      float: right;
-    }
-    .w_3 input, .w_4 input, .w_5 input{
-      width: 350px;
-    }
-    .w_7 textarea{
-      height: 380px;
-      resize: none;
-    }
-    .w_8 input{
-      width: 500px;
-    }
-    .inputLabel{
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-<!-- ############# 네비게이션 #############-->
-<header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
-  </div>
-  <div class="item-list">
-    <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
-    <a href="h-1_communityMain.html">커뮤니티</a>
-    <a href="./i-1_shopMain.html">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png" />
+      .w_1 {
+        width: 1200px;
+        height: 130px;
+      }
+      .w_2,
+      .w_3,
+      .w_4,
+      .w_5,
+      .w_6,
+      .w_8,
+      .w_9 {
+        padding: 0px;
+        width: 1200px;
+        height: 55px;
+      }
+      .w_7 {
+        width: 1200px;
+        height: 400px;
+      }
+      #btn_1 {
+        width: 200px;
+        height: 50px;
+        border: 1px solid white;
+        background-color: #f46b3f;
+        border-radius: 5px;
+        color: white;
+        float: right;
+      }
+      .w_3 input,
+      .w_4 input,
+      .w_5 input {
+        width: 350px;
+      }
+      .w_7 textarea {
+        height: 380px;
+        resize: none;
+      }
+      .w_8 input {
+        width: 500px;
+      }
+      .inputLabel {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ############# 네비게이션 #############-->
+    <header class="menu">
+      <div class="bg-line"></div>
+      <div class="logo-wrap">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="닉네임 검색">
+      <div class="item-list">
+        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f"
+          >코스추천</a
+        >
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
+      </div>
+      <div class="right">
+        <div class="friend">
+          <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+            <img class="img" src="./../static/img/icon_friends.png" />
           </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn">검색</button>
+          <div class="friend-dropbox">
+            <div class="search-area">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput0"
+                  placeholder="닉네임 검색"
+                />
+              </div>
+              <div class="btn-wrap">
+                <button type="button" class="btn btn-primary search-btn">
+                  검색
+                </button>
+              </div>
+            </div>
+            <ul class="friend-list">
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">1:1 채팅</button>
+                </div>
+              </li>
+            </ul>
+            <div class="line"></div>
+            <p class="recommend-title">추천 친구</p>
+            <ul class="friend-list">
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+              <li>
+                <div class="left">
+                  <div class="img-wrap">
+                    <img
+                      class="img"
+                      src="./../static/img/icon_profile_default.png"
+                    />
+                  </div>
+                  <p class="name">오메가오메오메</p>
+                  <button type="button" class="btn btn-link">친구 추가</button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-        </ul>
-        <div class="line"></div>
-        <p class="recommend-title">추천 친구</p>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-        </ul>
+        <div class="bell">
+          <div class="icon-bell" onclick="handleToggleBellDropBox()">
+            <img class="img" src="./../static/img/icon_bell.png" />
+          </div>
+          <div class="bell-dropbox">
+            <p>알람</p>
+            <ul>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <a class="my-profile-wrap" href="./f-1_myPage.html">
+          <div class="img-wrap">
+            <img class="img" src="./../static/img/icon_profile_default.png " />
+          </div>
+          <p class="text">나와바리나와바님</p>
+        </a>
       </div>
+    </header>
     </div>
     <div class="bell">
       <div class="icon-bell" onclick="handleToggleBellDropBox()">
@@ -194,88 +300,262 @@
         </ul>
       </div>
     </div>
-    <a class="my-profile-wrap" href="./f-1_myPage.html">
-      <div class="img-wrap">
-        <img class="img" src="./../static/img/icon_profile_default.png "/>
-      </div>
-      <p class="text">나와바리나와바님</p>
+    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--      <div class="img-wrap">-->
+<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--      </div>-->
+<!--      <p class="text">나와바리나와바님</p>-->
     </a>
   </div>
 
-</header>
+    <!-- ############# 작업공간 #############-->
+    <main class="container">
+      <h3 style="margin: 30px 0; font-weight: bold">코스추천 수정</h3>
+      <section>
+        <p class="inputLabel">제목</p>
+        <div class="w_2">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-title"
+            placeholder="제목을 입력하세요"
+          />
+        </div>
+        <p class="inputLabel">점수</p>
+        <div class="w_3">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-score"
+            placeholder="점수를 입력하세요"
+          />
+        </div>
+        <p class="inputLabel">계절</p>
+        <div class="w_4">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-season"
+            placeholder="계절을 입력하세요"
+          />
+        </div>
+        <p class="inputLabel">높이</p>
+        <div class="w_5">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-altitude"
+            placeholder="높이를 입력하세요"
+          />
+        </div>
+        <p class="inputLabel">주소</p>
+        <div class="w_6">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-region"
+            placeholder="주소를 입력하세요"
+          />
+        </div>
+        <p class="inputLabel">내용</p>
+        <div class="w_7">
+          <textarea
+            class="form-control"
+            id="recommend-contents"
+            rows="3"
+            placeholder="내용을 입력하세요"
+          ></textarea>
+        </div>
+        <!--        &lt;!&ndash; 이미지업로드 쪽 레이아웃 &ndash;&gt;-->
+        <!--        <div class="img-upload-box">-->
+        <!--            <div class="mb-3">-->
+        <!--                <div class="filebox">-->
+        <!--                    <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
+        <!--                    <label for="file" class="upload-label">파일찾기</label>-->
+        <!--                    <input type="file" id="file">-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
-<!-- ############# 작업공간 #############-->
-<main class="container">
-  <h3 style="margin: 30px 0; font-weight: bold;">코스추천 수정</h3>
-  <section>
-    <p class="inputLabel">제목</p>
-    <div class="w_2">
-      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요">
-    </div>
-    <p class="inputLabel">점수</p>
-    <div class="w_3">
-      <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="점수를 입력하세요">
-    </div>
-    <p class="inputLabel">계절</p>
-    <div class="w_4">
-      <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="계절을 입력하세요">
-    </div>
-    <p class="inputLabel">높이</p>
-    <div class="w_5">
-      <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="높이를 입력하세요">
-    </div>
-    <p class="inputLabel">주소</p>
-    <div class="w_6">
-      <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="주소를 입력하세요">
-    </div>
-    <p class="inputLabel">내용</p>
-    <div class="w_7">
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
-    </div>
-    <!--        &lt;!&ndash; 이미지업로드 쪽 레이아웃 &ndash;&gt;-->
-    <!--        <div class="img-upload-box">-->
-    <!--            <div class="mb-3">-->
-    <!--                <div class="filebox">-->
-    <!--                    <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
-    <!--                    <label for="file" class="upload-label">파일찾기</label>-->
-    <!--                    <input type="file" id="file">-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
+        <div class="w_8">
+          <input
+            class="form-control"
+            type="file"
+            id="formFileMultiple"
+            multiple
+          />
+        </div>
+        <div class="w_9">
+          <div class="b_1">
+            <button type="button" id="btn_1">게시글 등록</button>
+          </div>
+        </div>
+      </section>
+    </main>
 
-    <div class="w_8">
-      <input class="form-control" type="file" id="formFileMultiple" multiple>
-    </div>
-    <div class="w_9">
-      <div class="b_1">
-        <button type="button" id="btn_1">게시글 등록</button>
-      </div>
-    </div>
-  </section>
-</main>
-<!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
 
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-  window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-  ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-</script>
 <script>
   $(document).ready(function () {
     $(".friend-dropbox").hide();
     $(".bell-dropbox").hide();
+    getMenuProfile();
   });
+  function getMenuProfile(){
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    var tempProfile = `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+          </div>
+          <p class="text">${menuProfile.sub}님</p>
+`
+    $("#my-profile").append(tempProfile);
+  }
   function handleToggleBellDropBox() {
     $(".bell-dropbox").toggle();
     $(".friend-dropbox").hide();
   }
 
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
+      //단건조회로 글 내용 파싱해주고
 
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
+      function getRecommend() {
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+          type: "GET",
+          url: `http://localhost:8080/boards/recommend/${id}`,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          // data: {
+          //   name: "sasas",
+          // },
+          success: function (response) {
+            console.log("response : ", response);
+            const score = response.score;
+            const title = response.title;
+            const createDate = response.createDate.substring(0, 10);
+            const season = response.season;
+            const altitude = response.altitude;
+            const contents = response.contents;
+            const region = response.region;
+            const imgList = response.imgList;
+            const likeCount = response.likeCount;
+            const nickName = response.nickName;
+
+            for (let i = 0; i < response.data.length; i++) {
+              // 데이터 바인딩
+              const temp = ` <p class="inputLabel">제목</p>
+        <div class="w_2">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-title"
+          />
+        </div>
+        <p class="inputLabel">점수</p>
+        <div class="w_3">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-score"
+          />
+        </div>
+        <p class="inputLabel">계절</p>
+        <div class="w_4">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-season"
+          />
+        </div>
+        <p class="inputLabel">높이</p>
+        <div class="w_5">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-altitude"
+          />
+        </div>
+        <p class="inputLabel">주소</p>
+        <div class="w_6">
+          <input
+            type="text"
+            class="form-control"
+            id="recommend-region"
+          />
+        </div>
+        <p class="inputLabel">내용</p>
+        <div class="w_7">
+          <textarea
+            class="form-control"
+            id="recommend-contents"
+            rows="3"
+          ></textarea>
+        </div>
+
+              `;
+              $("tbody").append(temp);
+            }
+          },
+        });
+
+        $("#recommend-title").val(title);
+        $("#recommend-score").val(score);
+        $("#recommend-season").val(season);
+        $("#recommend-altitude").val(altitude);
+        $("#recommend-contents").val(contents);
+        $("#recommend-region").val(region);
+        $("#recommend-likeCount").val(likeCount);
+        $("#recommend-nickName").val(nickName);
+        $("#recommend-imgList").val(imgList);
+        //값 가져오기
+        // $("#exampleFormControlInput1").val();
+      }
+
+      //수정 api연동
+
+      function updateRecommend() {
+        const id = localStorage.getItem("recommendId");
+        // console.log("$(\"#title\").val() : ", $("#title").val())
+        // console.log("$(\"#contents\").val() : ", $("#contents").val())
+        // console.log("category : ", category)
+        // console.log("id : ", id)
+        $.ajax({
+          type: "PATCH",
+          url: `http://localhost:8080/admin/boards/recommends/${id}`,
+          // dataType: "text",
+          contentType: "application/json; charset=utf-8",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          data: JSON.stringify({
+            title: $("#title").val(),
+            score: $("#score").val(),
+            season: $("#season").val(),
+            altitude: $("#altitude").val(),
+            contents: $("#contents").val(),
+            region: $("#region").val(),
+            likeCount: $("#likeCount").val(),
+            nickName: $("#nickName").val(),
+            imgList: $("#imgList").val(),
+          }),
+          success: function (response) {
+            alert("수정 완료");
+            window.location.href = "g-1_recommend.html";
+          },
+          error: function (xhr) {
+            console.log(
+              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+            );
+          },
+        });
+      }
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async></script>
+  </body>
 </html>

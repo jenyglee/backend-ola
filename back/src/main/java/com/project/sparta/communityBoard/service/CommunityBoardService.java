@@ -24,9 +24,9 @@ public interface CommunityBoardService {
     PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
         String titleCond, String contentsCond, String nicknameCond);
 
-    PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size, User user);
+    PageResponseDto<List<CommunityBoardAllResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
-    //   PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,  User user);
+//       PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,  User user);
     void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto);
 
     void adminDeleteCommunityBoard(Long boardId);

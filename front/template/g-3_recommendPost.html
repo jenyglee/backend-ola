@@ -274,11 +274,11 @@
             </ul>
           </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-          <div class="img-wrap">
-            <img class="img" src="./../static/img/icon_profile_default.png " />
-          </div>
-          <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+          <!--          <div class="img-wrap">-->
+          <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
+          <!--          </div>-->
+          <!--          <p class="text">나와바리나와바님</p>-->
         </a>
       </div>
     </header>
@@ -341,24 +341,34 @@
             placeholder="내용을 입력하세요"
           ></textarea>
         </div>
-                <!-- 이미지업로드 쪽 레이아웃 -->
-<!--        <div class="img-upload-box">-->
-<!--          <div class="mb-3">-->
-<!--            <div class="filebox">-->
-<!--              <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
-<!--              <label for="file" class="upload-label">파일찾기</label>-->
-<!--              <input type="file" id="file">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!-- 이미지업로드 쪽 레이아웃 -->
+        <!--        <div class="img-upload-box">-->
+        <!--          <div class="mb-3">-->
+        <!--            <div class="filebox">-->
+        <!--              <input class="upload-name" value="이미지 업로드" placeholder="첨부파일">-->
+        <!--              <label for="file" class="upload-label">파일찾기</label>-->
+        <!--              <input type="file" id="file">-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
 
         <div class="w_8">
-          <input
+          <form method="post" enctype="multipart/form-data">
+            <input
+              type="file"
+              id="chooseFile"
+              name="chooseFile"
+              accept="image/*"
+              multiple
+              onchange="imgUpload()"
+            />
+          </form>
+          <!-- <input
             class="form-control"
             type="file"
             id="formFileMultiple"
             multiple
-          />
+          /> -->
         </div>
         <div class="w_9">
           <div class="b_1">
@@ -387,7 +397,18 @@
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+        getMenuProfile();
       });
+      function getMenuProfile() {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+                      <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+                      </div>
+                      <p class="text">${menuProfile.sub}님</p>
+            `;
+        $("#my-profile").append(tempProfile);
+      }
       function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
         $(".friend-dropbox").hide();
@@ -404,10 +425,10 @@
         $.ajax({
           type: "POST",
           url: `http://localhost:8080/boards/recommends`,
-          dataType	: "json",
+          // dataType: "json",
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", accessToken)
+            xlr.setRequestHeader("Authorization", accessToken);
           },
           data: JSON.stringify({
             score: $("#recommendBoardScore").val(),
@@ -416,21 +437,71 @@
             altitude: $("#recommendBoardAltitude").val(),
             contents: $("#recommendBoardContents").val(),
             region: $("#recommendBoardRegion").val(),
-            imgList: null,
+            imgList: imageUrlList,
           }),
           xhrFields: {
-            withCredentials: true // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: function (response) {
             alert("작성 완료");
             window.location.href = "g-1_recommend.html";
           },
-          error: function (xhr) {
-            ("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+          error: function (request, status, error) {
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+            console.log(status, error);
           },
         });
+      }
 
-        // 이미지 업로드 api 붙이기
+      //이미지경로리스트 전역변수 지정.
+      var imageUrlList = [];
+
+      function imgUpload(input) {
+        const accessToken = localStorage.getItem("accessToken");
+
+        const imageInput = $("#chooseFile")[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        console.log("$('#chooseFile'): ", $("#chooseFile"));
+        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+        var formData = new FormData();
+        for (var i = 0; i < imageInput.files.length; i++) {
+          // formData.append("image", imageInput.files[i]);
+          formData.append("multipartFile", imageInput.files[i]);
+          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        }
+
+        $.ajax({
+          type: "POST",
+          url: `http://localhost:8080/s3/file`,
+          // dataType: "json",
+          // dataType: "multipart",
+          enctype: "multipart/form-data",
+          // contentType: "application/json; charset=utf-8",
+          processData: false,
+          contentType: false,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: formData,
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
+          success: function (response) {
+            console.log("여긴 찍혀? 1");
+            console.log("response", response);
+            for (let i = 0; i < response.length; i++) {
+              // imageUrlList.push(response[i].imgList[i]);
+              imageUrlList.push(response[i]);
+            }
+            console.log("imageUrlList : ", imageUrlList);
+            return imageUrlList;
+          },
+          error: function (request, status, error) {
+            console.log(error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+          },
+        });
       }
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async></script>
