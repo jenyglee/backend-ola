@@ -52,7 +52,6 @@ public class FriendController {
     @PostMapping("/friends")
     public ResponseEntity addFriend(@AuthenticationPrincipal UserDetailsImpl user,
         @RequestParam(name = "targetId") Long targetId) {
-        //친구 추가
         friendService.addFriend(user.getUser().getId(), targetId);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -60,7 +59,6 @@ public class FriendController {
     @DeleteMapping("/friends")
     public ResponseEntity deleteFriend(@RequestParam(name = "targetId") Long targetId,
         @AuthenticationPrincipal UserDetailsImpl user) {
-        //친구 삭제
         friendService.deleteFriend(user.getUser().getId(), targetId);
         return new ResponseEntity(HttpStatus.OK);
     }

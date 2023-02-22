@@ -265,16 +265,12 @@
           </div>
         </div>
 
-        <ul class="friend-list-1">
-          <p class="recommend-title">내 친구목록</p>
-        </ul>
+        <p class="recommend-title">내 친구목록</p>
+        <ul class="friend-list-1"></ul>
 
-
-
-        <ul class="friend-list-2">
-          <div class="line"></div>
-          <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
-        </ul>
+        <div class="line"></div>
+        <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+        <ul class="friend-list-2"></ul>
 
       </div>
     </div>
@@ -581,7 +577,7 @@
     $(".friend-dropbox").hide();
     getMenuProfile()
     getMyInfo();
-    MyFriedList();
+    myFriedList();
     recommendFriedList();
   });
 
@@ -737,6 +733,7 @@
         let result = null;
         let tagName = [];
 
+
         if(response.data.length==0){
             result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
 
@@ -773,7 +770,7 @@
     });
   }
 
-  function MyFriedList() {
+  function myFriedList() {
     const accessToken = localStorage.getItem("accessToken");
 
     $.ajax({
@@ -838,9 +835,11 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
-
-        console.log("성공하니?");
+      complete : function (){
+        $(".friend-list-1").empty();
+        $(".friend-list-2").empty();
+        myFriedList();
+       recommendFriedList();
       }
     });
   }
@@ -856,10 +855,20 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
-        console.log("성공하니?");
+      complete : function (){
+        $(".friend-list-1").empty();
+        $(".friend-list-2").empty();
+        myFriedList();
+        recommendFriedList();
       }
     });
+  }
+
+
+
+  function reloadDivArea() {
+    $(".friend-list-1").load(location.href+' .friend-list-1');
+    $(".friend-list-2").load(location.href+' .friend-list-2');
   }
 </script>
 </body>
