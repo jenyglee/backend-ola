@@ -206,10 +206,18 @@
 
                 $('#email').val(response.email)
                 $('#nickname').val(response.nickName)
-                $('#altitude').val(response.altitude)
                 $('#phone').val(response.phoneNumber)
                 $('#age').val(response.age)
                 $('#img').val(response.img)
+
+                switch (response.grade) {
+                    case 0:
+                        $("#option-0").attr("selected");
+                    case 1:
+                        $("#option-1").attr("selected");
+                    case 2:
+                        $("#option-2").attr("selected");
+                }
 
             },
         })

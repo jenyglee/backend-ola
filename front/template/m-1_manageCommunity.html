@@ -270,7 +270,7 @@
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/admin/boards/communities?page="+page+"&size=10&contents=&nickname=",
+      url: "http://localhost:8080/admin/boards/communities?page=" + page+ "&size=10&title=&contents=&nickname=",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
