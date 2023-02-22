@@ -392,7 +392,7 @@
                  style="height: 50px; padding-top: 15px; display: flex; justify-content: space-between;">
                 <div class="wrap_2_1_1_1">
                     <div style="height: 50px;">
-                        <b style="font-weight: bold">총 <span style="color : #F46B3F">100</span> 건&nbsp;</b>
+                        <b style="font-weight: bold">총 <span style="color : #F46B3F">32</span> 건&nbsp;</b>
                     </div>
                 </div>
                 <!-- 좋아요 셀렉트박스 -->
@@ -604,7 +604,7 @@
     }
 
     function setRecommendId(id){
-        localStorage.setItem("noticeId", id);
+        localStorage.setItem("recommendId", id);
     }
 
     //파라미터 변수가 이상함..ㅠㅠ
@@ -638,10 +638,13 @@
                 imgUrl= "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
             }
 
+            console.log("response",response)
+            console.log("보드아이디 : ",response.data[i].boardId)
+
           // 데이터 바인딩
           const temp =
               `
-              <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
+              <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                         <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
@@ -662,9 +665,6 @@
         }
       },
     })
-  }
-  function setRecommendId(id){
-    localStorage.setItem("recommendId", id);
   }
 
   function regionChoice(value){
