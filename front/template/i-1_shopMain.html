@@ -261,7 +261,7 @@
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-                       id="inlineRadioCategory1-1" value="shoes">
+                       id="inlineRadioCategory1-1" value="shoes" >
                 <label class="form-check-label" for="inlineRadioCategory1-1">등산화</label>
             </div>
             <div class="form-check form-check-inline">
@@ -283,74 +283,39 @@
                 <label class="form-check-label" for="inlineRadioCategory4">등산용품</label>
             </div>
         </div>
-        <div class="wrap_1_2">
-            <span><b>브랜드</b> &nbsp;&nbsp;</span>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand5"
-                       value="all" checked>
-                <label class="form-check-label" for="inlineRadioBrand5">전체</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand6" value="nepa">
-                <label class="form-check-label" for="inlineRadioBrand6">네파</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand7"
-                       value="blackyak">
-                <label class="form-check-label" for="inlineRadioBrand7">블랙야크</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand8"
-                       value="northpace">
-                <label class="form-check-label" for="inlineRadioBrand8">노스페이스</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand9"
-                       value="millet">
-                <label class="form-check-label" for="inlineRadioBrand9">밀레</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioBrandOptions"
-                       id="inlineRadioBrand10"
-                       value="descente">
-                <label class="form-check-label" for="inlineRadioBrand10">데상트</label>
-            </div>
         </div>
         <div class="wrap_1_2">
-            <span><b>가격순</b> &nbsp;&nbsp;</span>
+            <span><b>정렬순서</b> &nbsp;&nbsp;</span>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
-                       id="inlineRadioPrice11"
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions1"
+                       id="inlineRadioPrice1"
+                       value="sim" checked>
+                <label class="form-check-label" for="inlineRadioPrice1">정확도순</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions1"
+                       id="inlineRadioPrice2"
+                       value="date" checked>
+                <label class="form-check-label" for="inlineRadioPrice2">날짜순</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions1"
+                       id="inlineRadioPrice3"
                        value="asc" checked>
-                <label class="form-check-label" for="inlineRadioPrice11">최고가순</label>
+                <label class="form-check-label" for="inlineRadioPrice3">최신순</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions"
-                       id="inlineRadioPrice12" value="desc">
-                <label class="form-check-label" for="inlineRadioPrice12">최저가순</label>
+                <input class="form-check-input" type="radio" name="inlineRadioPriceOptions1"
+                       id="inlineRadioPrice4"
+                       value="dsc" checked>
+                <label class="form-check-label" for="inlineRadioPrice4">마지막순</label>
             </div>
+
         </div>
-        <div class="wrap_1_2">
-            <span><b>등록순</b> &nbsp;&nbsp;</span>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
-                       id="inlineRadioRegist13"
-                       value="asc" checked>
-                <label class="form-check-label" for="inlineRadioRegist13">최신순</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioRegistOptions"
-                       id="inlineRadioRegist14" value="desc">
-                <label class="form-check-label" for="inlineRadioRegist14">마지막순</label>
-            </div>
-        </div>
+
+
         <div style="display: flex; margin-top: 20px; margin-bottom: 50px;">
-            <input type="text" class="form-control" id="Products" placeholder="입력"/>
+            <input type="text" class="form-control" id="Products" name="inputValue" placeholder="입력"/>
             <button type="button" class="btn search-btn"
                     style="width: 170px; background-color: #F46B3F; color:#ffffff" onclick="search()">검색
             </button>
@@ -358,6 +323,7 @@
     </section>
     <section class="card-wrap">
         <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px" id="cardBox">
+
         </div>
     </section>
     <!--   페이지네이션/작성버튼     -->
@@ -397,52 +363,32 @@
         $(".bell-dropbox").hide();
     }
 
-    function handleCreateGuestBook() {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-            data: {
-                name: "sasas",
-            },
-            success: function (response) {
-                console.log(response)
-                alert(response.msc)
-                window.location.reload();
-            },
-        })
-    }
-
-    // <input className="form-check-input" type="radio" name="inlineRadioCategoryOptions"
-    //        id="inlineRadioCategory1-1" value="shoes">
-    //     <label className="form-check-label" htmlFor="inlineRadioCategory1-1">등산화</label>
-    //
-
-    // const filter = $('input:radio[name="form-check-input"]').is(':checked'); // 체크 여부(checked)
-    // console.log(filter);
-    //
-    // const query = document.getElementById('inlineRadioCategory1-1').value;
-    // console.log(query);
-
-    // const accessToken = localStorage.getItem("accessToken");
-    //
-    // if (filter) {
-    //   $.ajax({
-    //     type: "GET",
-    //     url: "http://localhost:8080/product/search?query=" + query + "&limit=" + 10 + "&offset=" + 0,
-    //     beforeSend: function (xlr) {
-    //       xlr.setRequestHeader("Authorization", accessToken)
-    //     },
-    //     success: function (response) {
-    //       console.log(response);
-    //     }
-    //   });
-    //
-    // }
-
-
+    //가격에 , 찍어주기
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
+    //radio 값 가져와서 텍스트로 붙이기
+    $('input[name=inlineRadioCategoryOptions]').click(function () {
+
+        var answer = $(this).attr("id");
+        var anText = $("label[for='" + answer + "']").text();
+        $('input[name=inputValue]').attr('value', anText);
+
+    })
+    //정렬순서 값 가져오기
+
+    // $('input[name=inlineRadioCategoryOptions1]').click(function () {
+    //
+    //     var sort = $(this).attr("id");
+    //     $('input[name=inlineRadioPriceOptions1]').attr('value', sort);
+    //
+    // })
+
+
+
+
+
 
 
     $(document).ready(function () {
@@ -469,6 +415,7 @@
                         <div className="text-wrap" style="font-size: 14px;">
                             <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
                             <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+                            <button type="button">구매하러 가기</button>
                         </div>
                     </a>`;
                     $('#cardBox').append(result);
@@ -476,11 +423,60 @@
             }
         })
     });
+     function search() {
+        $('#cardBox').empty();
+        // 1. 검색창의 입력값을 가져온다.
+        const accessToken = localStorage.getItem("accessToken");
+        let products = $('#Products').val();
+         var sort = $("input[name='inlineRadioPriceOptions1']:checked").val();
+
+        console.log(products);
+        console.log(sort);
 
 
+        // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
+        if (products == '') {
+            alert('검색어를 입력해주세요');
+            $('#Products').focus();
+            return;
+        }
+        // 3. GET /api/search?query=${query} 요청
+
+        $.ajax({
+            contentType : "application/json",
+            dataType	: "json",
+            type: 'GET',
+            url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=0&sort=sim`+sort,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            success: function (response) {
+
+                console.log(response["data"]);
+                console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
+                console.log(response.data.length);
 
 
+                // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+                for (let i = 0; i < response.data.length; i++) {
 
+                    let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+                                <div className="img-wrap"
+                                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                    <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+                                </div>
+                                <div className="text-wrap" style="font-size: 14px;">
+                                    <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                                    <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+                                </div>
+                                <button type="button">구매하러 가기</button>
+                            </a>`;
+                    $('#cardBox').append(result);
+                }
+            }
+        })
+
+    }
     // let totalData; // 총 데이터수
     // let dataPerPage; //한 페이지에 나타낼 글 수
     // let pageCount = 10; //페이징에 나타낼 페이지 수
@@ -611,55 +607,6 @@
     //     }
 
 
-    function search() {
-        // 1. 검색창의 입력값을 가져온다.
-        const accessToken = localStorage.getItem("accessToken");
-        let products = $('#Products').val();
-
-        console.log(products);
-
-        // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
-        if (products == '') {
-            alert('검색어를 입력해주세요');
-            $('#Products').focus();
-            return;
-        }
-        // 3. GET /api/search?query=${query} 요청
-
-        $.ajax({
-            contentType : "application/json",
-            dataType	: "json",
-            type: 'GET',
-            url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=0`,
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", accessToken)
-            },
-            success: function (response) {
-
-                console.log(response["data"]);
-                console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
-                console.log(response.data.length);
-
-
-                // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
-                for (let i = 0; i < response.data.length; i++) {
-
-                    let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
-                                <div className="img-wrap"
-                                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                    <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
-                                </div>
-                                <div className="text-wrap" style="font-size: 14px;">
-                                    <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-                                    <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
-                                </div>
-                            </a>`;
-                    $('#cardBox').append(result);
-                }
-            }
-        })
-
-    }
 </script>
 </body>
 </html>
