@@ -371,9 +371,9 @@
 
     <!-- ############# 작업공간 #############-->
     <main class="container">
-      <section class="">
+      <section class="detailBoard">
         <!--   작업공간   -->
-        <div class="wrap">
+        <!-- <div class="wrap">
           <div class="w_1">
             <div class="w_1_1"></div>
             <div class="score">
@@ -423,7 +423,7 @@
               </span>
             </div>
           </div>
-          <br />
+          <br /> -->
           <!--            <div class="w_4">-->
           <!--                <div class="b_1"></div>-->
 
@@ -443,7 +443,7 @@
           <!--                </div>-->
           <!--            </div>-->
           <div class="btns">
-            <button type="button" class="modifyBtn btn btn-primary btn-search">
+            <button type="button" class="modifyBtn btn btn-primary btn-search" onclick="moveModifyPage()">
               수정
             </button>
             <button
@@ -468,9 +468,11 @@
     <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
     <script>
       $(document).ready(function () {
+       
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getMenuProfile();
+        getRecommend();
       });
       function getMenuProfile() {
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
@@ -495,9 +497,10 @@
       // 단건 코스조회
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
+        console.log("보드아이디 : ", id)
         $.ajax({
           type: "GET",
-          url: `http://localhost:8080/boards/recommend/${id}`,
+          url: `http://localhost:8080/boards/recommend/` + id,
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
@@ -524,19 +527,19 @@
               // 데이터 바인딩
               const temp = `
               <div class="wrap">
-          <div class="w_1">
-            <div class="w_1_1"></div>
-            <div class="score">
+              <div class="w_1">
+              <div class="w_1_1"></div>
+              <div class="score">
               <b style="color: #f46b3f">${score}</b>
-            </div>
-            <div class="title">
+              </div>
+              <div class="title">
               <h3>${title}</h3>
-            </div>
-            <div class="season">
+              </div>
+              <div class="season">
               <b style="color: #f46b3f">${season}</b>
               <b>이 최고의 계절</b>
-            </div>
-            <div class="above">
+              </div>
+              <div class="above">
               <b>해발 ${altitude}/b>
             </div>
             <div class="w_1_1"></div>
