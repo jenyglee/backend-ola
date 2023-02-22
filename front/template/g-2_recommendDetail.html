@@ -557,40 +557,6 @@
         });
       }
 
-      function updateNotice() {
-        const id = localStorage.getItem("noticeId");
-        // console.log("$(\"#title\").val() : ", $("#title").val())
-        // console.log("$(\"#contents\").val() : ", $("#contents").val())
-        // console.log("category : ", category)
-        // console.log("id : ", id)
-        $.ajax({
-          type: "PATCH",
-          url: `http://localhost:8080/admin/boards/notices/${id}`,
-          // dataType: "text",
-          contentType: "application/json; charset=utf-8",
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
-          },
-          data: JSON.stringify({
-            title: $("#title").val(),
-            contents: $("#contents").val(),
-            category: category,
-          }),
-          success: function (response) {
-            alert("수정 완료");
-            window.location.href = "n-1_manageNotice.html";
-          },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
-          },
-        });
-      }
-
       function deleteRecommend() {
         const id = localStorage.getItem("recommendId");
         console.log("id : " + id);

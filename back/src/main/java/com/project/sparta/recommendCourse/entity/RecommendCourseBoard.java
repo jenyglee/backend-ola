@@ -92,6 +92,8 @@ public class RecommendCourseBoard extends Timestamped {
         // this.images = images;
     }
 
+
+
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;
     }

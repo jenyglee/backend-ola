@@ -38,6 +38,8 @@ public class UserDetailsImpl implements UserDetails {
             authority = role.getAuthority() + ":" + grade.getAuthority();
         }
 
+//        grade.getAuthority();
+
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(simpleGrantedAuthority);
