@@ -156,7 +156,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     //어드민 코스 수정
     @Override
-    public void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto, Long userId) {
+    public void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto) {
 
         //수정하고자 하는 board 있는지 확인
         RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
@@ -169,7 +169,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, checkBoard);
             recommendCourseBoardImgRepository.save(courseImg);
         }
-        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), userId);
+        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), checkBoard.getUserId());
 
         //게시글 다시 등록
         recommendCourseBoardRepository.save(checkBoard);
