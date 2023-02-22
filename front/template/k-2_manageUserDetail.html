@@ -137,11 +137,11 @@
         <section style="margin-left: 100px; margin-top:100px;">
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이메일</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요">
+                <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요" disabled>
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">닉네임</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요">
+                <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요" disabled>
             </div>
 
 
@@ -158,11 +158,11 @@
             </select>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">휴대폰번호</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="phone" placeholder="휴대폰번호를 입력하세요(-제외)">
+                <input type="text" class="form-control" id="phone" placeholder="휴대폰번호를 입력하세요(-제외)" disabled>
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">나이</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="age" placeholder="나이를 입력하세요">
+                <input type="text" class="form-control" id="age" placeholder="나이를 입력하세요" disabled>
             </div>
             <div style="margin-bottom: 50px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">프로필이미지</p>
@@ -171,7 +171,7 @@
             <div>
                 <button type="button" id="btn_1">회원탈퇴</button>
                 <button type="button" id="btn_2">수정</button>
-                <button type="button" id="btn_3">목록</button>
+                <button type="button" id="btn_3" onclick="listUser()">목록</button>
             </div>
         </section>
     </div>
@@ -187,7 +187,7 @@
     }
 
     function listUser(){
-        window.location.href="n-1_manageNotice.html"
+        window.location.href="k-1_manageUser.html"
     }
 
     function getUser(){
