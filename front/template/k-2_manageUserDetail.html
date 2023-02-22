@@ -166,7 +166,9 @@
             </div>
             <div style="margin-bottom: 50px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">프로필이미지</p>
-                <input class="form-control" type="file" id="img" multiple>
+                <div id ="profile">
+
+                </div>
             </div>
             <div>
                 <button type="button" id="btn_1">회원탈퇴</button>
@@ -210,6 +212,13 @@
                 $('#phone').val(response.phoneNumber)
                 $('#age').val(response.age)
                 $('#img').val(response.img)
+              
+                for(let i=0;i<1;i++)
+                {
+                    const url = response.profileImage
+                    const temp = `<img id="profile${i}" src=${url}>`
+                    $('#profile').append(temp)
+                }
 
                 switch (response.grade) {
                     case 0:

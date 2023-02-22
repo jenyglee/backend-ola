@@ -272,36 +272,41 @@
             </div>
         </div>
         <section style="margin-left: 100px; margin-top:100px;">
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이메일</p>
+            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="이메일을 입력하세요">
+                <input type="text" class="form-control" id="title" placeholder="이메일을 입력하세요">
             </div>
             <div style="margin-bottom: 30px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="내용을 입력하세요"></textarea>
+                <textarea class="form-control" id="contents" rows="3" placeholder="내용을 입력하세요"></textarea>
             </div>
             <div style="margin-bottom: 30px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이미지</p>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                <div id="img_list">
+                </div>
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">태그</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id="exampleFormControlInput4" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id="exampleFormControlInput5" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id="exampleFormControlInput6" placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id=tag1 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id=tag2 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id=tag3 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id=tag4 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
+                <input type="text" class="form-control" id=tag5 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
             </div>
             <div>
-                <button type="button" id="btn_1">회원탈퇴</button>
-                <button type="button" id="btn_2">수정</button>
-                <button type="button" id="btn_3" onclick="listCommunity">목록</button>
+                <button type="button" id="btn_1" onclick="deleteCommunity()">삭제</button>
+                <button type="button" id="btn_2" onclick="updateCommunity()">수정</button>
+                <button type="button" id="btn_3" onclick="listCommunity()">목록</button>
             </div>
         </section>
     </div>
 </main>
 </body>
 <script>
+    let Listtag = []
+    let temp_img =["https://imgnn.seoul.co.kr/img/upload/2014/01/14/SSI_20140114151740_V.JPG",
+    "https://bellygom.com/_dj/img/company_img.jpg"]
+
 
     $(document).ready(function () {
         getCommunity();
@@ -311,11 +316,18 @@
         window.location.href="m-1_manageCommunity.html"
     }
 
+    function parse_img(){
+
+        for(var i=0; i<temp_img.length; i++) {
+            img_src = '${temp_img[i]}';
+        }
+        return img_src;
+    }
     function getCommunity(){
         const id = localStorage.getItem("communityId")
         $.ajax({
             type: "GET",
-            url: "/admin/boards/communities/"+ id + "?commentPage=0&commentSize=5",
+            url: "http://localhost:8080/admin/boards/communities/"+ id + "?commentPage=0&commentSize=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
@@ -323,42 +335,62 @@
                 console.log("response : ", response)
                 // 카테고리가 영어로 들어와서 한글로 반환
 
-                $('#score').val(response.score)
                 $('#title').val(response.title)
-                $('#altitude').val(response.altitude)
                 $('#contents').val(response.contents)
-                $('#season').val(response.season)
-                $('#address').val(response.region)
+                for(let i=0;i<response.tagList.length;i++)
+                {
+                    console.log(response.tagList[i].name)
+                    $('#tag'+(i+1)).val(response.tagList[i].name)
+                    Listtag.push(response.tagList[i].id)
+                }
+
+                for(let i=0;i<temp_img.length;i++)
+                {
+                    const url = temp_img[i]
+                    const temp = `<img style = "width: 500px" style ="height: 600px" id="img_list${i}" src=${url}>`
+                    $('#img_list').append(temp)
+                }
+
+
+                // for(let i=0;i<response.imgList.length;i++)
+                // {
+                //     console.log(response.imgList[i])
+                //     $('#img'+i+1).src(response.imgList[i])
+                // }
+
 
             },
         })
     }
 
-    function updateRecommend(){
-        const id = localStorage.getItem("noticeId")
+    function updateCommunity(){
+        const id = localStorage.getItem("communityId")
         // console.log("$(\"#title\").val() : ", $("#title").val())
         // console.log("$(\"#contents\").val() : ", $("#contents").val())
         // console.log("category : ", category)
         // console.log("id : ", id)
+
+        console.log(Listtag)
         $.ajax({
             type: "PATCH",
-            url: `http://localhost:8080/admin/boards/recommends/${id}`,
+            url: `http://localhost:8080/admin/boards/communities/${id}`,
             // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
             data: JSON.stringify({
-                score : $('#score').val(),
                 title :  $('#title').val(),
-                altitude : $('#altitude').val(),
                 contents : $('#contents').val(),
-                season : $('#season').val(),
-                address : $('#address').val()
+                chatStatus : "N",
+                chatMemCnt : 0,
+                tagList : Listtag,
+                imgList : ["asdasd.jpg", "Qweqwe.jpg"]
+
             }),
             success: function (response) {
                 alert("수정 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "m-1_manageCommunity.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
@@ -366,11 +398,11 @@
         })
     }
 
-    function deleteRecommend(){
-        const id = localStorage.getItem("noticeId")
+    function deleteCommunity(){
+        const id = localStorage.getItem("communityId")
         $.ajax({
             type: "DELETE",
-            url: `http://localhost:8080/admin/boards/recommends/${id}`,
+            url: `http://localhost:8080/admin/boards/communities/${id}`,
             // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
@@ -383,7 +415,7 @@
             // }),
             success: function (response) {
                 alert("삭제 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "m-1_manageCommunity.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
