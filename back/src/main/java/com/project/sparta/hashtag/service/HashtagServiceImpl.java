@@ -25,18 +25,18 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 추가
     @Override
-    public Hashtag createHashtag(String value, User user) {
+    public Hashtag createHashtag(String name, User user) {
         // 에러1: 이름이 ""인 경우
-        if(value.isBlank()){
+        if(name.isBlank()){
             throw new CustomException(INVALID_HASHTAG_NAME);
         }
         // 에러2: 중복된 이름이 있는경우
-        Optional<Hashtag> findHashtag = hashtagRepository.findByName(value);
+        Optional<Hashtag> findHashtag = hashtagRepository.findByName(name);
         if(findHashtag.isPresent()){
             throw new CustomException(INVALID_HASHTAG_NAME);
         }
 
-        Hashtag hashtag = new Hashtag(value);
+        Hashtag hashtag = new Hashtag(name);
         return hashtagRepository.save(hashtag);
     }
 
@@ -51,10 +51,10 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 전체 조회
     @Override
-    public PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, User user) {
+    public PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name, User user) {
         // 1. 페이징으로 요청해서 조회
         PageRequest pageRequest = PageRequest.of(offset, limit);
-        Page<Hashtag> results = hashtagRepository.findAll(pageRequest);
+        Page<Hashtag> results = hashtagRepository.findAllByLikeName(name, pageRequest);
 
         // 2. 데이터, 전체 개수 추출
         List<Hashtag> hashtagList = results.getContent();
