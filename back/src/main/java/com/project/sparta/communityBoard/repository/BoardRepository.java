@@ -7,14 +7,18 @@ import com.project.sparta.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, BoardRepositoryCustom {
   Page<CommunityBoard> findById(Pageable pageable,Long Id);
   Page<CommunityBoard> findAll(Pageable pageable);
-//  Page<CommunityBoard> findAllByNickName(Pageable pageable, String nickName);
-
   Optional<CommunityBoard> findByIdAndUser_NickName(Long id, String nickName);
+
+  @Query("delete from CommunityBoard cb where cb.id =:boardId")
+  @Modifying
+  void deleteById(@Param("boardId") Long boardId);
 
 
 }

@@ -46,9 +46,11 @@ public class JwtUtil {
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
 
-    public String generateAccessToken(String email, UserRoleEnum role) {
+    public String generateAccessToken(String email, UserRoleEnum role, String nickname, String imgUrl) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
+        claims.put("nickname", nickname);
+        claims.put("profileImage", imgUrl);
         Date date = new Date();
 
         Key key = tokenDecode(access_token_secretKey);
