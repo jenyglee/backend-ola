@@ -360,11 +360,11 @@
             </ul>
           </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-          <div class="img-wrap">
-            <img class="img" src="./../static/img/icon_profile_default.png " />
-          </div>
-          <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+          <!--          <div class="img-wrap">-->
+          <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
+          <!--          </div>-->
+          <!--          <p class="text">나와바리나와바님</p>-->
         </a>
       </div>
     </header>
@@ -470,7 +470,18 @@
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+        getMenuProfile();
       });
+      function getMenuProfile() {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+          </div>
+          <p class="text">${menuProfile.sub}님</p>
+`;
+        $("#my-profile").append(tempProfile);
+      }
 
       function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
@@ -480,6 +491,81 @@
       function handleToggleFriendDropBox() {
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
+      }
+      // 단건 코스조회
+      function getRecommend() {
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+          type: "GET",
+          url: `http://localhost:8080/boards/recommend/${id}`,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          // data: {
+          //   name: "sasas",
+          // },
+          success: function (response) {
+            console.log("response : ", response);
+            const score = response.score;
+            const title = response.title;
+            const createDate = response.createDate.substring(0, 10);
+            const season = response.season;
+            const altitude = response.altitude;
+            const contents = response.contents;
+            const region = response.region;
+            const imgList = response.imgList;
+            const likeCount = response.likeCount;
+            const nickName = response.nickName;
+
+            for (let i = 0; i < response.data.length; i++) {
+              // 데이터 바인딩
+              const temp = `
+              <div class="wrap">
+          <div class="w_1">
+            <div class="w_1_1"></div>
+            <div class="score">
+              <b style="color: #f46b3f">${score}</b>
+            </div>
+            <div class="title">
+              <h3>${title}</h3>
+            </div>
+            <div class="season">
+              <b style="color: #f46b3f">${season}</b>
+              <b>이 최고의 계절</b>
+            </div>
+            <div class="above">
+              <b>해발 ${altitude}/b>
+            </div>
+            <div class="w_1_1"></div>
+          </div>
+          <div class="w_2">
+            <img src=${imgList[0]} />
+          </div>
+
+          <hr />
+          <div class="w_3">
+            <div class="address">
+              <b>주소 : &nbsp;</b>
+              <span
+                >${region}
+              </span>
+            </div>
+            <br />
+            <div>
+              <span>
+                ${contents}
+              </span>
+            </div>
+          </div>
+          <br />
+              `;
+              $("tbody").append(temp);
+            }
+          },
+        });
       }
 
       function deleteRecommend() {

@@ -210,11 +210,11 @@
                 </ul>
             </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-            <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png "/>
-            </div>
-            <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--            <div class="img-wrap">-->
+<!--                <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+<!--            </div>-->
+<!--            <p class="text">나와바리나와바님</p>-->
         </a>
     </div>
 
@@ -226,91 +226,39 @@
         <div style="display: flex; align-items: center">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="margin-right: 20px">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1">내가 쓴 커뮤니티 글</label>
+                <label class="btn btn-outline-primary" for="btnradio1" onclick="changeList(0)">내가 쓴 커뮤니티 글</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">내가 쓴 코스추천</label>
+                <label class="btn btn-outline-primary" for="btnradio2" onclick="changeList(1)">내가 쓴 코스추천</label>
             </div>
-            <div style="margin-right: 20px">내가 참여한 크루 <b style="color : #F46B3F;">6</b>개</div>
-            <div>내가 만든 크루 <b style="color : #F46B3F">6</b>개</div>
+<!--            <div style="margin-right: 20px">내가 참여한 크루 <b style="color : #F46B3F;">6</b>개</div>-->
+<!--            <div>내가 만든 크루 <b style="color : #F46B3F">6</b>개</div>-->
         </div>
 
         <div class="w_3"></div>
-        <div class="w_4">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">제목</th>
-                    <th scope="col">좋아요</th>
-                    <th scope="col">날짜</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">8</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">9</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td><a href="h-2_communityDetail.html">커뮤니티 제목</a></td>
-                    <td>22000</td>
-                    <td>2023-02-11</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="w_5">
+        <!-- 메인 컨텐츠 -->
+        <section class="content">
+            <div class="select-like-div" style="display: flex; justify-content: space-between;">
+                <!-- 좋아요 셀렉트박스 -->
+                <div id="totalCount">
+<!--                    <b>총 <span style="color: #F46B3F">100</span> 건&nbsp;</b>-->
+                </div>
+                <select
+                    class="select-like form-serch-select form-select"
+                    aria-label="Default select example"
+                    style="width: 150px;"
+                >
+                    <option value="0">좋아요순</option>
+                    <option value="1">날짜 순</option>
+                </select>
+            </div>
+            <!-- 카드 -->
+            <div class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px " id="postList">
+
+            </div>
+        </section>
+        <!--   페이지네이션/작성버튼     -->
+        <div class="wrap_4" style="position: relative; margin-bottom: 100px; margin-top: 50px">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -318,9 +266,11 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" onclick="changePage(0)">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
@@ -328,16 +278,30 @@
                     </li>
                 </ul>
             </nav>
-            </div>
+        </div>
         </div>
     </section>
 </main>
 <script>
+    const accessToken = localStorage.getItem("accessToken")
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
-        getNoticeList(0);
+        getMyCommunityList(0);
+        getMenuProfile()
     });
+
+    function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+        <div class="img-wrap">
+          <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+        </div>
+        <p class="text">${menuProfile.sub}님</p>
+    `
+        $("#my-profile").append(tempProfile);
+    }
+
     function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
         $(".friend-dropbox").hide();
@@ -345,6 +309,91 @@
     function handleToggleFriendDropBox() {
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
+    }
+
+    function changeList(num){
+        if (num == 0) getMyCommunityList(0);
+        else if(num == 1) getMyRecommendList(0);
+    }
+
+    function getMyCommunityList(page){
+        $("#postList").empty();
+        $.ajax({
+            type: "GET",
+            contentType : "application/json",
+            dataType	: "json",
+            url: "http://localhost:8080/info/me/boards/communities?page=" + page + "&size=8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            success: function (response) {
+                for (let i=0; i<response.data.length; i++){
+                    console.log("response.data[i] : ", response.data[i])
+                    var temp = `
+                        <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
+                            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                <img style="width: 100%" src=${response.data[i].imgList[0]} alt="산 이미지" />
+                            </div>
+                            <div class="text-wrap" style="font-size: 14px;">
+                                <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                                <div style="display: flex;">
+                                    <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                        <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                                    </div>
+                                    <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].communityLikeCnt.toString()}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `
+                    $("#postList").append(temp);
+                }
+                var tempTotalCount = `
+                  <b>총 <span style="color: #F46B3F">${response.totalCount}</span> 건</b>
+                `
+                $("#totalCount").append(tempTotalCount)
+
+            }
+        });
+    }
+
+    function getMyRecommendList(page){
+        $("#postList").empty();
+        $.ajax({
+            type: "GET",
+            contentType : "application/json",
+            dataType	: "json",
+            url: "http://localhost:8080/info/me/boards/recommends?page=" + page + "&size=8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken)
+            },
+            success: function (response) {
+                for (let i=0; i<response.data.length; i++){
+                    console.log("response.data[i] : ", response.data[i])
+                    var temp = `
+                        <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
+                            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                <img style="width: 100%" src=${response.data[i].imgList[0]} alt="산 이미지" />
+                            </div>
+                            <div class="text-wrap" style="font-size: 14px;">
+                                <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                                <div style="display: flex;">
+                                    <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                                        <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
+                                    </div>
+                                    <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].communityLikeCnt.toString()}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `
+                    $("#postList").append(temp);
+                }
+                var tempTotalCount = `
+                  <b>총 <span style="color: #F46B3F">${response.totalCount}</span> 건</b>
+                `
+                $("#totalCount").append(tempTotalCount)
+
+            }
+        });
     }
 </script>
 </body>

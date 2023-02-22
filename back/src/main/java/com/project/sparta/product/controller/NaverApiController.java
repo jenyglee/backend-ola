@@ -22,9 +22,8 @@ public class NaverApiController {
     public PageResponseDto<List<ProductResponseDto>> getProductSearchList(
             @RequestParam String query,
             @RequestParam int limit,
-            @RequestParam int offset
-    )  {
-        return naverApiService.searchItems(query, limit, offset, "dsc");
+            @RequestParam int offset,
+            @RequestParam String sort)  {
+        return naverApiService.searchItems(query, limit, offset, sort);
     }
-
 }

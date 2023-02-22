@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecommendDetailResponseDto {
 
+    private Long boardId;
     private int score;
     private String title;
     private String season;
@@ -21,16 +22,15 @@ public class RecommendDetailResponseDto {
     private String region;
     private List<String> imgList;
     private LocalDateTime createDate;
-
-    //TODO: 나중에 좋아요 개수 추가해야 함. => OK
     private Long likeCount;
     private String nickName;
 
     @Builder
-    public RecommendDetailResponseDto(int score, String title, String season, int altitude,
+    public RecommendDetailResponseDto(Long boardId, int score, String title, String season, int altitude,
         String contents,
         String region, List<String> imgList, LocalDateTime createDate, Long likeCount,
         String nickName) {
+        this.boardId = boardId;
         this.score = score;
         this.title = title;
         this.season = season;

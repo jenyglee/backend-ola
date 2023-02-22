@@ -2,6 +2,7 @@ package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -40,14 +41,6 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    //    @OneToMany
-    //    private List<RecommendCourseImg> images = new ArrayList<>();
-
-    // @ManyToOne
-    // @JoinColumn(name = "user_id")
-    // private User user;
-
-
     @Builder
     public RecommendCourseBoard(int score, String title, String season, int altitude,
         String contents, String region, String orderByLike, PostStatusEnum postStatus, Long userId) {
@@ -62,31 +55,18 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-//    @Builder
-//    public RecommendCourseBoard(String title, String contents, int score, String season,
-//        int altitude, Long userId, List<RecommendCourseImg> images
-//    ) {
-//        this.title = title;
-//        this.contents = contents;
-//        this.season = season;
-//        this.score = score;
-//        this.altitude = altitude;
-//        this.postStatus = PostStatusEnum.VAILABLE;
-//        this.userId = userId;
-//        this.images = images;
-//    }
-
-    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto, Long userId,
-        List<RecommendCourseImg> images
+    public void update(Long id, int score, String title, String season, int altitude,
+        String contents, String region, Long userId
     ) {
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
-        this.season = requestDto.getSeason();
-        this.score = requestDto.getScore();
-        this.altitude = requestDto.getAltitude();
+        this.id = id;
+        this.score = score;
+        this.title = title;
+        this.season = season;
+        this.altitude = altitude;
+        this.contents = contents;
+        this.region = region;
         this.postStatus = PostStatusEnum.VAILABLE;
         this.userId = userId;
-        // this.images = images;
     }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {

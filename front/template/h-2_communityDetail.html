@@ -41,7 +41,7 @@
         padding: 100px 0 0 0;
       }
       .post-card-body {
-        height: 600px;
+        /*height: 600px;*/
         overflow-y: scroll;
         overflow-x: hidden;
       }
@@ -63,13 +63,15 @@
         justify-content: start;
         align-items: center;
       }
-      .tag-wrap > span {
-        width: 70px;
+      .tag-wrap > span,
+      .like-title{
+        /*width: 70px;*/
+        margin-right: 20px;
         height: 50px;
         line-height: 50px;
         font-size: 15px;
-        font-weight: 900;
-        margin-left: 10px;
+        font-weight: bold;
+        /*margin-left: 10px;*/
       }
       .tag-box {
         padding: 5px;
@@ -85,60 +87,10 @@
         margin-right: 20px;
       }
       /* 좋아요 레이아웃 css */
-      .like-box {
-      }
-      .filebox .upload-name {
-        display: inline-block;
-        height: 40px;
-        padding: 0 10px;
-        vertical-align: middle;
-        border: 1px solid #dddddd;
-        width: 500px;
-        color: #999999;
-      }
-      .upload-label {
-        color: #f46b3f;
-      }
-      /* 게시글 작성 버튼 css */
-      .create-post {
-        background-color: yellowgreen;
-        position: relative;
-      }
-      .btn-create-post {
-        width: 200px;
-        background-color: #f46b3f;
-        border: 1px solid #f46b3f;
-        position: absolute;
-        right: 10px;
-      }
-      /* 태그 셀렉트박스 */
-      .reccomend-tag {
-        display: none;
-      }
+
       .like-box {
         height: 50px;
         border-bottom: 1px solid #d9d9d9;
-      }
-
-      /* 좋아요 레이아웃 */
-      .like-box > img {
-        margin-left: 10px;
-        width: 20px;
-      }
-
-      /* 댓글 */
-      /* 댓글창 포커스 기능 빼기 */
-      .form-control:focus {
-        outline: none !important;
-        box-shadow: none !important;
-        border: 1px solid #dddddd;
-      }
-
-      /* 댓글작성 호버, 포커스 기능빼기 */
-      .comment-create > .btn:hover,
-      .btn:focus {
-        background-color: white !important;
-        color: #f46b3f;
       }
 
       .comment-create {
@@ -244,11 +196,11 @@
         display: flex;
         justify-content: center;
         position: relative;
-        margin-bottom: 100px;
+        margin-bottom: 200px;
       }
       .btns {
         position: absolute;
-        bottom: 0;
+        bottom: -100px;
         right: 0;
       }
       .btns > button {
@@ -476,11 +428,11 @@
             </ul>
           </div>
         </div>
-        <a class="my-profile-wrap" href="./f-1_myPage.html">
-          <div class="img-wrap">
-            <img class="img" src="./../static/img/icon_profile_default.png " />
-          </div>
-          <p class="text">나와바리나와바님</p>
+        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+<!--          <div class="img-wrap">-->
+<!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
+<!--          </div>-->
+<!--          <p class="text">나와바리나와바님</p>-->
         </a>
       </div>
     </header>
@@ -491,27 +443,28 @@
       <section class="header">
         <div class="read-post-box">
           <div class="mb-3 cteate-post">
-            <div class="card">
-              <div class="card-header">제목</div>
-              <div class="card-body post-card-body">
-                <p class="card-text">같이 등산해요~</p>
-                <img
-                  src="/static/img/DefaultMountain.png"
-                  alt="산 기본이미지"
-                />
-              </div>
+            <div id="contents-area" class="card">
+<!--              <div class="card-header">제목</div>-->
+<!--              <div class="card-body post-card-body">-->
+<!--                <p class="card-text">같이 등산해요~</p>-->
+<!--                <img-->
+<!--                  src="/static/img/DefaultMountain.png"-->
+<!--                  alt="산 기본이미지"-->
+<!--                />-->
+<!--              </div>-->
             </div>
+          </div>
+          <div id="img-wrap">
+
           </div>
 
           <!-- 태그 레이아웃 -->
           <div class="tag-read-box">
-            <div class="tag-wrap">
+            <div id="tag-wrap" class="tag-wrap">
               <span>태그</span>
-              <div class="tag-box">
-                <span>#가을산</span>
-                <span>#북한산</span>
-                <span>#등린이</span>
-              </div>
+<!--              <div style="padding: 8px 14px; border: 1px solid #F46B3F; border-radius: 50px; font-size: 12px; font-weight: bold">-->
+<!--                #가을산-->
+<!--              </div>-->
             </div>
             <div class="chating-btn-wrap">
               <a
@@ -525,14 +478,18 @@
             </div>
           </div>
           <!-- 좋아요 레이아웃-->
-          <div class="like-box">
-            <img src="/static/img/heart.png" alt="좋아요아이콘" />
-            <span>5422</span>
+          <!-- TODO 버튼으로 만들고 좋아요/좋아요해제 연동 -->
+          <div id="like-wrap" style="display: flex; align-items: center">
+            <span class="like-title">좋아요</span>
+            <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px">
+              <img src="/static/img/heart.png" alt="좋아요아이콘" style="width: 100%" />
+            </div>
+<!--            <span style="font-size: 14px; font-weight: bold">5422</span>-->
           </div>
           <!-- 댓글-->
-          <div class="comment-box" style="padding-top: 20px">
+          <div id="comment-wrap" class="comment-box" style="padding-top: 20px">
             <!-- 댓글입력창 -->
-            <div class="comment-create" style="margin-bottom: 10px">
+            <div  class="comment-create" style="margin-bottom: 10px">
               <input
                 type="text"
                 class="form-control post-content"
@@ -548,206 +505,206 @@
               </button>
             </div>
 
-            <!-- 댓글아티클 -->
-            <div class="comment-read-box">
-              <!-- 프로필 -->
-              <div class="comment-profile-box">
-                <div
-                  style="
-                    display: flex;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 10px;
-                  "
-                >
-                  <img
-                    src="/static/img/icon_profile_default.png"
-                    alt="프로필이미지"
-                    style="width: 100%"
-                  />
-                </div>
-                <span>이재원</span>
-              </div>
-              <!-- 댓글내용 -->
-              <div class="comment-content-wrap">
-                <div class="comment-content-box">
-                  <div class="comment-content">
-                    <span>우와 가까웠으면 갔을텐데...</span>
-                  </div>
-                  <!-- 좋아요 -->
-                  <div
-                    class="commetn-like-box"
-                    style="cursor: pointer"
-                    onclick=""
-                  >
-                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
-                    <span>5</span>
-                  </div>
-                </div>
-                <!-- 날짜 -->
-                <div class="btn-date-wrap">
-                  <div class="comment-btn-box">
-                    <button type="button" class="comment-btn">수정</button>
-                    <button type="button" class="comment-btn">삭제</button>
-                  </div>
-                  <div class="date-box">
-                    <p>2023-02-06</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 댓글아티클 -->
-            <div class="comment-read-box">
-              <!-- 프로필 -->
-              <div class="comment-profile-box">
-                <div
-                  style="
-                    display: flex;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 10px;
-                  "
-                >
-                  <img
-                    src="/static/img/icon_profile_default.png"
-                    alt="프로필이미지"
-                    style="width: 100%"
-                  />
-                </div>
-                <span>이재원</span>
-              </div>
-              <!-- 댓글내용 -->
-              <div class="comment-content-wrap">
-                <div class="comment-content-box">
-                  <div class="comment-content">
-                    <span>우와 가까웠으면 갔을텐데...</span>
-                  </div>
-                  <!-- 좋아요 -->
-                  <div
-                    class="commetn-like-box"
-                    style="cursor: pointer"
-                    onclick=""
-                  >
-                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
-                    <span>3</span>
-                  </div>
-                </div>
-                <!-- 날짜 -->
-                <div class="btn-date-wrap">
-                  <div class="comment-btn-box">
-                    <!-- <button type="button" class="comment-btn">수정</button>
-                    <button type="button" class="comment-btn">삭제</button> -->
-                  </div>
-                  <div class="date-box">
-                    <p>2023-02-06</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 댓글아티클 -->
-            <div class="comment-read-box">
-              <!-- 프로필 -->
-              <div class="comment-profile-box">
-                <div
-                  style="
-                    display: flex;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 10px;
-                  "
-                >
-                  <img
-                    src="/static/img/icon_profile_default.png"
-                    alt="프로필이미지"
-                    style="width: 100%"
-                  />
-                </div>
-                <span>이재원</span>
-              </div>
-              <!-- 댓글내용 -->
-              <div class="comment-content-wrap">
-                <div class="comment-content-box">
-                  <div class="comment-content">
-                    <span>우와 가까웠으면 갔을텐데...</span>
-                  </div>
-                  <!-- 좋아요 -->
-                  <div
-                    class="commetn-like-box"
-                    style="cursor: pointer"
-                    onclick=""
-                  >
-                    <img src="/static/img/heart.png" alt="좋아요아이콘" />
-                    <span>2</span>
-                  </div>
-                </div>
-                <!-- 날짜 -->
-                <div class="btn-date-wrap">
-                  <div class="comment-btn-box">
-                    <!-- <button type="button" class="comment-btn">수정</button>
-                    <button type="button" class="comment-btn">삭제</button> -->
-                  </div>
-                  <div class="date-box">
-                    <p>2023-02-06</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 댓글아티클 -->
-            <div class="comment-read-box">
-              <!-- 프로필 -->
-              <div class="comment-profile-box">
-                <div
-                  style="
-                    display: flex;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 100%;
-                    overflow: hidden;
-                    margin-right: 10px;
-                  "
-                >
-                  <img
-                    src="/static/img/icon_profile_default.png"
-                    alt="프로필이미지"
-                    style="width: 100%"
-                  />
-                </div>
-                <span>이재원</span>
-              </div>
-              <!-- 댓글내용 -->
-              <div class="comment-content-wrap">
-                <div class="comment-content-box">
-                  <div class="comment-content">
-                    <span>우와 가까웠으면 갔을텐데...</span>
-                  </div>
-                  <!-- 좋아요 -->
-                  <div
-                    class="commetn-like-box"
-                    style="cursor: pointer"
-                    onclick=""
-                  >
-                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
-                    <span>5</span>
-                  </div>
-                </div>
-                <!-- 날짜 -->
-                <div class="btn-date-wrap">
-                  <div class="comment-btn-box">
-                    <!-- <button type="button" class="comment-btn">수정</button>
-                    <button type="button" class="comment-btn">삭제</button> -->
-                  </div>
-                  <div class="date-box">
-                    <p>2023-02-06</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!--            &lt;!&ndash; 댓글아티클 &ndash;&gt;-->
+<!--            <div class="comment-read-box">-->
+<!--              &lt;!&ndash; 프로필 &ndash;&gt;-->
+<!--              <div class="comment-profile-box">-->
+<!--                <div-->
+<!--                  style="-->
+<!--                    display: flex;-->
+<!--                    width: 40px;-->
+<!--                    height: 40px;-->
+<!--                    border-radius: 100%;-->
+<!--                    overflow: hidden;-->
+<!--                    margin-right: 10px;-->
+<!--                  "-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="/static/img/icon_profile_default.png"-->
+<!--                    alt="프로필이미지"-->
+<!--                    style="width: 100%"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <span>이재원</span>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 댓글내용 &ndash;&gt;-->
+<!--              <div class="comment-content-wrap">-->
+<!--                <div class="comment-content-box">-->
+<!--                  <div class="comment-content">-->
+<!--                    <span>우와 가까웠으면 갔을텐데...</span>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 좋아요 &ndash;&gt;-->
+<!--                  <div-->
+<!--                    class="commetn-like-box"-->
+<!--                    style="cursor: pointer"-->
+<!--                    onclick=""-->
+<!--                  >-->
+<!--                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />-->
+<!--                    <span>5</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; 날짜 &ndash;&gt;-->
+<!--                <div class="btn-date-wrap">-->
+<!--                  <div class="comment-btn-box">-->
+<!--                    <button type="button" class="comment-btn">수정</button>-->
+<!--                    <button type="button" class="comment-btn">삭제</button>-->
+<!--                  </div>-->
+<!--                  <div class="date-box">-->
+<!--                    <p>2023-02-06</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 댓글아티클 &ndash;&gt;-->
+<!--            <div class="comment-read-box">-->
+<!--              &lt;!&ndash; 프로필 &ndash;&gt;-->
+<!--              <div class="comment-profile-box">-->
+<!--                <div-->
+<!--                  style="-->
+<!--                    display: flex;-->
+<!--                    width: 40px;-->
+<!--                    height: 40px;-->
+<!--                    border-radius: 100%;-->
+<!--                    overflow: hidden;-->
+<!--                    margin-right: 10px;-->
+<!--                  "-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="/static/img/icon_profile_default.png"-->
+<!--                    alt="프로필이미지"-->
+<!--                    style="width: 100%"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <span>이재원</span>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 댓글내용 &ndash;&gt;-->
+<!--              <div class="comment-content-wrap">-->
+<!--                <div class="comment-content-box">-->
+<!--                  <div class="comment-content">-->
+<!--                    <span>우와 가까웠으면 갔을텐데...</span>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 좋아요 &ndash;&gt;-->
+<!--                  <div-->
+<!--                    class="commetn-like-box"-->
+<!--                    style="cursor: pointer"-->
+<!--                    onclick=""-->
+<!--                  >-->
+<!--                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />-->
+<!--                    <span>3</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; 날짜 &ndash;&gt;-->
+<!--                <div class="btn-date-wrap">-->
+<!--                  <div class="comment-btn-box">-->
+<!--                    &lt;!&ndash; <button type="button" class="comment-btn">수정</button>-->
+<!--                    <button type="button" class="comment-btn">삭제</button> &ndash;&gt;-->
+<!--                  </div>-->
+<!--                  <div class="date-box">-->
+<!--                    <p>2023-02-06</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 댓글아티클 &ndash;&gt;-->
+<!--            <div class="comment-read-box">-->
+<!--              &lt;!&ndash; 프로필 &ndash;&gt;-->
+<!--              <div class="comment-profile-box">-->
+<!--                <div-->
+<!--                  style="-->
+<!--                    display: flex;-->
+<!--                    width: 40px;-->
+<!--                    height: 40px;-->
+<!--                    border-radius: 100%;-->
+<!--                    overflow: hidden;-->
+<!--                    margin-right: 10px;-->
+<!--                  "-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="/static/img/icon_profile_default.png"-->
+<!--                    alt="프로필이미지"-->
+<!--                    style="width: 100%"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <span>이재원</span>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 댓글내용 &ndash;&gt;-->
+<!--              <div class="comment-content-wrap">-->
+<!--                <div class="comment-content-box">-->
+<!--                  <div class="comment-content">-->
+<!--                    <span>우와 가까웠으면 갔을텐데...</span>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 좋아요 &ndash;&gt;-->
+<!--                  <div-->
+<!--                    class="commetn-like-box"-->
+<!--                    style="cursor: pointer"-->
+<!--                    onclick=""-->
+<!--                  >-->
+<!--                    <img src="/static/img/heart.png" alt="좋아요아이콘" />-->
+<!--                    <span>2</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; 날짜 &ndash;&gt;-->
+<!--                <div class="btn-date-wrap">-->
+<!--                  <div class="comment-btn-box">-->
+<!--                    &lt;!&ndash; <button type="button" class="comment-btn">수정</button>-->
+<!--                    <button type="button" class="comment-btn">삭제</button> &ndash;&gt;-->
+<!--                  </div>-->
+<!--                  <div class="date-box">-->
+<!--                    <p>2023-02-06</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 댓글아티클 &ndash;&gt;-->
+<!--            <div class="comment-read-box">-->
+<!--              &lt;!&ndash; 프로필 &ndash;&gt;-->
+<!--              <div class="comment-profile-box">-->
+<!--                <div-->
+<!--                  style="-->
+<!--                    display: flex;-->
+<!--                    width: 40px;-->
+<!--                    height: 40px;-->
+<!--                    border-radius: 100%;-->
+<!--                    overflow: hidden;-->
+<!--                    margin-right: 10px;-->
+<!--                  "-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="/static/img/icon_profile_default.png"-->
+<!--                    alt="프로필이미지"-->
+<!--                    style="width: 100%"-->
+<!--                  />-->
+<!--                </div>-->
+<!--                <span>이재원</span>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 댓글내용 &ndash;&gt;-->
+<!--              <div class="comment-content-wrap">-->
+<!--                <div class="comment-content-box">-->
+<!--                  <div class="comment-content">-->
+<!--                    <span>우와 가까웠으면 갔을텐데...</span>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 좋아요 &ndash;&gt;-->
+<!--                  <div-->
+<!--                    class="commetn-like-box"-->
+<!--                    style="cursor: pointer"-->
+<!--                    onclick=""-->
+<!--                  >-->
+<!--                    <img src="/static/img/unHeart.png" alt="좋아요아이콘" />-->
+<!--                    <span>5</span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; 날짜 &ndash;&gt;-->
+<!--                <div class="btn-date-wrap">-->
+<!--                  <div class="comment-btn-box">-->
+<!--                    &lt;!&ndash; <button type="button" class="comment-btn">수정</button>-->
+<!--                    <button type="button" class="comment-btn">삭제</button> &ndash;&gt;-->
+<!--                  </div>-->
+<!--                  <div class="date-box">-->
+<!--                    <p>2023-02-06</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
           <!--   페이지네이션/작성버튼     -->
           <div class="bottomBtn">
@@ -774,14 +731,24 @@
               <button
                 type="button"
                 class="modifyBtn btn btn-primary btn-search"
+                onclick="moveModifyPage()"
               >
                 수정
               </button>
               <button
                 type="button"
                 class="deleteBtn btn btn-primary btn-search"
+                onclick="deleteCommunity()"
               >
                 삭제
+              </button>
+              <button
+                  type="button"
+                  class="btn btn-primary btn-search"
+                  style="background-color: #f46b3f; border: none; color: white"
+                  onclick="moveMainPage()"
+              >
+                목록
               </button>
             </div>
           </div>
@@ -796,10 +763,26 @@
       });
     </script>
     <script>
+      var communityId = localStorage.getItem("communityId");
+      console.log("communityId : ", communityId)
+      var accessToken = localStorage.getItem("accessToken");
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
+        getMenuProfile();
+        getCommunity();
       });
+
+      function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+          </div>
+          <p class="text">${menuProfile.sub}님</p>
+`
+        $("#my-profile").append(tempProfile);
+      }
       function handleToggleBellDropBox() {
         $(".bell-dropbox").toggle();
         $(".friend-dropbox").hide();
@@ -809,47 +792,127 @@
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
       }
-      function handleCreateGuestBook() {
+
+      function getCommunity() {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-          data: {
-            name: "sasas",
+          url: "http://localhost:8080/boards/communities/" + communityId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
           },
           success: function (response) {
-            console.log(response);
-            alert(response.msc);
-            window.location.reload();
+            console.log("response : ", response);
+
+            // 컨텐츠 넣기
+            let tempContentsArea = `
+              <div class="card-header">${response.title}</div>
+              <div class="card-body post-card-body">
+                <p class="card-text">${response.contents}</p>
+              </div>
+            `
+            $("#contents-area").append(tempContentsArea);
+            for(let i=0; i<response.imgList.length; i++){
+              let temp = `
+                <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
+                  <img src=${response.imgList[i]} alt="이미지" style="width: 100%"/>
+                </div>
+              `
+              $("#contents-area").append(temp);
+            }
+
+            // 태그 넣기
+            for (let i=0; i<response.tagList.length; i++){
+              var temp = `
+                <div style="padding: 8px 14px; border: 1px solid #F46B3F; border-radius: 50px; font-size: 12px; font-weight: bold; margin-right: 5px;">
+                  #${response.tagList[i].name}
+                </div>
+              `
+              $("#tag-wrap").append(temp);
+            }
+
+            // 좋아요 수 넣기
+            var tempLike = `
+              <span style="font-size: 14px; font-weight: bold">${response.likeCount}</span>
+            `
+            $("#like-wrap").append(tempLike);
+
+            // 댓글 넣기
+            console.log("response.commentList.length : ", response.commentList.length)
+            for (let i=0; i<response.commentList.length; i++){
+              var tempComment = `
+                <div class="comment-read-box">
+                <!-- 프로필 -->
+                <div class="comment-profile-box">
+                  <div
+                    style="
+                      display: flex;
+                      width: 40px;
+                      height: 40px;
+                      border-radius: 100%;
+                      overflow: hidden;
+                      margin-right: 10px;
+                    "
+                  >
+                    <img
+                      src="/static/img/icon_profile_default.png"
+                      alt="프로필이미지"
+                      style="width: 100%"
+                    />
+                  </div>
+                  <span>${response.commentList[i].nickName}</span>
+                </div>
+                <!-- 댓글내용 -->
+                <div class="comment-content-wrap">
+                  <div class="comment-content-box">
+                    <div class="comment-content">
+                      <span>${response.commentList[i].contents}</span>
+                    </div>
+                    <!-- 좋아요 -->
+                    <!-- TODO 내가 좋아요 누른것만 빨간 하트로 뜨게 수정 -->
+                    <div
+                      class="commetn-like-box"
+                      style="cursor: pointer"
+                      onclick=""
+                    >
+                      <img src="/static/img/unHeart.png" alt="좋아요아이콘" />
+                      <span>${response.commentList[i].likeCount}</span>
+                    </div>
+                  </div>
+                  <!-- 날짜 -->
+                  <div class="btn-date-wrap">
+                    <div class="comment-btn-box">
+                      <!-- TODO 자기 userId만 수정 삭제 버튼이 뜨게 수정 -->
+                      <button type="button" class="comment-btn">수정</button>
+                      <button type="button" class="comment-btn">삭제</button>
+                    </div>
+                    <div class="date-box">
+                      <p>${response.commentList[i].createAt.substring(0, 10)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              `
+              $("#comment-wrap").append(tempComment);
+            }
           },
-        });
+        })
       }
 
-      function deleteCommunityBoard() {
-        const id = localStorage.getItem("communityBoardId");
-        console.log("id : " + id);
+      function deleteCommunity(){
         $.ajax({
           type: "DELETE",
-          url: `http://localhost:8080/boards/communities/${id}`,
-          // dataType: "text",
+          url: `http://localhost:8080/boards/communities/${communityId}`,
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
+            xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
           },
-          // data: JSON.stringify({
-          //     "title" : $("#title").val(),
-          //     "contents" : $("#contents").val(),
-          //     "category" : category
-          // }),
           success: function (response) {
             alert("삭제 완료");
             window.location.href = "h-1_communityMain.html";
           },
           error: function (xhr) {
             console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
             );
           },
         });
@@ -872,11 +935,6 @@
               localStorage.getItem("accessToken")
             );
           },
-          // data: JSON.stringify({
-          //     "title" : $("#title").val(),
-          //     "contents" : $("#contents").val(),
-          //     "category" : category
-          // }),
           success: function (response) {
             alert("삭제 완료");
             window.location.href = "h-1_communityMain.html";
@@ -887,6 +945,14 @@
             );
           },
         });
+      }
+
+      function moveModifyPage(){
+        window.location.href = "h-5_communityModify.html";
+      }
+
+      function moveMainPage(){
+        window.location.href = "h-1_communityMain.html";
       }
     </script>
   </body>

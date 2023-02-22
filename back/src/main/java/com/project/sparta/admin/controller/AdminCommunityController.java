@@ -25,7 +25,9 @@ public class AdminCommunityController {
     // 커뮤니티 전체 조회
     @GetMapping("/boards/communities")
     public ResponseEntity getCommunityList(@RequestParam int page, @RequestParam int size,
-        @RequestParam String title, @RequestParam String contents, @RequestParam String nickname) {
+        @RequestParam String title, @RequestParam String contents, @RequestParam String nickname
+        //@RequestParam Long hashtagId
+    ) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
             page, size, title, contents, nickname);
         return new ResponseEntity<>(result, HttpStatus.OK);
