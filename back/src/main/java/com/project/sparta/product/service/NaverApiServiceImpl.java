@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class NaverApiServiceImpl implements NaverApiService {
 
+    @Override
     public PageResponseDto<List<ProductResponseDto>> searchItems(String query , int limit, int offset, String sort) {
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
