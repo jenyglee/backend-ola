@@ -6,16 +6,13 @@ import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.like.repository.LikeRecommendRepository;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
-import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +31,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     private final RecommendCourseBoardRepository recommendCourseBoardRepository;
 
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
-
     /**
      * 추천코스 게시글 등록 메서드
      *
@@ -61,7 +57,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             recommendCourseBoardImgRepository.save(courseImg);
         }
         recommendCourseBoardRepository.save(board);
-
     }
 
 
@@ -122,7 +117,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
-        //board의 작성자 맞는지 확인
         if (!post.getUserId().equals(userId)) {
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
@@ -216,4 +210,5 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());
     }
+
 }

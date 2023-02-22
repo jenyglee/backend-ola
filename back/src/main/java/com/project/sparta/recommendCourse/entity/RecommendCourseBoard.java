@@ -40,8 +40,11 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
+
+
     //    @OneToMany
     //    private List<RecommendCourseImg> images = new ArrayList<>();
+
 
     // @ManyToOne
     // @JoinColumn(name = "user_id")
@@ -63,19 +66,19 @@ public class RecommendCourseBoard extends Timestamped {
     }
 
 
-//    public void modifyRecommendCourseBoard(int score, String title, String season, int altitude,
-//        String contents, String region, String orderByLike, Long userId
-//    ) {
-//        this.title = title;
-//        this.contents = contents;
-//        this.season = season;
-//        this.score = score;
-//        this.region = region;
-//        this.altitude = altitude;
-//        this.postStatus = PostStatusEnum.VAILABLE;
-//        this.orderByLike = orderByLike;
-//        this.userId = userId;
-//    }
+
+    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto, Long userId,
+        List<RecommendCourseImg> images
+    ) {
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.season = requestDto.getSeason();
+        this.score = requestDto.getScore();
+        this.altitude = requestDto.getAltitude();
+        this.postStatus = PostStatusEnum.VAILABLE;
+        this.userId = userId;
+        // this.images = images;
+    }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;
