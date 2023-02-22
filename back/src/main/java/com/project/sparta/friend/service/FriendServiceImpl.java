@@ -5,7 +5,10 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
+import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
 import static com.project.sparta.user.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
 import static com.project.sparta.exception.api.Status.INVALID_USER;
@@ -29,10 +33,13 @@ public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    private final HashtagRepository hashtagRepository;
+
     //내 친구목록 전체조회
     @Transactional(readOnly = true)
     @Override
-    public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int page, int size, Long userId) {
+    public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int page, int size,
+        Long userId) {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
         List<FriendInfoReponseDto> friendInfoList = new ArrayList<>();
@@ -40,8 +47,10 @@ public class FriendServiceImpl implements FriendService {
         Page<Friend> friendsList = friendRepository.findAllByUserId(userId, pageRequest);
 
         for (Friend friend : friendsList) {
-            User friendInfo = userRepository.findById(friend.getTargetId()).orElseThrow(() -> new CustomException(INVALID_USER));
-            friendInfoList.add(new FriendInfoReponseDto(friendInfo.getUserImageUrl(), friendInfo.getNickName()));
+            User friendInfo = userRepository.findById(friend.getTargetId())
+                .orElseThrow(() -> new CustomException(INVALID_USER));
+            friendInfoList.add(
+                new FriendInfoReponseDto(friendInfo.getUserImageUrl(), friendInfo.getNickName()));
         }
         long totalCount = friendInfoList.size();
 
@@ -51,25 +60,27 @@ public class FriendServiceImpl implements FriendService {
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int page, int size, Long userId) {
+    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int page, int size,
+        Long userId) {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
 
         //해당 유저의 회원가입 태그 정보 긁어오기
-        User userInfo = userRepository.findById(userId).orElseThrow(() -> new CustomException(INVALID_USER));
+        User userInfo = userRepository.findById(userId)
+            .orElseThrow(() -> new CustomException(INVALID_USER));
 
         //매칭 회원 랜덤으로 뽑아오기
         Page<User> randomList = friendRepository.randomUser(userInfo, pageRequest, USER_REGISTERED);
 
         //매칭 회원의 프로필 사진, 이름 정보 뽑기
-        Page<FriendInfoReponseDto> searchFriendsMap = randomList.map(u -> new FriendInfoReponseDto(u.getUserImageUrl(), u.getNickName()));
-
+        Page<FriendInfoReponseDto> searchFriendsMap = randomList.map(
+            u -> new FriendInfoReponseDto(u.getUserImageUrl(), u.getNickName()));
         List<FriendInfoReponseDto> content = searchFriendsMap.getContent();
-
         long totalCount = searchFriendsMap.getTotalElements();
 
         //리스트 반환
-        return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
+        return new PageResponseDto(page, totalCount,
+            content.stream().distinct().collect(Collectors.toList()));
     }
 
     //친구 추가
@@ -78,7 +89,8 @@ public class FriendServiceImpl implements FriendService {
     public void addFriend(Long userId, String targetName) {
 
         //요청한 친구 정보 유무 확인
-        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED).orElseThrow(() -> new CustomException(INVALID_USER));
+        User targetUser = userRepository.findByNickNameAndStatus(targetName, USER_REGISTERED)
+            .orElseThrow(() -> new CustomException(INVALID_USER));
 
         //이미 친구로 등록되어있는지 확인
         Friend check = friendRepository.findByUserIdAndTargetId(userId, targetUser.getId());
@@ -106,7 +118,8 @@ public class FriendServiceImpl implements FriendService {
     //친구 검색(내친구 포함 모든친구)
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int page, int size, String targetUserName) {
+    public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int page, int size,
+        String targetUserName) {
 
         //page , size 값 임의로 넣기
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
@@ -114,12 +127,26 @@ public class FriendServiceImpl implements FriendService {
         //친구 이름으로 검색(+with paging 처리)
         Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
 
-        //검색했을 경우에 프로필 사진, 이름 정보 뽑기
-        Page<FriendInfoReponseDto> searchFriendsMap = user.map(u -> new FriendInfoReponseDto(u.getUserImageUrl(), u.getNickName()));
-        List<FriendInfoReponseDto> content = searchFriendsMap.getContent();
+        //토탈 카운트만 뽑기 위해
+        Page<FriendInfoReponseDto> searchFriendsMap = user.map(
+            u -> new FriendInfoReponseDto(u.getUserImageUrl(), u.getNickName()));
+
+        List<Hashtag> tagNameList = new ArrayList<>();
+        List<FriendInfoReponseDto> content = new ArrayList<>();
+
+        for (int i = 0; i < user.toList().get(0).getTags().size(); i++) {
+            List<UserTag> tagList = user.toList().get(0).getTags();
+            Hashtag tag = hashtagRepository.findById(tagList.get(i).getTag().getId())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+            tagNameList.add(tag);
+        }
+
+        content.add(new FriendInfoReponseDto(user.toList().get(0).getUserImageUrl(), user.toList().get(0).getNickName(), tagNameList));
+
         long totalCount = searchFriendsMap.getTotalElements();
 
         //리스트 반환
-        return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
+        return new PageResponseDto(page, totalCount,
+            content.stream().distinct().collect(Collectors.toList()));
     }
 }
