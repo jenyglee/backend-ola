@@ -4,6 +4,7 @@ package com.project.sparta.recommendCourse.service;
 import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
 
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
@@ -32,6 +33,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     private final RecommendCourseBoardRepository recommendCourseBoardRepository;
 
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
+
     /**
      * 추천코스 게시글 등록 메서드
      *
@@ -43,15 +45,15 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public void creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
 
         RecommendCourseBoard board = RecommendCourseBoard.builder()
-            .score(requestPostDto.getScore())
-            .title(requestPostDto.getTitle())
-            .season(requestPostDto.getSeason())
-            .altitude(requestPostDto.getAltitude())
-            .contents(requestPostDto.getContents())
-            .region(requestPostDto.getRegion())
-            .userId(userId)
-            .postStatus(VAILABLE)
-            .build();
+                                            .score(requestPostDto.getScore())
+                                            .title(requestPostDto.getTitle())
+                                            .season(requestPostDto.getSeason())
+                                            .altitude(requestPostDto.getAltitude())
+                                            .contents(requestPostDto.getContents())
+                                            .region(requestPostDto.getRegion())
+                                            .userId(userId)
+                                            .postStatus(VAILABLE)
+                                            .build();
 
         for (String imgUrl : requestPostDto.getImgList()) {
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
@@ -72,6 +74,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     //코스 수정
     @Override
     public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
+
         //수정하고자 하는 board 있는지 확인
         RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
@@ -79,30 +82,18 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         if (!checkBoard.getUserId().equals(userId)) {
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
-
-        RecommendCourseBoard board = RecommendCourseBoard.builder()
-            .score(requestDto.getScore())
-            .title(requestDto.getTitle())
-            .season(requestDto.getSeason())
-            .altitude(requestDto.getAltitude())
-            .contents(requestDto.getContents())
-            .region(requestDto.getRegion())
-            .userId(userId)
-            .postStatus(VAILABLE)
-            .build();
-
         //기존에 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 
         //새로운 이미지 추가
         for (String imgUrl : requestDto.getImgList()) {
-            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
+            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, checkBoard);
             recommendCourseBoardImgRepository.save(courseImg);
         }
+        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), userId);
 
         //게시글 다시 등록
-        recommendCourseBoardRepository.save(board);
-
+        recommendCourseBoardRepository.save(checkBoard);
     }
 
     /**
@@ -168,30 +159,20 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto, Long userId) {
 
         //수정하고자 하는 board 있는지 확인
-        recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
-
-        RecommendCourseBoard board = RecommendCourseBoard.builder()
-            .score(requestDto.getScore())
-            .title(requestDto.getTitle())
-            .season(requestDto.getSeason())
-            .altitude(requestDto.getAltitude())
-            .contents(requestDto.getContents())
-            .region(requestDto.getRegion())
-            .userId(userId)
-            .postStatus(VAILABLE)
-            .build();
+        RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
         //기존에 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 
         //새로운 이미지 추가
         for (String imgUrl : requestDto.getImgList()) {
-            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
+            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, checkBoard);
             recommendCourseBoardImgRepository.save(courseImg);
         }
+        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), userId);
 
         //게시글 다시 등록
-        recommendCourseBoardRepository.save(board);
+        recommendCourseBoardRepository.save(checkBoard);
     }
 
     /**

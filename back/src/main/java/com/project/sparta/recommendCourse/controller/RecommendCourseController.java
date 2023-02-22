@@ -123,4 +123,6 @@ public class RecommendCourseController {
         @RequestParam(name = "orderByLike") String orderByLike) {
         return recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, orderByLike);
     }
+
+
 }

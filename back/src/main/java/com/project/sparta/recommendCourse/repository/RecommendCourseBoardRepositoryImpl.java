@@ -71,12 +71,12 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         if (region != null) {
             builder.and(reBoard.region.contains(region));
         }
-//Projections.list(
+
         List<RecommendResponseDto> boards = queryFactory
             .select(Projections.constructor(RecommendResponseDto.class,
                 reBoard.id.as("boardId"),
                 reBoard.title.as("title"),
-                JPAExpressions.select(courseImg.url).from(reBoard, courseImg).where(reBoard.id.eq(courseImg.recommendCourseBoard.id)),
+                Projections.list(courseImg.url),
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
                 user.nickName.as("nickName"),
@@ -160,7 +160,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .select(Projections.constructor(RecommendResponseDto.class,
                 reBoard.id.as("boardId"),
                 reBoard.title.as("title"),
-                courseImg.url.as("img"),
+                Projections.list(courseImg.url),
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
                 user.nickName.as("nickName"),

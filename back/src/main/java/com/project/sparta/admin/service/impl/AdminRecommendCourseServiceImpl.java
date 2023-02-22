@@ -4,4 +4,5 @@ import com.project.sparta.admin.service.AdminRecommendCourseService;
 
 public class AdminRecommendCourseServiceImpl implements AdminRecommendCourseService {
 
+
 }
