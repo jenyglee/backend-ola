@@ -11,6 +11,7 @@ import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -96,11 +97,11 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //새로운 이미지 추가
         for (String imgUrl : requestDto.getImgList()) {
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
-            recommendCourseBoardImgRepository.saveAndFlush(courseImg);
+            recommendCourseBoardImgRepository.save(courseImg);
         }
 
         //게시글 다시 등록
-        recommendCourseBoardRepository.saveAndFlush(board);
+        recommendCourseBoardRepository.save(board);
 
     }
 
@@ -186,11 +187,11 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //새로운 이미지 추가
         for (String imgUrl : requestDto.getImgList()) {
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
-            recommendCourseBoardImgRepository.saveAndFlush(courseImg);
+            recommendCourseBoardImgRepository.save(courseImg);
         }
 
         //게시글 다시 등록
-        recommendCourseBoardRepository.saveAndFlush(board);
+        recommendCourseBoardRepository.save(board);
     }
 
     /**
