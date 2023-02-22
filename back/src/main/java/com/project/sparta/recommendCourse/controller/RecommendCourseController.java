@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,8 @@ public class RecommendCourseController {
 
     // TODO 이미지 업로드 API는 커뮤니티 쓸 때, 회원가입할 때도 사용하기 때문에 위치 변경이 필요
     //이미지 업로드 api
-    @CrossOrigin(origins="http://localhost:8080", maxAge=3600)
     @ApiOperation(value = "이미지 업로드", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/upload") //todo url 어떤것으로 할지 의논 후 수정
     public ImgUrlDto ImageUpload(
         @RequestPart(value = "image", required = false) List<MultipartFile> images)
@@ -57,7 +57,7 @@ public class RecommendCourseController {
      */
 
     @ApiOperation(value = "코스 추천 생성", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PostMapping("/recommends")
     public ResponseEntity createRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -65,13 +65,6 @@ public class RecommendCourseController {
         recommendCourseBoardService.creatRecommendCourseBoard(requestDto, userId);
 
         return new ResponseEntity(HttpStatus.OK);
-
-        // 이미지업로드 API를 쏴서 이미지를 백에다가 업로드요청을 합니다.
-        // 백은 이미지를 받아서 DB에 저장하고 DB에 저장된 이미지의 URL을 이미지업로드API에 반환해줍니다.
-        // 클라이언트에서는 이미지업로드API에서 반환받은 이미지의 URL을 코스추천 작성API에 포함해서 요청합니다.
-        // 백은 코스추천 API에서 요청받은 타이틀, 컨텐츠, 이미지URL을 코스추천 DB에 저장합니다.
-        // 반환할건 없습니다.
-
     }
 
     /**
@@ -84,7 +77,7 @@ public class RecommendCourseController {
      * @throws IOException
      */
     @ApiOperation(value = "코스 추천 수정", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @PatchMapping("/recommends/{boardId}")
     public ResponseEntity modifyRecommendCourse(@RequestBody RecommendRequestDto requestDto,
         @PathVariable Long boardId,
@@ -103,7 +96,7 @@ public class RecommendCourseController {
      * @param userDetail : 삭제하는 유저정보
      */
     @ApiOperation(value = "코스 추천 삭제", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:MOUNTAIN_GOD')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -112,7 +105,7 @@ public class RecommendCourseController {
     }
 
     @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
-    @GetMapping("/recommend/{boardId}")
+    @GetMapping("/recommends/{boardId}")
     public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
     }

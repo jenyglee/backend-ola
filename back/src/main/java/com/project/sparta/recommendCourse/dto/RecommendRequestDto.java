@@ -29,4 +29,6 @@ public class RecommendRequestDto {
         this.region = region;
         this.imgList = imgList;
     }
+
+
 }

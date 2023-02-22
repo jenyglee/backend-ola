@@ -9,13 +9,6 @@ import java.util.List;
 
 public interface RecommendCourseBoardImgRepository extends JpaRepository<RecommendCourseImg,Long> {
 
-
-//    @Query("select m.id from RecommendCourseImg m where m.recommendCoursePost.Id=:id ")
-
-    // @Query("select m.id from RecommendCourseImg m where m.recommendCourseBoard.Id=:id")
-    // List<Long> findByRecommendCoursePostId(@Param("id")Long id );
-
-
-
-
+    @Query("delete from RecommendCourseImg r where r.recommendCourseBoard.id=:boardId")
+    void deleteBoard(Long boardId);
 }

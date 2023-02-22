@@ -62,32 +62,20 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-//    @Builder
-//    public RecommendCourseBoard(String title, String contents, int score, String season,
-//        int altitude, Long userId, List<RecommendCourseImg> images
+
+//    public void modifyRecommendCourseBoard(int score, String title, String season, int altitude,
+//        String contents, String region, String orderByLike, Long userId
 //    ) {
 //        this.title = title;
 //        this.contents = contents;
 //        this.season = season;
 //        this.score = score;
+//        this.region = region;
 //        this.altitude = altitude;
 //        this.postStatus = PostStatusEnum.VAILABLE;
+//        this.orderByLike = orderByLike;
 //        this.userId = userId;
-//        this.images = images;
 //    }
-
-    public void modifyRecommendCourseBoard(RecommendRequestDto requestDto, Long userId,
-        List<RecommendCourseImg> images
-    ) {
-        this.title = requestDto.getTitle();
-        this.contents = requestDto.getContents();
-        this.season = requestDto.getSeason();
-        this.score = requestDto.getScore();
-        this.altitude = requestDto.getAltitude();
-        this.postStatus = PostStatusEnum.VAILABLE;
-        this.userId = userId;
-        // this.images = images;
-    }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;

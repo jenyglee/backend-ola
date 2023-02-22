@@ -4,6 +4,7 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.GetMyBoardResponseDto;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.recommendCourse.dto.GetMyRecommendCourseResponseDto;
+import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.dto.UpgradeRequestDto;
@@ -55,7 +56,7 @@ public class InfoController {
         @RequestParam("page") int page,
         @RequestParam("size") int size,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        PageResponseDto<List<GetMyRecommendCourseResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
+        PageResponseDto<List<RecommendResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
         return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
     }
 

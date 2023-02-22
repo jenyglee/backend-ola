@@ -16,6 +16,9 @@ import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepositoryImpl;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
 import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.dto.UserSignupDto;
@@ -60,6 +63,10 @@ public class initDb {
         AdminService adminService;
         @Autowired
         RecommendCourseBoardService recommendCourseBoardService;
+
+        @Autowired
+        RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
+
         @Autowired
         CommunityBoardService communityBoardService;
         @Autowired
@@ -175,6 +182,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(1)
@@ -192,6 +200,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(2)
