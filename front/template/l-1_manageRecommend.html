@@ -270,7 +270,7 @@
 
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/admin/boards/recommends?page="+page+"&size=10&score=0&season=&altitude=0&region=&orderByLike=all",
+      url: "http://localhost:8080/boards/recommends?page="+page+"&size=10&score=0&season=&altitude=0&region=&orderByLike=all",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
