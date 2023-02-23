@@ -7,6 +7,7 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.recommendCourse.dto.RecommendCondition;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
@@ -139,15 +140,13 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
         int score, String season, int altitude, String region, String orderByLike) {
 
+        RecommendCondition condition = new RecommendCondition(score, season, altitude, region, orderByLike);
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
-            pageRequest, VAILABLE, score, season, altitude, region, orderByLike);
-
+            pageRequest, VAILABLE, condition);
 
         List<RecommendResponseDto> content = courseAllList.getContent();
         long totalCount = courseAllList.getTotalElements();
-
-        System.out.println(totalCount);
 
         return new PageResponseDto<>(page, totalCount, content);
     }
