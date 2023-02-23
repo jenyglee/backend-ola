@@ -56,7 +56,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public CommunityBoardOneResponseDto getBoard(Long boardId, int commentPage, int commentSize, String username) {
+    public CommunityBoardOneResponseDto getBoard(Long boardId, Pageable pageable, String username) {
         // 커뮤니티 조회
         Tuple boardCol = queryFactory.select(
                 communityBoard.title,
@@ -143,8 +143,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 communityComment.nickName.eq(user.nickName)
             )
             .distinct()
-            .offset(commentPage)
-            .limit(commentSize)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
 
         CommunityBoardOneResponseDto build = CommunityBoardOneResponseDto.builder()

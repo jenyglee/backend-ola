@@ -564,9 +564,9 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#" onclick="getCommunity(0)">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#" onclick="getCommunity(1)">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#" onclick="getCommunity(2)">3</a></li>
                   <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
@@ -619,7 +619,7 @@
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getMenuProfile();
-        getCommunity();
+        getCommunity(0);
       });
 
       function getMenuProfile(){
@@ -643,12 +643,12 @@
         $(".bell-dropbox").hide();
       }
 
-      function getCommunity() {
+      function getCommunity(commentPage) {
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         console.log("menuProfile : ", menuProfile)
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/boards/communities/" + communityId,
+          url: "http://localhost:8080/boards/communities/" + communityId + "?commentPage=" + commentPage + "&commentSize=4",
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
@@ -811,12 +811,13 @@
             contents : $("#comment").val()
           }),
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
         })
       }
 
       function commentDelete(commentId){
+        console.log("commentId : ", commentId)
         $.ajax({
           type: "DELETE",
           url: "http://localhost:8080/comments/communities/" + commentId,
@@ -825,7 +826,7 @@
           },
           contentType: "application/json; charset=utf-8",
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
         })
       }
@@ -868,7 +869,7 @@
             xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
           },
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
           error: function (xhr) {
             console.log(
@@ -887,7 +888,7 @@
             xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
           },
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
           error: function (xhr) {
             console.log(
@@ -908,7 +909,7 @@
               xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
             },
             success: function (response) {
-              getCommunity();
+              getCommunity(0);
             },
             error: function (xhr) {
               console.log(
@@ -925,7 +926,7 @@
               xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
             },
             success: function (response) {
-              getCommunity();
+              getCommunity(0);
             },
             error: function (xhr) {
               console.log(
@@ -946,7 +947,7 @@
         //     xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
         //   },
         //   success: function (response) {
-        //     getCommunity();
+        //     getCommunity(0);
         //   },
         //   error: function (xhr) {
         //     console.log(
