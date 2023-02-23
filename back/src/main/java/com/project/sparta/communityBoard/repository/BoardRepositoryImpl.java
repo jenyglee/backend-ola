@@ -124,7 +124,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     JPAExpressions
                         .select(commentLike.count())
                         .from(commentLike)
-                        .where(commentLike.comment.Id.eq(communityComment.Id))
+                        .where(commentLike.comment.Id.eq(communityComment.Id)),
+                    JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
+                            .otherwise(false))
+                        .from(commentLike)
+                        .where(
+                            communityComment.Id.eq(commentLike.comment.Id),
+                            commentLike.userNickName.eq(username)
+                        )
                 )
             )
             .from(communityBoard, communityComment, commentLike)

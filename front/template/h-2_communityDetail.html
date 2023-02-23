@@ -481,12 +481,10 @@
           <!-- TODO 버튼으로 만들고 좋아요/좋아요해제 연동 -->
           <div id="like-wrap" style="display: flex; align-items: center">
             <span class="like-title">좋아요</span>
-<!--            <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"-->
-<!--              onclick="likeCommunity()"-->
-<!--            >-->
-<!--              <img src="/static/img/heart.png" alt="좋아요아이콘" style="width: 100%" />-->
-<!--            </div>-->
-<!--            <span style="font-size: 14px; font-weight: bold">5422</span>-->
+            <div id="like-btn" style="display: flex; align-items: center">
+              <!-- 좋아요 버튼 자리 -->
+            </div>
+
           </div>
           <!-- 댓글-->
           <div id="comment-wrap" class="comment-box" style="padding-top: 20px">
@@ -655,6 +653,7 @@
             console.log("response : ", response);
 
             // 컨텐츠 넣기
+            $("#contents-area").empty();
             let tempContentsArea = `
               <div class="card-header">${response.title}</div>
               <div class="card-body post-card-body">
@@ -662,6 +661,7 @@
               </div>
             `
             $("#contents-area").append(tempContentsArea);
+
             for(let i=0; i<response.imgList.length; i++){
               let temp = `
                 <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
@@ -672,6 +672,7 @@
             }
 
             // 태그 넣기
+            $("#tag-wrap").empty();
             for (let i=0; i<response.tagList.length; i++){
               var temp = `
                 <div style="padding: 8px 14px; border: 1px solid #F46B3F; border-radius: 50px; font-size: 12px; font-weight: bold; margin-right: 5px;">
@@ -681,10 +682,10 @@
               $("#tag-wrap").append(temp);
             }
 
-            var tempHeart;
             //(내가 좋아요 한 경우) 빨간하트
+            var tempHeart;
+            $("#like-btn").empty();
             if(response.isLike){
-              console.log("라이크함")
               tempHeart = `
                 <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"
                   onclick="unlikeCommunity()"
@@ -693,7 +694,6 @@
                 </div>
               `
             }else{
-              console.log("라이크안함")
               tempHeart = `
                 <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"
                   onclick="likeCommunity()"
@@ -702,16 +702,16 @@
                 </div>
               `
             }
-            $("#like-wrap").append(tempHeart);
+            $("#like-btn").append(tempHeart);
 
             // 좋아요 수 넣기
             var tempLike = `
               <span style="font-size: 14px; font-weight: bold">${response.likeCount}</span>
             `
-            $("#like-wrap").append(tempLike);
+            $("#like-btn").append(tempLike);
 
             // 댓글 넣기
-            console.log("response.commentList.length : ", response.commentList.length)
+            $("#comment-wrap").empty();
             for (let i=0; i<response.commentList.length; i++){
               var tempComment = `
                 <div class="comment-read-box">
@@ -822,43 +822,41 @@
       }
 
       function likeCommunity(){
-        communityId
         $.ajax({
           type: "POST",
-          url: `http://localhost:8080/s3/file`,
-          // dataType: "json",
-          // dataType: "multipart",
-          enctype: "multipart/form-data",
-          // contentType: "application/json; charset=utf-8",
-          processData: false,
-          contentType: false,
+          url: `http://localhost:8080/like/communities/${communityId}`,
+          contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", accessToken);
-          },
-          data: formData,
-          xhrFields: {
-            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
           },
           success: function (response) {
-            console.log("여긴 찍혀? 1");
-            console.log("response", response);
-            for (let i = 0; i < response.length; i++) {
-              // imageUrlList.push(response[i].imgList[i]);
-              imageUrlList.push(response[i]);
-            }
-            console.log("imageUrlList : ", imageUrlList);
-            return imageUrlList;
+            getCommunity();
           },
-          error: function (request, status, error) {
-            console.log(error);
-            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+          error: function (xhr) {
+            console.log(
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+            );
           },
         });
-
       }
 
       function unlikeCommunity(){
-
+        $.ajax({
+          type: "DELETE",
+          url: `http://localhost:8080/like/communities/${communityId}`,
+          contentType: "application/json; charset=utf-8",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
+          },
+          success: function (response) {
+            getCommunity();
+          },
+          error: function (xhr) {
+            console.log(
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+            );
+          },
+        });
       }
 
       function moveModifyPage(){
