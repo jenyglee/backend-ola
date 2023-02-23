@@ -260,7 +260,7 @@
                 </div>
 
                 <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                        type="button" class="logout" onclick="">로그아웃</button>
+                        type="button" class="logout" onclick="gotologout()">로그아웃</button>
 
             </div>
 
@@ -310,7 +310,32 @@
     });
 
     function listRecommend(){
-        window.location.href="n-1_manageNotice.html"
+        window.location.href="l-1_manageRecommend.html"
+    }
+
+    function gotologout(){
+        const accessToken = localStorage.getItem("accessToken");
+        var admin_settings = {
+            "url": "http://localhost:8080/auth/logout",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "accessToken": accessToken,
+                "refreshToken": "hi",
+                "role": 0
+            }),
+        }
+        $.ajax(admin_settings).done(function (response) {
+            alert("로그아웃 되었습니다.")
+            window.location.href = "../index.html";
+        })
+        .fail(function (response){
+            console.log("logout fail")
+            alert("로그아웃 실패하였습니다.")
+        })
     }
 
     function getRecommend(){
@@ -340,7 +365,7 @@
     }
 
     function updateRecommend(){
-        const id = localStorage.getItem("noticeId")
+        const id = localStorage.getItem("recommendId")
         // console.log("$(\"#title\").val() : ", $("#title").val())
         // console.log("$(\"#contents\").val() : ", $("#contents").val())
         // console.log("category : ", category)
@@ -359,11 +384,14 @@
                altitude : $('#altitude').val(),
                contents : $('#contents').val(),
                season : $('#season').val(),
-               address : $('#address').val()
+                region : $('#address').val(),
+                imgList : ["https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg",
+                    "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
+                    "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg"]
             }),
             success: function (response) {
                 alert("수정 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "l-1_manageRecommend.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
@@ -372,7 +400,7 @@
     }
 
     function deleteRecommend(){
-        const id = localStorage.getItem("noticeId")
+        const id = localStorage.getItem("recommendId")
         $.ajax({
             type: "DELETE",
             url: `http://localhost:8080/admin/boards/recommends/${id}`,
@@ -388,7 +416,7 @@
             // }),
             success: function (response) {
                 alert("삭제 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "l-1_manageRecommend.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));

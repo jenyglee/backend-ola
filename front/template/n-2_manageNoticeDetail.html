@@ -220,7 +220,7 @@
               "
               type="button"
               class="logout"
-              onclick=""
+              onclick="gotologout()"
           >
             로그아웃
           </button>
@@ -303,7 +303,7 @@
           <button type="button" id="btn_2" onclick="updateNotice()">
             수정
           </button>
-          <button type="button" id="btn_3">목록</button>
+          <button type="button" id="btn_3" onclick="listNotice()">목록</button>
         </div>
       </section>
     </div>
@@ -314,6 +314,31 @@
         getNotice();
         category = "0";
       });
+
+      function gotologout(){
+        const accessToken = localStorage.getItem("accessToken");
+        var admin_settings = {
+          "url": "http://localhost:8080/auth/logout",
+          "method": "POST",
+          "timeout": 0,
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "data": JSON.stringify({
+            "accessToken": accessToken,
+            "refreshToken": "hi",
+            "role": 0
+          }),
+        }
+        $.ajax(admin_settings).done(function (response) {
+          alert("로그아웃 되었습니다.")
+          window.location.href = "../index.html";
+        })
+        .fail(function (response){
+          console.log("logout fail")
+          alert("로그아웃 실패하였습니다.")
+        })
+      }
 
     function listNotice(){
         window.location.href="n-1_manageNotice.html"

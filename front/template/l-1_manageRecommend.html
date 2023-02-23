@@ -153,7 +153,7 @@
         </div>
 
         <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                type="button" class="logout" onclick="">로그아웃</button>
+                type="button" class="logout" onclick="gotologout()">로그아웃</button>
 
       </div>
 
@@ -262,6 +262,32 @@
   function setRecommendId(id){
     localStorage.setItem("recommendId", id);
   }
+
+  function gotologout(){
+    const accessToken = localStorage.getItem("accessToken");
+    var admin_settings = {
+      "url": "http://localhost:8080/auth/logout",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "data": JSON.stringify({
+        "accessToken": accessToken,
+        "refreshToken": "hi",
+        "role": 0
+      }),
+    }
+    $.ajax(admin_settings).done(function (response) {
+      alert("로그아웃 되었습니다.")
+      window.location.href = "../index.html";
+    })
+    .fail(function (response){
+      console.log("logout fail")
+      alert("로그아웃 실패하였습니다.")
+    })
+  }
+
   function getRecommendList(page) {
     // 1. 데이터 초기화를 해야됨.
     $('tbody').empty();
@@ -288,7 +314,7 @@
               `
                   <tr>
                     <th scope="row">${i+1}</th>
-                    <td class="td_2"><a href="l-2_manageRecommendDetail.html" onclick="setRecommendId(${20-(i)})">${response.data[i].title}</a></td>
+                    <td class="td_2"><a href="l-2_manageRecommendDetail.html" onclick="setRecommendId(${response.data[i].boardId})">${response.data[i].title}</a></td>
                     <td class="td_3">${response.data[i].createDate.substring(0, 10)}</td>
                   </tr>
               `
