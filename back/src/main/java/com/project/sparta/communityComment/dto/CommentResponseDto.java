@@ -10,30 +10,25 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CommentResponseDto {
-
-    //  private Long communityBoardId;
     private Long id;
     private String nickName;
     private String contents;
     private LocalDateTime createAt;
-    private Long likeCount; //코멘트 좋아요
+    private Long likeCount;
+    //private Boolean isLike;
+    private String profileImage;
 
-    //  @Builder
-//  public CommunityResponseDto(CommunityComment communityComment,Long likeCount) {
-//    this.communityBoardId = communityComment.getCommunityBoardId();
-//    this.id = communityComment.getId();
-//    this.nickName = communityComment.getNickName();
-//    this.contents = communityComment.getContents();
-//    this.likeCount = likeCount;
-//  }
     @Builder
     public CommentResponseDto(Long id, String nickName, String contents, LocalDateTime createAt
         , Long likeCount
-    ) {
+        //, Boolean isLike
+        , String profileImage) {
         this.id = id;
         this.nickName = nickName;
         this.contents = contents;
         this.createAt = createAt;
         this.likeCount = likeCount;
+        //this.isLike = isLike;
+        this.profileImage = profileImage;
     }
 }
