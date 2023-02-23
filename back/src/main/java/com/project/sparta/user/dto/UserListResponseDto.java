@@ -1,5 +1,6 @@
 package com.project.sparta.user.dto;
 
+import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import java.time.LocalDateTime;
@@ -16,15 +17,17 @@ public class UserListResponseDto {
     private String phoneNumber;
     private UserGradeEnum grade;
     private LocalDateTime createdAt;
+    private StatusEnum status;
 
     @Builder
     public UserListResponseDto(Long id, String nickName, String email, String phoneNumber,
-        UserGradeEnum grade, LocalDateTime createdAt) {
+        UserGradeEnum grade, LocalDateTime createdAt, StatusEnum status) {
         this.id = id;
         this.nickName = nickName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.grade = grade;
         this.createdAt = createdAt;
+        this.status = status;
     }
 }

@@ -266,6 +266,7 @@ public class UserServiceImpl implements UserService {
                 .phoneNumber(user.getPhoneNumber())
                 .grade(user.getGradeEnum())
                 .createdAt(user.getCreateAt())
+                .status(user.getStatus())
                 .build();
             userResponseDtoList.add(userResponseDto);
         }
@@ -289,6 +290,7 @@ public class UserServiceImpl implements UserService {
             .createdAt(user.getCreateAt())
             .modifiedAt(user.getModifiedAt())
             .profileImage(user.getUserImageUrl())
+            .status(user.getStatus())
             .build();
     }
 
