@@ -168,10 +168,8 @@
 
                 </div>
             </div>
-            <div>
-                <button type="button" id="btn_1" onclick="deleteUser()">회원탈퇴</button>
-                <button type="button" id="btn_2" onclick="updateUser()">수정</button>
-                <button type="button" id="btn_3" onclick="listUser()">목록</button>
+            <div id ="btn_wrap">
+
             </div>
         </section>
     </div>
@@ -179,6 +177,7 @@
 
 </body>
 <script>
+    let enable_val=0
     $(document).ready(function () {
         getUser(0,"");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
@@ -188,6 +187,7 @@
         }
     });
     var garde_val
+    var people_flag =[]
     function setValue(value){
         console.log(value)
         garde_val = value
@@ -249,14 +249,42 @@
                     $('#profile').append(temp)
                 }
 
+
+                switch (response.status) {
+                    case "USER_REGISTERED":
+                        people_flag.push("가입된 회원")
+                        enable_val =1
+                        break;
+                    case "USER_WITHDRAWAL":
+                        people_flag.push("탈퇴한 회원")
+                        enable_val =0
+                        break;
+                    case "ADMIN_REGISTERED":
+                        people_flag.push("가입된 관리자")
+                        break;
+                    case "ADMIN_EXPIRED":
+                        people_flag.push("만료된 관리자")
+                        break;
+                }
+
                 switch (response.grade) {
                     case 0:
                         $("#option-0").attr("selected");
+                        break;
                     case 1:
                         $("#option-1").attr("selected");
+                        break;
                     case 2:
                         $("#option-2").attr("selected");
+                        break;
                 }
+
+                console.log("회원 :" ,people_flag[0])
+                const temp =`<button type="button" id="btn_1" onclick="changerollUser(enable_val)">${people_flag[0] == "가입된 회원" ? "탈퇴처리" : "복구처리"}</button>
+                <button type="button" id="btn_2" onclick="updateUser()">수정</button>
+                <button type="button" id="btn_3" onclick="listUser()">목록</button>`
+
+                $('#btn_wrap').append(temp)
 
             },
         })
@@ -294,8 +322,9 @@
         })
     }
 // 회원 탈퇴 복구
-    function deleteUser(){
+    function changerollUser(change_val){
         const id = localStorage.getItem("userId")
+        change_val = change_val == 0 ? 1:0
         $.ajax({
             type: "PATCH",
             url: `http://localhost:8080/admin/users/${id}/status`,
@@ -305,7 +334,7 @@
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
             data: JSON.stringify({
-                status : 0
+                status : change_val
             }),
             // data: JSON.stringify({
             //     "title" : $("#title").val(),
@@ -313,9 +342,11 @@
             //     "category" : category
             // }),
             success: function (response) {
-
-                alert("삭제 완료")
-                window.location.href = "k-1_manageUser.html";
+                if(change_val ==0)
+                    alert("탈퇴 완료")
+                else
+                    alert("복구 완료")
+                window.location.href = "k-2_manageUserDetail.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));

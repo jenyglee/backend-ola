@@ -47,6 +47,7 @@
                         <th scope="col">휴대폰번호</th>
                         <th scope="col">가입날짜</th>
                         <th scope="col">회원탈퇴여부</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -227,16 +228,22 @@
 
                     phoneNum = [];
                     grade_name = [];
+                    people_flag = [];
                     for (let i = 0; i < response.data.length; i++) {
                         // console.log(i+1)
                         // console.log(response.data[i].title)
                         // 데이터 바인딩
+                        console.log(response.data[i].status)
                         switch (response.data[i].phoneNumber) {
                             case null:
                                 phoneNum.push("없음")
+                                break;
                             default:
                                 phoneNum.push(response.data[i].phoneNumber)
+                                break;
                         }
+                    }
+                    for (let i = 0; i < response.data.length; i++) {
                         switch (response.data[i].grade) {
                             case "MOUNTAIN_CHILDREN":
                                 // $('#select').val(category)
@@ -251,6 +258,22 @@
                             default:
                                 grade_name.push("매니저")
                         }
+                    }
+                    for (let i = 0; i < response.data.length; i++) {
+                        switch (response.data[i].status) {
+                            case "USER_REGISTERED":
+                                people_flag.push("가입된 회원")
+                                break;
+                            case "USER_WITHDRAWAL":
+                                people_flag.push("탈퇴한 회원")
+                                break;
+                            case "ADMIN_REGISTERED":
+                                people_flag.push("가입된 관리자")
+                                break;
+                            case "ADMIN_EXPIRED":
+                                people_flag.push("만료된 관리자")
+                                break;
+                        }
                         console.log(grade_name[i])
                         const temp =
                             `
@@ -261,8 +284,10 @@
                     <td class="td_4">${grade_name[i]}</td>
                     <td class="td_5">${phoneNum[i]}</td>
                     <td class="td_6">${response.data[i].createdAt.substring(0, 10)}</td>
+                    <td class="td_7">${people_flag[i]}</td>
                   </tr>
               `
+
                         $('tbody').append(temp)
                     }
                 },
