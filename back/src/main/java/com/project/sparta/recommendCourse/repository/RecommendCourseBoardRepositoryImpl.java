@@ -15,6 +15,7 @@ import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.user.entity.QUser;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
@@ -177,27 +178,43 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
     @Override
     public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable,
         PostStatusEnum postStatusEnum, Long userId) {
-
-        List<RecommendResponseDto> boards = queryFactory
-            .select(Projections.constructor(RecommendResponseDto.class,
-                reBoard.id.as("boardId"),
-                reBoard.title.as("title"),
-                Projections.list(courseImg.url),
+        List<RecommendResponseDto> recommendBoards = new ArrayList<>();
+        QueryResults<Tuple> results = queryFactory
+            .select(
+                reBoard.id,
+                reBoard.title,
+                thumbnail.url,
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
-                user.nickName.as("nickName"),
-                reBoard.modifiedAt.as("createDate")))
+                user.nickName,
+                reBoard.modifiedAt)
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
-            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
-            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
-            .where(reBoard.postStatus.eq(postStatusEnum), reBoard.userId.eq(userId))
-            .distinct()
+            .leftJoin(thumbnail).on(reBoard.id.eq(thumbnail.recommendCourseBoard.id))
+            .where(reBoard.userId.eq(userId))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .fetch();
+            .fetchResults();
+        List<Tuple> boards = results.getResults();
+        long total = results.getTotal();
 
-        return new PageImpl<>(boards, pageable, boards.size());
+        for(Tuple t : boards) {
+            Long Id = t.get(reBoard.id);
+            String title = t.get(reBoard.title);
+            String thumbnail_url = t.get(thumbnail.url);
+            String nickName = t.get(user.nickName);
+            LocalDateTime createDate = t.get(reBoard.modifiedAt);
+            Long like = t.get(ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
+                .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"));
+
+            //이미지 리스트 뽑기
+            List<String> imgList = queryFactory.select(courseImg.url)
+                .from(courseImg)
+                .where(courseImg.recommendCourseBoard.id.eq(Id)).fetch();
+
+            recommendBoards.add(new RecommendResponseDto(Id, title, thumbnail_url, imgList, createDate, like, nickName));
+        }
+        return new PageImpl<>(recommendBoards, pageable, total);
     }
 
     //좋아요 필터링
