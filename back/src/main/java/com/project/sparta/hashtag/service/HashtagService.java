@@ -9,8 +9,8 @@ import com.project.sparta.user.entity.User;
 import java.util.List;
 
 public interface HashtagService {
-    Hashtag createHashtag(String value, User user);
+    Hashtag createHashtag(String name, User user);
     void deleteHashtag(Long id, User user);
-    PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, User user);
+    PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name, User user);
     List<HashtagResponseDto> getFixedHashtagList();
 }

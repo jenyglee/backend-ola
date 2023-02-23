@@ -14,7 +14,7 @@ public interface FriendRepository extends JpaRepository<Friend, Long>, FriendCus
 
     Friend findByUserIdAndTargetId(Long userId, Long targetId);
 
-    Friend findByTargetId(Long userId);
+    Friend findByTargetIdAndUserId(Long targetId ,Long userId);
 
     List<Friend> findByUserId(Long userId);     //테스트용
 
