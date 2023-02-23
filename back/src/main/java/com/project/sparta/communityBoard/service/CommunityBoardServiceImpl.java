@@ -150,7 +150,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional(readOnly = true)
     public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname) {
-        CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, commentPage, commentSize, nickname);
+        PageRequest pageRequest = PageRequest.of(commentPage, commentSize);
+        CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, pageRequest, nickname);
         return communityBoard;
     }
 

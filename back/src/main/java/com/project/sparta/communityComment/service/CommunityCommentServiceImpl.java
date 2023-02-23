@@ -53,12 +53,10 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
   @Override
   @Transactional
   public void deleteCommunityComments(Long commentId, User user) {
-    System.out.println("commentId = " + commentId);
-    System.out.println("user.getNickName() = " + user.getNickName());
     CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
         user.getNickName()).orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
     likeCommentRepository.deleteLikeAllByInCommentId(commentId);
-    //commentRepository.delete(communityComment);
+    commentRepository.delete(communityComment);
   }
 
 }
