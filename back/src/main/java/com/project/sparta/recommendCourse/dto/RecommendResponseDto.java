@@ -31,16 +31,4 @@ public class RecommendResponseDto {
         this.likeCount = likeCount;
         this.nickName = nickName;
     }
-
-    @Builder
-    public RecommendResponseDto(Long boardId, String title, String thumbnail,
-        Long likeCount, String nickName, LocalDateTime createDate) {
-        this.boardId = boardId;
-        this.title = title;
-        this.thumbnail = thumbnail;
-        this.likeCount = likeCount;
-        this.nickName = nickName;
-        this.createDate = createDate;
-    }
-
 }
