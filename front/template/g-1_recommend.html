@@ -1,509 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
+  <meta charset="UTF-8">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/menu.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="theme-color" content="#fafafa">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <title>올라 코스추천</title>
-    <style>
-        .container {
-            width: 1200px;
-            padding: 0;
-        }
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/menu.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <title>올라 코스추천</title>
+  <style>
+    .container {
+      width: 1200px;
+      padding: 0;
+    }
 
-        .wrap_1 {
-            width: 1200px;
-            margin-bottom: 10px;
-            /*height: 250px;*/
-            /*border: 1px solid blue;*/
-        }
+    .wrap_1 {
+      width: 1200px;
+      margin-bottom: 10px;
+      /*height: 250px;*/
+      /*border: 1px solid blue;*/
+    }
 
-        .wrap_1 div {
-            width: 1200px;
-            height: 38px;
-            /*border: 1px solid red;*/
-        }
+    .wrap_1 div {
+      width: 1200px;
+      height: 38px;
+      /*border: 1px solid red;*/
+    }
 
-        .wrap_1_2 div {
-            width: 80px;
-            display: inline-block
-        }
+    .wrap_1_2 div {
+      width: 80px;
+      display: inline-block
+    }
 
-        .wrap_2 {
-            width: 1200px;
-        }
+    .wrap_2 {
+      width: 1200px;
+    }
 
-        .wrap_2_1_1_1 {
-            width: 595px;
-            height: 30px;
-            display: inline-block;
-        }
+    .wrap_2_1_1_1 {
+      width: 595px;
+      height: 30px;
+      display: inline-block;
+    }
 
-        .card-title {
-            font-size: 15px;
-            font-weight: bolder;
-        }
+    .card-title {
+      font-size: 15px;
+      font-weight: bolder;
+    }
 
-        .wrap_3 {
-            width: 1200px;
-            height: 80px;
-        }
+    .wrap_3 {
+      width: 1200px;
+      height: 80px;
+    }
 
-        .wrap_4 {
-            margin-top: 50px;
-            height: 50px;
-            width: 1200px;
-        }
+    .wrap_4 {
+      margin-top: 50px;
+      height: 50px;
+      width: 1200px;
+    }
 
-        #like:hover {
-            color: red;
-        }
+    #like:hover {
+      color: red;
+    }
 
-        #btn_1 {
-            width: 200px;
-            height: 50px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            border-radius: 5px;
-            color: white;
-            float: right;
-        }
+    #btn_1 {
+      width: 200px;
+      height: 50px;
+      border: 1px solid white;
+      background-color: #F46B3F;
+      border-radius: 5px;
+      color: white;
+      float: right;
+    }
 
-        .form-check-inline {
-            margin: 0;
-        }
+    .form-check-inline {
+      margin: 0;
+    }
 
-        .form-check-input:checked {
-            background-color: #F46B3F;
-            border-color: #F46B3F;
-        }
+    .form-check-input:checked {
+      background-color: #F46B3F;
+      border-color: #F46B3F;
+    }
 
-        .page-link,
-        .page-link:hover,
-        .page-link:active,
-        .page-link:focus{
-            color: #F46B3F;
-        }
-    </style>
+    .page-link,
+    .page-link:hover,
+    .page-link:active,
+    .page-link:focus {
+      color: #F46B3F;
+    }
+  </style>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
-    <div class="bg-line"></div>
-    <div class="logo-wrap">
-        <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-    </div>
-    <div class="item-list">
-        <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
-        <a href="h-1_communityMain.html">커뮤니티</a>
-        <a href="./i-1_shopMain.html">쇼핑몰</a>
-        <a href="./j-1_noticeMain.html">공지사항</a>
-    </div>
-    <div class="right">
-        <div class="friend">
-            <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-                <img class="img" src="./../static/img/icon_friends.png"/>
-            </div>
-            <div class="friend-dropbox">
-                <div class="search-area">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
-                    </div>
-                    <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary search-btn">검색</button>
-                    </div>
-                </div>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
+  <div class="bg-line"></div>
+  <div class="logo-wrap">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  </div>
+  <div class="item-list">
+    <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
+    <a href="h-1_communityMain.html">커뮤니티</a>
+    <a href="./i-1_shopMain.html">쇼핑몰</a>
+    <a href="./j-1_noticeMain.html">공지사항</a>
+  </div>
+  <div class="right">
+    <div class="friend">
+      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+        <img class="img" src="./../static/img/icon_friends.png"/>
+      </div>
+      <div class="friend-dropbox">
+        <div class="search-area">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1"
+                   placeholder="닉네임 검색">
+          </div>
+          <div class="btn-wrap">
+            <button type="button" class="btn btn-primary search-btn">검색</button>
+          </div>
+        </div>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
 
-                            <a
-                                    href="./h-4_chat.html"
-                                    onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
-                            >
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">1:1 채팅</button>
-                        </div>
-                    </li>
-                </ul>
-                <div class="line"></div>
-                <p class="recommend-title">추천 친구</p>
-                <ul class="friend-list">
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left">
-                            <div class="img-wrap">
-                                <img class="img" src="./../static/img/icon_profile_default.png"/>
-                            </div>
-                            <p class="name">오메가오메오메</p>
-                            <button type="button" class="btn btn-link">친구 추가</button>
-                        </div>
-                    </li>
-                </ul>
+              <a
+                  href="./h-4_chat.html"
+                  onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
+              >
+                <button type="button" class="btn btn-link">1:1 채팅</button>
+              </a>
             </div>
-        </div>
-        <div class="bell">
-            <div class="icon-bell" onclick="handleToggleBellDropBox()">
-                <img class="img" src="./../static/img/icon_bell.png"/>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
             </div>
-            <div class="bell-dropbox">
-                <p>알람</p>
-                <ul>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                    <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-                </ul>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
             </div>
-        </div>
-        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
-<!--            <div class="img-wrap">-->
-<!--                <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-<!--            </div>-->
-<!--            <p class="text">나와바리나와바님</p>-->
-        </a>
+          </li>
+        </ul>
+        <div class="line"></div>
+        <p class="recommend-title">추천 친구</p>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
+    <div class="bell">
+      <div class="icon-bell" onclick="handleToggleBellDropBox()">
+        <img class="img" src="./../static/img/icon_bell.png"/>
+      </div>
+      <div class="bell-dropbox">
+        <p>알람</p>
+        <ul>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+        </ul>
+      </div>
+    </div>
+    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+      <!--            <div class="img-wrap">-->
+      <!--                <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+      <!--            </div>-->
+      <!--            <p class="text">나와바리나와바님</p>-->
+    </a>
+  </div>
 
 </header>
 
 <!-- ############# 작업공간 #############-->
 <main class="container">
-    <section class="">
-        <div class="wrap_1">
-            <div class="wrap_1_2" style="margin-top: 100px">
-                <span><b>높이별</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline" style="width: 65px">
-                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight1"
-                           value="all" onclick="altitudeChoice(0)">
-                    <label class="form-check-label" for="inlineRadioHeight1">전체</label>
-                </div>
-                <div class="form-check form-check-inline" style="width: 115px">
-                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
-                           id="inlineRadioHeight1-1" value="all" onclick="altitudeChoice(100)">
-                    <label class="form-check-label" for="inlineRadioHeight1-1">100m 이상</label>
-                </div>
-                <div class="form-check form-check-inline" style="width: 115px">
-                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight2"
-                           value="200" onclick="altitudeChoice(200)">
-                    <label class="form-check-label" for="inlineRadioHeight2">200m 이상</label>
-                </div>
-                <div class="form-check form-check-inline" style="width: 115px">
-                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight3"
-                           value="300" onclick="altitudeChoice(300)">
-                    <label class="form-check-label" for="inlineRadioHeight3">300m 이상</label>
-                </div>
-                <div class="form-check form-check-inline" style="width: 115px">
-                    <input class="form-check-input" type="radio" name="inlineRadioHeightOptions" id="inlineRadioHeight4"
-                           value="400" onclick="altitudeChoice(400)">
-                    <label class="form-check-label" for="inlineRadioHeight4">400m 이상</label>
-                </div>
-            </div>
-            <div class="wrap_1_2">
-                <span><b>별점순</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline" style="width: 65px">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadio5"
-                           value="all" onclick="scoreChoice(0)">
-                    <label class="form-check-label" for="inlineRadio5">전체</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore5-1"
-                           value="1" onclick="scoreChoice(1)">
-                    <label class="form-check-label" for="inlineRadioScore5-1">1점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore6"
-                           value="2" onclick="scoreChoice(2)">
-                    <label class="form-check-label" for="inlineRadioScore6">2점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore7"
-                           value="3" onclick="scoreChoice(3)">
-                    <label class="form-check-label" for="inlineRadioScore7">3점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore8"
-                           value="4" onclick="scoreChoice(4)">
-                    <label class="form-check-label" for="inlineRadioScore8">4점</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioScoreOptions" id="inlineRadioScore9"
-                           value="5" onclick="scoreChoice(5)">
-                    <label class="form-check-label" for="inlineRadioScore9">5점</label>
-                </div>
-            </div>
-            <div class="wrap_1_2">
-                <span><b>지역별</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline" style="width: 65px">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation10" value="all"  onclick="regionChoice('all')">
-                    <label class="form-check-label" for="inlineRadioLocation10">전체</label>
-                </div>
-                <div class="form-check form-check-inline" style="width: 110px">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation10-1" value="서울특별시" onclick="regionChoice('서울특별시')">
-                    <label class="form-check-label" for="inlineRadioLocation10-1">서울특별시</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation11" value="경기도" onclick="regionChoice('경기도')">
-                    <label class="form-check-label" for="inlineRadioLocation11">경기도</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation12" value="강원도" onclick="regionChoice('강원도')">
-                    <label class="form-check-label" for="inlineRadioLocation12">강원도</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation13" value="충청도" onclick="regionChoice('충청도')">
-                    <label class="form-check-label" for="inlineRadioLocation13">충청도</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation14" value="전라도" onclick="regionChoice('전라도')">
-                    <label class="form-check-label" for="inlineRadioLocation14">전라도</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation15" value="경상도" onclick="regionChoice('경상도')">
-                    <label class="form-check-label" for="inlineRadioLocation15">경상도</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
-                           id="inlineRadioLocation16" value="제주도" onclick="regionChoice('제주도')">
-                    <label class="form-check-label" for="inlineRadioLocation16">제주도</label>
-                </div>
-            </div>
-            <div class="wrap_1_2">
-                <span><b>계절별</b> &nbsp;&nbsp;</span>
-                <div class="form-check form-check-inline" style="width: 65px">
-                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason17" value="all" onclick="seasonChoice('all')">
-                    <label class="form-check-label" for="inlineRadioSeason17">전체</label>
-                </div>
+  <section class="">
+    <div class="wrap_1">
+      <div class="wrap_1_2" style="margin-top: 100px">
+        <span><b>높이별</b> &nbsp;&nbsp;</span>
+        <div class="form-check form-check-inline" style="width: 65px">
+          <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
+                 id="inlineRadioHeight1"
+                 value="all" onclick="altitudeChoice(0)" checked>
+          <label class="form-check-label" for="inlineRadioHeight1">전체</label>
+        </div>
+        <div class="form-check form-check-inline" style="width: 115px">
+          <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
+                 id="inlineRadioHeight1-1" value="all" onclick="altitudeChoice(100)">
+          <label class="form-check-label" for="inlineRadioHeight1-1">100m 이상</label>
+        </div>
+        <div class="form-check form-check-inline" style="width: 115px">
+          <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
+                 id="inlineRadioHeight2"
+                 value="200" onclick="altitudeChoice(200)">
+          <label class="form-check-label" for="inlineRadioHeight2">200m 이상</label>
+        </div>
+        <div class="form-check form-check-inline" style="width: 115px">
+          <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
+                 id="inlineRadioHeight3"
+                 value="300" onclick="altitudeChoice(300)">
+          <label class="form-check-label" for="inlineRadioHeight3">300m 이상</label>
+        </div>
+        <div class="form-check form-check-inline" style="width: 115px">
+          <input class="form-check-input" type="radio" name="inlineRadioHeightOptions"
+                 id="inlineRadioHeight4"
+                 value="400" onclick="altitudeChoice(400)">
+          <label class="form-check-label" for="inlineRadioHeight4">400m 이상</label>
+        </div>
+      </div>
+      <div class="wrap_1_2">
+        <span><b>별점순</b> &nbsp;&nbsp;</span>
+        <div class="form-check form-check-inline" style="width: 65px">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadio5"
+                 value="all" onclick="scoreChoice(0)" checked>
+          <label class="form-check-label" for="inlineRadio5">전체</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadioScore5-1"
+                 value="1" onclick="scoreChoice(1)">
+          <label class="form-check-label" for="inlineRadioScore5-1">1점</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadioScore6"
+                 value="2" onclick="scoreChoice(2)">
+          <label class="form-check-label" for="inlineRadioScore6">2점</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadioScore7"
+                 value="3" onclick="scoreChoice(3)">
+          <label class="form-check-label" for="inlineRadioScore7">3점</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadioScore8"
+                 value="4" onclick="scoreChoice(4)">
+          <label class="form-check-label" for="inlineRadioScore8">4점</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioScoreOptions"
+                 id="inlineRadioScore9"
+                 value="5" onclick="scoreChoice(5)">
+          <label class="form-check-label" for="inlineRadioScore9">5점</label>
+        </div>
+      </div>
+      <div class="wrap_1_2">
+        <span><b>지역별</b> &nbsp;&nbsp;</span>
+        <div class="form-check form-check-inline" style="width: 65px">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation10" value="all" onclick="regionChoice('')" checked>
+          <label class="form-check-label" for="inlineRadioLocation10">전체</label>
+        </div>
+        <div class="form-check form-check-inline" style="width: 110px">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation10-1" value="서울특별시" onclick="regionChoice('서울')">
+          <label class="form-check-label" for="inlineRadioLocation10-1">서울특별시</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation11" value="경기도" onclick="regionChoice('경기도')">
+          <label class="form-check-label" for="inlineRadioLocation11">경기도</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation12" value="강원도" onclick="regionChoice('강원도')">
+          <label class="form-check-label" for="inlineRadioLocation12">강원도</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation13" value="충청도" onclick="regionChoice('충청도')">
+          <label class="form-check-label" for="inlineRadioLocation13">충청도</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation14" value="전라도" onclick="regionChoice('전라도')">
+          <label class="form-check-label" for="inlineRadioLocation14">전라도</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation15" value="경상도" onclick="regionChoice('경상도')">
+          <label class="form-check-label" for="inlineRadioLocation15">경상도</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioLocationOptions"
+                 id="inlineRadioLocation16" value="제주도" onclick="regionChoice('제주도')">
+          <label class="form-check-label" for="inlineRadioLocation16">제주도</label>
+        </div>
+      </div>
+      <div class="wrap_1_2">
+        <span><b>계절별</b> &nbsp;&nbsp;</span>
+        <div class="form-check form-check-inline" style="width: 65px">
+          <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
+                 id="inlineRadioSeason17" value="all" onclick="seasonChoice('')" checked>
+          <label class="form-check-label" for="inlineRadioSeason17">전체</label>
+        </div>
 
-                <div class="form-check form-check-inline" style="width: 55px">
-                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason17-1" value="봄" onclick="seasonChoice('봄')" >
-                    <label class="form-check-label" for="inlineRadioSeason17-1">봄</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason18" value="여름" onclick="seasonChoice('여름')">
-                    <label class="form-check-label" for="inlineRadioSeason18">여름</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason19" value="가을" onclick="seasonChoice('가을')">
-                    <label class="form-check-label" for="inlineRadioSeason19">가을</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
-                           id="inlineRadioSeason20" value="겨울" onclick="seasonChoice('겨울')">
-                    <label class="form-check-label" for="inlineRadioSeason20">겨울</label>
-                </div>
-            </div>
+        <div class="form-check form-check-inline" style="width: 55px">
+          <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
+                 id="inlineRadioSeason17-1" value="봄" onclick="seasonChoice('봄')">
+          <label class="form-check-label" for="inlineRadioSeason17-1">봄</label>
         </div>
-        <div class="wrap_1_5"><button onclick="getRecommendList(0,8,searchScore,searchRegion,searchAltitude,searchSeason,searchOrderByLike)">검색</button></div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
+                 id="inlineRadioSeason18" value="여름" onclick="seasonChoice('여름')">
+          <label class="form-check-label" for="inlineRadioSeason18">여름</label>
         </div>
-        <div class="wrap_2">
-            <div class="wrap_2_1_1"
-                 style="height: 50px; padding-top: 15px; display: flex; justify-content: space-between;">
-                <div class="wrap_2_1_1_1">
-                    <div style="height: 50px;">
-                        <b style="font-weight: bold">총 <span style="color : #F46B3F">32</span> 건&nbsp;</b>
-                    </div>
-                </div>
-                <!-- 좋아요 셀렉트박스 -->
-                <select class="select-like form-serch-select form-select" aria-label="Default select example" id="likeChoice"
-                        style="width: 130px" onclick="orderByLikeChoice(value)">
-                    <option value="0" >좋아요순</option>
-                    <option value="1" >날짜 순</option>
-                </select>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
+                 id="inlineRadioSeason19" value="가을" onclick="seasonChoice('가을')">
+          <label class="form-check-label" for="inlineRadioSeason19">가을</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioSeasonOptions"
+                 id="inlineRadioSeason20" value="겨울" onclick="seasonChoice('겨울')">
+          <label class="form-check-label" for="inlineRadioSeason20">겨울</label>
+        </div>
+      </div>
+      <div class="wrap_1_5">
+        <button onclick="getRecommendList(0,8)" style="background-color: #F46B3F; color: white; border: none; border-radius: 5px; width: 100px;">검색</button>
+      </div>
+    </div>
 
-            </div>
-            <!-- 카드 -->
-            <div class="article-wrap" id="cardBody" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
-            </div>
+    </div>
+    <div class="wrap_2">
+      <div class="wrap_2_1_1"
+           style="height: 50px; padding-top: 15px; display: flex; justify-content: space-between;">
+        <div class="wrap_2_1_1_1">
+          <div style="height: 50px;" class="totalCnt">
+
+          </div>
         </div>
-        <!--   페이지네이션/작성버튼     -->
-        <div class="wrap_4" style="position: relative; margin-bottom: 100px">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(3,8,searchScore,searchSeason,searchAltitude,searchRegion,searchOrderByLike)">4</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <a href="g-3_recommendPost.html" style="text-decoration: none; color : black; position: absolute; bottom: 0; right: 0;">
-                <button type="button" id="btn_1">게시글 작성</button>
+        <!-- 좋아요 셀렉트박스 -->
+        <select class="select-like form-serch-select form-select"
+                aria-label="Default select example" id="likeChoice"
+                style="width: 130px" onclick="orderByLikeChoice(value)">
+          <option value="0">좋아요순</option>
+          <option value="1">날짜 순</option>
+        </select>
+
+      </div>
+      <!-- 카드 -->
+      <div class="article-wrap" id="cardBody"
+           style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+      </div>
+    </div>
+    <!--   페이지네이션/작성버튼     -->
+    <div class="wrap_4" style="position: relative; margin-bottom: 100px">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
             </a>
-        </div>
-    </section>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(0,8)">1</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(1,8)">2</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(2,8)">3</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" onclick="getRecommendList(3,8)">4</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <a href="g-3_recommendPost.html"
+         style="text-decoration: none; color : black; position: absolute; bottom: 0; right: 0;">
+        <button type="button" id="btn_1">게시글 작성</button>
+      </a>
+    </div>
+  </section>
 </main>
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <!--<script src="https://www.google-analytics.com/analytics.js" async></script>-->
 <script>
-    var searchRegion = "";
-    var searchSeason = "";
-    var searchScore = 0;
-    var searchAltitude = 0;
-    var searchOrderByLike = "likeDesc"
+  var searchRegion = "";
+  var searchSeason = "";
+  var searchScore = 0;
+  var searchAltitude = 0;
+  var searchOrderByLike = "likeDesc"
 
 
-    $(document).ready(function () {
-        getRecommendList(0,8,0,"",0,"","likeDesc");
-    });
-    function getMenuProfile(){
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        var tempProfile = `
+  $(document).ready(function () {
+    getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
+  });
+
+  function getMenuProfile() {
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    var tempProfile = `
             <div class="img-wrap">
               <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
             </div>
             <p class="text">${menuProfile.sub}님</p>
         `
-        $("#my-profile").append(tempProfile);
-    }
+    $("#my-profile").append(tempProfile);
+  }
 
+  $(document).ready(function () {
+    $(".friend-dropbox").hide();
+    $(".bell-dropbox").hide();
+  });
 
-    $(document).ready(function () {
-        $(".friend-dropbox").hide();
-        $(".bell-dropbox").hide();
-    });
+  function handleToggleBellDropBox() {
+    $(".bell-dropbox").toggle();
+    $(".friend-dropbox").hide();
+  }
 
-    function handleToggleBellDropBox() {
-        $(".bell-dropbox").toggle();
-        $(".friend-dropbox").hide();
-    }
+  function handleToggleFriendDropBox() {
+    $(".friend-dropbox").toggle();
+    $(".bell-dropbox").hide();
+  }
 
-    function handleToggleFriendDropBox() {
-        $(".friend-dropbox").toggle();
-        $(".bell-dropbox").hide();
-    }
+  function setRecommendId(id) {
+    localStorage.setItem("recommendId", id);
+  }
 
-    function setRecommendId(id){
-        localStorage.setItem("recommendId", id);
-    }
-
-    //파라미터 변수가 이상함..ㅠㅠ
-    //http://localhost:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
-    //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..? 
-    function getRecommendList(page, size, score, season, altitude, region, orderByLike) {
+  //파라미터 변수가 이상함..ㅠㅠ
+  //http://localhost:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
+  //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..?
+  function getRecommendList(page, size) {
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
-    console.log(page, size, score, season, altitude, region, orderByLike)
+
+    console.log("searchScore" + searchScore)
+    console.log("searchSeason" + searchSeason)
+    console.log("searchAltitude" + searchAltitude)
+    console.log("searchRegion" + searchRegion)
+    console.log("searchOrderByLike" + searchOrderByLike)
+
+
     // 2. 통신해서 불러오기
     $.ajax({
       type: "GET",
+<<<<<<< HEAD
       url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size +  "&score=" + score  +  "&season=" + season
       +  "&altitude=" + altitude  +  "&region=" + region +  "&orderByLike=" + orderByLike,
+=======
+      url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
+          + searchScore + "&season=" + searchSeason
+          + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&orderByLike="
+          + searchOrderByLike,
+
+>>>>>>> 97d39680d1b7172aa631a803e4da87fead7a2483
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
       success: function (response) {
-        console.log(response)
+
+          $('.totalCnt').empty()
+          const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
+          $('.totalCnt').append(cnt)
+
         for (let i = 0; i < response.data.length; i++) {
 
-            var imgUrl = response.data[i].thumbnail
-            if (imgUrl === null) {
-                imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
-            }else if(imgUrl.includes(".png")){
-                imgUrl= "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
-            }
+          var imgUrl = response.data[i].thumbnail
+          if (imgUrl === null) {
+            imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
+          } else if (imgUrl.includes(".png")) {
+            imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
+          }
 
           // 데이터 바인딩
           const temp =
@@ -525,39 +566,43 @@
                     </div>
                 </a>
               `
+
           $('#cardBody').append(temp)
+
         }
       },
     })
   }
 
-  function regionChoice(value){
+  function regionChoice(value) {
     console.log(value)
     searchRegion = value
   }
-  function seasonChoice(value){
+
+  function seasonChoice(value) {
     console.log(value)
     searchSeason = value
   }
-  function scoreChoice(value){
+
+  function scoreChoice(value) {
     console.log(value)
     searchScore = value
   }
-  function altitudeChoice(value){
+
+  function altitudeChoice(value) {
     console.log(value)
     searchAltitude = value
   }
 
-  function orderByLikeChoice(value){
+  function orderByLikeChoice(value) {
     console.log(value)
-    if(value==="0"){
-        searchOrderByLike = "likeDesc"
-    }else{
-        searchOrderByLike = "dateDesc"
+    if (value === "0") {
+      searchOrderByLike = "likeDesc"
+    } else {
+      searchOrderByLike = "idDesc"
     }
-    searchRegion = value
   }
-  
+
 </script>
 </body>
 </html>

@@ -55,6 +55,21 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
+    @Builder
+    public RecommendCourseBoard(long id, int score, String title, String season, int altitude,
+        String contents, String region, String orderByLike, PostStatusEnum postStatus, Long userId) {
+        this.id = id;
+        this.score = score;
+        this.title = title;
+        this.season = season;
+        this.altitude = altitude;
+        this.contents = contents;
+        this.region = region;
+        this.orderByLike = orderByLike;
+        this.postStatus = postStatus;
+        this.userId = userId;
+    }
+
     public void update(Long id, int score, String title, String season, int altitude,
         String contents, String region, Long userId
     ) {
