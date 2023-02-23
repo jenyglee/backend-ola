@@ -22,19 +22,19 @@ public class LikeController {
 
     //커뮤니티 좋아요
     @ApiOperation(value = "보드 라이크",response = Join.class)
-    @PostMapping("/communities")
+    @PostMapping("/communities/{boardId}")
     @ResponseStatus(HttpStatus.OK)
-    public void likeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void likeBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        boardLikeService.likeBoard(id, user);
+        boardLikeService.likeBoard(boardId, user);
     }
 
     //커뮤니티 좋아요 해제
     @ApiOperation(value = "보드 언라이크",response = Join.class)
-    @DeleteMapping("/communities")
-    public void unLikeBoard(@RequestParam Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @DeleteMapping("/communities/{boardId}")
+    public void unLikeBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
-        boardLikeService.unLikeBoard(id, user);
+        boardLikeService.unLikeBoard(boardId, user);
     }
 
     //댓글 좋아요
