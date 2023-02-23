@@ -147,9 +147,7 @@
   <div style="display: flex">
     <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
       <div class="b_2" style="">
-        <div class="b_2_1" style="font-size: 26px; color: white">
-          <span>이재원</span>
-          <span>매니저</span>
+        <div class="b_2_1" style="font-size: 26px; color: white" id ="manager_name">
         </div>
 
         <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
@@ -257,6 +255,9 @@
 <script>
   $(document).ready(function () {
     getRecommendList(0);
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile")).nickname;
+    const temp = `<span>${menuProfile} 매니저</span>`
+    $(manager_name).append(temp)
   });
 
   function setRecommendId(id){
