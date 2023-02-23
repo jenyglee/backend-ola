@@ -182,7 +182,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
-
+                String thumbnail = "https://www.50plus.or.kr/upload/im/2017/11/3b8e4193-bbec-4058-928d-1934d8a8e01e.jpg";
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(1)
@@ -192,6 +192,7 @@ public class initDb {
                         .contents("추천해요!" + i)
                         .region("서울")
                         .imgList(imgList)
+                        .thumbnail(thumbnail)
                         .build()
                     , 10L
                 );
@@ -200,7 +201,7 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
-
+                String thumbnail = "https://cdn.mhns.co.kr/news/photo/202011/420732_549374_3013.jpg";
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(2)
@@ -210,6 +211,7 @@ public class initDb {
                         .contents("추천해요!" + i)
                         .region("경기도")
                         .imgList(imgList)
+                        .thumbnail(thumbnail)
                         .build()
                     , 9L
                 );
@@ -218,6 +220,8 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
+                String thumbnail = "http://db.kookje.co.kr/news2000/photo/2022/0203/L20220203.22012000210i1.jpg";
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(3)
@@ -227,6 +231,7 @@ public class initDb {
                         .contents("추천해요!" + i)
                         .region("전라도")
                         .imgList(imgList)
+                        .thumbnail(thumbnail)
                         .build()
                     , 8L
                 );
@@ -235,6 +240,8 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
                 imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
+
+                String thumbnail = "https://t1.daumcdn.net/cfile/tistory/1214144F4FD9948407";
                 recommendCourseBoardService.creatRecommendCourseBoard(
                     RecommendRequestDto.builder()
                         .score(4)
@@ -244,6 +251,7 @@ public class initDb {
                         .contents("추천해요!" + i)
                         .region("강원도")
                         .imgList(imgList)
+                        .thumbnail(thumbnail)
                         .build()
                     , 7L
                 );
@@ -257,6 +265,7 @@ public class initDb {
             User user3 = em.find(User.class, 3L);
             User user4 = em.find(User.class, 4L);
             List<String> imgList = new ArrayList<>();
+
             imgList.add("https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg");
             imgList.add("https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg");
             for (int i=0; i<5; i++){
