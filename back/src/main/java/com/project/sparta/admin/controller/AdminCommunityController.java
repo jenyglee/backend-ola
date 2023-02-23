@@ -6,10 +6,12 @@ import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
+import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,9 +39,9 @@ public class AdminCommunityController {
     // 커뮤니티 단건 조회
     @GetMapping("/boards/communities/{boardId}")
     public ResponseEntity getCommunity(@PathVariable Long boardId, @RequestParam int commentPage,
-        int commentSize) {
+        int commentSize, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CommunityBoardOneResponseDto result = communityBoardService.getCommunityBoard(boardId,
-            commentPage, commentSize);
+            commentPage, commentSize, userDetails.getUser().getNickName());
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
