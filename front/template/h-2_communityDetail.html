@@ -820,7 +820,7 @@
         console.log("commentId : ", commentId)
         $.ajax({
           type: "DELETE",
-          url: "http://localhost:8080/comments/communities/" + commentId,
+          url: "http://localhost:8080/communities/comments/" + commentId,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
