@@ -481,11 +481,11 @@
           <!-- TODO 버튼으로 만들고 좋아요/좋아요해제 연동 -->
           <div id="like-wrap" style="display: flex; align-items: center">
             <span class="like-title">좋아요</span>
-            <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"
-              onclick="likeCommunity()"
-            >
-              <img src="/static/img/heart.png" alt="좋아요아이콘" style="width: 100%" />
-            </div>
+<!--            <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"-->
+<!--              onclick="likeCommunity()"-->
+<!--            >-->
+<!--              <img src="/static/img/heart.png" alt="좋아요아이콘" style="width: 100%" />-->
+<!--            </div>-->
 <!--            <span style="font-size: 14px; font-weight: bold">5422</span>-->
           </div>
           <!-- 댓글-->
@@ -681,6 +681,29 @@
               $("#tag-wrap").append(temp);
             }
 
+            var tempHeart;
+            //(내가 좋아요 한 경우) 빨간하트
+            if(response.isLike){
+              console.log("라이크함")
+              tempHeart = `
+                <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"
+                  onclick="unlikeCommunity()"
+                >
+                  <img src="/static/img/heart.png" alt="좋아요아이콘" style="width: 100%" />
+                </div>
+              `
+            }else{
+              console.log("라이크안함")
+              tempHeart = `
+                <div style="width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; overflow:hidden; margin-right: 5px; cursor: pointer"
+                  onclick="likeCommunity()"
+                >
+                  <img src="/static/img/unHeart.png" alt="회색 좋아요아이콘" style="width: 100%" />
+                </div>
+              `
+            }
+            $("#like-wrap").append(tempHeart);
+
             // 좋아요 수 넣기
             var tempLike = `
               <span style="font-size: 14px; font-weight: bold">${response.likeCount}</span>
@@ -831,6 +854,10 @@
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
+
+      }
+
+      function unlikeCommunity(){
 
       }
 

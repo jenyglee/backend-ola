@@ -149,10 +149,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     //커뮤니티 단건 조회(커뮤니티 게시글 + 커뮤 좋아요 + 커뮤니티 댓글 + 커뮤니티 댓글 좋아요)
     @Override
     @Transactional(readOnly = true)
-    public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int page, int size) {
-
-
-        CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, page, size);
+    public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname) {
+        CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, commentPage, commentSize, nickname);
         return communityBoard;
     }
 

@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class BoardLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardLikesId;
+    private Long id;
 
     @Column(nullable = false)
     private String userEmail; //좋아요를 누른사람이 누군지 확인하기 위한 필드
