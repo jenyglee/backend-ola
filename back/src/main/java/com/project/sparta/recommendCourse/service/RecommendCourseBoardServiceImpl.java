@@ -157,7 +157,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     //어드민 코스 수정
     @Override
     public void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto) {
-
         //수정하고자 하는 board 있는지 확인
         RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 

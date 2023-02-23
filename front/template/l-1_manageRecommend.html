@@ -147,13 +147,11 @@
   <div style="display: flex">
     <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
       <div class="b_2" style="">
-        <div class="b_2_1" style="font-size: 26px; color: white">
-          <span>이재원</span>
-          <span>매니저</span>
+        <div class="b_2_1" style="font-size: 26px; color: white" id ="manager_name">
         </div>
 
         <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                type="button" class="logout" onclick="">로그아웃</button>
+                type="button" class="logout" onclick="gotologout()">로그아웃</button>
 
       </div>
 
@@ -257,11 +255,40 @@
 <script>
   $(document).ready(function () {
     getRecommendList(0);
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile")).nickname;
+    const temp = `<span>${menuProfile} 매니저</span>`
+    $(manager_name).append(temp)
   });
 
   function setRecommendId(id){
     localStorage.setItem("recommendId", id);
   }
+
+  function gotologout(){
+    const accessToken = localStorage.getItem("accessToken");
+    var admin_settings = {
+      "url": "http://localhost:8080/auth/logout",
+      "method": "POST",
+      "timeout": 0,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "data": JSON.stringify({
+        "accessToken": accessToken,
+        "refreshToken": "hi",
+        "role": 0
+      }),
+    }
+    $.ajax(admin_settings).done(function (response) {
+      alert("로그아웃 되었습니다.")
+      window.location.href = "../index.html";
+    })
+    .fail(function (response){
+      console.log("logout fail")
+      alert("로그아웃 실패하였습니다.")
+    })
+  }
+
   function getRecommendList(page) {
     // 1. 데이터 초기화를 해야됨.
     $('tbody').empty();
@@ -288,7 +315,7 @@
               `
                   <tr>
                     <th scope="row">${i+1}</th>
-                    <td class="td_2"><a href="l-2_manageRecommendDetail.html" onclick="setRecommendId(${20-(i)})">${response.data[i].title}</a></td>
+                    <td class="td_2"><a href="l-2_manageRecommendDetail.html" onclick="setRecommendId(${response.data[i].boardId})">${response.data[i].title}</a></td>
                     <td class="td_3">${response.data[i].createDate.substring(0, 10)}</td>
                   </tr>
               `

@@ -117,13 +117,11 @@
     <div style="display: flex">
         <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
             <div style="">
-                <div style="font-size: 26px; color: white">
-                    <span>이재원</span>
-                    <span>매니저</span>
+                <div style="font-size: 26px; color: white" id ="manager_name">
                 </div>
 
                 <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                        type="button" class="logout" onclick="">로그아웃</button>
+                        type="button" class="logout" onclick="gotologout()">로그아웃</button>
 
             </div>
 
@@ -137,11 +135,11 @@
         <section style="margin-left: 100px; margin-top:100px;">
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이메일</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요">
+                <input type="text" class="form-control" id="email" placeholder="이메일을 입력하세요" disabled>
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">닉네임</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요">
+                <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요" disabled>
             </div>
 
 
@@ -158,20 +156,22 @@
             </select>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">휴대폰번호</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="phone" placeholder="휴대폰번호를 입력하세요(-제외)">
+                <input type="text" class="form-control" id="phone" placeholder="휴대폰번호를 입력하세요(-제외)" disabled>
             </div>
             <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">나이</p>
             <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="age" placeholder="나이를 입력하세요">
+                <input type="text" class="form-control" id="age" placeholder="나이를 입력하세요" disabled>
             </div>
             <div style="margin-bottom: 50px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">프로필이미지</p>
-                <input class="form-control" type="file" id="img" multiple>
+                <div id ="profile">
+
+                </div>
             </div>
             <div>
-                <button type="button" id="btn_1">회원탈퇴</button>
-                <button type="button" id="btn_2">수정</button>
-                <button type="button" id="btn_3">목록</button>
+                <button type="button" id="btn_1" onclick="deleteUser()">회원탈퇴</button>
+                <button type="button" id="btn_2" onclick="updateUser()">수정</button>
+                <button type="button" id="btn_3" onclick="listUser()">목록</button>
             </div>
         </section>
     </div>
@@ -181,13 +181,42 @@
 <script>
     $(document).ready(function () {
         getUser(0,"");
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile")).nickname;
+        const temp = `<span>${menuProfile} 매니저</span>`
+        $(manager_name).append(temp)
     });
+    var garde_val
     function setValue(value){
         console.log(value)
+        garde_val = value
     }
 
     function listUser(){
-        window.location.href="n-1_manageNotice.html"
+        window.location.href="k-1_manageUser.html"
+    }
+    function gotologout(){
+        const accessToken = localStorage.getItem("accessToken");
+        var admin_settings = {
+            "url": "http://localhost:8080/auth/logout",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "accessToken": accessToken,
+                "refreshToken": "hi",
+                "role": 0
+            }),
+        }
+        $.ajax(admin_settings).done(function (response) {
+            alert("로그아웃 되었습니다.")
+            window.location.href = "../index.html";
+        })
+        .fail(function (response){
+            console.log("logout fail")
+            alert("로그아웃 실패하였습니다.")
+        })
     }
 
     function getUser(){
@@ -210,6 +239,13 @@
                 $('#phone').val(response.phoneNumber)
                 $('#age').val(response.age)
                 $('#img').val(response.img)
+
+                for(let i=0;i<1;i++)
+                {
+                    const url = response.profileImage
+                    const temp = `<img id="profile${i}" src=${url}>`
+                    $('#profile').append(temp)
+                }
 
                 switch (response.grade) {
                     case 0:
@@ -239,16 +275,16 @@
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
             data: JSON.stringify({
-                score : $('#score').val(),
-                title :  $('#title').val(),
-                altitude : $('#altitude').val(),
-                contents : $('#contents').val(),
-                season : $('#season').val(),
-                address : $('#address').val()
+                email : $('#email').val(),
+                nickname :  $('#nickname').val(),
+                phone : $('#phone').val(),
+                age : $('#age').val(),
+                img : $('#img').val(),
+                grade : garde_val
             }),
             success: function (response) {
                 alert("수정 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "k-1_manageUser.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
@@ -259,21 +295,25 @@
     function deleteUser(){
         const id = localStorage.getItem("userId")
         $.ajax({
-            type: "DELETE",
+            type: "PATCH",
             url: `http://localhost:8080/admin/users/${id}/status`,
             // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
             },
+            data: JSON.stringify({
+                status : 0
+            }),
             // data: JSON.stringify({
             //     "title" : $("#title").val(),
             //     "contents" : $("#contents").val(),
             //     "category" : category
             // }),
             success: function (response) {
+
                 alert("삭제 완료")
-                window.location.href = "n-1_manageNotice.html";
+                window.location.href = "k-1_manageUser.html";
             },
             error: function(xhr) {
                 console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));

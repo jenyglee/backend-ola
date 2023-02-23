@@ -74,7 +74,7 @@ public class UserController {
     //로그아웃
     @ApiOperation(value = "로그아웃",response = Join.class)
     @PostMapping("/logout")
-    public ResponseEntity login(@Validated @RequestBody TokenDto tokenRequestDto){
+    public ResponseEntity logout(@Validated @RequestBody TokenDto tokenRequestDto){
         // 어드민인지 확인하는 로직
         userService.logout(tokenRequestDto);
         return new ResponseEntity(HttpStatus.OK);
