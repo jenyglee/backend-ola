@@ -47,9 +47,10 @@ public class CommunityBoardController {
     @GetMapping("/communities/{boardId}")
     public ResponseEntity getCommunityBoard(@PathVariable Long boardId,
         @RequestParam(defaultValue = "0") int commentPage,
-        @RequestParam(defaultValue = "8") int commentSize) {
+        @RequestParam(defaultValue = "8") int commentSize,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.getCommunityBoard(
-            boardId, commentPage, commentSize);
+            boardId, commentPage, commentSize, userDetails.getUser().getNickName());
         return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
     }
 

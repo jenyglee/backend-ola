@@ -56,15 +56,22 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public CommunityBoardOneResponseDto getBoard(Long boardId, int page, int size) {
+    public CommunityBoardOneResponseDto getBoard(Long boardId, int commentPage, int commentSize, String username) {
         // 커뮤니티 조회
         Tuple boardCol = queryFactory.select(
                 communityBoard.title,
                 communityBoard.user.nickName,
                 communityBoard.contents,
                 JPAExpressions.select(boardLike.count())
-                    .from(boardLike)
-                    .where(boardLike.board.id.eq(communityBoard.id))
+                        .from(boardLike)
+                        .where(boardLike.board.id.eq(communityBoard.id)),
+                JPAExpressions.select(boardLike.userNickName.count().when(1L).then(true)
+                        .otherwise(false))
+                        .from(boardLike)
+                        .where(
+                            communityBoard.id.eq(boardLike.board.id),
+                            boardLike.userNickName.eq(username)
+                        )
             )
             .from(communityBoard)
             .join(communityBoard.user, user)
@@ -80,6 +87,14 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         Long communityLikeCount = boardCol.get(JPAExpressions.select(boardLike.count())
             .from(boardLike)
             .where(boardLike.board.id.eq(communityBoard.id)));
+        Boolean isLike = boardCol.get(
+            JPAExpressions.select(boardLike.userNickName.count().when(1L).then(true)
+                    .otherwise(false))
+                .from(boardLike)
+                .where(
+                    communityBoard.id.eq(boardLike.board.id),
+                    boardLike.userNickName.eq(username)
+                ));
 
         // 관련 이미지 조회
         List<String> imgCol = queryFactory.select(communityBoardImg.url)
@@ -118,16 +133,16 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 communityComment.communityBoardId.eq(communityBoard.id)
             )
             .distinct()
-            .offset(page)
-            .limit(size)
+            .offset(commentPage)
+            .limit(commentSize)
             .fetch();
-
 
         CommunityBoardOneResponseDto build = CommunityBoardOneResponseDto.builder()
             .title(title)
             .nickName(nickname)
             .contents(contents)
             .likeCount(communityLikeCount)
+            .isLike(isLike)
             .imgList(imgCol)
             .tagList(tagCol)
             .commentList(commentCol)

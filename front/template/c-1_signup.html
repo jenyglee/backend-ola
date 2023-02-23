@@ -160,8 +160,16 @@
                 <label for="phoneNumber">휴대폰번호(-제외)</label>
             </div>
             <div id="user-input3" class="w_8">
-                <label for="formFileMultiple"><b>프로필 이미지</b></label>
-                <input class="form-control" type="file" id="formFileMultiple" multiple>
+                <label for="chooseFile"><b>프로필 이미지</b></label>
+                <br>
+                <input
+                    type="file"
+                    id="chooseFile"
+                    name="chooseFile"
+                    accept="image/*"
+                    multiple
+                    onchange="imgUpload()"
+                />
             </div>
             <div class="d-grid gap-2 col-6 mx-auto" style="width: 100%; margin-top: 20px; margin-bottom: 100px">
                 <button id="next-btn" class="next-btn" type="button" style="border-radius: 5px;" onclick="handleNext()"><b>다음으로</b></button>
@@ -208,7 +216,7 @@
               "nickName": $('#nickname').val(),
               "age": Number($('#age').val()),
               "phoneNumber": $('#phoneNumber').val(),
-              "imageUrl": "default.jpg"
+              "imageUrl": imageUrlList[0]
           }),
       };
       localStorage.setItem("signup1", settings.data);
@@ -246,6 +254,58 @@
           alert("관리자 비밀번호를 확인해주세요")
       }
   }
+
+
+    var imageUrlList = [];
+
+    function imgUpload(input) {
+        const accessToken = localStorage.getItem("accessToken");
+
+        const imageInput = $("#chooseFile")[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        console.log("$('#chooseFile'): ", $("#chooseFile"));
+        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+        var formData = new FormData();
+        for (var i = 0; i < imageInput.files.length; i++) {
+            // formData.append("image", imageInput.files[i]);
+            formData.append("multipartFile", imageInput.files[i]);
+            console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: `http://localhost:8080/s3/file`,
+            // dataType: "json",
+            // dataType: "multipart",
+            enctype: "multipart/form-data",
+            // contentType: "application/json; charset=utf-8",
+            processData: false,
+            contentType: false,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader("Authorization", accessToken);
+            },
+            data: formData,
+            xhrFields: {
+                withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            },
+            success: function (response) {
+                console.log("여긴 찍혀? 1");
+                console.log("response", response);
+                for (let i = 0; i < response.length; i++) {
+                    // imageUrlList.push(response[i].imgList[i]);
+                    imageUrlList.push(response[i]);
+                }
+                console.log("imageUrlList : ", imageUrlList);
+                return imageUrlList;
+            },
+            error: function (request, status, error) {
+                console.log(error);
+                // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+            },
+        });
+    }
+
 </script>
 </body>
 
