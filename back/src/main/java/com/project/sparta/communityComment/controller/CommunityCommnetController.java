@@ -23,41 +23,38 @@ import com.project.sparta.communityComment.dto.CommentResponseDto;
 @RequiredArgsConstructor
 public class CommunityCommnetController {
 
-  private final CommunityCommentService commentService;
+    private final CommunityCommentService commentService;
 
-  //커뮤니티 댓글 작성
-  @ApiOperation(value = "커뮤니티 댓글 작성",response = Join.class)
-  @PostMapping("/comments/communities/{boardId}")
-  public ResponseEntity createCommunityComment(@PathVariable Long boardId
-      , @RequestBody CommunityRequestDto communityRequestDto
-      , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    CommentResponseDto communityResponseDto = commentService.createCommunityComments(boardId,
-        communityRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(communityResponseDto, HttpStatus.OK);
-  }
+    //커뮤니티 댓글 작성
+    @ApiOperation(value = "커뮤니티 댓글 작성", response = Join.class)
+    @PostMapping("/comments/communities/{boardId}")
+    public ResponseEntity createCommunityComment(@PathVariable Long boardId
+        , @RequestBody CommunityRequestDto communityRequestDto
+        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        commentService.createCommunityComments(boardId, communityRequestDto, userDetail.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-  //커뮤니티 댓글 수정
-  @ApiOperation(value = "커뮤니티 댓글 수정",response = Join.class)
-  @PatchMapping("/communities/{boardId}/comments/{commentId}")
-  public ResponseEntity updateCommunityComment(
-      @PathVariable Long boardId,
-      @PathVariable Long commentId,
-      @RequestBody CommunityRequestDto communityRequestDto,
-      @AuthenticationPrincipal UserDetailsImpl userDetail) {
-    commentService.updateCommunityComments(boardId,commentId,
-        communityRequestDto, userDetail.getUser());
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+    //커뮤니티 댓글 수정
+    @ApiOperation(value = "커뮤니티 댓글 수정", response = Join.class)
+    @PatchMapping("/communities/comments/{commentId}")
+    public ResponseEntity updateCommunityComment(
+        @PathVariable Long commentId,
+        @RequestBody CommunityRequestDto communityRequestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        commentService.updateCommunityComments(commentId, communityRequestDto,
+            userDetail.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-  //커뮤니티 댓글 삭제
-  @ApiOperation(value = "커뮤니티 댓글 삭제",response = Join.class)
-  @DeleteMapping("/comments/{comment_id}/communities/{boardId}")
-  public ResponseEntity deleteCommunityComment(@PathVariable Long boardId,
-      @PathVariable Long comment_id
-      ,@AuthenticationPrincipal UserDetailsImpl userDetail) {
-    commentService.deleteCommunityComments(boardId, comment_id,userDetail.getUser());
-    return new ResponseEntity("댓글 삭제 완료", HttpStatus.OK);
-  }
+    //커뮤니티 댓글 삭제
+    @ApiOperation(value = "커뮤니티 댓글 삭제", response = Join.class)
+    @DeleteMapping("/communities/comments/{commentId}")
+    public ResponseEntity deleteCommunityComment(@PathVariable Long commentId,
+        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        commentService.deleteCommunityComments(commentId, userDetail.getUser());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

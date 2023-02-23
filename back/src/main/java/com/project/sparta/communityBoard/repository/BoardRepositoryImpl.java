@@ -124,13 +124,23 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     JPAExpressions
                         .select(commentLike.count())
                         .from(commentLike)
-                        .where(commentLike.comment.Id.eq(communityComment.Id))
+                        .where(commentLike.comment.Id.eq(communityComment.Id)),
+                    // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
+                    JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
+                            .otherwise(false))
+                        .from(commentLike)
+                        .where(
+                            communityComment.Id.eq(commentLike.comment.Id),
+                            commentLike.userNickName.eq(username)
+                        ),
+                    user.userImageUrl
                 )
             )
-            .from(communityBoard, communityComment, commentLike)
+            .from(communityBoard, communityComment, commentLike, user)
             .where(
                 communityBoard.id.eq(boardId),
-                communityComment.communityBoardId.eq(communityBoard.id)
+                communityComment.communityBoardId.eq(communityBoard.id),
+                communityComment.nickName.eq(user.nickName)
             )
             .distinct()
             .offset(commentPage)

@@ -23,7 +23,6 @@ public class CommunityBoardOneResponseDto {
     private List<String> imgList = new ArrayList<>();
     private List<Hashtag> tagList = new ArrayList<>();
     private List<CommentResponseDto> commentList = new ArrayList<>();
-
     private Boolean isLike;
 
 //    private int boardLikeCount;
