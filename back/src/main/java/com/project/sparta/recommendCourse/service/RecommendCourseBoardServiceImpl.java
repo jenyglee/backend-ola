@@ -118,6 +118,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
 
+        //게시글 썸네일 이미지 삭제
+        thumbnailRepository.deleteByRecommendCourseBoardId(id);
+
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 
