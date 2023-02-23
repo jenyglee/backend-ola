@@ -446,7 +446,7 @@
             contentType : "application/json",
             dataType	: "json",
             type: 'GET',
-            url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=0&sort=sim`+sort,
+            url: `http://localhost:8080/product/search?query=` + products + `&limit=8&offset=0&sort=`+sort,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -460,7 +460,7 @@
                 // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
                 for (let i = 0; i < response.data.length; i++) {
 
-                    let result = `<a href="./i-2_shopDetails.html" className="article" style="text-decoration: none; color: #000000">
+                    let result = `<a href="http://localhost:8080/product/search?query=${products}&limit=8&offset=0&sort=${sort}" className="article" style="text-decoration: none; color: #000000">
                                 <div className="img-wrap"
                                      style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                                     <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
