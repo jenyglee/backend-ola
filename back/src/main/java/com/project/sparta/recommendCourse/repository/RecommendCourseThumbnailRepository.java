@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RecommendCourseThumbnailRepository extends JpaRepository<RecommendCourseThumbnail, Long> {
 
+    void deleteByRecommendCourseBoardId(Long boardId);
 }
