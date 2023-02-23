@@ -167,7 +167,7 @@
         // console.log(result);
         let result1 = localStorage.getItem("signup1");
         let result3 = result1.substring(0,result1.length-1) + ',' + '"' + "tagList" + '"' + ':' + '['+ result.toString() + "]}"
-        console.log("STEP1에서 입력한 값 :", JSON.parse(result3))
+        console.log("input값에서 입력한 값 :", JSON.parse(result3))
 
         var settings = {
             "url": "http://localhost:8080/auth/signup",
@@ -194,6 +194,7 @@
 
         // window.location.href = "c-3_singup.html";
     }
+
 </script>
 </body>
 

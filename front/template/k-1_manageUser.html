@@ -179,8 +179,6 @@
             },
             "data": JSON.stringify({
                 "accessToken": accessToken,
-                "refreshToken": "hi",
-                "role": 0
             }),
         }
         $.ajax(admin_settings).done(function (response) {
@@ -241,7 +239,7 @@
                         `
                   <tr>
                     <th scope="row">${i+1}</th>
-                    <td class="td_2"><a href="k-2_manageUserDetail.html" onclick="setUserId(${i+1})">${response.data[i].email}</a></td>
+                    <td class="td_2"><a href="k-2_manageUserDetail.html" onclick="setUserId(${response.data[i].id})">${response.data[i].email}</a></td>
                     <td class="td_3">${response.data[i].nickName}</td>
                     <td class="td_4">${grade_name[i]}</td>
                     <td class="td_5">${phoneNum[i]}</td>
