@@ -42,34 +42,23 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
 
   @Override
   @Transactional
-  public void updateCommunityComments(Long boardId, Long communityCommentId, CommunityRequestDto communityRequestDto,
+  public void updateCommunityComments(Long commentId, CommunityRequestDto requestDto,
       User user) {
-    boardRepository.findById(boardId)
-        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-    CommunityComment communityComment = commentRepository.findById(communityCommentId)
-        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
-    communityComment.updateComment(communityRequestDto.getContents());
+    CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
+            user.getNickName()).orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+    communityComment.updateComment(requestDto.getContents());
     commentRepository.saveAndFlush(communityComment);
-//    CommentResponseDto communityResponseDto = new CommentResponseDto().builder()
-//        .contents(communityComment.getContents())
-//        .build();
-//    return communityResponseDto;
   }
 
   @Override
   @Transactional
-  public void deleteCommunityComments(Long boardId, Long commentsId,User user) {
-    boardRepository.findById(boardId)
-        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-
-    CommunityComment communityComment = commentRepository.findById(commentsId)
-        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
-
-    if(communityComment.getNickName() != user.getNickName()) {
-      new CustomException(Status.INVALID_USER);
-    }
-
-    commentRepository.deleteById(commentsId);
+  public void deleteCommunityComments(Long commentId, User user) {
+    System.out.println("commentId = " + commentId);
+    System.out.println("user.getNickName() = " + user.getNickName());
+    CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
+        user.getNickName()).orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+    likeCommentRepository.deleteLikeAllByInCommentId(commentId);
+    //commentRepository.delete(communityComment);
   }
 
 }

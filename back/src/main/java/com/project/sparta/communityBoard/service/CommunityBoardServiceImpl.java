@@ -131,7 +131,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         // 1. Comment Id에 해당하는 Like를 전부 지운다.
         List<Long> commentIds = commentRepository.findIdsByCommunityBoardId(boardId);
-        likeCommentRepository.deleteLikeAllByInCommentId(commentIds);
+        likeCommentRepository.deleteLikeAllByInCommentIds(commentIds);
 
         // 2. Comment를 전부 지운다.
         commentRepository.deleteCommentAllByInBoardId(boardId);
@@ -235,7 +235,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         // 1. Comment Id에 해당하는 Like를 전부 지운다.
         List<Long> commentIds = commentRepository.findIdsByCommunityBoardId(boardId);
-        likeCommentRepository.deleteLikeAllByInCommentId(commentIds);
+        likeCommentRepository.deleteLikeAllByInCommentIds(commentIds);
 
         // 2. Comment를 전부 지운다.
         commentRepository.deleteCommentAllByInBoardId(boardId);
