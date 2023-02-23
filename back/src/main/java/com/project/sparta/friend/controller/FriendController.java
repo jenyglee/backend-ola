@@ -4,7 +4,6 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.friend.dto.FriendInfoReponseDto;
 import com.project.sparta.friend.service.FriendService;
 import com.project.sparta.security.UserDetailsImpl;
-import io.swagger.annotations.Api;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"친구추천 API"})
 @RestController

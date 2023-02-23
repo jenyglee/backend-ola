@@ -10,7 +10,9 @@ import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseImg;
+import com.project.sparta.recommendCourse.entity.QRecommendCourseThumbnail;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.user.entity.QUser;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
@@ -26,6 +28,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +49,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     QRecommendCourseImg courseImg = new QRecommendCourseImg("courseImg");
 
+    QRecommendCourseThumbnail thumbnail = new QRecommendCourseThumbnail("thumbnail");
 
     //코스 전체 조회(+필터링)
     @Override
@@ -53,6 +57,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         PostStatusEnum postStatusEnum, int score, String season, int altitude, String region,
         String orderByLike) {
 
+        List<RecommendResponseDto> recommendBoards = new ArrayList<>();
         BooleanBuilder builder = new BooleanBuilder();
         StringPath aliasLike = Expressions.stringPath("likeCount");
         StringPath boardId = Expressions.stringPath("boardId");
@@ -72,19 +77,18 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             builder.and(reBoard.region.contains(region));
         }
 
-        List<RecommendResponseDto> boards = queryFactory
-            .select(Projections.constructor(RecommendResponseDto.class,
-                reBoard.id.as("boardId"),
-                reBoard.title.as("title"),
-                Projections.list(courseImg.url),
+        List<Tuple> boards = queryFactory
+            .select(
+                reBoard.id,
+                reBoard.title,
+                thumbnail.url,
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
-                user.nickName.as("nickName"),
-                reBoard.modifiedAt.as("createDate")))
+                user.nickName,
+                reBoard.modifiedAt)
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
-            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
-            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
+            .leftJoin(thumbnail).on(reBoard.id.eq(thumbnail.recommendCourseBoard.id))
             .where(reBoard.postStatus.eq(postStatusEnum), builder)
             .orderBy(orderSpecifiers)
             .offset(pageable.getOffset())
@@ -92,7 +96,24 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .fetch();
 
 
-        return new PageImpl<>(boards, pageable, boards.size());
+        for(Tuple t : boards) {
+            Long Id = t.get(reBoard.id);
+            String title = t.get(reBoard.title);
+            String thumbnail_url = t.get(thumbnail.url);
+            String nickName = t.get(user.nickName);
+            LocalDateTime createDate = t.get(reBoard.modifiedAt);
+            Long like = t.get(ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
+                .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"));
+
+            //이미지 리스트 뽑기
+            List<String> imgList = queryFactory.select(courseImg.url)
+                .from(courseImg)
+                .where(courseImg.recommendCourseBoard.id.eq(Id)).fetch();
+
+            recommendBoards.add(new RecommendResponseDto(Id, title, thumbnail_url, imgList, createDate, like, nickName));
+        }
+
+        return new PageImpl<>(recommendBoards, pageable, recommendBoards.size());
     }
 
     //코스 단건 조회
@@ -144,7 +165,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .contents(contents)
             .region(region)
             .createDate(modifiedAt)
-            .likeCount((long)like.size())
+            .likeCount((long) like.size())
             .nickName(nickName)
             .imgList(images)
             .build();
@@ -154,7 +175,8 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     // 나의 코스추천 글 조회
     @Override
-    public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable, PostStatusEnum postStatusEnum, Long userId) {
+    public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable,
+        PostStatusEnum postStatusEnum, Long userId) {
 
         List<RecommendResponseDto> boards = queryFactory
             .select(Projections.constructor(RecommendResponseDto.class,
@@ -179,7 +201,8 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
     }
 
     //좋아요 필터링
-    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike, StringPath boardId) {
+    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike,
+        StringPath boardId) {
 
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
@@ -187,7 +210,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             orderSpecifiers.add(new OrderSpecifier(Order.DESC, aliasLike));
         } else if (orderByLike.equals("likeAsc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.ASC, aliasLike));
-        } else if (orderByLike.equals("idDesc")){
+        } else if (orderByLike.equals("idDesc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC, boardId));
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
