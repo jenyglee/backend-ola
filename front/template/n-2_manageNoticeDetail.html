@@ -203,9 +203,7 @@
           "
       >
         <div style="">
-          <div style="font-size: 26px; color: white">
-            <span>이재원</span>
-            <span>매니저</span>
+          <div style="font-size: 26px; color: white" id ="manager_name">
           </div>
 
           <button
@@ -313,6 +311,9 @@
       $(document).ready(function () {
         getNotice();
         category = "0";
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile")).nickname;
+        const temp = `<span>${menuProfile} 매니저</span>`
+        $(manager_name).append(temp)
       });
 
       function gotologout(){
