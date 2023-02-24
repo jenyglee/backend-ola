@@ -79,10 +79,9 @@
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
       <div class="item-list">
-        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f">코스추천</a>
         <a
           href="./h-1_communityMain.html"
-          style="font-weight: bold; color: #f46b3f"
           >커뮤니티</a
         >
         <a href="./i-1_shopMain.html">쇼핑몰</a>
@@ -400,6 +399,9 @@
 
       //단건조회로 글 내용 파싱해주고
 
+
+      var imageUrlList = [];
+
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         console.log(id);
@@ -439,6 +441,7 @@
 
             //사진넣기
             $("#img-wrap").empty();
+            imageUrlList = response.imgList;
             for (let i = 0; i < response.imgList.length; i++) {
               var temp = `
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
@@ -498,9 +501,6 @@
           },
         });
       }
-
-      var imageUrlList = [];
-
       function imgUpload(input) {
         const accessToken = localStorage.getItem("accessToken");
 
