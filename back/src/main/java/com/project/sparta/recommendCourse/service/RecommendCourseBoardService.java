@@ -28,13 +28,14 @@ public interface RecommendCourseBoardService {
     void deleteRecommendCourseBoard(Long id, Long userId);
 
     //단건 코스 조회
-    RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long id);
+    RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long id, String nickName);
 
     //전체 코스 조회
     PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size, int score, String season, int altitude, String region, String orderByLike);
 
     //내가 쓴 코스추천 전체 조회
     PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user);
+
 
     //어드민 코스 수정
     void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto);

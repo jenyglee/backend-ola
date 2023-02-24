@@ -17,6 +17,7 @@ import com.project.sparta.recommendCourse.entity.RecommendCourseThumbnail;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseThumbnailRepository;
+import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -131,8 +132,8 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     //단건 코스 조회
     @Override
-    public RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long boardId) {
-        return recommendCourseBoardRepository.getCourseBoard(boardId, VAILABLE);
+    public RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long boardId, String nickName) {
+        return recommendCourseBoardRepository.getCourseBoard(boardId, VAILABLE, nickName);
     }
 
     //코스 추천 전체 조회

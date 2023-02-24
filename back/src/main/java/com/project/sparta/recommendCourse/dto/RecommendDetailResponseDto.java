@@ -25,11 +25,13 @@ public class RecommendDetailResponseDto {
     private Long likeCount;
     private String nickName;
 
+    private Boolean isLike;
+
     @Builder
     public RecommendDetailResponseDto(Long boardId, int score, String title, String season, int altitude,
         String contents,
         String region, List<String> imgList, LocalDateTime createDate, Long likeCount,
-        String nickName) {
+        String nickName, Boolean isLike) {
         this.boardId = boardId;
         this.score = score;
         this.title = title;
@@ -41,6 +43,7 @@ public class RecommendDetailResponseDto {
         this.createDate = createDate;
         this.likeCount = likeCount;
         this.nickName = nickName;
+        this.isLike = isLike;
     }
 
 }

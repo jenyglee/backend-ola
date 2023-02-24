@@ -4,10 +4,12 @@ import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
+import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +38,9 @@ public class AdminRecommendCourseController {
 
     // 코스추천 단건 조회
     @GetMapping("/boards/recommends/{boardId}")
-    public ResponseEntity getRecommend(@PathVariable Long boardId){
-        RecommendDetailResponseDto result = recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
+    public ResponseEntity getRecommend(@PathVariable Long boardId, @AuthenticationPrincipal
+        UserDetailsImpl userDetails){
+        RecommendDetailResponseDto result = recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId, userDetails.getUser().getNickName());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 //

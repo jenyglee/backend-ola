@@ -12,6 +12,6 @@ public interface RecommendCourseBoardCustomRepository {
 
     Page<RecommendResponseDto> allRecommendBoardList(PageRequest pageRequest, PostStatusEnum postStatusEnum, RecommendCondition condition);
 
-    RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum);
+    RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum, String nickName);
     Page<RecommendResponseDto>  myRecommendBoardList(PageRequest pageRequest, PostStatusEnum postStatusEnum, Long userId);
 }
