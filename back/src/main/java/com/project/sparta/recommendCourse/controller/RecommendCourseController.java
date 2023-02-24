@@ -56,7 +56,7 @@ public class RecommendCourseController {
     }
 
     @ApiOperation(value = "코스 추천 삭제", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER:GRADE_GOD')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
