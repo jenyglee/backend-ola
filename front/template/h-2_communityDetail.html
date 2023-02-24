@@ -484,23 +484,25 @@
             </div>
           </div>
           <!-- 댓글-->
-          <div id="comment-wrap" class="comment-box" style="padding-top: 20px">
+          <div class="comment-box" style="padding-top: 20px">
             <!-- 댓글입력창 -->
             <div class="comment-create" style="margin-bottom: 10px">
               <input
                 type="text"
                 class="form-control post-content"
-                id="tagFormControlInput1"
+                id="comment"
                 placeholder="댓글을 입력해주세요"
                 style="outline: none"
               />
               <button
-                type="button"
                 class="btn create-comment btn-outline-warning"
+                onclick="commentCreate()"
               >
                 댓글쓰기
               </button>
             </div>
+            <div id="comment-wrap"></div>
+
             <!--            &lt;!&ndash; 댓글아티클 &ndash;&gt;-->
             <!--            <div class="comment-read-box">-->
             <!--              &lt;!&ndash; 프로필 &ndash;&gt;-->
@@ -562,9 +564,21 @@
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" onclick="getCommunity(0)"
+                      >1</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" onclick="getCommunity(1)"
+                      >2</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" onclick="getCommunity(2)"
+                      >3</a
+                    >
+                  </li>
                   <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
@@ -612,15 +626,17 @@
       var communityId = localStorage.getItem("communityId");
       console.log("communityId : ", communityId);
       var accessToken = localStorage.getItem("accessToken");
+
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getMenuProfile();
-        getCommunity();
+        getCommunity(0);
       });
 
       function getMenuProfile() {
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        // console.log("menuProfile : ", menuProfile)
         var tempProfile = `
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
@@ -639,10 +655,17 @@
         $(".bell-dropbox").hide();
       }
 
-      function getCommunity() {
+      function getCommunity(commentPage) {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        console.log("menuProfile : ", menuProfile);
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/boards/communities/" + communityId,
+          url:
+            "http://localhost:8080/boards/communities/" +
+            communityId +
+            "?commentPage=" +
+            commentPage +
+            "&commentSize=4",
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken);
           },
@@ -709,6 +732,7 @@
 
             // 댓글 넣기
             $("#comment-wrap").empty();
+
             for (let i = 0; i < response.commentList.length; i++) {
               var tempComment = `
                 <div class="comment-read-box">
@@ -725,7 +749,11 @@
                     "
                   >
                     <img
-                      src="/static/img/icon_profile_default.png"
+                      src=${
+                        response.commentList[i].profileImage
+                          ? response.commentList[i].profileImage
+                          : "/static/img/icon_profile_default.png"
+                      }
                       alt="프로필이미지"
                       style="width: 100%"
                     />
@@ -744,6 +772,15 @@
                       style="cursor: pointer"
                       onclick=""
                     >
+
+                      <img src=${
+                        response.commentList[i].isLike
+                          ? "/static/img/heart.png"
+                          : "/static/img/unHeart.png"
+                      } alt="좋아요아이콘"
+                        onClick="likeComment(${
+                          response.commentList[i].isLike
+                        }, ${response.commentList[i].id})"/>
                       <span>${response.commentList[i].likeCount}</span>
                     </div>
                   </div>
@@ -751,8 +788,18 @@
                   <div class="btn-date-wrap">
                     <div class="comment-btn-box">
                       <!-- TODO 자기 userId만 수정 삭제 버튼이 뜨게 수정 -->
-                      <button type="button" class="comment-btn">수정</button>
-                      <button type="button" class="comment-btn">삭제</button>
+                      <!-- <button type="button" class="comment-btn" >${
+                        response.commentList[i].nickName == menuProfile.nickname
+                          ? "수정"
+                          : ""
+                      }</button> -->
+                      <button type="button" class="comment-btn" onclick="commentDelete(${
+                        response.commentList[i].id
+                      })">${
+                response.commentList[i].nickName == menuProfile.nickname
+                  ? "삭제"
+                  : ""
+              }</button>
                     </div>
                     <div class="date-box">
                       <p>${response.commentList[i].createAt.substring(
@@ -766,6 +813,9 @@
               `;
               $("#comment-wrap").append(tempComment);
             }
+            // menuProfile
+            // <button type="button" className="comment-btn">${response.commentList[i].nickName
+            //     ==}</button>
           },
         });
       }
@@ -789,6 +839,37 @@
             console.log(
               "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
             );
+          },
+        });
+      }
+      function commentCreate() {
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/comments/communities/" + communityId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          contentType: "application/json; charset=utf-8",
+          data: JSON.stringify({
+            contents: $("#comment").val(),
+          }),
+          success: function (response) {
+            getCommunity(0);
+          },
+        });
+      }
+
+      function commentDelete(commentId) {
+        console.log("commentId : ", commentId);
+        $.ajax({
+          type: "DELETE",
+          url: "http://localhost:8080/communities/comments/" + commentId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          contentType: "application/json; charset=utf-8",
+          success: function (response) {
+            getCommunity(0);
           },
         });
       }
@@ -834,7 +915,7 @@
             );
           },
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
           error: function (xhr) {
             console.log(
@@ -856,7 +937,7 @@
             );
           },
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
           error: function (xhr) {
             console.log(
@@ -864,6 +945,71 @@
             );
           },
         });
+      }
+
+      function likeComment(isLike, commentId) {
+        console.log("likeComment");
+        if (isLike) {
+          $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8080/like/comments/${commentId}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+              xlr.setRequestHeader(
+                "Authorization",
+                localStorage.getItem("accessToken")
+              );
+            },
+            success: function (response) {
+              getCommunity(0);
+            },
+            error: function (xhr) {
+              console.log(
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+              );
+            },
+          });
+        } else {
+          $.ajax({
+            type: "POST",
+            url: `http://localhost:8080/like/comments/${commentId}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+              xlr.setRequestHeader(
+                "Authorization",
+                localStorage.getItem("accessToken")
+              );
+            },
+            success: function (response) {
+              getCommunity(0);
+            },
+            error: function (xhr) {
+              console.log(
+                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+              );
+            },
+          });
+        }
+      }
+
+      function unlikeComment(commentId) {
+        console.log("unlikeComment");
+        // $.ajax({
+        //   type: "DELETE",
+        //   url: `http://localhost:8080/like/comments/${commentId}`,
+        //   contentType: "application/json; charset=utf-8",
+        //   beforeSend: function (xlr) {
+        //     xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
+        //   },
+        //   success: function (response) {
+        //     getCommunity(0);
+        //   },
+        //   error: function (xhr) {
+        //     console.log(
+        //         "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
+        //     );
+        //   },
+        // });
       }
 
       function likeComment(commentId) {

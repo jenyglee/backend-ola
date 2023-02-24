@@ -305,9 +305,11 @@
 <script>
     $(document).ready(function () {
         getRecommend(0,"");
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile")).nickname;
-        const temp = `<span>${menuProfile} 매니저</span>`
-        $(manager_name).append(temp)
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        if(menuProfile.role=="ADMIN"){
+            const temp = `<span>${menuProfile.nickname} 매니저</span>`
+            $(manager_name).append(temp)
+        }
     });
 
     function listRecommend(){
@@ -331,7 +333,7 @@
         }
         $.ajax(admin_settings).done(function (response) {
             alert("로그아웃 되었습니다.")
-            window.location.href = "../index.html";
+            window.location.href = "b-1_login.html";
         })
         .fail(function (response){
             console.log("logout fail")

@@ -554,7 +554,7 @@
         // 2. 통신해서 불러오기
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/boards/communities?page=" + page + "&size=16&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
+          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents + "&nickname=" + nickname,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },

@@ -79,10 +79,9 @@
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
       <div class="item-list">
-        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f">코스추천</a>
         <a
           href="./h-1_communityMain.html"
-          style="font-weight: bold; color: #f46b3f"
           >커뮤니티</a
         >
         <a href="./i-1_shopMain.html">쇼핑몰</a>
@@ -400,6 +399,9 @@
 
       //단건조회로 글 내용 파싱해주고
 
+
+      var imageUrlList = [];
+
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         console.log(id);
@@ -439,6 +441,7 @@
 
             //사진넣기
             $("#img-wrap").empty();
+            imageUrlList = response.imgList;
             for (let i = 0; i < response.imgList.length; i++) {
               var temp = `
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
@@ -464,15 +467,10 @@
 
       function updateRecommend() {
         const id = localStorage.getItem("recommendId");
-        // console.log("$(\"#title\").val() : ", $("#title").val())
-        // console.log("$(\"#contents\").val() : ", $("#contents").val())
-        // console.log("category : ", category)
-        // console.log("id : ", id)
-        console.log("수정 id :" + id);
+
         $.ajax({
           type: "PATCH",
           url: "http://localhost:8080/admin/boards/recommends/" + id,
-          // dataType: "jason",
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
@@ -487,21 +485,12 @@
             altitude: $("#recommend-altitude").val(),
             contents: $("#recommend-contents").val(),
             region: $("#recommend-region").val(),
-            imgList: imageUrlList,
-
-            // title: "제목",
-            // score: 3,
-            // season: "ㅁㅇ리ㅏㅓㄴㅇ",
-            // altitude: 3234,
-            // contents: "ㄴㅁ이ㅓㅣㅏㄴ어라ㅓㄴㅇ리ㅏㅓ",
-            // region: "ㄴ아ㅣㅓㅏㅣㅁㄴㄹ",
-            // imgList: ["ㄴㄹ어ㅣ마널ㄴㄹㅇㄴㄹ", "너롬나ㅓ로ㅓㅗㄴ라ㅓ나"],
+            imgList: imageUrlList
           }),
           xhrFields: {
             withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: function (response) {
-            console.log("여기뜨니?");
             alert("수정 완료");
             window.location.href = "g-1_recommend.html";
           },
@@ -512,9 +501,6 @@
           },
         });
       }
-
-      var imageUrlList = [];
-
       function imgUpload(input) {
         const accessToken = localStorage.getItem("accessToken");
 
