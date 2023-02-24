@@ -528,6 +528,8 @@
       },
       success: function (response) {
 
+        console.log(response)
+
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
           $('.totalCnt').append(cnt)

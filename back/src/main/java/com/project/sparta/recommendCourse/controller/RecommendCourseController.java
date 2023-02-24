@@ -66,8 +66,8 @@ public class RecommendCourseController {
 
     @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
     @GetMapping("/recommends/{boardId}")
-    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId) {
-        return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId);
+    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId, userDetails.getUser().getNickName());
     }
 
     @ApiOperation(value = "코스 추천 전체 조회", response = Join.class)

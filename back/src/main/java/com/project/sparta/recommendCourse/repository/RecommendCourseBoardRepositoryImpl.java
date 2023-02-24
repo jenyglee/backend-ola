@@ -113,7 +113,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     //코스 단건 조회
     @Override
-    public RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum) {
+    public RecommendDetailResponseDto getCourseBoard(Long boardId, PostStatusEnum postStatusEnum, String loginNickName) {
 
         Tuple result = queryFactory.select(
                 reBoard.id,
@@ -124,7 +124,13 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
                 reBoard.contents,
                 reBoard.region,
                 reBoard.modifiedAt,
-                user.nickName)
+                user.nickName,
+                JPAExpressions.select(cLike.userNickName.count().when(1L).then(true)
+                        .otherwise(false))
+                    .from(cLike)
+                    .where(
+                        cLike.courseBoard.id.eq(boardId),
+                        cLike.userNickName.eq(loginNickName)))
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
             .where(reBoard.postStatus.eq(postStatusEnum), reBoard.id.eq(boardId))
@@ -146,10 +152,18 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .where(courseImg.recommendCourseBoard.id.eq(boardId))
             .fetch();
 
-        List<RecommendCourseBoard> like = queryFactory.select(cLike.courseBoard)
-            .from(cLike)
-            .where(cLike.courseBoard.id.eq(boardId))
-            .fetch();
+        Long like = queryFactory.select(cLike.courseBoard.count())
+                                                .from(cLike)
+                                                .where(cLike.courseBoard.id.eq(boardId))
+                                                .fetchOne();
+        Boolean isLike = result.get(
+            JPAExpressions.select(cLike.userNickName.count().when(1L).then(true)
+                    .otherwise(false))
+                .from(cLike)
+                .where(
+                    cLike.courseBoard.id.eq(boardId),
+                    cLike.userNickName.eq(loginNickName)
+                ));
 
         RecommendDetailResponseDto recommendDto = RecommendDetailResponseDto.builder()
             .boardId(id)
@@ -160,9 +174,10 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .contents(contents)
             .region(region)
             .createDate(modifiedAt)
-            .likeCount((long) like.size())
+            .likeCount(like)
             .nickName(nickName)
             .imgList(images)
+            .isLike(isLike)
             .build();
 
         return recommendDto;
