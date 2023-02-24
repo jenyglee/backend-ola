@@ -7,13 +7,16 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.recommendCourse.dto.RecommendCondition;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
+import com.project.sparta.recommendCourse.entity.RecommendCourseThumbnail;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.recommendCourse.repository.RecommendCourseThumbnailRepository;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,6 +37,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
 
+    private final RecommendCourseThumbnailRepository thumbnailRepository;
     /**
      * 추천코스 게시글 등록 메서드
      *
@@ -55,11 +59,13 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
                                             .postStatus(VAILABLE)
                                             .build();
 
+        recommendCourseBoardRepository.save(board);
+
         for (String imgUrl : requestPostDto.getImgList()) {
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
             recommendCourseBoardImgRepository.save(courseImg);
         }
-        recommendCourseBoardRepository.save(board);
+        thumbnailRepository.save(new RecommendCourseThumbnail(requestPostDto.getThumbnail(), board));
     }
 
 
@@ -113,6 +119,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
 
+        //게시글 썸네일 이미지 삭제
+        thumbnailRepository.deleteByRecommendCourseBoardId(id);
+
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 
@@ -131,14 +140,15 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
         int score, String season, int altitude, String region, String orderByLike) {
 
+        RecommendCondition condition = new RecommendCondition(score, season, altitude, region, orderByLike);
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
-            pageRequest, VAILABLE, score, season, altitude, region, orderByLike);
+            pageRequest, VAILABLE, condition);
 
         List<RecommendResponseDto> content = courseAllList.getContent();
         long totalCount = courseAllList.getTotalElements();
-        return new PageResponseDto<>(page, totalCount, content.stream().distinct().collect(
-            Collectors.toList()));
+
+        return new PageResponseDto<>(page, totalCount, content);
     }
 
     //내가 쓴 코스 추천 조회
@@ -185,6 +195,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //삭제하려는 board 있는지 확인
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+        //게시글 썸네일 이미지 삭제
+        thumbnailRepository.deleteByRecommendCourseBoardId(id);
+
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 

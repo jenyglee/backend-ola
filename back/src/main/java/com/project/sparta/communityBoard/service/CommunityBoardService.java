@@ -19,7 +19,7 @@ public interface CommunityBoardService {
 
     void deleteCommunityBoard(Long boardId, User user);
 
-    CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int page, int size);
+    CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname);
 
     PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
         String titleCond, String contentsCond, String nicknameCond);

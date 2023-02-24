@@ -254,9 +254,7 @@
     <div style="display: flex">
         <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
             <div style="">
-                <div style="font-size: 26px; color: white">
-                    <span>이재원</span>
-                    <span>매니저</span>
+                <div style="font-size: 26px; color: white" id ="manager_name">
                 </div>
 
                 <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
@@ -307,6 +305,11 @@
 <script>
     $(document).ready(function () {
         getRecommend(0,"");
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        if(menuProfile.role=="ADMIN"){
+            const temp = `<span>${menuProfile.nickname} 매니저</span>`
+            $(manager_name).append(temp)
+        }
     });
 
     function listRecommend(){
@@ -330,7 +333,7 @@
         }
         $.ajax(admin_settings).done(function (response) {
             alert("로그아웃 되었습니다.")
-            window.location.href = "../index.html";
+            window.location.href = "g-1_recommend.html";
         })
         .fail(function (response){
             console.log("logout fail")

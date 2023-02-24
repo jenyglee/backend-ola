@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 public interface BoardRepositoryCustom {
 
     Long countByUserId(Long userId);
-    CommunityBoardOneResponseDto getBoard(Long boardId, int page, int size);
+    CommunityBoardOneResponseDto getBoard(Long boardId, Pageable pageable, String username);
     Page<CommunityBoardAllResponseDto> communityAllList(
         CommunitySearchCondition condition, Pageable pageable);
     Page<CommunityBoardAllResponseDto> communityMyList(Pageable pageable, Long userId);

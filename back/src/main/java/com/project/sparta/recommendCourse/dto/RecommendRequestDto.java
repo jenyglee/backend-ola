@@ -18,9 +18,11 @@ public class RecommendRequestDto {
     private String region;
     private List<String> imgList;
 
+    private String thumbnail;
+
     @Builder
     public RecommendRequestDto(int score, String title, String season, int altitude,
-        String contents, String region, List<String> imgList) {
+        String contents, String region, List<String> imgList, String thumbnail) {
         this.score = score;
         this.title = title;
         this.season = season;
@@ -28,6 +30,7 @@ public class RecommendRequestDto {
         this.contents = contents;
         this.region = region;
         this.imgList = imgList;
+        this.thumbnail = thumbnail;
     }
 
 

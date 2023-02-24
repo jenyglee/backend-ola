@@ -3,16 +3,21 @@ package com.project.sparta.recommendCourse.repository;
 
 import static com.project.sparta.communityBoard.entity.QCommunityBoard.communityBoard;
 
+import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
 import com.project.sparta.like.entity.CourseLike;
 import com.project.sparta.like.entity.QCourseLike;
+import com.project.sparta.recommendCourse.dto.RecommendCondition;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.PostStatusEnum;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.QRecommendCourseImg;
+import com.project.sparta.recommendCourse.entity.QRecommendCourseThumbnail;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
 import com.project.sparta.user.entity.QUser;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
@@ -24,8 +29,10 @@ import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.swagger.models.auth.In;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -46,53 +53,62 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     QRecommendCourseImg courseImg = new QRecommendCourseImg("courseImg");
 
+    QRecommendCourseThumbnail thumbnail = new QRecommendCourseThumbnail("thumbnail");
 
     //코스 전체 조회(+필터링)
     @Override
     public Page<RecommendResponseDto> allRecommendBoardList(PageRequest pageable,
-        PostStatusEnum postStatusEnum, int score, String season, int altitude, String region,
-        String orderByLike) {
+        PostStatusEnum postStatusEnum, RecommendCondition condition) {
 
-        BooleanBuilder builder = new BooleanBuilder();
+        List<RecommendResponseDto> recommendBoards = new ArrayList<>();
         StringPath aliasLike = Expressions.stringPath("likeCount");
-        StringPath boardId = Expressions.stringPath("boardId");
+        StringPath dateOrderBy = Expressions.stringPath("dateOrderBy");
 
-        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(orderByLike, aliasLike, boardId);
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getOrderByLike(), aliasLike, dateOrderBy);
 
-        if (score > 0) {
-            builder.and(reBoard.score.loe(score));
-        }
-        if (season != null) {
-            builder.and(reBoard.season.contains(season));
-        }
-        if (altitude > 0) {
-            builder.and(reBoard.altitude.loe(altitude));
-        }
-        if (region != null) {
-            builder.and(reBoard.region.contains(region));
-        }
-
-        List<RecommendResponseDto> boards = queryFactory
-            .select(Projections.constructor(RecommendResponseDto.class,
-                reBoard.id.as("boardId"),
-                reBoard.title.as("title"),
-                Projections.list(courseImg.url),
+        QueryResults<Tuple> results = queryFactory
+            .select(
+                reBoard.id,
+                reBoard.title,
+                thumbnail.url,
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
-                user.nickName.as("nickName"),
-                reBoard.modifiedAt.as("createDate")))
+                user.nickName,
+                reBoard.modifiedAt.as("dateOrderBy"))
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
-            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
-            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
-            .where(reBoard.postStatus.eq(postStatusEnum), builder)
+            .leftJoin(thumbnail).on(reBoard.id.eq(thumbnail.recommendCourseBoard.id))
+            .where(reBoard.postStatus.eq(postStatusEnum),
+                regionEq(condition.getRegion()),
+                scoreEq(condition.getScore()),
+                seasonEq(condition.getSeason()),
+                altitudeEq(condition.getAltitude()))
             .orderBy(orderSpecifiers)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .fetch();
+            .fetchResults();
 
+        List<Tuple> boards = results.getResults();
+        long total = results.getTotal();
 
-        return new PageImpl<>(boards, pageable, boards.size());
+        for(Tuple t : boards) {
+            Long Id = t.get(reBoard.id);
+            String title = t.get(reBoard.title);
+            String thumbnail_url = t.get(thumbnail.url);
+            String nickName = t.get(user.nickName);
+            LocalDateTime createDate = t.get(reBoard.modifiedAt.as("dateOrderBy"));
+            Long like = t.get(ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
+                .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"));
+
+            //이미지 리스트 뽑기
+            List<String> imgList = queryFactory.select(courseImg.url)
+                .from(courseImg)
+                .where(courseImg.recommendCourseBoard.id.eq(Id)).fetch();
+
+            recommendBoards.add(new RecommendResponseDto(Id, title, thumbnail_url, imgList, createDate, like, nickName));
+        }
+
+        return new PageImpl<>(recommendBoards, pageable, total);
     }
 
     //코스 단건 조회
@@ -144,7 +160,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
             .contents(contents)
             .region(region)
             .createDate(modifiedAt)
-            .likeCount((long)like.size())
+            .likeCount((long) like.size())
             .nickName(nickName)
             .imgList(images)
             .build();
@@ -154,44 +170,72 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
 
     // 나의 코스추천 글 조회
     @Override
-    public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable, PostStatusEnum postStatusEnum, Long userId) {
-
-        List<RecommendResponseDto> boards = queryFactory
-            .select(Projections.constructor(RecommendResponseDto.class,
-                reBoard.id.as("boardId"),
-                reBoard.title.as("title"),
-                Projections.list(courseImg.url),
+    public Page<RecommendResponseDto> myRecommendBoardList(PageRequest pageable,
+        PostStatusEnum postStatusEnum, Long userId) {
+        List<RecommendResponseDto> recommendBoards = new ArrayList<>();
+        QueryResults<Tuple> results = queryFactory
+            .select(
+                reBoard.id,
+                reBoard.title,
+                thumbnail.url,
                 ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
                     .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"),
-                user.nickName.as("nickName"),
-                reBoard.modifiedAt.as("createDate")))
+                user.nickName,
+                reBoard.modifiedAt)
             .from(reBoard)
             .leftJoin(user).on(reBoard.userId.eq(user.Id))
-            .leftJoin(cLike).on(reBoard.id.eq(cLike.courseBoard.id))
-            .leftJoin(courseImg).on(reBoard.id.eq(courseImg.recommendCourseBoard.id))
-            .where(reBoard.postStatus.eq(postStatusEnum), reBoard.userId.eq(userId))
-            .distinct()
+            .leftJoin(thumbnail).on(reBoard.id.eq(thumbnail.recommendCourseBoard.id))
+            .where(reBoard.userId.eq(userId))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
-            .fetch();
+            .fetchResults();
+        List<Tuple> boards = results.getResults();
+        long total = results.getTotal();
 
-        return new PageImpl<>(boards, pageable, boards.size());
+        for(Tuple t : boards) {
+            Long Id = t.get(reBoard.id);
+            String title = t.get(reBoard.title);
+            String thumbnail_url = t.get(thumbnail.url);
+            String nickName = t.get(user.nickName);
+            LocalDateTime createDate = t.get(reBoard.modifiedAt);
+            Long like = t.get(ExpressionUtils.as(JPAExpressions.select(cLike.courseBoard.count()).from(cLike)
+                .where(cLike.courseBoard.id.eq(reBoard.id)), "likeCount"));
+
+            //이미지 리스트 뽑기
+            List<String> imgList = queryFactory.select(courseImg.url)
+                .from(courseImg)
+                .where(courseImg.recommendCourseBoard.id.eq(Id)).fetch();
+
+            recommendBoards.add(new RecommendResponseDto(Id, title, thumbnail_url, imgList, createDate, like, nickName));
+        }
+        return new PageImpl<>(recommendBoards, pageable, total);
     }
 
     //좋아요 필터링
-    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike, StringPath boardId) {
+    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike,
+        StringPath dateOrderBy) {
 
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
         if (orderByLike.equals("likeDesc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC, aliasLike));
-        } else if (orderByLike.equals("likeAsc")) {
-            orderSpecifiers.add(new OrderSpecifier(Order.ASC, aliasLike));
-        } else if (orderByLike.equals("idDesc")){
-            orderSpecifiers.add(new OrderSpecifier(Order.DESC, boardId));
+        } else if (orderByLike.equals("idDesc")) {
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC, dateOrderBy));
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
 
+    private Predicate regionEq(String region) {
+        return region != "all" ?  reBoard.region.contains(region) : null;
+    }
+    private Predicate scoreEq(int score) {
+        return score != 0 ? reBoard.score.eq(score) : null;
+    }
+    private Predicate seasonEq(String season) {
+        return season != "all" ? reBoard.season.contains(season) : null;
+    }
+    private Predicate altitudeEq(int altitude) {
+        return altitude != 0 ? reBoard.altitude.between(altitude, altitude+100): null;
+    }
 }
 

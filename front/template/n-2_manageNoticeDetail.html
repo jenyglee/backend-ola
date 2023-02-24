@@ -203,9 +203,7 @@
           "
       >
         <div style="">
-          <div style="font-size: 26px; color: white">
-            <span>이재원</span>
-            <span>매니저</span>
+          <div style="font-size: 26px; color: white" id ="manager_name">
           </div>
 
           <button
@@ -313,6 +311,11 @@
       $(document).ready(function () {
         getNotice();
         category = "0";
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        if(menuProfile.role=="ADMIN"){
+          const temp = `<span>${menuProfile.nickname} 매니저</span>`
+          $(manager_name).append(temp)
+        }
       });
 
       function gotologout(){
@@ -332,7 +335,7 @@
         }
         $.ajax(admin_settings).done(function (response) {
           alert("로그아웃 되었습니다.")
-          window.location.href = "../index.html";
+          window.location.href = "g-1_recommend.html";
         })
         .fail(function (response){
           console.log("logout fail")

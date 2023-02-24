@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CommentRepository extends JpaRepository<CommunityComment, Long> {
+    @Query("select cc from CommunityComment cc where cc.Id=:commentId and"
+        + " cc.nickName=:nickname")
+    Optional<CommunityComment> findByIdAndNickName(@Param("commentId") Long commentId, @Param("nickname") String nickname);
     @Query("select cc.Id from CommunityComment cc where cc.communityBoardId=:boardId")
     List<Long> findIdsByCommunityBoardId(@Param("boardId") Long boardId);
 

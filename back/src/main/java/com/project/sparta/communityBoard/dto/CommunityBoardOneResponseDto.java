@@ -23,6 +23,7 @@ public class CommunityBoardOneResponseDto {
     private List<String> imgList = new ArrayList<>();
     private List<Hashtag> tagList = new ArrayList<>();
     private List<CommentResponseDto> commentList = new ArrayList<>();
+    private Boolean isLike;
 
 //    private int boardLikeCount;
 
@@ -33,7 +34,8 @@ public class CommunityBoardOneResponseDto {
         Long likeCount,
         List<String> imgList,
         List<Hashtag> tagList,
-        List<CommentResponseDto> commentList
+        List<CommentResponseDto> commentList,
+        Boolean isLike
 //        int boardLikeCount,
 //        LocalDateTime createdAt
     ) {
@@ -44,6 +46,7 @@ public class CommunityBoardOneResponseDto {
         this.imgList = imgList;
         this.tagList = tagList;
         this.commentList = commentList;
+        this.isLike = isLike;
 //        this.boardLikeCount = boardLikeCount;
 //        this.createdAt = createdAt;
     }
