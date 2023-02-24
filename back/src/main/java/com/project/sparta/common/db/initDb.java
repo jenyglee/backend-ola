@@ -197,7 +197,7 @@ public class initDb {
                                         "\n" +
                                         "설악산은 초심자부터 경험자까지\n" +
                                         "모두 겨울 산행을 즐기기 좋은 산이에요!" + i)
-                                .region("강원 양양군 서면 오색리 #설악산")
+                                .region("강원도 양양군 서면 오색리 #설악산")
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
@@ -219,7 +219,7 @@ public class initDb {
                                 .contents("푸른색의 잎이 붉게 변하는 가을이 돌아왔어요.\n" +
                                         "아이들에게 오색단풍이 아름다운 가을을 마음껏 느끼게 해주고 싶다면 가을산은 어떠세요?\n" +
                                         " 어떤 산이 있는지 함께 만나볼까요?" + i)
-                                .region("서울 서초구 #청계산")
+                                .region("서울특별시 서초구 #청계산")
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
@@ -246,7 +246,7 @@ public class initDb {
                                         "벚꽃터널을 산 위에서 볼 수 있을 줄은 상상도 못했는데, 산 능선에 펼쳐지는 벚꽃 터널은 감동 그 자체에요 :)\n" +
                                         "\n" +
                                         "게다가 벚꽃 너머 보이는 아름다운 바다까지 한 데 어우러져 그야말로 감동의 뷰를 자아내요." + i)
-                                .region("경남 창원시 진해구")
+                                .region("경상도 창원시 진해구")
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
@@ -270,7 +270,7 @@ public class initDb {
                                 .contents("무의도에는 영화나 드라마 촬영장으로 유명한 실미해수욕장,\n" +
                                         "하나개해수욕장 같은 풍광이 좋은 해수욕장이 있다. 여름철에 해변의 캠핑장에서 야영하며 피서를 겸한 산행을 즐길 수 있다.\n" +
                                         " 영종도와 인근 섬들 가운데 가장 먼저 산꾼들이 찾기 시작한 곳이 바로 무의도다." + i)
-                                .region("전라남도 영광군 대마면 남산리")
+                                .region("전라도 영광군 대마면 남산리")
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
