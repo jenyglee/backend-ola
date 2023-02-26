@@ -328,7 +328,7 @@
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         var tempProfile = `
           <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
           <p class="text">${menuProfile.sub}님</p>
 `;
@@ -348,6 +348,7 @@
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        console.log("menuProfile ; ",menuProfile)
         const accessToken = localStorage.getItem("accessToken");
 
         $.ajax({
@@ -379,11 +380,9 @@
 
             let temp = null;
             let btnTemp = null;
-            let before = menuProfile.sub;
-            let after = before.split('@');
-
+            let myNickname = menuProfile.nickname;
             //로그인한 사용자와 게시물 작성자가 같을 경우
-            if(nickName==after[0]){
+            if(myNickname==nickName){
               btnTemp = ` <button type="button" class="modifyBtn btn btn-primary btn-search" onclick="location.href='g-4_recommendModify.html'">수정</button>`;
 
               btnTemp +=  `<button type="button" class="deleteBtn btn btn-primary btn-search" onclick="deleteRecommend()">삭제</button>`;

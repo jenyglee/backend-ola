@@ -114,7 +114,8 @@ public class initDb {
                         UserSignupDto.builder()
                                 .email("user" + i + "@naver.com")
                                 .password("1234")
-                                .nickName("열즈엉열즈엉" + i)
+                                //.nickName("열즈엉열즈엉" + i)
+                                .nickName("user"+i)
                                 .age(i)
                                 .phoneNumber("01012345678")
                                 .imageUrl(
@@ -128,7 +129,8 @@ public class initDb {
                         UserSignupDto.builder()
                                 .email("user" + i + "@naver.com")
                                 .password("1234")
-                                .nickName("등산꼰대" + i)
+                                //.nickName("등산꼰대" + i)
+                                .nickName("user"+i)
                                 .age(i)
                                 .phoneNumber("01012345678")
                                 .imageUrl(
@@ -142,7 +144,8 @@ public class initDb {
                         UserSignupDto.builder()
                                 .email("user" + i + "@naver.com")
                                 .password("1234")
-                                .nickName("등산마초" + i)
+                                //.nickName("등산마초" + i)
+                                .nickName("user"+i)
                                 .age(i)
                                 .phoneNumber("01012345678")
                                 .imageUrl(
@@ -201,7 +204,7 @@ public class initDb {
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
-                        , 10L
+                        , 9L
                 );
             }
             for (int i = 5; i < 10; i++) {
@@ -250,7 +253,7 @@ public class initDb {
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
-                        , 8L
+                        , 9L
                 );
             }
             for (int i = 15; i < 20; i++) {
@@ -274,7 +277,7 @@ public class initDb {
                                 .imgList(imgList)
                                 .thumbnail(thumbnail)
                                 .build()
-                        , 7L
+                        , 9L
                 );
             }
         }
@@ -317,7 +320,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user2
+                        user1
                 );
             }
             for (int i = 10; i < 15; i++) {
@@ -336,7 +339,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user3
+                        user1
                 );
             }
             for (int i = 15; i < 20; i++) {
@@ -350,7 +353,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user4
+                        user1
                 );
             }
         }
@@ -374,7 +377,6 @@ public class initDb {
             User user6 = em.find(User.class, 6L);
             User user7 = em.find(User.class, 7L);
             User user8 = em.find(User.class, 8L);
-
             boardLikeService.likeBoard(1L, user1);
             boardLikeService.likeBoard(1L, user2);
             boardLikeService.likeBoard(1L, user3);
