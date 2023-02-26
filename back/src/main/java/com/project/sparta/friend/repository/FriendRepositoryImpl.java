@@ -62,7 +62,8 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
             .leftJoin(userTag.user, user)
             .where(user.status.eq(statusEnum),           // 활동중인 유저
                 user.Id.ne(userInfo.getId()),           //현재 로그인한 유저 정보 아닌거
-                builder, fbuilder)                                //현재 나랑 하나라도 맞는 태그를 가진 유저
+                builder,                                //현재 나랑 하나라도 맞는 태그를 가진 유저
+                fbuilder)                               //내 친구가 아닌 유저
             .orderBy(NumberExpression.random().asc())
             .distinct()
             .offset(pageable.getOffset())
@@ -100,23 +101,4 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
             userList.get(i).getUserTagList(tags);
         }
     }
-
-//    private BooleanExpression inTags(User userInfo) {
-//        for (int i = 0; i < userInfo.getTags().size(); i++) {
-//            if (userInfo.getTags().get(i) != null) {
-//                return userTag.tag.in(userInfo.getTags().get(i).getTag());
-//            }
-//        }
-//        return null;
-//    }
-
-//    private BooleanExpression neFriend(List<User> userList) {
-//        for (int i = 0; i < userList.size(); i++) {
-//            System.out.println(userList.get(i).getNickName());
-//            if (userList.get(i).getId() != null) {
-//                return friend.targetId.ne(userList.get(i).getId());
-//            }
-//        }
-//        return null;
-//    }
 }
