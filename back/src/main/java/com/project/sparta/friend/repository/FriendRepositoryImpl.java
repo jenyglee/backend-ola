@@ -54,7 +54,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 fbuilder.and(user.Id.ne(friendList.get(j)));
             }
         }
-        
+
         // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
         // 현재 회원의 태그와 맞는 회원 추출
         List<User> userList = queryFactory.select(user)
