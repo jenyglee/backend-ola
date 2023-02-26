@@ -8,7 +8,9 @@ import com.project.sparta.user.entity.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
@@ -33,10 +35,23 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> randomUser(User userInfo, Pageable pageable, StatusEnum statusEnum) {
 
         BooleanBuilder builder = new BooleanBuilder();
+        BooleanBuilder fbuilder = new BooleanBuilder();
+
+        //1. 내 친구 리스트 뽑기
+        List<Long> friendList = queryFactory.select(friend.targetId)
+                                            .from(friend)
+                                            .where(friend.userId.eq(userInfo.getId()))
+                                            .fetch();
 
         for (int i = 0; i < userInfo.getTags().size(); i++) {
             if (userInfo.getTags().get(i) != null) {
-                builder.or(userTag.tag.eq(userInfo.getTags().get(i).getTag()));
+                builder.or(userTag.tag.in(userInfo.getTags().get(i).getTag()));
+            }
+        }
+
+        for (int j = 0; j < friendList.size(); j++) {
+            if (!friendList.isEmpty()) {
+                fbuilder.and(user.Id.ne(friendList.get(j)));
             }
         }
 
@@ -45,14 +60,15 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
         List<User> userList = queryFactory.select(user)
             .from(userTag)
             .leftJoin(userTag.user, user)
-            .where(user.status.eq(statusEnum),
-                    user.Id.ne(userInfo.getId()),
-                    builder)
-            .distinct()
+            .where(user.status.eq(statusEnum),           // 활동중인 유저
+                user.Id.ne(userInfo.getId()),           //현재 로그인한 유저 정보 아닌거
+                builder, fbuilder)                                //현재 나랑 하나라도 맞는 태그를 가진 유저
             .orderBy(NumberExpression.random().asc())
+            .distinct()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
+
 
         getUserTagList(userList);
 
@@ -84,4 +100,23 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
             userList.get(i).getUserTagList(tags);
         }
     }
+
+//    private BooleanExpression inTags(User userInfo) {
+//        for (int i = 0; i < userInfo.getTags().size(); i++) {
+//            if (userInfo.getTags().get(i) != null) {
+//                return userTag.tag.in(userInfo.getTags().get(i).getTag());
+//            }
+//        }
+//        return null;
+//    }
+
+//    private BooleanExpression neFriend(List<User> userList) {
+//        for (int i = 0; i < userList.size(); i++) {
+//            System.out.println(userList.get(i).getNickName());
+//            if (userList.get(i).getId() != null) {
+//                return friend.targetId.ne(userList.get(i).getId());
+//            }
+//        }
+//        return null;
+//    }
 }
