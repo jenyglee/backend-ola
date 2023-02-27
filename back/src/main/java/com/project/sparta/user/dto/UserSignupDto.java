@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserSignupDto {
     private String email;
     private String password;
@@ -21,9 +23,12 @@ public class UserSignupDto {
     private String adminToken="";
 
     @Builder
-    public UserSignupDto(String email, String password, String nickName, int age,
+    public UserSignupDto(String email,
+        String password, String nickName,
+        int age,
         String phoneNumber,
-        String imageUrl, List<Long> tagList) {
+        String imageUrl, List<Long> tagList
+    ) {
         this.email = email;
         this.password = password;
         this.nickName = nickName;

@@ -552,7 +552,7 @@
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         var tempProfile = `
           <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage} alt="프로필사진"/>
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
           <p class="text">${menuProfile.sub}님</p>
 `;
@@ -602,14 +602,14 @@
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
               <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
               <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                onclick="removeImage(${i})"
+                onclick="removeImage(${i})" />
               >
                 <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
               </div>
             </div>
           `;
               $("#img-wrap").append(temp);
-              imageUrlList.push(response.imgList[i]);
+              imageUrlList.push(response.imgList[i]); // [url]
             }
 
             // 태그 넣기
@@ -765,18 +765,16 @@
             withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: function (response) {
-            console.log("여긴 찍혀? 1");
+            $("#img-wrap").empty()
             console.log("response", response);
             for (let i = 0; i < response.length; i++) {
-              // imageUrlList.push(response[i].imgList[i]);
               imageUrlList.push(response[i]);
             }
-            console.log("imageUrlList : ", imageUrlList);
+
             return imageUrlList;
           },
           error: function (request, status, error) {
             console.log(error);
-            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
       }

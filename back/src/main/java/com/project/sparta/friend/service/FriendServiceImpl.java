@@ -55,7 +55,9 @@ public class FriendServiceImpl implements FriendService {
 
             List<Hashtag> tagList = userTagRepository.findUserTag(friendInfo.getId());
 
-            friendInfoList.add(new FriendInfoReponseDto(friendInfo.getId(), friendInfo.getUserImageUrl(), friendInfo.getNickName(), tagList));
+            friendInfoList.add(
+                new FriendInfoReponseDto(friendInfo.getId(), friendInfo.getUserImageUrl(),
+                    friendInfo.getNickName(), tagList));
         }
         long totalCount = friendInfoList.size();
 
@@ -70,37 +72,21 @@ public class FriendServiceImpl implements FriendService {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
         List<FriendInfoReponseDto> content = new ArrayList<>();
-        List<Hashtag> tagNameList = new ArrayList<>();
 
         //해당 유저의 회원가입 태그 정보 긁어오기
         User userInfo = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(INVALID_USER));
 
-        //해당 유저의 친구들 리스트 뽑기(친구되어 있는 사람들은 추천 친구에서 제외시켜야 함)
-        List<Friend> friends = friendRepository.findByUserId(userId);
-
         //매칭 회원 랜덤으로 뽑아오기
         Page<User> randomList = friendRepository.randomUser(userInfo, pageRequest, USER_REGISTERED);
 
-        for( User target : randomList.toList()){
-
+        for (User target : randomList.toList()) {
             //매칭된 회원의 태그 리스트 뽑기
             List<Hashtag> tagList = userTagRepository.findUserTag(target.getId());
 
-            if(friends.size()!=0){  //너 친구 있음?
-                for(int i=0; i<friends.size(); i++){        //있는 친구 수 만큼 for문 돌려서 매칭된 회원과 친구 리스트에 있는 친구랑 맞는지 확인
-                    if(target.getId()==friends.get(i).getTargetId()){     //랜덤 추천친구 리스트에 내 친구와 같지 않을때만 list에 add해주기
-                        friends.remove(i);
-                    }else{
-                        content.add(new FriendInfoReponseDto(target.getId(), target.getUserImageUrl(), target.getNickName(), tagList));
-                    }
-                }
-            }else{
-                //친구가 없을때 추천 친구 리스트 생성
-                System.out.println("어디에 찍히나 보자 2");
-                content.add(new FriendInfoReponseDto(target.getId(), target.getUserImageUrl(), target.getNickName(), tagList));
-            }
+            content.add(new FriendInfoReponseDto(target.getId(), target.getUserImageUrl(), target.getNickName(), tagList));
         }
+
         long totalCount = content.size();
 
         return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
@@ -128,7 +114,8 @@ public class FriendServiceImpl implements FriendService {
     public void deleteFriend(Long userId, Long targetId) {
 
         //삭제할 친구 정보 있는지 확인
-        User userInfo = userRepository.findById(targetId).orElseThrow(()-> new CustomException(NOT_FOUND_USER));
+        User userInfo = userRepository.findById(targetId)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
         //내 친구 목록에서 요청한 친구 있는지 확인
         Friend friend = friendRepository.findByTargetIdAndUserId(userInfo.getId(), userId);
@@ -152,13 +139,16 @@ public class FriendServiceImpl implements FriendService {
         Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
         List<FriendInfoReponseDto> content = new ArrayList<>();
 
-        for(User u : user.toList()){
+        for (User u : user.toList()) {
             List<Hashtag> tagList = userTagRepository.findUserTag(u.getId());
-            content.add(new FriendInfoReponseDto(user.toList().get(0).getId(), user.toList().get(0).getUserImageUrl(), user.toList().get(0).getNickName(), tagList));
+            content.add(new FriendInfoReponseDto(user.toList().get(0).getId(),
+                user.toList().get(0).getUserImageUrl(), user.toList().get(0).getNickName(),
+                tagList));
         }
         long totalCount = content.size();
 
         //리스트 반환
-        return new PageResponseDto(page, totalCount, content.stream().distinct().collect(Collectors.toList()));
+        return new PageResponseDto(page, totalCount,
+            content.stream().distinct().collect(Collectors.toList()));
     }
 }
