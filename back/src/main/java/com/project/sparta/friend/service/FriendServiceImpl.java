@@ -34,8 +34,6 @@ public class FriendServiceImpl implements FriendService {
 
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
-
-    private final HashtagRepository hashtagRepository;
     private final UserTagRepository userTagRepository;
 
     //내 친구목록 전체조회
@@ -134,16 +132,16 @@ public class FriendServiceImpl implements FriendService {
 
         //page , size 값 임의로 넣기
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
+        List<FriendInfoReponseDto> content = new ArrayList<>();
 
         //친구 이름으로 검색(+with paging 처리)
         Page<User> user = friendRepository.serachFriend(targetUserName, pageRequest);
-        List<FriendInfoReponseDto> content = new ArrayList<>();
 
         for (User u : user.toList()) {
+            //매칭된 회원의 태그 리스트 뽑기
             List<Hashtag> tagList = userTagRepository.findUserTag(u.getId());
-            content.add(new FriendInfoReponseDto(user.toList().get(0).getId(),
-                user.toList().get(0).getUserImageUrl(), user.toList().get(0).getNickName(),
-                tagList));
+
+            content.add(new FriendInfoReponseDto(u.getId(), u.getUserImageUrl(), u.getNickName(), tagList));
         }
         long totalCount = content.size();
 

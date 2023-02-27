@@ -80,7 +80,7 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     public PageImpl<User> serachFriend(String targetUserName, Pageable pageable) {
         List<User> userList = queryFactory.select(user)
             .from(user)
-            .where(user.nickName.contains(targetUserName))
+            .where(user.nickName.startsWith(targetUserName))
             .orderBy(user.nickName.desc())
             .distinct()
             .offset(pageable.getOffset())
