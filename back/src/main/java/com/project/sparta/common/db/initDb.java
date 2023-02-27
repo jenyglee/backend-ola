@@ -320,7 +320,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user2
+                        user1
                 );
             }
             for (int i = 10; i < 15; i++) {
@@ -339,7 +339,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user3
+                        user1
                 );
             }
             for (int i = 15; i < 20; i++) {
@@ -353,7 +353,7 @@ public class initDb {
                                 .tagList(Arrays.asList(7L, 8L, 9L))
                                 .imgList(imgList)
                                 .build(),
-                        user4
+                        user1
                 );
             }
         }
