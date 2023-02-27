@@ -29,16 +29,19 @@ public class BoardLikeServiceImpl implements BoardLikeService {
         Optional<BoardLike> findByUserEmail = likeBoardRepository.findByUserEmailAndBoard(user.getEmail(),board);
 
         if(findByUserEmail.isPresent()) throw new CustomException(Status.CONFLICT_LIKE);
-
-        //보드라이크 생성
-        BoardLike boardLike = BoardLike.builder()
+            //보드라이크 생성
+            BoardLike boardLike = BoardLike.builder()
                 .userNickName(user.getNickName())
                 .userEmail(user.getEmail())
                 .board(board)
                 .build();
 
-        //레파지토리에 저장
-        likeBoardRepository.save(boardLike);
+            //레파지토리에 저장
+            likeBoardRepository.save(boardLike);
+
+
+
+
 
     }
 
