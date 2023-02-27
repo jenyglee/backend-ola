@@ -38,11 +38,6 @@ public class BoardLikeServiceImpl implements BoardLikeService {
 
             //레파지토리에 저장
             likeBoardRepository.save(boardLike);
-
-
-
-
-
     }
 
     @Override
