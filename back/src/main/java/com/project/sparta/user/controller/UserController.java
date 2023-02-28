@@ -10,6 +10,8 @@ import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
@@ -46,22 +48,12 @@ public class UserController {
         return userService.login(requestDto);
     }
 
-    // TODO 카카오, 네이버, 구글 로그인 API 제작
+
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        // code: 카카오 서버로부터 받은 인가 코드
-        // new KakaoApi
-        System.out.println("code = " + code);
-         String createToken = kakaoService.kakaoLogin(code, response);
-         // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
-         //Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
-         //cookie.setPath("/");
-         //response.addCookie(cookie);
-        //HttpHeaders response = new HttpHeaders()''
-        //.sendRedirect("/");
-        return "http://localhost:63342/front/index.html"; // 회원가입 이어서 폼
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+        return kakaoService.kakaoLogin(code, response);
     }
 
     @ApiOperation(value = "네이버 로그인",response = Join.class)

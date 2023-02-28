@@ -93,6 +93,31 @@
             /*margin: 0 auto;*/
         }
     </style>
+    <script>
+        var kakaoCode = ""
+        $(document).ready(function () {
+			const urlParams = new URL(location.href).searchParams; // 
+			const code = urlParams.get('code');
+            const beforeCode = localStorage.getItem("code");
+            if(code != beforeCode){
+                localStorage.setItem("code", code);
+                // kakaoCode = code;
+                kakaoLogin(code);
+            }
+            
+            
+			// if (code) {
+			// 	setCookie('code', code);
+			// 	kakaoLogin();
+			// }
+            // console.log("getCookie('accessToken') : ", getCookie('accessToken'))
+            // console.log("getCookie('refreshToken') : ", getCookie('refreshToken'))
+			// if (getCookie('accessToken') && getCookie('refreshToken')) {
+			// 	alert("이미 로그인되어 있습니다.")
+			// 	location.href = "http://" + window.location.hostname + ":5500/template/f-1_myPage.html";
+			// }
+		});
+    </script>
 </head>
 <body>
 <!-- ############# 네비게이션 #############-->
@@ -147,7 +172,7 @@
                 <div class=lastmain">
                     <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn">
                         <button class="btn_2" type="button" style="border-radius: 5px;"
-                            onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://localhost:8080/auth/login/kakao&response_type=code'"
+                            onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://localhost:5500/template/b-1_login.html&response_type=code'"
                         ><b>카카오 로그인</b></button>
                     </div>
                     <br>
@@ -220,6 +245,86 @@
             alert("로그인 실패")
         });
     }
+    
+    function kakaoLogin(code){
+        console.log("code : ", code)
+        // console.log("getCookie : ", getCookie("code"));
+        var settings = {
+            "url": "http://" + window.location.hostname + ":8080/auth/login/kakao?code=" + code ,
+            "method": "GET",
+            "timeout": 0,
+            // "headers": {
+            //      "code": getCookie("code")
+            // },
+        };
+        
+        $.ajax(settings).done(function (response,status,xhr) {
+            console.log("성공", response);
+            localStorage.setItem('accessToken', response.accessToken)
+
+            // // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
+            var get_token = response.accessToken
+            var remove_bearer = get_token.toString().substring(6,get_token.length)
+            var result = decodeJWT(remove_bearer)
+            localStorage.setItem("menuProfile", JSON.stringify(result.payload));
+            // clearCookie('code');
+            // alert("로그인 성공")
+            if(result.payload.role=="USER") {
+                window.location.href = "g-1_recommend.html";
+            } else {
+                window.location.href = "k-1_manageUser.html";
+            }
+            
+        }).fail(function (response){
+            console.log("실패 : ", response);
+            // alert("로그인 실패")
+            // clearCookie('code');
+        })
+    }
+
+    function setCookie(key, value, days) {
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + days);
+	// 설정 일수만큼 현재시간에 만료값으로 지정
+
+	var cookie_value = value + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+	document.cookie = key + '=' + cookie_value;
+}
+
+    function getCookie(key) {
+	let cName = key + '=';
+    console.log("cName : ", cName)
+	let cookieData = document.cookie;
+    console.log("cookieData : ", cookieData)
+	let cookie = cookieData.indexOf(key);
+    console.log("cookie : ", cookie)
+	let value = '';
+	if (cookie !== -1) {
+		cookie += cName.length;
+		let end = cookieData.indexOf(';', cookie);
+		if (end === -1) end = cookieData.length;
+		value = cookieData.substring(cookie, end);
+	}
+
+	// kakao 로그인 사용한 경우 Bearer 추가
+	if (value.indexOf('Bearer') === -1 && value !== '') {
+	  value = 'Bearer ' + value;
+	}
+
+	return value;
+
+}
+
+function clearCookie(key) {
+	// 토큰 값 ''으로 덮어쓰기
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + 0);
+	document.cookie =
+		key + '=' + '' + '; expires=' + exdate.toUTCString();
+}
+
+
+
 </script>
 </body>
 
