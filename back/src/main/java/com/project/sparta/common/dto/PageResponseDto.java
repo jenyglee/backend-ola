@@ -1,10 +1,16 @@
 package com.project.sparta.common.dto;
 
+import java.io.Serializable;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-public class PageResponseDto<T> {
+@NoArgsConstructor
+@Setter
+public class PageResponseDto<T> implements Serializable {
     private int currentPage;
     private long totalCount;
     private T data;

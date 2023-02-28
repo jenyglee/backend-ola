@@ -1,6 +1,7 @@
 package com.project.sparta.communityBoard.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommunityBoardAllResponseDto {
+public class CommunityBoardAllResponseDto implements Serializable {
     private Long boardId;
     private String nickName;
     private String title;
