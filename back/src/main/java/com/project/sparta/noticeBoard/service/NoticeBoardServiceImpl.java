@@ -70,10 +70,16 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
-        return new NoticeBoardResponseDto(noticeBoard.getId(), noticeBoard.getUser().getNickName(),
-                noticeBoard.getTitle(),
-                noticeBoard.getContents(), noticeBoard.getCategory(), noticeBoard.getModifiedAt(),
-                noticeBoard.getCreateAt());
+        NoticeBoardResponseDto noticeBoardResponseDto = NoticeBoardResponseDto.builder()
+                .title(noticeBoard.getTitle())
+                .contents(noticeBoard.getContents())
+                .createdAt(noticeBoard.getCreateAt())
+                .username(noticeBoard.getUser().getNickName())
+                .category(noticeBoard.getCategory())
+                .modifiedAt(noticeBoard.getModifiedAt())
+                .build();
+
+        return noticeBoardResponseDto;
     }
 
     //공지글 전체조회
