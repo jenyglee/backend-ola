@@ -56,10 +56,11 @@ public class RecommendCourseController {
     }
 
     @ApiOperation(value = "코스 추천 삭제", response = Join.class)
-    @PreAuthorize("hasRole('ROLE_USER:GRADE_GOD')")
+    @PreAuthorize("hasRole('ROLE_USER:GRADE_GOD')")  //TODO @PreAuthorize에 함수를 사용하여 게시물작성자가 나인지 체크
     @DeleteMapping("/recommends/{boardId}")
     public void deleteRecommendCourse(@PathVariable Long boardId,
         @AuthenticationPrincipal UserDetailsImpl userDetail) {
+
         User user = userDetail.getUser();
         recommendCourseBoardService.deleteRecommendCourseBoard(boardId, user.getId());
     }

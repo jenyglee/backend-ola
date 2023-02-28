@@ -46,6 +46,7 @@ public class CommunityBoard extends Timestamped {
     private String chatStatus = "N";
     private int chatMemCnt = 0;
 
+    //TODO @OneToMany를 빼는 방식으로(게시물이 존재하지 않으면 댓글도 없음)
     @OneToMany(mappedBy = "communityBoardId", cascade = CascadeType.REMOVE)
     private List<CommunityComment> communityComment = new ArrayList<>();
     @ManyToOne
