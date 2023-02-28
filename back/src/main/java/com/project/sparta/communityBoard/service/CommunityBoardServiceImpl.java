@@ -52,7 +52,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     //커뮤니티 생성
     @Override
     @Transactional
-    public void createCommunityBoard(CommunityBoardRequestDto requestDto,
+    public CommunityBoard createCommunityBoard(CommunityBoardRequestDto requestDto,
         User user) {
         CommunityBoard communityBoard = new CommunityBoard().builder()
             .title(requestDto.getTitle())
@@ -61,7 +61,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .chatMemCnt(requestDto.getChatMemCnt())
             .user(user)
             .build();
-        boardRepository.saveAndFlush(communityBoard);
+
+        CommunityBoard board = boardRepository.saveAndFlush(communityBoard);
 
         // 저장된 보드에 태그 넣기 TODO 따로 메서드로 추출하기
         List<CommunityTag> communityTagList = new ArrayList<>();
@@ -82,6 +83,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             communityImgList.add(communityImg);
         }
         communityBoard.updateCommunityImg(communityImgList);
+
+        return board;//채팅방 생성을 위한 return
     }
 
     //커뮤니티 수정

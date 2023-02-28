@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 public interface CommunityBoardService {
 
-    void createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
+    CommunityBoard createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
 
     void updateCommunityBoard(Long boardId,
         CommunityBoardRequestDto communityBoardRequestDto, User user);

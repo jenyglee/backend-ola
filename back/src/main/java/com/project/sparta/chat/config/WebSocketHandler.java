@@ -1,4 +1,4 @@
-package com.project.sparta.config;
+package com.project.sparta.chat.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sparta.security.UserDetailsImpl;

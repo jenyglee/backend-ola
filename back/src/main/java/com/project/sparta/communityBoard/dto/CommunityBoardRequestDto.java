@@ -13,9 +13,7 @@ public class CommunityBoardRequestDto {
 
     private String contents;
     private String title;
-
     private String chatStatus;
-
     private int chatMemCnt;
 
     private List<Long> tagList;
