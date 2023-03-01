@@ -54,19 +54,20 @@
 
 
         .btn-group .btn{
-            color: #F46B3F;
-            border: 1px solid #F46B3F;
-        }
-        .btn-group .btn:hover{
-            background-color: #F46B3F;
             color: white;
-        }
-        .btn-check:active+.btn-outline-primary,
-        .btn-check:checked+.btn-outline-primary,
-        .btn-outline-primary:active{
             background-color: #F46B3F;
             border: 1px solid #F46B3F;
         }
+        /*.btn-group .btn:hover{*/
+        /*    background-color: #F46B3F;*/
+        /*    color: white;*/
+        /*}*/
+        /*.btn-check:active+.btn-outline-primary,*/
+        /*.btn-check:checked+.btn-outline-primary,*/
+        /*.btn-outline-primary{*/
+        /*    background-color: #F46B3F;*/
+        /*    border: 1px solid #F46B3F;*/
+        /*}*/
 
         .page-link,
         .page-link:hover,
@@ -225,11 +226,11 @@
         <div class="w_1"></div>
         <div style="display: flex; align-items: center">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="margin-right: 20px">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1" onclick="changeList(0)">내가 쓴 커뮤니티 글</label>
+<!--                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>-->
+                <label class="btn btn-outline-primary">내가 만든 크루</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2" onclick="changeList(1)">내가 쓴 코스추천</label>
+<!--                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">-->
+<!--                <label class="btn btn-outline-primary" for="btnradio2" onclick="changeList(1)">내가 쓴 코스추천</label>-->
             </div>
 <!--            <div style="margin-right: 20px">내가 참여한 크루 <b style="color : #F46B3F;">6</b>개</div>-->
 <!--            <div>내가 만든 크루 <b style="color : #F46B3F">6</b>개</div>-->
@@ -322,12 +323,12 @@
             type: "GET",
             contentType : "application/json",
             dataType	: "json",
-            url: "http://localhost:8080/info/me/boards/communities?page=" + page + "&size=8",
+            url: "http://localhost:8080/info/me/boards/chat?page=" + page + "&size=8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
             success: function (response) {
-                console.log("커뮤니티 response : ", response);
+                console.log("채팅방 response : ", response);
                 for (let i=0; i<response.data.length; i++){
                     console.log("response.data[i] : ", response.data[i])
                     var temp = `

@@ -35,9 +35,8 @@ public class ChatServiceMain {
     }
 
     // roomName 로 채팅방 만들기
-    public ChatRoomDto createChatRoom(Long chatId, String roomName, int maxUserCnt){
-
-        return msgChatService.createChatRoom(chatId, roomName, maxUserCnt);
+    public ChatRoomDto createChatRoom(Long chatId, String roomName, int maxUserCnt, String hostName){
+        return msgChatService.createChatRoom(chatId, roomName, maxUserCnt, hostName);
     }
 
     // 채팅방 인원+1
@@ -68,6 +67,5 @@ public class ChatServiceMain {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

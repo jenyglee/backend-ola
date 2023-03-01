@@ -121,7 +121,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             requestDto.getContents(),
             communityTags,
             communityImgList,
-            requestDto.getChatStatus()
+            requestDto.getChatStatus(),
+            requestDto.getChatMemCnt()
         );
     }
 
@@ -249,7 +250,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             requestDto.getContents(),
             communityTags,
             communityImgList,
-            requestDto.getChatStatus()
+            requestDto.getChatStatus(),
+            requestDto.getChatMemCnt()
         );
     }
 
@@ -274,6 +276,22 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         // 4. 모든 연관관계를 지웠으니 이제 게시글을 지운다.
         boardRepository.deleteById(communityBoard.getId());
+    }
+
+    //내가 작성한 채팅방 리스트 전체조회
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId) {
+
+        // 1. 검색조건을 포함하여 전체조회
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.myChatBoardList(userId, pageRequest);
+
+        //2. 결과를 반환
+        List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
     }
 }
 

@@ -43,8 +43,8 @@ public class CommunityBoard extends Timestamped {
     @OneToMany(mappedBy = "communityBoard", cascade = CascadeType.REMOVE)
     private List<CommunityBoardImg> imgList = new ArrayList<>();
 
-    private String chatStatus = "N";
-    private int chatMemCnt = 0;
+    private String chatStatus;
+    private int chatMemCnt;
 
     //TODO @OneToMany를 빼는 방식으로(게시물이 존재하지 않으면 댓글도 없음)
     @OneToMany(mappedBy = "communityBoardId", cascade = CascadeType.REMOVE)
@@ -74,12 +74,13 @@ public class CommunityBoard extends Timestamped {
     }
 
     public void updateBoard(String title, String contents, List<CommunityTag> tagList,
-        List<CommunityBoardImg> imgList, String chatStatus) {
+        List<CommunityBoardImg> imgList, String chatStatus, int chatMemCnt) {
         this.title = title;
         this.contents = contents;
         this.tagList = tagList;
         this.imgList = imgList;
         this.chatStatus = chatStatus;
+        this.chatMemCnt = chatMemCnt;
     }
 
 }

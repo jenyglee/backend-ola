@@ -56,7 +56,7 @@ public class CommunityBoardController {
             ChatRoomDto room;
 
             room = chatServiceMain.createChatRoom(board.getId(), communityBoardRequestDto.getTitle(),
-                communityBoardRequestDto.getChatMemCnt());
+                communityBoardRequestDto.getChatMemCnt(), userDetail.getUser().getNickName());
 
             log.info("create chat room : " + communityBoardRequestDto.getTitle());
 

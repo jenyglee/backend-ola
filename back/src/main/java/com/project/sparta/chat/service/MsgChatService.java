@@ -16,11 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MsgChatService {
 
-    public ChatRoomDto createChatRoom(Long chatId,String roomName, int maxUserCnt) {
+    public ChatRoomDto createChatRoom(Long chatId,String roomName, int maxUserCnt, String hostName) {
         // roomName 와 roomPwd 로 chatRoom 빌드 후 return
         ChatRoomDto room = ChatRoomDto.builder()
                 .roomId(String.valueOf(chatId))
                 .roomName(roomName)
+                .hostName(hostName)
                 .userCount(0) // 채팅방 참여 인원수
                 .maxUserCnt(maxUserCnt) // 최대 인원수 제한
                 .build();

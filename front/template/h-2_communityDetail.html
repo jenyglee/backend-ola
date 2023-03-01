@@ -458,11 +458,7 @@
 
             </div>
             <div class="chating-btn-wrap">
-              <a
-                href="./h-4_chat.html"
-                onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
-              >
-                <button type="button" class="btn btn-primary btn-chating-post" onclick="enterRoom()">채팅방
+                <button type="button" class="btn btn-primary btn-chating-post" id="enterChat" onclick="roomMemberCnt()">채팅방
                   참여하기
                 </button>
               </a>
@@ -1077,13 +1073,21 @@
           url: "http://localhost:8080/chat/room?roomId=" + communityId,
           async: false,
           success: function (response) {
-            console.log(response.maxUserCnt);
 
             $(".crew").empty();
 
-            let crew = `<div style="margin-left: 600px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+            let crew = `<div style="margin-left: 770px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
             $(".crew").append(crew);
+
+            $('#enterChat').click(function(){
+                if(response.userCount==response.maxUserCnt){
+                  window.alert("채팅방 정원이 초과되었습니다.");
+                  $("#enterChat").attr("disabled", true);
+                }else{
+                  enterRoom();
+                }
+            });
 
           }
         })
