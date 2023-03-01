@@ -62,6 +62,7 @@
         display: flex;
         justify-content: start;
         align-items: center;
+        width: 550px;
       }
       .tag-wrap > span,
       .like-title {
@@ -825,7 +826,7 @@
           },
           success: function (response) {
             alert("삭제 완료");
-            // window.location.href = "h-1_communityMain.html";
+            window.location.href = "h-1_communityMain.html";
           },
           error: function (response, status, error) {
             if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
@@ -1075,7 +1076,7 @@
 
             $(".crew").empty();
 
-            let crew = `<div style="margin-left: 770px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+            let crew = `<div style="float: right; margin-left: 200px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
             $(".crew").append(crew);
 
