@@ -2,6 +2,7 @@ package com.project.sparta.noticeBoard.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,7 @@ public class NoticeBoard extends Timestamped {
     @Column(nullable = false)
     private NoticeCategoryEnum category;
 
+    @Builder
     public NoticeBoard(User user, String title, String contents, NoticeCategoryEnum category) {
         this.user = user;
         this.title = title;
