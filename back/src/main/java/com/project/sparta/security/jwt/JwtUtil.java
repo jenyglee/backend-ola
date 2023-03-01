@@ -29,6 +29,7 @@ public class JwtUtil {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
     private static final long ACCESS_TOKEN_TIME = 60 * 60 * 1000L;     //Access 토큰 유효(1시간)
+
     public static final long REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000L;     //Refresh 토큰(1일)
 
     @Value("${jwt.token.access-token-secret}")
@@ -86,7 +87,7 @@ public class JwtUtil {
     public boolean validateToken(String token) {
         try {
             String changeToken = token.substring(7);
-            Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(changeToken);
+            Jwts.parserBuilder().setSigningKey(access_token_secretKey).build().parseClaimsJws(changeToken);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");

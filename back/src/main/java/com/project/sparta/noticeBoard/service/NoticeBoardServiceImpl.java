@@ -36,34 +36,52 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     @Override
     public void createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // 0: SERVICE, 1: UPDATE, 2: EVENT
-        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
-        if(user.getRole()== UserRoleEnum.ADMIN) {
-            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
-                requestDto.getContents(), requestDto.getCategory());
-            noticeBoardRepository.saveAndFlush(noticeBoard);
-        }
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.(수정완료)
+
+        NoticeBoard noticeBoard = NoticeBoard.builder()
+                .category(requestDto.getCategory())
+                .contents(requestDto.getContents())
+                .title(requestDto.getTitle())
+                .user(user)
+                .build();
+        noticeBoardRepository.saveAndFlush(noticeBoard);
+
+//        if(user.getRole()== UserRoleEnum.ADMIN) {
+//            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
+//                requestDto.getContents(), requestDto.getCategory());
+//            noticeBoardRepository.saveAndFlush(noticeBoard);
+//        }
     }
 
     //공지글 삭제
     @Override
     public void deleteNoticeBoard(Long id, User user) {
-        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
-        if(user.getRole()== UserRoleEnum.ADMIN) {
-            NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.(수정완료)
+
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
-            noticeBoardRepository.delete(noticeBoard);
-        }
+        noticeBoardRepository.delete(noticeBoard);
+
+//        if(user.getRole()== UserRoleEnum.ADMIN) {
+//            NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+//                .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+//            noticeBoardRepository.delete(noticeBoard);
+//        }
     }
 
     //공지글 수정
     @Override
     public void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user) {
-        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
-        if(user.getRole()== UserRoleEnum.ADMIN)
-        {
-            NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
-            noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
-        }
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.(수정완료)
+
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+        noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
+
+//        if(user.getRole()== UserRoleEnum.ADMIN)
+//        {
+//            NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
+//            noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
+//        }
     }
 
     //공지글 단건 조회
@@ -73,10 +91,16 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
-        return new NoticeBoardResponseDto(noticeBoard.getId(), noticeBoard.getUser().getNickName(),
-                noticeBoard.getTitle(),
-                noticeBoard.getContents(), noticeBoard.getCategory(), noticeBoard.getModifiedAt(),
-                noticeBoard.getCreateAt());
+        NoticeBoardResponseDto noticeBoardResponseDto = NoticeBoardResponseDto.builder()
+                .title(noticeBoard.getTitle())
+                .contents(noticeBoard.getContents())
+                .createdAt(noticeBoard.getCreateAt())
+                .username(noticeBoard.getUser().getNickName())
+                .category(noticeBoard.getCategory())
+                .modifiedAt(noticeBoard.getModifiedAt())
+                .build();
+
+        return noticeBoardResponseDto;
     }
 
     //공지글 전체조회

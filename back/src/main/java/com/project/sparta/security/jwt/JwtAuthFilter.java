@@ -38,8 +38,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     // 유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
                     // 클라이언트에게 에러를 보내주고
                     // 클라이언트 -> 갱신된 api호출 -> api
-//                    response.sendError(401, "토큰이 만료되었습니다.");
+                    // throw new AuthenticationException();
+                    response.sendError(401, "토큰이 만료되었습니다.");
                 }
+
                 Authentication auth = jwtUtil.getAuthenticationByAccessToken(token);
                 String isLogout = redisTemplate.opsForValue().get(auth.getName());
 
@@ -51,6 +53,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
             response.sendError(e.getStatus().getHttpStatus().value(), e.getMessage());
         }
+
+
         filterChain.doFilter(request, response);
     }
 

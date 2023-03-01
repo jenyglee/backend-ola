@@ -224,19 +224,38 @@
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
         getMenuProfile();
+    });
 
+    function getMenuProfile(){
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var tempProfile = `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+          </div>
+          <p class="text">${menuProfile.sub}님</p>
+`
+        $("#my-profile").append(tempProfile);
+    }
+    function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+    }
+
+    function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+    }
+
+    function getNotice(){
         const id = localStorage.getItem("noticeId")
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
             type: "GET",
             url: `http://localhost:8080/boards/notices/${id}`,
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                xlr.setRequestHeader("Authorization", accessToken)
             },
-            // data: {
-            //   name: "sasas",
-            // },
             success: function (response) {
-                console.log("response : ", response)
                 const category = response.category;
                 const contents = response.contents;
                 const createdAt = response.createdAt.substring(0, 10);
@@ -262,27 +281,33 @@
                 $('#createAt').val(createdAt);
                 $('#username').val(username);
             },
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    getNotice()
+                }
+            },
         })
-    });
-
-    function getMenuProfile(){
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
-          </div>
-          <p class="text">${menuProfile.sub}님</p>
-`
-        $("#my-profile").append(tempProfile);
-    }
-    function handleToggleBellDropBox() {
-        $(".bell-dropbox").toggle();
-        $(".friend-dropbox").hide();
     }
 
-    function handleToggleFriendDropBox() {
-        $(".friend-dropbox").toggle();
-        $(".bell-dropbox").hide();
+    function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/auth/token/regenerate",
+            contentType : "application/json; charset=utf-8",
+            data: JSON.stringify({
+                refreshToken: refreshToken
+            }),
+            success: function (response) {
+                localStorage.setItem('accessToken', response.accessToken)
+                localStorage.setItem("refreshToken", response.refreshToken)
+            },
+            error: function(response){
+                console.log("에러 : ", response)
+            }
+        })
     }
 
 

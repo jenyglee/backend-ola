@@ -198,36 +198,34 @@
     }
     function gotologout(){
         const accessToken = localStorage.getItem("accessToken");
-        var admin_settings = {
-            "url": "http://localhost:8080/auth/logout",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "data": JSON.stringify({
-                "accessToken": accessToken,
-                "refreshToken": "hi",
-                "role": 0
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/auth/logout",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                accessToken : accessToken
             }),
-        }
-        $.ajax(admin_settings).done(function (response) {
-            alert("로그아웃 되었습니다.")
-            window.location.href = "b-1_login.html";
-        })
-        .fail(function (response){
-            console.log("logout fail")
-            alert("로그아웃 실패하였습니다.")
+            success: function (response) {
+                alert("로그아웃 되었습니다.")
+                window.location.href = "b-1_login.html";
+            },
+            error: function (response, status, error) {
+                if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+                    regenerateToken()
+                    gotologout()
+                }
+            },
         })
     }
 
     function getUser(){
+        const accessToken = localStorage.getItem("accessToken");
         const id = localStorage.getItem("userId")
         $.ajax({
             type: "GET",
             url: `http://localhost:8080/admin/users/${id}`,
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                xlr.setRequestHeader("Authorization", accessToken)
             },
             // data: {
             //   name: "sasas",
@@ -287,22 +285,25 @@
                 $('#btn_wrap').append(temp)
 
             },
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    getUser()
+                }
+            },
         })
     }
-// 등급변경
+    // 등급변경
     function updateUser(){
+        const accessToken = localStorage.getItem("accessToken");
         const id = localStorage.getItem("userId")
-        // console.log("$(\"#title\").val() : ", $("#title").val())
-        // console.log("$(\"#contents\").val() : ", $("#contents").val())
-        // console.log("category : ", category)
-        // console.log("id : ", id)
         $.ajax({
             type: "PATCH",
             url: `http://localhost:8080/admin/users/${id}/grade`,
             // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                xlr.setRequestHeader("Authorization", accessToken)
             },
             data: JSON.stringify({
                 email : $('#email').val(),
@@ -316,41 +317,62 @@
                 alert("수정 완료")
                 window.location.href = "k-1_manageUser.html";
             },
-            error: function(xhr) {
-                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    updateUser()
+                }
             },
         })
     }
-// 회원 탈퇴 복구
+    // 회원 탈퇴 복구
     function changerollUser(change_val){
+        const accessToken = localStorage.getItem("accessToken");
         const id = localStorage.getItem("userId")
-        change_val = change_val == 0 ? 1:0
+        changeVal = change_val == 0 ? 1:0
         $.ajax({
             type: "PATCH",
             url: `http://localhost:8080/admin/users/${id}/status`,
-            // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                xlr.setRequestHeader("Authorization", accessToken)
             },
             data: JSON.stringify({
-                status : change_val
+                status : changeVal
             }),
-            // data: JSON.stringify({
-            //     "title" : $("#title").val(),
-            //     "contents" : $("#contents").val(),
-            //     "category" : category
-            // }),
             success: function (response) {
-                if(change_val ==0)
+                if(changeVal ==0)
                     alert("탈퇴 완료")
                 else
                     alert("복구 완료")
                 window.location.href = "k-2_manageUserDetail.html";
             },
-            error: function(xhr) {
-                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    changerollUser(change_val)
+                }
             },
+        })
+    }
+
+    function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/auth/token/regenerate",
+            contentType : "application/json; charset=utf-8",
+            data: JSON.stringify({
+                refreshToken: refreshToken
+            }),
+            success: function (response) {
+                localStorage.setItem('accessToken', response.accessToken)
+                localStorage.setItem("refreshToken", response.refreshToken)
+            },
+            error: function(response){
+                console.log("에러 : ", response)
+            }
         })
     }
 </script>

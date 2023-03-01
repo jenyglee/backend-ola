@@ -580,8 +580,7 @@
         }
       });
       function getCommunity() {
-        console.log("communityId : ", communityId);
-        console.log("accessToken : ", accessToken);
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
           type: "GET",
           url: "http://localhost:8080/boards/communities/" + communityId,
@@ -599,15 +598,14 @@
             // 사진 넣기
             for (let i = 0; i < response.imgList.length; i++) {
               var temp = `
-            <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-              <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
-              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                onclick="removeImage(${i})" />
-              >
-                <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-              </div>
-            </div>
-          `;
+                <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                  <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
+                  <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                    onclick="removeImage(${i})" />
+                    <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                  </div>
+                </div>
+              `;
               $("#img-wrap").append(temp);
               imageUrlList.push(response.imgList[i]); // [url]
             }
@@ -625,12 +623,18 @@
 
             // TODO 크루원 값 받아온 뒤 체크박스에 넣어주기
           },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              getCommunity();
+            }
+          },
         });
       }
 
       function searchTags() {
+        const accessToken = localStorage.getItem("accessToken");
         var tagName = $("#tag-search-input").val();
-        console.log("tagName : ", tagName);
         $.ajax({
           type: "GET",
           url:
@@ -643,9 +647,15 @@
             $(".tag-select-box").empty();
             for (let i = 0; i < response.data.length; i++) {
               var temp = `
-            <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
-          `;
+                <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+              `;
               $(".tag-select-box").append(temp);
+            }
+          },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              searchTags();
             }
           },
         });
@@ -653,6 +663,7 @@
 
       // 수정하기
       function updateCommunity() {
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
           type: "PATCH",
           url: "http://localhost:8080/boards/communities/" + communityId,
@@ -671,6 +682,12 @@
           success: function (response) {
             alert("수정완료");
             window.location.href = "h-1_communityMain.html";
+          },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              updateCommunity();
+            }
           },
         });
       }
@@ -712,6 +729,7 @@
       }
 
       function addTag() {
+        const accessToken = localStorage.getItem("accessToken");
         $.ajax({
           type: "POST",
           url: "http://localhost:8080/hashtags?name=" + $("#tag-add").val(),
@@ -722,6 +740,12 @@
             alert("추가 완료");
             $("#tag-add").empty();
             searchTags();
+          },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              addTag(commentId);
+            }
           },
         });
       }
@@ -773,10 +797,32 @@
 
             return imageUrlList;
           },
-          error: function (request, status, error) {
-            console.log(error);
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              imgUpload(input)
+            }
           },
         });
+      }
+
+      function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/auth/token/regenerate",
+          contentType : "application/json; charset=utf-8",
+          data: JSON.stringify({
+            refreshToken: refreshToken
+          }),
+          success: function (response) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+          },error: function(response){
+            console.log("에러 : ", response)
+          }
+        })
       }
     </script>
   </body>

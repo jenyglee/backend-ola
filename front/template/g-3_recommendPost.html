@@ -446,12 +446,36 @@
             alert("작성 완료");
             window.location.href = "g-1_recommend.html";
           },
-          error: function (request, status, error) {
+          error: function (response, status, error) {
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
             console.log(status, error);
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+            }
           },
         });
       }
+
+      function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/auth/token/regenerate",
+          contentType : "application/json; charset=utf-8",
+          data: JSON.stringify({
+            refreshToken: refreshToken
+          }),
+          success: function (response) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+            createRecommendBoaed();
+          },error: function(response){
+            console.log("에러 : ", response)
+          }
+        })
+      }
+
 
       //이미지경로리스트 전역변수 지정.
       var imageUrlList = [];

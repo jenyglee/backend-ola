@@ -193,9 +193,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto tokenDto) {
-
-        String changeToken = tokenDto.getRefresh_token();
-
+        String changeToken = tokenDto.getRefreshToken();
+        System.out.println("changeToken = " + changeToken);
         try {
             if (!jwtUtil.validateRefreshToken(changeToken)) {
                 throw new CustomException(INVALID_TOKEN);
@@ -321,4 +320,7 @@ public class UserServiceImpl implements UserService {
             user.changeStatus(StatusEnum.USER_REGISTERED);
         }
     }
+
+
+
 }
