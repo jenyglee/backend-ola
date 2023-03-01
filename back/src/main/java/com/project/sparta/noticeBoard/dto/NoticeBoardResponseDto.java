@@ -3,6 +3,7 @@ package com.project.sparta.noticeBoard.dto;
 import com.project.sparta.noticeBoard.entity.NoticeBoard;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ public class NoticeBoardResponseDto {
     private LocalDateTime modifiedAt;
 
     @QueryProjection
+    @Builder
     public NoticeBoardResponseDto(Long id, String username, String title, String contents, NoticeCategoryEnum category, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.username = username;
