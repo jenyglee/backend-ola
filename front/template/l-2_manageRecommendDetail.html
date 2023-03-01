@@ -318,26 +318,23 @@
 
     function gotologout(){
         const accessToken = localStorage.getItem("accessToken");
-        var admin_settings = {
-            "url": "http://localhost:8080/auth/logout",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "data": JSON.stringify({
-                "accessToken": accessToken,
-                "refreshToken": "hi",
-                "role": 0
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/auth/logout",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                accessToken : accessToken
             }),
-        }
-        $.ajax(admin_settings).done(function (response) {
-            alert("로그아웃 되었습니다.")
-            window.location.href = "b-1_login.html";
-        })
-        .fail(function (response){
-            console.log("logout fail")
-            alert("로그아웃 실패하였습니다.")
+            success: function (response) {
+                alert("로그아웃 되었습니다.")
+                window.location.href = "b-1_login.html";
+            },
+            error: function (response, status, error) {
+                if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+                    regenerateToken()
+                    gotologout()
+                }
+            },
         })
     }
 
@@ -363,6 +360,12 @@
                 $('#season').val(response.season)
                 $('#address').val(response.region)
 
+            },
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    getRecommend()
+                }
             },
         })
     }
@@ -396,8 +399,11 @@
                 alert("수정 완료")
                 window.location.href = "l-1_manageRecommend.html";
             },
-            error: function(xhr) {
-                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    updateRecommend()
+                }
             },
         })
     }
@@ -421,9 +427,32 @@
                 alert("삭제 완료")
                 window.location.href = "l-1_manageRecommend.html";
             },
-            error: function(xhr) {
-                console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
+            error: function (response, status, error) {
+                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                    regenerateToken()
+                    deleteRecommend()
+                }
             },
+        })
+    }
+
+    function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/auth/token/regenerate",
+            contentType : "application/json; charset=utf-8",
+            data: JSON.stringify({
+                refreshToken: refreshToken
+            }),
+            success: function (response) {
+                localStorage.setItem('accessToken', response.accessToken)
+                localStorage.setItem("refreshToken", response.refreshToken)
+            },
+            error: function(response){
+                console.log("에러 : ", response)
+            }
         })
     }
 </script>

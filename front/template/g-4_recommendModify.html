@@ -404,7 +404,6 @@
 
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
-        console.log(id);
         $.ajax({
           type: "GET",
           url: `http://localhost:8080/boards/recommends/${id}`,
@@ -414,9 +413,6 @@
               localStorage.getItem("accessToken")
             );
           },
-          // data: {
-          //   name: "sasas",
-          // },
           success: function (response) {
             console.log("response : ", response);
             const score = response.score;
@@ -456,15 +452,17 @@
               $("#img-wrap").append(tempProfile);
               imageUrlList.push(response.imgList[i]);
             }
+          }
+          ,error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              getRecommend();
+            }
           },
         });
-
-        //값 가져오기
-        // $("#exampleFormControlInput1").val();
       }
 
       //수정 api연동
-
       function updateRecommend() {
         const id = localStorage.getItem("recommendId");
 
@@ -494,13 +492,35 @@
             alert("수정 완료");
             window.location.href = "g-1_recommend.html";
           },
-          error: function (request, status, error) {
-            console.log("여기가뜨니?2");
-            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
-            console.log(request, status, error);
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              updateRecommend();
+            }
           },
+
         });
       }
+
+      function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/auth/token/regenerate",
+          contentType : "application/json; charset=utf-8",
+          data: JSON.stringify({
+            refreshToken: refreshToken
+          }),
+          success: function (response) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+          },error: function(response){
+            console.log("에러 : ", response)
+          }
+        })
+      }
+
       function imgUpload(input) {
         const accessToken = localStorage.getItem("accessToken");
 

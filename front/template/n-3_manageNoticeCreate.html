@@ -261,11 +261,52 @@
         alert("작성 완료")
         window.location.href = "n-1_manageNotice.html";
       },
-      error: function(xhr) {
-        console.log("");
-        console.log("[requestPostBodyJson] : [error] : " + JSON.stringify(xhr));
-        console.log("");
+      error: function (response, status, error) {
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+          postNotice()
+        }
       },
+    })
+  }
+  function gotologout(){
+    const accessToken = localStorage.getItem("accessToken");
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/auth/logout",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        accessToken : accessToken
+      }),
+      success: function (response) {
+        alert("로그아웃 되었습니다.")
+        window.location.href = "b-1_login.html";
+      },
+      error: function (response, status, error) {
+        if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+          regenerateToken()
+          gotologout()
+        }
+      },
+    })
+  }
+  function regenerateToken(){
+    var refreshToken = localStorage.getItem("refreshToken")
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/auth/token/regenerate",
+      contentType : "application/json; charset=utf-8",
+      data: JSON.stringify({
+        refreshToken: refreshToken
+      }),
+      success: function (response) {
+        localStorage.setItem('accessToken', response.accessToken)
+        localStorage.setItem("refreshToken", response.refreshToken)
+      },
+      error: function(response){
+        console.log("에러 : ", response)
+      }
     })
   }
 </script>

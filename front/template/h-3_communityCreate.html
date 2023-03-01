@@ -414,7 +414,6 @@
 </script>
 <script>
   var communityId = localStorage.getItem("communityId");
-  var accessToken = localStorage.getItem("accessToken");
   var imageUrlList = [];
   var tags = [];
   var isChat = false;
@@ -462,6 +461,7 @@
 
   // 작성하기
   function createCommunity() {
+    var accessToken = localStorage.getItem("accessToken");
     if($("#title").val() == "" || $("#contents").val() == ""){
       alert("제목 또는 내용이 비었습니다.");
       return;
@@ -485,6 +485,12 @@
       success: function (response) {
         alert("작성완료")
         window.location.href = "h-1_communityMain.html";
+      },
+      error: function (response, status, error) {
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+          createCommunity()
+        }
       },
     })
   }
@@ -527,6 +533,7 @@
   }
 
   function addTag(){
+    var accessToken = localStorage.getItem("accessToken");
     $.ajax({
       type: "POST",
       url: "http://localhost:8080/hashtags?name=" + $("#tag-add").val(),
@@ -538,10 +545,17 @@
         $("#tag-add").empty();
         searchTags();
       },
+      error: function (response, status, error) {
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+          addTag()
+        }
+      },
     })
   }
 
   function searchTags(){
+    var accessToken = localStorage.getItem("accessToken");
     var tagName = $("#tag-search-input").val();
     console.log("tagName : ", tagName);
     $.ajax({
@@ -558,6 +572,12 @@
             <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
           `
           $(".tag-select-box").append(temp);
+        }
+      },
+      error: function (response, status, error) {
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+          searchTags()
         }
       },
     })
@@ -604,9 +624,11 @@
         console.log("imageUrlList : ", imageUrlList);
         return imageUrlList;
       },
-      error: function (request, status, error) {
-        console.log(error);
-        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      error: function (response, status, error) {
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+          imgUpload(input)
+        }
       },
     });
   }
@@ -616,8 +638,24 @@
     $("#tag-select-list").empty();
   }
 
-  function checkChat(){
+  function regenerateToken(){
+    var refreshToken = localStorage.getItem("refreshToken")
 
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/auth/token/regenerate",
+      contentType : "application/json; charset=utf-8",
+      data: JSON.stringify({
+        refreshToken: refreshToken
+      }),
+      success: function (response) {
+        localStorage.setItem('accessToken', response.accessToken)
+        localStorage.setItem("refreshToken", response.refreshToken)
+      },
+      error: function(response){
+        console.log("에러 : ", response)
+      }
+    })
   }
 </script>
 </body>
