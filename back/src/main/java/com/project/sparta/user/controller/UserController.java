@@ -3,22 +3,16 @@ package com.project.sparta.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
-import com.project.sparta.security.UserDetailsImpl;
-import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,13 +42,14 @@ public class UserController {
         return userService.login(requestDto);
     }
 
-
+    // TODO 카카오, 네이버, 구글 로그인 API 제작
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
     public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
         return kakaoService.kakaoLogin(code, response);
     }
+
 
     @ApiOperation(value = "네이버 로그인",response = Join.class)
     //네이버 로그인
@@ -67,6 +62,7 @@ public class UserController {
     @GetMapping("/login/google")
     public void googleLogin() {
     }
+
 
     //로그아웃
     @ApiOperation(value = "로그아웃",response = Join.class)
@@ -92,9 +88,8 @@ public class UserController {
     }
 
     //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
-    @PostMapping("/token/regenerate")
-    public ResponseEntity<TokenDto> regenerateToken(@RequestBody RegenerateTokenDto tokenDto) {
-        //System.out.println("tokenDto.getRefreshToken() = " + tokenDto.getRefreshToken());
+    @PostMapping("/regenerate-token")
+    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {
         return userService.regenerateToken(tokenDto);
     }
 

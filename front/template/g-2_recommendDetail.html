@@ -348,9 +348,6 @@
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        console.log("menuProfile ; ",menuProfile)
-        const accessToken = localStorage.getItem("accessToken");
-
         $.ajax({
           type: "GET",
           url: `http://localhost:8080/boards/recommends/${id}`,
@@ -360,9 +357,6 @@
               localStorage.getItem("accessToken")
             );
           },
-          // data: {
-          //   name: "sasas",
-          // },
           success: function (response) {
             console.log("response : ", response);
 

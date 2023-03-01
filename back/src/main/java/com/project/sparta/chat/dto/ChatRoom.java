@@ -16,15 +16,13 @@ public class ChatRoom {
 
     private String roomId;      //채팅방 아이디
     private String roomName;    //채팅방 이름
-
-    private List<Hashtag> tagList = new ArrayList<>();  //태그 리스트
     private long userCount;     //채팅방 인원수
 
     private HashMap<String, String> userlist = new HashMap<>();
 
-    public ChatRoom create(String roomeName){
+    public ChatRoom create(String roomId, String roomeName){
         ChatRoom chatRoom = new ChatRoom();
-        chatRoom.roomId = UUID.randomUUID().toString();
+        chatRoom.roomId = roomId;
         chatRoom.roomName = roomName;
 
         return chatRoom;
