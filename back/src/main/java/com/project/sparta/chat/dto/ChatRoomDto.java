@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
     @NotNull
     private String roomId; // 채팅방 아이디
+    private String hostName;    //채팅방 만든 사람
     private String roomName; // 채팅방 이름 
     private int userCount; // 채팅방 인원수
     private int maxUserCnt; // 채팅방 최대 인원 제한

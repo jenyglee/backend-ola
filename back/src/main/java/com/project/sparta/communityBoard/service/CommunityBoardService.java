@@ -32,4 +32,5 @@ public interface CommunityBoardService {
 
     void adminDeleteCommunityBoard(Long boardId);
 
+    PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId);
 }

@@ -323,22 +323,22 @@
       </div>
     </div>
     <div class="w_3">
-      <a href="f-2_myPageDetail.html">
+      <a href="f-2_myCommunity.html">
         <div id="community" class="b_3" style="cursor: pointer">
 
         </div>
       </a>
-      <a href="f-2_myPageDetail.html">
+      <a href="f-3_myCourse.html">
         <div id="recommend" class="b_4" style="cursor: pointer">
 
         </div>
       </a>
-      <a href="f-2_myPageDetail.html">
+      <a href="f-3_myCourse.html">
         <div id="enter" class="b_5" style="cursor: pointer">
 
         </div>
       </a>
-      <a href="f-2_myPageDetail.html">
+      <a href="f-4_myChat.html">
         <div id="make" class="b_6" style="cursor: pointer">
 
         </div>
@@ -432,7 +432,6 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      dataType: "json",
       url: "http://localhost:8080/info/me",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)

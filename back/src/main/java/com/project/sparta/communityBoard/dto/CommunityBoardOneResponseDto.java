@@ -25,20 +25,15 @@ public class CommunityBoardOneResponseDto {
     private List<CommentResponseDto> commentList = new ArrayList<>();
     private Boolean isLike;
 
-//    private int boardLikeCount;
+    private String chatStatus;
 
-//    private LocalDateTime createdAt;
+    private int chatMemCnt;
 
     @Builder
     public CommunityBoardOneResponseDto(String title, String nickName, String contents,
         Long likeCount,
-        List<String> imgList,
-        List<Hashtag> tagList,
-        List<CommentResponseDto> commentList,
-        Boolean isLike
-//        int boardLikeCount,
-//        LocalDateTime createdAt
-    ) {
+        List<String> imgList, List<Hashtag> tagList, List<CommentResponseDto> commentList,
+        Boolean isLike, String chatStatus, int chatMemCnt) {
         this.title = title;
         this.nickName = nickName;
         this.contents = contents;
@@ -47,8 +42,7 @@ public class CommunityBoardOneResponseDto {
         this.tagList = tagList;
         this.commentList = commentList;
         this.isLike = isLike;
-//        this.boardLikeCount = boardLikeCount;
-//        this.createdAt = createdAt;
+        this.chatStatus = chatStatus;
+        this.chatMemCnt = chatMemCnt;
     }
-
 }

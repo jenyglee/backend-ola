@@ -3,13 +3,21 @@ package com.project.sparta.chat.controller;
 import com.project.sparta.chat.dto.ChatRoomDto;
 import com.project.sparta.chat.dto.ChatRoomMap;
 import com.project.sparta.chat.service.ChatServiceMain;
+import com.project.sparta.security.UserDetailsImpl;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +29,7 @@ public class ChatRoomController {
     // ChatService Bean 가져오기
     private final ChatServiceMain chatServiceMain;
 
+    //채팅룸 상세 정보
     @GetMapping("/chat/room")
     public ResponseEntity roomDetail(@RequestParam String roomId){
 
@@ -30,17 +39,37 @@ public class ChatRoomController {
 
         return new ResponseEntity(room, HttpStatus.OK);
     }
-    // 유저 카운트
-    @GetMapping("/chat/chkUserCnt/{roomId}")
-    @ResponseBody
-    public boolean chUserCnt(@PathVariable String roomId){
 
+    //유저 카운트
+    @GetMapping("/chat/chkUserCnt}")
+    @ResponseBody
+    public boolean chUserCnt(@RequestParam String roomId){
         return chatServiceMain.chkRoomUserCnt(roomId);
     }
-    @GetMapping("/chat/delRoom/{roomId}")
-    public ResponseEntity delChatRoom(@PathVariable String roomId){
-        // roomId 기준으로 chatRoomMap 에서 삭제, 해당 채팅룸 안에 있는 사진 삭제
+    
+    //채팅룸 삭제
+    @GetMapping("/chat/delRoom")
+    public ResponseEntity delChatRoom(@RequestParam String roomId){
         chatServiceMain.delChatRoom(roomId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    //채팅룸 수정
+    @PostMapping("/chat/updateRoom")
+    public ResponseEntity updateChatRoom(@RequestParam String roomId, @RequestParam int roomMaxCnt){
+
+        ChatRoomDto beforeRoom = ChatRoomMap.getInstance().getChatRooms().get(roomId);
+
+        ChatRoomDto room = ChatRoomDto.builder()
+            .roomId(String.valueOf(beforeRoom.getRoomId()))
+            .roomName(beforeRoom.getRoomName())
+            .hostName(beforeRoom.getHostName())
+            .userCount(beforeRoom.getUserCount())
+            .maxUserCnt(roomMaxCnt)
+            .build();
+
+        ChatRoomMap.getInstance().getChatRooms().put(roomId, room);
+
         return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -458,11 +458,7 @@
 
             </div>
             <div class="chating-btn-wrap">
-              <a
-                href="./h-4_chat.html"
-                onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
-              >
-                <button type="button" class="btn btn-primary btn-chating-post" onclick="enterRoom()">채팅방
+                <button type="button" class="btn btn-primary btn-chating-post" id="enterChat" onclick="roomMemberCnt()">채팅방
                   참여하기
                 </button>
               </a>
@@ -815,10 +811,7 @@
 
       function deleteCommunity() {
         //게시물 삭제 전 채팅방 삭제
-        let check = roomInfo();
-        if(check!=null){
-          deleteChatRoom();
-        }
+        deleteBeforeRoomCheck();
 
         $.ajax({
           type: "DELETE",
@@ -832,7 +825,7 @@
           },
           success: function (response) {
             alert("삭제 완료");
-            window.location.href = "h-1_communityMain.html";
+            // window.location.href = "h-1_communityMain.html";
           },
           error: function (response, status, error) {
             if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
@@ -1048,13 +1041,15 @@
         })
       }
 
-      function roomInfo() {
+      function deleteBeforeRoomCheck() {
         $.ajax({
           type: "GET",
           url: "http://localhost:8080/chat/room?roomId=" + communityId,
           async: false,
           success: function (response) {
-            return response.roomId
+            if (response!=null){
+              deleteChatRoom();
+            }
           }
         })
       }
@@ -1077,13 +1072,21 @@
           url: "http://localhost:8080/chat/room?roomId=" + communityId,
           async: false,
           success: function (response) {
-            console.log(response.maxUserCnt);
 
             $(".crew").empty();
 
-            let crew = `<div style="margin-left: 600px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+            let crew = `<div style="margin-left: 770px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
             $(".crew").append(crew);
+
+            $('#enterChat').click(function(){
+                if(response.userCount==response.maxUserCnt){
+                  window.alert("채팅방 정원이 초과되었습니다.");
+                  $("#enterChat").attr("disabled", true);
+                }else{
+                  enterRoom();
+                }
+            });
 
           }
         })

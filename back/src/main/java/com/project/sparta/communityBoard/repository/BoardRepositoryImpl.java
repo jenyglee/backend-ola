@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -63,6 +64,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 communityBoard.title,
                 communityBoard.user.nickName,
                 communityBoard.contents,
+                communityBoard.chatStatus,
+                communityBoard.chatMemCnt,
                 JPAExpressions.select(boardLike.count())
                         .from(boardLike)
                         .where(boardLike.board.id.eq(communityBoard.id)),
@@ -85,6 +88,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         String title = boardCol.get(communityBoard.title);
         String nickname = boardCol.get(communityBoard.user.nickName);
         String contents = boardCol.get(communityBoard.contents);
+        String chatStatus = boardCol.get(communityBoard.chatStatus);
+        int chatMemCnt = boardCol.get(communityBoard.chatMemCnt);
         Long communityLikeCount = boardCol.get(JPAExpressions.select(boardLike.count())
             .from(boardLike)
             .where(boardLike.board.id.eq(communityBoard.id)));
@@ -153,6 +158,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .nickName(nickname)
             .contents(contents)
             .likeCount(communityLikeCount)
+            .chatMemCnt(chatMemCnt)
+            .chatStatus(chatStatus)
             .isLike(isLike)
             .imgList(imgCol)
             .tagList(tagCol)
@@ -272,7 +279,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .from(communityBoard)
             .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
-            .where(communityBoard.user.Id.eq(userId))
+            .where(communityBoard.user.Id.eq(userId), communityBoard.chatStatus.eq("N"))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -297,6 +304,61 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .limit(pageable.getPageSize())
             .fetchCount();
         return new PageImpl<>(boards, pageable, total);
+    }
+
+    // 내가 만든 채팅방 list 전체조회
+    @Override
+    public Page<CommunityBoardAllResponseDto> myChatBoardList(Long userId, PageRequest pageable) {
+
+        QueryResults<Tuple> results = queryFactory
+            .select(
+                communityBoard.id,
+                communityBoard.user.nickName,
+                communityBoard.title,
+                ExpressionUtils.as(JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                    .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
+                communityBoard.createAt
+            )
+            .from(communityBoard)
+            .where(
+              communityBoard.user.Id.eq(userId),
+              communityBoard.chatStatus.eq("Y")
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetchResults();
+
+
+        List<Tuple> boards = results.getResults();
+        long total = results.getTotal();
+
+        List<CommunityBoardAllResponseDto> contents = new ArrayList<>();
+        for (Tuple tuple : boards) {
+            Long id = tuple.get(communityBoard.id);
+            String nickName = tuple.get(communityBoard.user.nickName);
+            String title = tuple.get(communityBoard.title);
+            Long likeCount = tuple.get(
+                ExpressionUtils.as(JPAExpressions.select(boardLike.board.count()).from(boardLike)
+                    .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"));
+            LocalDateTime createAt = tuple.get(communityBoard.createAt);
+
+            List<String> imgList = queryFactory.select(communityBoardImg.url)
+                .from(communityBoardImg)
+                .where(communityBoardImg.communityBoard.id.eq(id))
+                .fetch();
+
+            CommunityBoardAllResponseDto build = CommunityBoardAllResponseDto.builder()
+                .boardId(id)
+                .nickName(nickName)
+                .title(title)
+                .communityLikeCnt(likeCount)
+                .imgList(imgList)
+                .createAt(createAt)
+                .build();
+            contents.add(build);
+        }
+
+        return new PageImpl<>(contents, pageable, total);
     }
 
     private Predicate tileEq(String title) {
