@@ -110,7 +110,7 @@ public class CommunityBoardController {
     @PatchMapping("/communities/{boardId}")
     public ResponseEntity updateCommunityBoard(@PathVariable Long boardId,
         @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        , @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
         communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto,
             userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);

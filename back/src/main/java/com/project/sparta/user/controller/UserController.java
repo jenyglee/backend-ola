@@ -4,13 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.UserDetailsImpl;
+import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -43,20 +48,12 @@ public class UserController {
         return userService.login(requestDto);
     }
 
-    // TODO 카카오, 네이버, 구글 로그인 API 제작
+
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        // code: 카카오 서버로부터 받은 인가 코드
-        // new KakaoApi
-        System.out.println("code = " + code);
-        // String createToken = kakaoService.kakaoLogin(code, response);
-        // // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
-        // Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
-        // cookie.setPath("/");
-        // response.addCookie(cookie);
-        return "gello";
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+        return kakaoService.kakaoLogin(code, response);
     }
 
     @ApiOperation(value = "네이버 로그인",response = Join.class)
@@ -95,8 +92,9 @@ public class UserController {
     }
 
     //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
-    @PostMapping("/regenerate-token")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {
+    @PostMapping("/token/regenerate")
+    public ResponseEntity<TokenDto> regenerateToken(@RequestBody RegenerateTokenDto tokenDto) {
+        //System.out.println("tokenDto.getRefreshToken() = " + tokenDto.getRefreshToken());
         return userService.regenerateToken(tokenDto);
     }
 

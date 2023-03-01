@@ -3,16 +3,21 @@ package com.project.sparta.user.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.KakaoUserInfoDto;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.repository.UserRepository;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +35,9 @@ public class KakaoServiceImpl implements KakaoService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final RedisTemplate<String, String> redisTemplate;
     @Override
-    public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
+    public ResponseEntity<TokenDto> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
         //1. '인가 코드'로 Access Token 요청
         String accessToken = getToken(code);
 
@@ -40,10 +46,25 @@ public class KakaoServiceImpl implements KakaoService {
 
         //3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
-
         //4. JWT 토큰 반환
-        String createToken = jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl());
-        return createToken;
+        String refreshToken = jwtUtil.generateRefreshToken(kakaoUser.getEmail(), kakaoUser.getRole());
+        //System.out.println("refreshToken = " + refreshToken);
+        TokenDto tokenDto = new TokenDto(
+            jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl()),
+            refreshToken,
+            kakaoUser.getRole()
+            );
+        redisTemplate.opsForValue().set(
+            kakaoUser.getEmail(),
+            refreshToken,
+            JwtUtil.REFRESH_TOKEN_TIME,
+            TimeUnit.MILLISECONDS
+        );
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
+
+        return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
     }
 
     // '인가 코드'로 Access Token 요청
@@ -57,7 +78,7 @@ public class KakaoServiceImpl implements KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "d47fdedf288092701f880cf868e90d47");
-        body.add("redirect_uri", "http://localhost:8080/auth/login/kakao");
+        body.add("redirect_uri", "http://localhost:5500/template/b-1_login.html");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -80,14 +101,14 @@ public class KakaoServiceImpl implements KakaoService {
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException{
         //Http Header 생성
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer" + accessToken);
+        headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         //Http 요청 보내기
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me",
+                "https://kapi.kakao.com/v2/user/me", // 401 unAuthorize
                 HttpMethod.POST,
                 kakaoUserInfoRequest,
                 String.class

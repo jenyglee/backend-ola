@@ -114,4 +114,9 @@ public class User extends Timestamped {
     public void changeStatus(StatusEnum status){
         this.status = status;
     }
+
+
+    public void isUserId(Long userId) {
+        // TODO ID 체크를 객체지향적으로 쓰기
+    }
 }

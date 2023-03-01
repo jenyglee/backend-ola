@@ -484,7 +484,31 @@
           $("#tagList").append(tempTag);
         }
       }
+      ,error: function (response){
+        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          regenerateToken()
+        }
+      }
     });
+  }
+  function regenerateToken(){
+    var refreshToken = localStorage.getItem("refreshToken")
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/auth/token/regenerate",
+      contentType : "application/json; charset=utf-8",
+      data: JSON.stringify({
+        refreshToken: refreshToken
+      }),
+      success: function (response) {
+        localStorage.setItem('accessToken', response.accessToken)
+        localStorage.setItem("refreshToken", response.refreshToken)
+        getMyInfo();
+      },error: function(response){
+        console.log("에러 : ", response)
+      }
+    })
   }
 
   function searchFriend() {
@@ -495,7 +519,7 @@
       type: "GET",
       contentType: "application/json",
       dataType: "json",
-      url: "http://localhost:8080/friend?page=0&size=5&targetNickname=" + targetNickname,
+      url: "http://localhost:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -503,6 +527,7 @@
 
         $(".friend-list-1").empty();
         $(".friend-list-2").empty();
+        $(".friend-list-3").empty();
 
         let tagName = [];
         let result = null;
@@ -511,19 +536,19 @@
             result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
 
             $(".friend-list-3").append(result);
-        }
+        }else{
+          for (let i = 0; i < response.data.length; i++) {
+            let image = response.data[i].friendImage;
+            let friendId = response.data[i].friendId;
+            let name = response.data[i].friendName;
+            let tags = response.data[i].hashtagList;
 
-        for (let i = 0; i < response.data.length; i++) {
-          let image = response.data[i].friendImage;
-          let friendId = response.data[i].friendId;
-          let name = response.data[i].friendName;
-          let tags = response.data[i].hashtagList;
+            tagName = [];
+            for (let j = 0; j < tags.length; j++) {
+              tagName.push("#" + tags[j].name);
+            }
 
-          for (let j = 0; j < tags.length; j++) {
-            tagName.push("#" + tags[j].name);
-          }
-
-          result = `
+            result = `
                     <li style="margin-top: 10px;">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
@@ -536,7 +561,8 @@
                       </li>`
 
 
-          $(".friend-list-3").append(result);
+            $(".friend-list-3").append(result);
+          }
         }
       }
     });
@@ -714,6 +740,7 @@
 
   function mainRecommendFriendList() {
     const accessToken = localStorage.getItem("accessToken")
+    console.log("accessToken : ", accessToken)
 
     $.ajax({
       type: "GET",
@@ -724,46 +751,46 @@
       },
       success: function (response) {
 
-        let mainFriend = null;
-        let tagName = [];
-
-        $(".b_17").empty();
-
-        if(response.data.length==0){
-          mainFriend = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 80px; margin-left: 450px; width :300px">추천 친구가 없습니다.</p>`
-
-          $(".b_17").append(mainFriend);
-        }else{
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let name = response.data[i].friendName;
-            let friendId = response.data[i].friendId;
-            let tags = response.data[i].hashtagList;
-
-            tagName = [];
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
-            }
-
-            mainFriend = `<div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
-                              <div class="left" style="display: flex; align-items: center">
-                                <div class="img-wrap"
-                                     style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                                  <img class="img" style="width: 100%" src="${image}"/>
-                                </div>
-                                <p>${name}</p>
-                              </div>
-                              <div class="right">
-                                <button type="button" class="btn btn-link" onclick="addFriend(${friendId});"
-                                        style="text-decoration: none; color: cornflowerblue; font-size: 13px; padding: 0px; margin-left: 10px; margin-bottom: 11px; font-weight: bolder;
-                                        width: 70px">친구추가</button>
-                              </div>
-                          </div>`
-
-            $(".b_17").append(mainFriend);
-
-          }
-        }
+        // let mainFriend = null;
+        // let tagName = [];
+        //
+        // $(".b_17").empty();
+        //
+        // if(response.data.length==0){
+        //   mainFriend = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 80px; margin-left: 450px; width :300px">추천 친구가 없습니다.</p>`
+        //
+        //   $(".b_17").append(mainFriend);
+        // }else{
+        //   for (let i = 0; i < response.data.length; i++) {
+        //     let image = response.data[i].friendImage;
+        //     let name = response.data[i].friendName;
+        //     let friendId = response.data[i].friendId;
+        //     let tags = response.data[i].hashtagList;
+        //
+        //     tagName = [];
+        //     for (let j = 0; j < tags.length; j++) {
+        //       tagName.push("#" + tags[j].name);
+        //     }
+        //
+        //     mainFriend = `<div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
+        //                       <div class="left" style="display: flex; align-items: center">
+        //                         <div class="img-wrap"
+        //                              style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
+        //                           <img class="img" style="width: 100%" src="${image}"/>
+        //                         </div>
+        //                         <p>${name}</p>
+        //                       </div>
+        //                       <div class="right">
+        //                         <button type="button" class="btn btn-link" onclick="addFriend(${friendId});"
+        //                                 style="text-decoration: none; color: cornflowerblue; font-size: 13px; padding: 0px; margin-left: 10px; margin-bottom: 11px; font-weight: bolder;
+        //                                 width: 70px">친구추가</button>
+        //                       </div>
+        //                   </div>`
+        //
+        //     $(".b_17").append(mainFriend);
+        //
+        //   }
+        // }
       }
     });
   }
