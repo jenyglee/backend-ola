@@ -2,6 +2,7 @@ package com.project.sparta.security.jwt;
 
 
 import com.project.sparta.security.UserDetailServiceImpl;
+import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -46,9 +47,10 @@ public class JwtUtil {
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
 
-    public String generateAccessToken(String email, UserRoleEnum role, String nickname, String imgUrl) {
+    public String generateAccessToken(String email, UserRoleEnum role, UserGradeEnum grade, String nickname, String imgUrl) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
+        claims.put("grade", grade);
         claims.put("nickname", nickname);
         claims.put("profileImage", imgUrl);
         Date date = new Date();

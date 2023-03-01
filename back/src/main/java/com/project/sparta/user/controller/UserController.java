@@ -56,18 +56,6 @@ public class UserController {
         return kakaoService.kakaoLogin(code, response);
     }
 
-    @ApiOperation(value = "네이버 로그인",response = Join.class)
-    //네이버 로그인
-    @GetMapping("/login/naver")
-    public void naverLogin() {
-    }
-
-    //구글 로그인
-    @ApiOperation(value = "구글 로그인",response = Join.class)
-    @GetMapping("/login/google")
-    public void googleLogin() {
-    }
-
     //로그아웃
     @ApiOperation(value = "로그아웃",response = Join.class)
     @PostMapping("/logout")
