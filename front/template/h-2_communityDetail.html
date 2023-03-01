@@ -811,10 +811,7 @@
 
       function deleteCommunity() {
         //게시물 삭제 전 채팅방 삭제
-        let check = roomInfo();
-        if(check!=null){
-          deleteChatRoom();
-        }
+        deleteBeforeRoomCheck();
 
         $.ajax({
           type: "DELETE",
@@ -828,7 +825,7 @@
           },
           success: function (response) {
             alert("삭제 완료");
-            window.location.href = "h-1_communityMain.html";
+            // window.location.href = "h-1_communityMain.html";
           },
           error: function (response, status, error) {
             if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
@@ -1044,13 +1041,15 @@
         })
       }
 
-      function roomInfo() {
+      function deleteBeforeRoomCheck() {
         $.ajax({
           type: "GET",
           url: "http://localhost:8080/chat/room?roomId=" + communityId,
           async: false,
           success: function (response) {
-            return response.roomId
+            if (response!=null){
+              deleteChatRoom();
+            }
           }
         })
       }

@@ -82,5 +82,4 @@ public class CommunityBoard extends Timestamped {
         this.chatStatus = chatStatus;
         this.chatMemCnt = chatMemCnt;
     }
-
 }
