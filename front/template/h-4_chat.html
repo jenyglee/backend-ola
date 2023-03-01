@@ -181,7 +181,7 @@
         stompClient.send("/pub/chat/enterUser",
             {},
             JSON.stringify({
-                "roomId": roomId,
+                roomId: roomId,
                 sender: myNickname,
                 type: 'ENTER',
                 time : day.toLocaleTimeString()
@@ -268,7 +268,6 @@
     // 넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
     function onMessageReceived(payload) {
 
-        let day = new Date();
         var chat = JSON.parse(payload.body);
 
         console.log(chat.type)
