@@ -36,7 +36,7 @@ public class KakaoServiceImpl implements KakaoService {
         String accessToken = getToken(code);
 
         //2. 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
-        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
+        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken); // 401 un
 
         //3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
@@ -80,14 +80,14 @@ public class KakaoServiceImpl implements KakaoService {
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException{
         //Http Header 생성
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer" + accessToken);
+        headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         //Http 요청 보내기
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me",
+                "https://kapi.kakao.com/v2/user/me", // 401 unAuthorize
                 HttpMethod.POST,
                 kakaoUserInfoRequest,
                 String.class

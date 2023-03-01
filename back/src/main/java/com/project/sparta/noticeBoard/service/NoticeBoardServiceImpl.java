@@ -36,6 +36,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     @Override
     public void createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // 0: SERVICE, 1: UPDATE, 2: EVENT
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
         if(user.getRole()== UserRoleEnum.ADMIN) {
             NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
                 requestDto.getContents(), requestDto.getCategory());
@@ -46,6 +47,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     //공지글 삭제
     @Override
     public void deleteNoticeBoard(Long id, User user) {
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
         if(user.getRole()== UserRoleEnum.ADMIN) {
             NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
@@ -56,6 +58,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
     //공지글 수정
     @Override
     public void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user) {
+        //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.
         if(user.getRole()== UserRoleEnum.ADMIN)
         {
             NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
