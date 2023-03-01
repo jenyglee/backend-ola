@@ -320,4 +320,7 @@ public class UserServiceImpl implements UserService {
             user.changeStatus(StatusEnum.USER_REGISTERED);
         }
     }
+
+
+
 }
