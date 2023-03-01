@@ -1,15 +1,19 @@
 package com.project.sparta.communityBoard.controller;
 
+import com.project.sparta.chat.dto.ChatRoomDto;
+import com.project.sparta.chat.service.ChatServiceMain;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.mapping.Join;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -24,22 +28,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Api(tags = {"커뮤니티 보드 API"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")
+@Slf4j
 public class CommunityBoardController {
 
     private final CommunityBoardService communityBoardService;
 
+    private final ChatServiceMain chatServiceMain;
+
     //커뮤니티 작성
-    @ApiOperation(value = "커뮤니티 작성", response = Join.class)
+    @ApiOperation(value = "커뮤니티 작성/채팅방 생성", response = Join.class)
     @PostMapping("/communities")
     public ResponseEntity createCommunityBoard(
         @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
-        communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
+        , @AuthenticationPrincipal UserDetailsImpl userDetail,
+        RedirectAttributes rttr) {
+
+        CommunityBoard board = communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
+
+        if (communityBoardRequestDto.getChatStatus().equals("Y")) {
+            // 매개변수 : 방 이름, 방 인원수, 방 타입
+            ChatRoomDto room;
+
+            room = chatServiceMain.createChatRoom(board.getId(), communityBoardRequestDto.getTitle(),
+                communityBoardRequestDto.getChatMemCnt(), userDetail.getUser().getNickName());
+
+            log.info("create chat room : " + communityBoardRequestDto.getTitle());
+
+            rttr.addFlashAttribute("roomName", room);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -77,6 +77,17 @@ public class InfoController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    //내가 만든 크루 전체 조회
+    @ApiOperation(value = "내가 만든 크루 전체 조회", response = Join.class)
+    @GetMapping("/me/boards/chat")
+    public ResponseEntity getMyChatBoardList(
+        @RequestParam("page") int page,
+        @RequestParam("size") int size,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getMyChatBoardList(page, size, userDetails.getUser().getId());
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     //TODO 내 알람 전체 조회 API 제작
     //내 알람 전체 조회
     @ApiOperation(value = "내 알람 전체 조회", response = Join.class)

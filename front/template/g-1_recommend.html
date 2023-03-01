@@ -508,7 +508,13 @@
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken : ", accessToken)
+
+    console.log("searchScore" + searchScore)
+    console.log("searchSeason" + searchSeason)
+    console.log("searchAltitude" + searchAltitude)
+    console.log("searchRegion" + searchRegion)
+    console.log("searchOrderByLike" + searchOrderByLike)
+
 
     // 2. 통신해서 불러오기
     $.ajax({
@@ -521,7 +527,8 @@
         xlr.setRequestHeader("Authorization", accessToken)
       },
       success: function (response) {
-        console.log("response : ", response)
+
+        console.log(response)
 
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
@@ -560,32 +567,7 @@
           $('#cardBody').append(temp)
 
         }
-      },error: function(response){
-          console.log("response : ", response)
-          if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                regenerateToken()
-          }
-      }
-    })
-  }
-
-  function regenerateToken(){
-    var refreshToken = localStorage.getItem("refreshToken")
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
-      contentType : "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-        getRecommendList(0, 8);
-      },error: function(response){
-        console.log("에러 : ", response)
-      }
+      },
     })
   }
 

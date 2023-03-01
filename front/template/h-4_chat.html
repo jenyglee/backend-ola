@@ -31,7 +31,7 @@
             bottom: 0;
         }
         .input-area .input-wrap{
-            width: 300px;
+            width: 570px;
             margin-right: 10px;
         }
         .input-area{
@@ -120,105 +120,193 @@
             background-color: #f46b3f;
             color: white;
         }
-
     </style>
 </head>
 <body>
 <main>
     <ul>
-        <div class="other-chat" id="msgArea"></div>
-    </ul>
+        <div class="other-chat" id="msgArea">
 
+        </div>
+    </ul>
 </main>
 <div class="input-area">
     <div class="input-wrap">
-        <input type="text" class="form-control" id="message" placeholder="입력" />
+        <input type="text" class="form-control" id="messageSend" placeholder="입력"/>
     </div>
     <div class="btn-wrap">
-        <button type="button" class="btn btn-primary search-btn" onclick="send();" id="sendMes">보내기</button>
-        <button type="button" class="btn btn-primary search-btn" onclick="exit();" id="exitMes">방나가기</button>
+        <button type="button" class="btn btn-primary search-btn" id="sendMes">보내기</button>
+        <button type="button" class="btn btn-primary search-btn" onclick="exitRoom()" id="exitMes">방나가기</button>
     </div>
 </div>
 <script>
-
+    var stompClient = null;
     $(document).ready(function(){
-
-        const username = "사용자";
-        const date = new Date();
-
-        $("#exitMes").on("click", (e) => {
-            disconnect();
-        })
-
         $("#sendMes").on("click", (e) => {
-            send();
+            sendMessage();
+            $("#messageSend").val("");
         });
 
-        const websocket = new WebSocket("ws://localhost:8080/ws/chat");
-
-        websocket.onmessage = onMessage;
-        websocket.onopen = onOpen;
-        websocket.onclose = onClose;
-
-        function send(){
-
-            let msg = document.getElementById("message");
-
-            console.log(username + ":" + msg.value);
-            websocket.send(username + ":" + msg.value);
-            msg.value = '';
-        }
-
-        //채팅창에서 나갔을 때
-        function onClose(evt) {
-            var str = username + ": 님이 방을 나가셨습니다.";
-            websocket.send(str);
-        }
-
-        //채팅창에 들어왔을 때
-        function onOpen(evt) {
-            var str = username + ": 님이 입장하셨습니다.";
-            websocket.send(str);
-        }
-
-        function onMessage(msg) {
-            var data = msg.data;
-            var sessionId = null;
-            //데이터를 보낸 사람
-            var message = null;
-            var arr = data.split(":");
-
-            for(var i=0; i<arr.length; i++){
-                console.log('arr[' + i + ']: ' + arr[i]);
-            }
-
-            var cur_session = username;
-
-            //현재 세션에 로그인 한 사람
-            console.log("cur_session : " + cur_session);
-            sessionId = arr[0];
-            message = arr[1];
-
-            console.log("sessionID : " + sessionId);
-            console.log("cur_session : " + cur_session);
-
-            //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-            if(sessionId == cur_session){
-                var str = "<div className='wrap'>";
-                str += "<div className='text-box' style='width: 300px; background-color: lightblue; border-radius: 5px; padding:10px; font-size: 15px;'>" + sessionId + ": " + message + "</div>";
-                str += "<p className='time' style='font-size: 10px;'>" + date.toLocaleTimeString('ko-kr') +"</p>";
-                str += "</div>";
-                $("#msgArea").append(str);
-            }
-            else{
-                var str = "<div className='wrap'>";
-                str += "<div className='text-box' style='width: 300px; background-color: ivory; border-radius: 5px; padding:10px'>" + sessionId + ": " + message + "</div>";
-                str += "<p className='time'>" + date.toLocaleTimeString('ko-kr') +"</p>";
-                str += "</div>";
-                $("#msgArea").append(str);
-            }
-        }
+        connect();
     })
+
+
+    // roomId 파라미터 가져오기
+    const url = new URL(location.href).searchParams;
+    const roomId = url.get('roomId');
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    let myNickname = menuProfile.nickname;
+
+    function connect(event) {
+         // username 중복 확인
+         isDuplicateName();
+
+        // 연결하고자하는 Socket 의 endPoint
+        var socket = new SockJS('http://localhost:8080/ws-stomp');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, onConnected, onError);
+
+        event.preventDefault();
+    }
+
+    function onConnected() {
+
+        let day = new Date();
+        // sub 할 url => /sub/chat/room/roomId 로 구독한다
+        stompClient.subscribe('/sub/chat/room/' + roomId, onMessageReceived);
+
+        // 서버에 username 을 가진 유저가 들어왔다는 것을 알림
+        // /pub/chat/enterUser 로 메시지를 보냄
+        stompClient.send("/pub/chat/enterUser",
+            {},
+            JSON.stringify({
+                roomId: roomId,
+                sender: myNickname,
+                type: 'ENTER',
+                time : day.toLocaleTimeString()
+            })
+        )
+    }
+
+    // 유저 닉네임 중복 확인
+    function isDuplicateName() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/chat/duplicateName",
+            data: {
+                "username": myNickname,
+                "roomId": roomId
+            },
+            success: function (data) {
+                console.log("함수 동작 확인 : " + data);
+
+                myNickname = data;
+            }
+        })
+
+    }
+
+    // 유저 리스트 받기
+    // ajax 로 유저 리스를 받으며 클라이언트가 입장/퇴장 했다는 문구가 나왔을 때마다 실행된다.
+    // function getUserList() {
+    //     const $list = $("#list");
+    //
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "http://localhost:8080/chat/userlist",
+    //         data: {
+    //             "roomId": roomId
+    //         },
+    //         success: function (data) {
+    //             console.log(data)
+    //             // var users = "";
+    //             // for (let i = 0; i < data.length; i++) {
+    //             //     //console.log("data[i] : "+data[i]);
+    //             //     users += "<li class='dropdown-item'>" + data[i] + "</li>"
+    //             // }
+    //             // $list.html(users);
+    //         }
+    //     })
+    // }
+
+
+    function onError(error) {
+        connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+        connectingElement.style.color = 'red';
+    }
+
+    // 메시지 전송때는 JSON 형식을 메시지를 전달한다.
+    function sendMessage() {
+        var messageContent = $("#messageSend").val();
+        let day = new Date();
+
+        console.log(messageContent)
+
+        if (messageContent && stompClient) {
+            var chatMessage = {
+                "roomId": roomId,
+                sender: myNickname,
+                message: messageContent,
+                type: 'TALK',
+                time : day.toLocaleTimeString()
+            };
+            stompClient.send("/pub/chat/sendMessage", {}, JSON.stringify(chatMessage));
+        }
+
+        var str = "<div className='wrap'>";
+        str += "<div className='text-box' style='width: 300px; background-color: antiquewhite; border-radius: 5px; padding:10px; margin-left: 400px; '>" + myNickname + ": " + messageContent + "</div>";
+        str += "<p className='time' style='margin-left: 635px; font-size: 10px;'>" + day.toLocaleTimeString() +"</p>";
+        str += "</div>";
+
+        $("#msgArea").append(str);
+
+    }
+
+    // 메시지를 받을 때도 마찬가지로 JSON 타입으로 받으며,
+    // 넘어온 JSON 형식의 메시지를 parse 해서 사용한다.
+    function onMessageReceived(payload) {
+
+        var chat = JSON.parse(payload.body);
+
+        console.log(chat.type)
+
+        if(chat.sender!=myNickname){
+            var str = "<div className='wrap'>";
+
+            if(chat.type=="TALK"){
+                str += "<div className='text-box' style='width: 300px; border-radius: 5px; padding:10px; font-size: 15px; color: #666666; background-color: #b3d4fc; color: black'>"
+                    + chat.sender
+                    + ": "
+                    + chat.message + "</div>";
+                if(chat.time!=null){
+                    str += "<p className='time' style='font-size: 10px; margin-left: 290px; margin-bottom:5px; padding: 5px'>" + chat.time +"</p>";
+                }else{
+                    str += "<p className='time' style='font-size: 10px; margin-left: 290px; margin-bottom:5px; padding: 5px'></p>";
+                }
+            }else if(chat.type=="ENTER") {
+                str += "<div className='text-box' style='width: 250px; border-radius: 5px; padding:5px; font-size: 15px; color: #666666; margin-left: 200px; text-align: center'>"
+                    + "✌ "
+                    + chat.message + "<hr></div>";
+            }else if(chat.type=="LEAVE") {
+                str += "<div className='text-box' style='width: 250px; border-radius: 5px; padding:5px; font-size: 15px; color: #666666; margin-left: 200px; text-align: center'>"
+                    + "👋 "
+                    + chat.message + "<hr></div>";
+            }
+            str += "</div>";
+
+            $("#msgArea").append(str);
+        }
+    }
+
+    function exitRoom(){
+        window.location.href = "h-2_communityDetail.html"
+    }
+
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
 </html>

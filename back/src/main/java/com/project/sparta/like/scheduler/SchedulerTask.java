@@ -22,7 +22,7 @@ public class SchedulerTask {
   public void commentLikeBulkCnt() {
 
     if (commentLikeService.start_schedule()) {
-      likeCommentRepository.bulkUpdateLike();
+//      likeCommentRepository.bulkUpdateLike();
     }
   }
 

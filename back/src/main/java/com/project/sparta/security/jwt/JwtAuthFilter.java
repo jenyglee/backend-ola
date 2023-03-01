@@ -1,7 +1,5 @@
 package com.project.sparta.security.jwt;
 
-import static com.project.sparta.exception.api.Status.INVALID_TOKEN;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.security.dto.SecurityExceptionDto;
@@ -35,14 +33,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = jwtUtil.resolveToken(request);
 
         try {
-            if (!Objects.isNull(token)) { // 토큰이 존재할 때
-                if (!jwtUtil.validateToken(token)) { // 토큰이 유효하지 않을 때
+            if (!Objects.isNull(token)) {
+                if (!jwtUtil.validateToken(token)) {
                     // 유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
                     // 클라이언트에게 에러를 보내주고
                     // 클라이언트 -> 갱신된 api호출 -> api
                     // throw new AuthenticationException();
                     response.sendError(401, "토큰이 만료되었습니다.");
-                    // sendError를 프론트에서 확인하고, 다시 서버에 regenerateToken(리프레시 토큰)
                 }
 
                 Authentication auth = jwtUtil.getAuthenticationByAccessToken(token);
@@ -56,8 +53,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
             response.sendError(e.getStatus().getHttpStatus().value(), e.getMessage());
         }
-
-
         filterChain.doFilter(request, response);
     }
 

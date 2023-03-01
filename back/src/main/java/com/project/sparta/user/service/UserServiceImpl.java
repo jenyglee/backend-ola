@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public InfoResponseDto getMyInfo(User user) {
         // 내가 쓴 커뮤니티 글 개수
-        Long communityCount = boardRepository.countByUserId(user.getId());
+        Long communityCount = boardRepository.countMyCommunity(user.getId());
 
         // 내가 쓴 코스추천 글 개수
         Long recommendCount = recommendRepository.countByUserId(user.getId());
@@ -171,7 +171,8 @@ public class UserServiceImpl implements UserService {
         int enterCount = user.getEnterCount();
 
         // 내가 만든 크루 수
-        int makeCount = user.getMakeCount();
+        int makeCount = boardRepository.countMyChat(user.getId());
+
 
         // 나의 해시태그
         List<UserTag> userTags = userTagRepository.findAllByUser(user);

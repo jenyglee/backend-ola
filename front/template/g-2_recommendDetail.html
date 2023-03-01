@@ -348,9 +348,6 @@
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        console.log("menuProfile ; ",menuProfile)
-        const accessToken = localStorage.getItem("accessToken");
-
         $.ajax({
           type: "GET",
           url: `http://localhost:8080/boards/recommends/${id}`,
@@ -360,9 +357,6 @@
               localStorage.getItem("accessToken")
             );
           },
-          // data: {
-          //   name: "sasas",
-          // },
           success: function (response) {
             console.log("response : ", response);
 
@@ -534,6 +528,7 @@
           },
           success: function (response) {
             alert("삭제 완료");
+
             window.location.href = "g-1_recommend.html";
           },
           error: function (xhr) {
@@ -595,6 +590,7 @@
           },
         });
       }
+
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async></script>
   </body>
