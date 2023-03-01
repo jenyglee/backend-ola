@@ -27,6 +27,7 @@ import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -151,8 +152,31 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname) {
         PageRequest pageRequest = PageRequest.of(commentPage, commentSize);
+
         CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, pageRequest, nickname);
+
         return communityBoard;
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value="getallcommunity")
+    public PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page,
+        int size, String titleCond, String contentsCond, String nicknameCond) {
+        // 1. 검색 조건을 객체로 저장
+        CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
+            contentsCond, nicknameCond);
+
+        // 2. 검색조건을 포함하여 전체조회
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.communityAllList(
+            searchCondition, pageRequest);
+        //3. 결과를 반환
+        List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
     }
 
     //커뮤니티 전체조회(커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징)
@@ -168,7 +192,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.communityAllList(
             searchCondition, pageRequest);
-
         //3. 결과를 반환
         List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
         long totalCount = allCommunityBoardList.getTotalElements();

@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -49,9 +50,36 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "0") int commentPage,
         @RequestParam(defaultValue = "8") int commentSize,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        long start = System.currentTimeMillis();
         CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.getCommunityBoard(
             boardId, commentPage, commentSize, userDetails.getUser().getNickName());
+        long end = System.currentTimeMillis();
+        System.out.println("No 캐시 쿼리 수행 시간 : ");
+        System.out.print(end-start);
+        System.out.print("ms");
         return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "캐시 커뮤니티 전체 조회", response = Join.class)
+    @GetMapping("/communities/cache")
+    public ResponseEntity getCacheAllCommunityBoard(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "8") int size,
+        @RequestParam String title,
+        @RequestParam String contents,
+        @RequestParam String nickname
+        //@RequestParam Long hashtagId
+    ) {
+        long start = System.currentTimeMillis();
+        PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getCacheAllCommunityBoard(
+            page, size, title, contents, nickname);
+        long end = System.currentTimeMillis();
+        System.out.println("Yes 쿼리 수행 시간 : ");
+        System.out.print(end-start);
+        System.out.print("ms");
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
@@ -66,8 +94,14 @@ public class CommunityBoardController {
         @RequestParam String nickname
         //@RequestParam Long hashtagId
     ) {
+        long start = System.currentTimeMillis();
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
             page, size, title, contents, nickname);
+        long end = System.currentTimeMillis();
+        System.out.println("No 쿼리 수행 시간 : ");
+        System.out.print(end-start);
+        System.out.print("ms");
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -76,7 +110,7 @@ public class CommunityBoardController {
     @PatchMapping("/communities/{boardId}")
     public ResponseEntity updateCommunityBoard(@PathVariable Long boardId,
         @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        , @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
         communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto,
             userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);

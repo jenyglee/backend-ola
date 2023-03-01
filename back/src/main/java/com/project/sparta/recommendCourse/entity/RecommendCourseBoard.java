@@ -2,6 +2,7 @@ package com.project.sparta.recommendCourse.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
+import com.project.sparta.user.entity.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import lombok.AccessLevel;
@@ -55,6 +56,11 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
+    //TODO User에 isUserId() 사용해서 체크하게
+    //public void validateOwner(Long userId){
+    //    user.isUserId(userId)
+    //}
+
     @Builder
     public RecommendCourseBoard(long id, int score, String title, String season, int altitude,
         String contents, String region, String orderByLike, PostStatusEnum postStatus, Long userId) {
@@ -86,5 +92,11 @@ public class RecommendCourseBoard extends Timestamped {
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
         this.postStatus = postStatus;
+    }
+
+    public void isOwner(Long userId) {
+    }
+
+    public void validateOwner(Long userId) {
     }
 }

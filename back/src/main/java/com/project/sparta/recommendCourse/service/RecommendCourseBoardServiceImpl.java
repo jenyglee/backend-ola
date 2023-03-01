@@ -82,13 +82,16 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     @Override
     public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
 
+        //TODO 이걸 표본으로 전체 적용
         //수정하고자 하는 board 있는지 확인
         RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
-        //board의 작성자 맞는지 확인
+        //TODO if문 validateOwner() 사용(예시 -> checkBoard.validateOwner(userId))
+        //TODO .get() 하는 부분은 찾아서 엔티티에 객체지향적으로 수정
         if (!checkBoard.getUserId().equals(userId)) {
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
+
         //기존에 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
 
