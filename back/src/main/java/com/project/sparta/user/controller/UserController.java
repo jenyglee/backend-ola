@@ -92,8 +92,9 @@ public class UserController {
     }
 
     //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
-    @PostMapping("/regenerate-token")
-    public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto tokenDto) {
+    @PostMapping("/token/regenerate")
+    public ResponseEntity<TokenDto> regenerateToken(@RequestBody RegenerateTokenDto tokenDto) {
+        //System.out.println("tokenDto.getRefreshToken() = " + tokenDto.getRefreshToken());
         return userService.regenerateToken(tokenDto);
     }
 

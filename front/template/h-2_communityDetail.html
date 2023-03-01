@@ -625,7 +625,7 @@
     <script>
       var communityId = localStorage.getItem("communityId");
       console.log("communityId : ", communityId);
-      var accessToken = localStorage.getItem("accessToken");
+
 
       $(document).ready(function () {
         $(".friend-dropbox").hide();
@@ -636,7 +636,6 @@
 
       function getMenuProfile() {
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        console.log("menuProfile : ", menuProfile)
         var tempProfile = `
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
@@ -656,8 +655,8 @@
       }
 
       function getCommunity(commentPage) {
+        var accessToken = localStorage.getItem("accessToken");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        console.log("menuProfile : ", menuProfile);
         $.ajax({
           type: "GET",
           url:
@@ -670,8 +669,6 @@
             xlr.setRequestHeader("Authorization", accessToken);
           },
           success: function (response) {
-            console.log("response : ", response);
-
             // 컨텐츠 넣기
             $("#contents-area").empty();
             let tempContentsArea = `
@@ -817,6 +814,12 @@
             // <button type="button" className="comment-btn">${response.commentList[i].nickName
             //     ==}</button>
           },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              getCommunity(0);
+            }
+          },
         });
       }
 
@@ -835,14 +838,16 @@
             alert("삭제 완료");
             window.location.href = "h-1_communityMain.html";
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              deleteCommunity();
+            }
           },
         });
       }
       function commentCreate() {
+        var accessToken = localStorage.getItem("accessToken");
         $.ajax({
           type: "POST",
           url: "http://localhost:8080/comments/communities/" + communityId,
@@ -856,10 +861,17 @@
           success: function (response) {
             getCommunity(0);
           },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              commentCreate();
+            }
+          },
         });
       }
 
       function commentDelete(commentId) {
+        var accessToken = localStorage.getItem("accessToken");
         console.log("commentId : ", commentId);
         $.ajax({
           type: "DELETE",
@@ -870,6 +882,12 @@
           contentType: "application/json; charset=utf-8",
           success: function (response) {
             getCommunity(0);
+          },
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              commentDelete(commentId);
+            }
           },
         });
       }
@@ -895,10 +913,11 @@
             alert("삭제 완료");
             window.location.href = "h-1_communityMain.html";
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              deleteCommunityComment();
+            }
           },
         });
       }
@@ -917,10 +936,11 @@
           success: function (response) {
             getCommunity(0);
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              likeCommunity();
+            }
           },
         });
       }
@@ -939,15 +959,18 @@
           success: function (response) {
             getCommunity(0);
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              unlikeCommunity();
+            }
           },
         });
       }
 
       function likeComment(isLike, commentId) {
+        var accessToken = localStorage.getItem("accessToken");
+        console.log("commentId : ", commentId)
         console.log("likeComment");
         if (isLike) {
           $.ajax({
@@ -955,18 +978,16 @@
             url: `http://localhost:8080/like/comments/${commentId}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
-              xlr.setRequestHeader(
-                "Authorization",
-                localStorage.getItem("accessToken")
-              );
+              xlr.setRequestHeader("Authorization", accessToken);
             },
             success: function (response) {
               getCommunity(0);
             },
-            error: function (xhr) {
-              console.log(
-                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-              );
+            error: function (response, status, error) {
+              if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                regenerateToken()
+                likeComment(isLike, commentId);
+              }
             },
           });
         } else {
@@ -975,18 +996,17 @@
             url: `http://localhost:8080/like/comments/${commentId}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
-              xlr.setRequestHeader(
-                "Authorization",
-                localStorage.getItem("accessToken")
-              );
+              xlr.setRequestHeader("Authorization", accessToken);
             },
             success: function (response) {
               getCommunity(0);
             },
-            error: function (xhr) {
-              console.log(
-                "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-              );
+            error: function (response, status, error) {
+              if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                regenerateToken()
+                console.log("isLike : ", isLike)
+                likeComment(isLike, commentId);
+              }
             },
           });
         }
@@ -994,66 +1014,42 @@
 
       function unlikeComment(commentId) {
         console.log("unlikeComment");
-        // $.ajax({
-        //   type: "DELETE",
-        //   url: `http://localhost:8080/like/comments/${commentId}`,
-        //   contentType: "application/json; charset=utf-8",
-        //   beforeSend: function (xlr) {
-        //     xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
-        //   },
-        //   success: function (response) {
-        //     getCommunity(0);
-        //   },
-        //   error: function (xhr) {
-        //     console.log(
-        //         "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-        //     );
-        //   },
-        // });
-      }
-
-      function likeComment(commentId) {
-        $.ajax({
-          type: "POST",
-          url: `http://localhost:8080/like/comments/${commentId}`,
-          contentType: "application/json; charset=utf-8",
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
-          },
-          success: function (response) {
-            getCommunity();
-          },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
-          },
-        });
-      }
-
-      function unlikeComment(commentId) {
         $.ajax({
           type: "DELETE",
           url: `http://localhost:8080/like/comments/${commentId}`,
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
+            xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
           },
           success: function (response) {
-            getCommunity();
+            getCommunity(0);
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response, status, error) {
+            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+              regenerateToken()
+              unlikeComment(commentId);
+            }
           },
         });
+      }
+
+      function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:8080/auth/token/regenerate",
+          contentType : "application/json; charset=utf-8",
+          data: JSON.stringify({
+            refreshToken: refreshToken
+          }),
+          success: function (response) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+          },error: function(response){
+            console.log("에러 : ", response)
+          }
+        })
       }
 
       function moveModifyPage() {

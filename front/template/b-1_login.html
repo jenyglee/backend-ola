@@ -222,7 +222,7 @@
         $.ajax(settings).done(function (response,status,xhr) {
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
-
+            localStorage.setItem("refreshToken", response.refreshToken)
             // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
             var get_token = xhr.getResponseHeader("Authorization")
             var remove_bearer = get_token.toString().substring(6,get_token.length)
@@ -261,7 +261,7 @@
         $.ajax(settings).done(function (response,status,xhr) {
             console.log("성공", response);
             localStorage.setItem('accessToken', response.accessToken)
-
+            localStorage.setItem("refreshToken", response.refreshToken)
             // // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
             var get_token = response.accessToken
             var remove_bearer = get_token.toString().substring(6,get_token.length)
