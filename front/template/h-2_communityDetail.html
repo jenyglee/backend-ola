@@ -444,14 +444,7 @@
         <div class="read-post-box">
           <div class="mb-3 cteate-post">
             <div id="contents-area" class="card">
-              <!--              <div class="card-header">제목</div>-->
-              <!--              <div class="card-body post-card-body">-->
-              <!--                <p class="card-text">같이 등산해요~</p>-->
-              <!--                <img-->
-              <!--                  src="/static/img/DefaultMountain.png"-->
-              <!--                  alt="산 기본이미지"-->
-              <!--                />-->
-              <!--              </div>-->
+
             </div>
           </div>
           <div id="img-wrap"></div>
@@ -460,17 +453,17 @@
           <div class="tag-read-box">
             <div id="tag-wrap" class="tag-wrap">
               <span>태그</span>
-              <!--              <div style="padding: 8px 14px; border: 1px solid #F46B3F; border-radius: 50px; font-size: 12px; font-weight: bold">-->
-              <!--                #가을산-->
-              <!--              </div>-->
+            </div>
+            <div class="crew">
+
             </div>
             <div class="chating-btn-wrap">
               <a
                 href="./h-4_chat.html"
                 onClick="window.open(this.href, '', 'width=500, height=700'); return false;"
               >
-                <button type="button" class="btn btn-primary btn-chating-post">
-                  채팅방 참여하기
+                <button type="button" class="btn btn-primary btn-chating-post" onclick="enterRoom()">채팅방
+                  참여하기
                 </button>
               </a>
             </div>
@@ -494,12 +487,7 @@
                 placeholder="댓글을 입력해주세요"
                 style="outline: none"
               />
-              <button
-                class="btn create-comment btn-outline-warning"
-                onclick="commentCreate()"
-              >
-                댓글쓰기
-              </button>
+              <button class="btn create-comment btn-outline-warning" onclick="commentCreate()">댓글쓰기
             </div>
             <div id="comment-wrap"></div>
 
@@ -625,7 +613,7 @@
     <script>
       var communityId = localStorage.getItem("communityId");
       console.log("communityId : ", communityId);
-
+      var accessToken = localStorage.getItem("accessToken");
 
       $(document).ready(function () {
         $(".friend-dropbox").hide();
@@ -669,6 +657,8 @@
             xlr.setRequestHeader("Authorization", accessToken);
           },
           success: function (response) {
+
+            roomMemberCnt();
             // 컨텐츠 넣기
             $("#contents-area").empty();
             let tempContentsArea = `
@@ -824,6 +814,12 @@
       }
 
       function deleteCommunity() {
+        //게시물 삭제 전 채팅방 삭제
+        let check = roomInfo();
+        if(check!=null){
+          deleteChatRoom();
+        }
+
         $.ajax({
           type: "DELETE",
           url: `http://localhost:8080/boards/communities/${communityId}`,
@@ -1052,6 +1048,58 @@
         })
       }
 
+      function roomInfo() {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/chat/room?roomId=" + communityId,
+          async: false,
+          success: function (response) {
+            return response.roomId
+          }
+        })
+      }
+
+
+      function enterRoom() {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/chat/room?roomId=" + communityId,
+          async: false,
+          success: function () {
+            location.href = "./h-4_chat.html?roomId=" + communityId;
+          }
+        })
+      }
+
+      function roomMemberCnt() {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/chat/room?roomId=" + communityId,
+          async: false,
+          success: function (response) {
+            console.log(response.maxUserCnt);
+
+            $(".crew").empty();
+
+            let crew = `<div style="margin-left: 600px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+
+            $(".crew").append(crew);
+
+          }
+        })
+      }
+
+      function deleteChatRoom(){
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/chat/delRoom?roomId=" + communityId,
+          async: false,
+          success: function (response) {
+            console.log("채팅방 삭제 성공");
+          }
+        })
+      }
+
       function moveModifyPage() {
         window.location.href = "h-5_communityModify.html";
       }
@@ -1060,5 +1108,6 @@
         window.location.href = "h-1_communityMain.html";
       }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   </body>
 </html>

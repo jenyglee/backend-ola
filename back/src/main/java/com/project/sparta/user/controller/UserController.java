@@ -3,20 +3,16 @@ package com.project.sparta.user.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
-import com.project.sparta.security.UserDetailsImpl;
-import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.service.KakaoService;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.servlet.http.Cookie;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,19 +46,10 @@ public class UserController {
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        // code: 카카오 서버로부터 받은 인가 코드
-        // new KakaoApi
-        System.out.println("code = " + code);
-         String createToken = kakaoService.kakaoLogin(code, response);
-         // Cookie 생성 및 직접 브라우저에 자동으로 세팅하게 된다.
-         //Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, createToken.substring(7));
-         //cookie.setPath("/");
-         //response.addCookie(cookie);
-        //HttpHeaders response = new HttpHeaders()''
-        //.sendRedirect("/");
-        return "http://localhost:63342/front/index.html"; // 회원가입 이어서 폼
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+        return kakaoService.kakaoLogin(code, response);
     }
+
 
     @ApiOperation(value = "네이버 로그인",response = Join.class)
     //네이버 로그인
@@ -75,6 +62,7 @@ public class UserController {
     @GetMapping("/login/google")
     public void googleLogin() {
     }
+
 
     //로그아웃
     @ApiOperation(value = "로그아웃",response = Join.class)

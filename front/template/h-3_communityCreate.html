@@ -416,7 +416,6 @@
   var communityId = localStorage.getItem("communityId");
   var imageUrlList = [];
   var tags = [];
-  var isChat = false;
 
   $(document).ready(function () {
     $(".friend-dropbox").hide();
@@ -460,11 +459,7 @@
 
   // 작성하기
   function createCommunity() {
-<<<<<<< HEAD
-
-=======
     var accessToken = localStorage.getItem("accessToken");
->>>>>>> d5a0e323ffc0324fa2eedf05863e08f35d7b5b8e
     if($("#title").val() == "" || $("#contents").val() == ""){
       alert("제목 또는 내용이 비었습니다.");
       return;
@@ -653,8 +648,6 @@
     tags = [];
     $("#tag-select-list").empty();
   }
-<<<<<<< HEAD
-=======
 
   function regenerateToken(){
     var refreshToken = localStorage.getItem("refreshToken")
@@ -675,7 +668,6 @@
       }
     })
   }
->>>>>>> d5a0e323ffc0324fa2eedf05863e08f35d7b5b8e
 </script>
 </body>
 </html>
