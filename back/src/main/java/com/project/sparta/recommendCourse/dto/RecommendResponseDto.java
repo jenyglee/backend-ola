@@ -14,18 +14,16 @@ public class RecommendResponseDto {
 
     private Long boardId;
     private String title;
-    private String thumbnail;
     private List<String> imgList;
     private LocalDateTime createDate;
     private Long likeCount;
     private String nickName;
 
     @Builder
-    public RecommendResponseDto(Long boardId, String title, String thumbnail, List<String> imgList,
+    public RecommendResponseDto(Long boardId, String title, List<String> imgList,
         LocalDateTime createDate, Long likeCount, String nickName) {
         this.boardId = boardId;
         this.title = title;
-        this.thumbnail = thumbnail;
         this.imgList = imgList;
         this.createDate = createDate;
         this.likeCount = likeCount;
