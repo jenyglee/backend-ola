@@ -3,6 +3,7 @@ package com.project.sparta.like.repository;
 import com.project.sparta.like.entity.CourseLike;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ public interface LikeRecommendRepository extends JpaRepository<CourseLike,Long> 
     Optional<CourseLike> findByUserEmailAndCourseBoard(@Param("email") String email,@Param("courseBoard") RecommendCourseBoard courseBoard);
 
 
-    Long countByCourseBoard_Id(Long id);
-
+    @Query("delete from CourseLike cl where cl.courseBoard.id=:recommendId")
+    @Modifying
+    void deleteLikeAllByInRecommendId(@Param("recommendId") Long recommendId);
 }
