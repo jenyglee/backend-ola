@@ -8,6 +8,7 @@ import static com.project.sparta.user.entity.QUser.user;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.entity.CommunityBoardImg;
 import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityComment.dto.CommentResponseDto;
@@ -30,6 +31,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,6 +48,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     private final QCommunityComment communityComment = new QCommunityComment("comment");
 
     private final QCommentLike commentLike = new QCommentLike("commLike");
+
 
 
     @Override
@@ -166,6 +169,16 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .commentList(commentCol)
             .build();
         return build;
+    }
+
+    @Override
+    public Long getBoardCount(Long id){
+        Long count = queryFactory.select(communityBoard.count())
+            .where(communityBoard.user.Id.eq(id))
+            .from(communityBoard)
+            .fetchOne();
+        System.out.println("보드 작성 수 : "+count);
+        return count;
     }
 
     //커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징

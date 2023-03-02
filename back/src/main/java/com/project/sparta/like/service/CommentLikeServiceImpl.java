@@ -1,6 +1,5 @@
 package com.project.sparta.like.service;
 
-import static com.project.sparta.like.entity.QCountLike.countLike;
 
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
@@ -10,10 +9,8 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.like.entity.BoardLike;
 import com.project.sparta.like.entity.CommentLike;
-import com.project.sparta.like.entity.CountLike;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
-import com.project.sparta.like.repository.LikeCommentRepositoryImpl;
 import com.project.sparta.user.entity.User;
 import java.security.PrivateKey;
 import lombok.RequiredArgsConstructor;
@@ -30,15 +27,6 @@ public class CommentLikeServiceImpl implements CommentLikeService{
     private final CommentRepository commentRepository;
     private final LikeCommentRepository likeCommentRepository;
 
-    private final LikeCommentRepositoryImpl likeCommentRepositoryImpl;
-
-    CountLike countLike = new CountLike();
-    @Override
-    public boolean start_schedule()
-    {
-        boolean scheudlerOn = true;
-        return scheudlerOn;
-    }
     @Override
     public void likeComment(Long id, User user){
         CommunityComment comment = commentRepository.findById(id).orElseThrow(()->new CustomException(Status.NOT_FOUND_POST));
@@ -57,14 +45,6 @@ public class CommentLikeServiceImpl implements CommentLikeService{
         //레파지토리에 저장
 
         likeCommentRepository.save(commentLike);
-        Long temp = likeCommentRepositoryImpl.initCountLike();
-        if(temp>=0){
-            countLike.add(temp);
-        }
-        if(temp>=5){
-            start_schedule();
-
-        }
 
     }
     @Override
@@ -76,16 +56,7 @@ public class CommentLikeServiceImpl implements CommentLikeService{
         //레파지토리에서 좋아요를 삭제한다.
         likeCommentRepository.delete(findByUserEmail);
 
-        Long temp = likeCommentRepositoryImpl.initCountLike();
-        if(temp>0)
-        {
-            countLike.sub(temp);
-        }
-
 
     }
-
-
-
 
 }

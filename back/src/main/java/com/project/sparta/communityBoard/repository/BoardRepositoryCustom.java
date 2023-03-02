@@ -19,4 +19,6 @@ public interface BoardRepositoryCustom {
     Page<CommunityBoardAllResponseDto> communityMyList(Pageable pageable, Long userId);
 
     Page<CommunityBoardAllResponseDto> myChatBoardList(Long userId, PageRequest pageRequest);
+
+    Long getBoardCount(Long id);
 }
