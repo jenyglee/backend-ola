@@ -6,6 +6,7 @@ import static com.project.sparta.user.entity.QUser.user;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
+import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.entity.QCommunityComment;
 import com.project.sparta.hashtag.entity.Hashtag;
@@ -182,7 +183,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     //커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징
     @Override
     public Page<CommunityBoardAllResponseDto> communityAllList(
-        CommunitySearchCondition condition, Pageable pageable) {
+        CommunitySearchCondition condition, Pageable pageable) { // condition.getHashtagId()
         StringPath likeCount = Expressions.stringPath("likeCount");
         StringPath date = Expressions.stringPath("date");
         OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getSort(), likeCount, date);

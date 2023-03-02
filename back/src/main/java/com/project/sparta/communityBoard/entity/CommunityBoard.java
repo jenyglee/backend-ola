@@ -35,8 +35,6 @@ public class CommunityBoard extends Timestamped {
     private String contents;  //내용
 //    @OneToMany
 //    private List<Hashtag> tagList = new ArrayList<>();  //채팅방 태그리스트
-
-
     @OneToMany(mappedBy = "communityBoard", cascade = CascadeType.REMOVE)
     private List<CommunityTag> tagList = new ArrayList<>();
 
