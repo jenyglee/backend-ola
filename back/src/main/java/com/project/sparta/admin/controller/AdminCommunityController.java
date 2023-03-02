@@ -32,9 +32,11 @@ public class AdminCommunityController {
         @RequestParam String title,
         @RequestParam String contents,
         @RequestParam String nickname,
-        @RequestParam Long hashtagId) {
+        @RequestParam Long hashtagId,
+        @RequestParam String chatStatus,
+        @RequestParam String orderByLike) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
-            page, size, title, contents, nickname, hashtagId);
+            page, size, title, contents, nickname, hashtagId, chatStatus, orderByLike);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

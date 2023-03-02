@@ -21,9 +21,9 @@ public interface CommunityBoardService {
 
     CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname);
     PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page, int size,
-        String titleCond, String contentsCond, String nicknameCond, Long hashtagId);
+        String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort);
     PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
-        String titleCond, String contentsCond, String nicknameCond, Long hashtagId);
+        String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort);
 
     PageResponseDto<List<CommunityBoardAllResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
