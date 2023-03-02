@@ -1,438 +1,582 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8" />
+        <title>메인페이지</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>메인페이지</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:title" content="" />
+        <meta property="og:type" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+        <link rel="manifest" href="site.webmanifest" />
+        <link rel="apple-touch-icon" href="icon.png" />
+        <!-- Place favicon.ico in the root directory -->
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/reset.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta name="theme-color" content="#fafafa" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+        />
+        <script
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+        ></script>
+        <style>
+            .container {
+                width: 1200px;
+                /*height: 1000px;*/
+                padding: 0;
+                /*background-color: #FFFBF4;*/
+            }
+            .post-slider {
+                margin-top: 100px;
+            }
+            .post-slider .post-wrapper {
+                width: 100%;
+                /*height:350px;*/
+                margin: 0px auto;
+                display: flex;
+                gap: 5px;
+            }
+            .post-slider .post-wrapper .post {
+                width: 285px;
+                /*height:350px;*/
+                display: inline-block;
+                padding: 0 10px;
+                /*background:gray;*/
+            }
+            .post-img-wrap {
+                width: 100%;
+                height: 250px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/menu.css">
-  <link rel="stylesheet" href="css/reset.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <style>
-    .container{
-      width: 1200px;
-      /*height: 1000px;*/
-      padding: 0;
-      /*background-color: #FFFBF4;*/
-    }
-    .post-slider{
-      margin-top: 100px;
-    }
-    .post-slider .post-wrapper{
-      width:100%;
-      /*height:350px;*/
-      margin:0px auto;
-      display: flex;
-      gap: 5px;
+            .post-img-wrap img {
+                height: 100%;
+            }
+            .top-area {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                margin-bottom: 30px;
+            }
+            .sider-title {
+                font-size: 30px;
+                font-weight: bold;
+            }
+            .post-text {
+            }
+            .post-text .title {
+                margin-top: 10px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .post-text .count {
+                font-size: 12px;
+            }
 
-    }
-    .post-slider .post-wrapper .post{
-      width:285px;
-      /*height:350px;*/
-      display:inline-block;
-      padding: 0 10px;
-      /*background:gray;*/
-    }
-    .post-img-wrap{
-      width: 100%;
-      height: 250px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+            .slick-prev,
+            .slick-next {
+                background-color: white;
+                width: 50px;
+                height: 50px;
+                margin-top: 100px;
+                border: none;
+                font-size: 20px;
+            }
 
-    .post-img-wrap img{
-      height: 100%;
-    }
-    .top-area{
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
-    .sider-title {
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .post-text{
+            .btn-style,
+            .btn-style:active,
+            .btn-style:focus {
+                background-color: #f46b3f;
+                border: 1px solid #f46b3f;
+            }
 
-    }
-    .post-text .title{
-      margin-top: 10px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .post-text .count{
-      font-size: 12px;
-    }
+            .btn-style:hover {
+                background-color: #e1572b;
+                border: 1px solid #e1572b;
+            }
 
-    .slick-prev,
-    .slick-next{
-      background-color: white;
-      width: 50px;
-      height: 50px;
-      margin-top: 100px;
-      border: none;
-      font-size: 20px;
-    }
+            .tag-box {
+                margin-top: 50px;
+                margin-bottom: 100px;
+            }
 
-    .btn-style,
-    .btn-style:active,
-    .btn-style:focus{
-      background-color: #F46B3F;
-      border: 1px solid #F46B3F;
-    }
+            .btn-group {
+                width: 700px;
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 auto;
+            }
+            .btn-group > label {
+                border-radius: 0;
+                margin: 10px;
+                border: 1px solid #f46b3f;
+                color: #f46b3f;
+            }
+            .btn-group > label:hover,
+            .btn-check:checked + .btn-outline-primary {
+                background-color: #f46b3f;
+                border: 1px solid #f46b3f;
+            }
+        </style>
+    </head>
 
-    .btn-style:hover{
-      background-color: #E1572B;
-      border: 1px solid #E1572B;
-    }
-
-  </style>
-</head>
-
-<body>
-<header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="static/img/logo_main.png" alt="로고" />
-  </div>
-  <div class="item-list">
-    <a href="./template/g-1_recommend.html">코스추천</a>
-    <a href="template/h-1_communityMain.html">커뮤니티</a>
-    <a href="./template/i-1_shopMain.html">쇼핑몰</a>
-    <a href="./template/j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="static/img/icon_friends.png" />
-      </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
-          </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn">검색</button>
-          </div>
-        </div>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+    <body>
+        <header class="menu">
+            <div class="bg-line"></div>
+            <div class="logo-wrap">
+                <img class="img" src="static/img/logo_main.png" alt="로고" />
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+            <div class="item-list">
+                <a href="./template/g-1_recommend.html">코스추천</a>
+                <a href="template/h-1_communityMain.html">커뮤니티</a>
+                <a href="./template/i-1_shopMain.html">쇼핑몰</a>
+                <a href="./template/j-1_noticeMain.html">공지사항</a>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
+            <div class="right">
+                <div class="friend">
+                    <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                        <img class="img" src="static/img/icon_friends.png" />
+                    </div>
+                    <div class="friend-dropbox">
+                        <div class="search-area">
+                            <div class="mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleFormControlInput1"
+                                    placeholder="닉네임 검색"
+                                />
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary search-btn">
+                                    검색
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="line"></div>
+                        <p class="recommend-title">추천 친구</p>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bell">
+                    <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                        <img class="img" src="static/img/icon_bell.png" />
+                    </div>
+                    <div class="bell-dropbox">
+                        <p>알람</p>
+                        <ul>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="my-profile-wrap">
+                    <div class="img-wrap">
+                        <img class="img" src="static/img/icon_profile_default.png " />
+                    </div>
+                    <p class="text">나와바리나와바님</p>
+                </div>
             </div>
-          </li>
-        </ul>
-        <div class="line"></div>
-        <p class="recommend-title">추천 친구</p>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
+        </header>
+        <main class="container">
+            <div class="post-slider">
+                <div class="top-area">
+                    <h1 class="sider-title">현재 모집중인 크루</h1>
+                    <button type="button" class="btn btn-primary btn-style">
+                        직접 크루원 모으기
+                    </button>
+                </div>
+                <div class="post-wrapper">
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
+            <div class="post-slider" style="margin-top: 50px">
+                <div class="top-area">
+                    <h1 class="sider-title">지금 핫한 등산코스</h1>
+                </div>
+                <div class="post-wrapper">
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-img-wrap">
+                            <img src="static/img/bestshot3.jpg" alt="사진" />
+                        </div>
+                        <div class="post-text">
+                            <p class="title">같이 등산할분~</p>
+                            <p class="count">1/5 참여중</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="static/img/icon_profile_default.png" />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="static/img/icon_bell.png" />
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="my-profile-wrap">
-      <div class="img-wrap">
-        <img class="img" src="static/img/icon_profile_default.png " />
-      </div>
-      <p class="text">나와바리나와바님</p>
-    </div>
-  </div>
+        </main>
+        <div class="tag-box">
+            <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic checkbox toggle button group"
+            ></div>
+        </div>
+        <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
 
-</header>
-<main class="container">
-  <div class="post-slider">
-    <div class="top-area">
-      <h1 class="sider-title">현재 모집중인 크루</h1>
-      <button type="button" class="btn btn-primary btn-style">직접 크루원 모으기</button>
-    </div>
-    <div class="post-wrapper">
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="post-slider" style="margin-top: 50px">
-    <div class="top-area">
-      <h1 class="sider-title">지금 핫한 등산코스</h1>
-    </div>
-    <div class="post-wrapper">
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-      <div class="post">
-        <div class="post-img-wrap">
-          <img src="static/img/bestshot3.jpg" alt="사진" />
-        </div>
-        <div class="post-text">
-          <p class="title">같이 등산할분~</p>
-          <p class="count">1/5 참여중</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-<!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
+        <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
 
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            let list = [
+                { id: 1, name: "주변맛집" },
+                { id: 2, name: "등산용품" },
+                { id: 3, name: "등산데이트" },
+                { id: 4, name: "등산친구" },
+                { id: 5, name: "봄산" },
+                { id: 6, name: "여름산" },
+                { id: 7, name: "가을산" },
+                { id: 8, name: "겨울산" },
+                { id: 9, name: "안전수칙" },
+                { id: 10, name: "산악회" },
+                { id: 11, name: "10~20대" },
+                { id: 12, name: "30~40대" },
+                { id: 13, name: "50~60대" },
+                { id: 14, name: "등산꿀팁" },
+                { id: 15, name: "산추천" },
+                { id: 16, name: "계곡추천" },
+                { id: 17, name: "등린이" },
+                { id: 18, name: "등산입문자" },
+                { id: 19, name: "등산매니아" },
+                { id: 20, name: "등산모임" },
+                { id: 21, name: "1시간걸리는산" },
+                { id: 22, name: "2시간걸리는산" },
+                { id: 23, name: "3시간걸리는산" },
+            ]
+            $(document).ready(function () {
+                $(".friend-dropbox").hide()
+                $(".bell-dropbox").hide()
 
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-  });
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
+                for (let i = 0; i < list.length; i++) {
+                    var temp = `
+                 <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
+                <label class="btn btn-outline-primary" for="btncheck${i}">'${list[i].id}' ${list[i].name} </label>
+            `
+                    $(".btn-group").append(temp)
+                }
+            })
+            function handleToggleBellDropBox() {
+                $(".bell-dropbox").toggle()
+                $(".friend-dropbox").hide()
+            }
 
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
+            function handleToggleFriendDropBox() {
+                $(".friend-dropbox").toggle()
+                $(".bell-dropbox").hide()
+            }
 
-  $('.post-wrapper').slick({
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-  });
+            $(".post-wrapper").slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+            })
 
-  $(".slick-prev").text("<")
-  $(".slick-next").text(">")
+            $(".slick-prev").text("<")
+            $(".slick-next").text(">")
 
-  window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-  ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
+            function getRecommendList(page, size) {
+                // 1. 데이터 초기화를 해야됨.
+                $("#cardBody").empty()
+                const accessToken = localStorage.getItem("accessToken")
 
+                console.log("searchScore" + searchScore)
+                console.log("searchSeason" + searchSeason)
+                console.log("searchAltitude" + searchAltitude)
+                console.log("searchRegion" + searchRegion)
+                console.log("searchOrderByLike" + searchOrderByLike)
+
+                // 2. 통신해서 불러오기
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/boards/recommends",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    error: function (response) {
+                        console.log("response : ", response)
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                        }
+                    },
+                })
+            }
+        </script>
+    </body>
 </html>
-

@@ -12,6 +12,7 @@ import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.like.service.BoardLikeService;
 import com.project.sparta.like.service.CommentLikeService;
+import com.project.sparta.like.service.RecommendCourseLikeService;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
@@ -50,6 +51,7 @@ public class initDb {
         initService.communityInit();
         initService.communityCommentInit();
         initService.communityLike();
+        initService.recommendLike();
         initService.noticeInit();
     }
 
@@ -75,9 +77,10 @@ public class initDb {
         NoticeBoardService noticeBoardService;
         @Autowired
         BoardLikeService boardLikeService;
-
         @Autowired
         CommentLikeService commentLikeService;
+        @Autowired
+        RecommendCourseLikeService recommendCourseLikeService;
 
         @Transactional
         public void hashtagInit(){
@@ -390,6 +393,39 @@ public class initDb {
             commentLikeService.likeComment(2L, user6);
             commentLikeService.likeComment(2L, user7);
             commentLikeService.likeComment(2L, user8);
+        }
+
+        @Transactional
+        public void recommendLike() {
+            User user1 = em.find(User.class, 1L);
+            User user2 = em.find(User.class, 2L);
+            User user3 = em.find(User.class, 3L);
+            User user4 = em.find(User.class, 4L);
+            User user5 = em.find(User.class, 5L);
+            User user6 = em.find(User.class, 6L);
+            recommendCourseLikeService.likeRecommendCourse(4L, user1);
+            recommendCourseLikeService.likeRecommendCourse(4L, user2);
+            recommendCourseLikeService.likeRecommendCourse(4L, user3);
+            recommendCourseLikeService.likeRecommendCourse(4L, user4);
+            recommendCourseLikeService.likeRecommendCourse(4L, user5);
+            recommendCourseLikeService.likeRecommendCourse(4L, user6);
+            recommendCourseLikeService.likeRecommendCourse(1L, user1);
+            recommendCourseLikeService.likeRecommendCourse(1L, user2);
+            recommendCourseLikeService.likeRecommendCourse(1L, user3);
+            recommendCourseLikeService.likeRecommendCourse(1L, user4);
+            recommendCourseLikeService.likeRecommendCourse(1L, user5);
+            recommendCourseLikeService.likeRecommendCourse(9L, user1);
+            recommendCourseLikeService.likeRecommendCourse(9L, user2);
+            recommendCourseLikeService.likeRecommendCourse(9L, user3);
+            recommendCourseLikeService.likeRecommendCourse(9L, user4);
+            recommendCourseLikeService.likeRecommendCourse(12L, user1);
+            recommendCourseLikeService.likeRecommendCourse(12L, user2);
+            recommendCourseLikeService.likeRecommendCourse(12L, user3);
+            recommendCourseLikeService.likeRecommendCourse(17L, user1);
+            recommendCourseLikeService.likeRecommendCourse(17L, user2);
+            recommendCourseLikeService.likeRecommendCourse(2L, user1);
+
+
         }
 
         @Transactional
