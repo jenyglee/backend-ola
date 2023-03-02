@@ -330,7 +330,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     private Predicate nicknameEq(String nickname) {
         return nickname != "" ? communityBoard.user.nickName.contains(nickname) : null;
     }
-
     private Predicate hashtagEq(Long hashtagId) {
         return hashtagId != 0 ? communityTag.hashtag.id.eq(hashtagId) : null;
     }
