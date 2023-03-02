@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlarmDto {
-    private String roomId; // 방 번호
-    private String sender; // 구독하는 사람
+    private String roomName; // 방 이름
+    private String sender; // 채팅을 보낸 사람
+    private String message; //메세지
 }

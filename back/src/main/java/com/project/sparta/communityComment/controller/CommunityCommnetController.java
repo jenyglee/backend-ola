@@ -1,15 +1,10 @@
 package com.project.sparta.communityComment.controller;
 
-import com.project.sparta.alarm.controller.AlarmController;
-import com.project.sparta.alarm.dto.AlarmMessageDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
-import com.project.sparta.communityBoard.service.CommunityBoardServiceImpl;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
@@ -29,9 +24,6 @@ public class CommunityCommnetController {
 
     private final CommunityCommentService commentService;
 
-    private final AlarmController alarmController;
-
-    private final CommunityBoardServiceImpl communityBoardService;
 
     //커뮤니티 댓글 작성
     @ApiOperation(value = "커뮤니티 댓글 작성", response = Join.class)
@@ -41,18 +33,6 @@ public class CommunityCommnetController {
         , @AuthenticationPrincipal UserDetailsImpl userDetail) {
 
         commentService.createCommunityComments(boardId, communityRequestDto, userDetail.getUser());
-        CommunityBoardOneResponseDto board = communityBoardService.getBoard(boardId);
-
-        LocalDateTime now = LocalDateTime.now();
-        AlarmMessageDto messageDto = AlarmMessageDto.builder()
-                                    .title(board.getTitle())
-                                    .writerNickName(board.getNickName())
-                                    .sendNickName(userDetail.getUser().getNickName())
-                                    .boardType("댓글")
-                                    .time(now)
-                                    .build();
-
-        alarmController.alarmSendMessage("1", messageDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

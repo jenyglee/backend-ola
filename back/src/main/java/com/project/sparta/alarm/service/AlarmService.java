@@ -6,12 +6,9 @@ import java.util.Map;
 
 public interface AlarmService {
 
-    AlarmRoomDto createAlarmRoom(String roomId, String roomName, int alarmMaxCnt);
+    AlarmRoomDto createAlarmRoom(String roomName, String alarmType);
 
-    void plusUserCnt(String roomId);
-    void minusUserCnt(String roomId);
-
-    String addUser(Map<String, AlarmRoomDto> alarm, String roomId, String userName);
+    String addUser(Map<String, AlarmRoomDto> alarm, String roomName, String userName);
 
 }
 

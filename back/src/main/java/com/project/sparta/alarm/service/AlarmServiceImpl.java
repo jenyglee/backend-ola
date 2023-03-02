@@ -13,14 +13,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AlarmServiceImpl implements AlarmService{
 
-
     @Override
-    public AlarmRoomDto createAlarmRoom(String roomId, String roomName, int alarmMaxCnt) {
+    public AlarmRoomDto createAlarmRoom(String roomName, String alarmType) {
 
         AlarmRoomDto alarmRoom = AlarmRoomDto.builder()
-            .roomId(roomId)
             .roomName(roomName)
-            .userCount(alarmMaxCnt) // 최대 인원수 제한
+            .alarmType(alarmType) // 최대 인원수 제한
             .build();
 
         alarmRoom.setUserList(new ConcurrentHashMap<String, String>());
@@ -29,19 +27,6 @@ public class AlarmServiceImpl implements AlarmService{
         AlarmMap.getInstance().getAlarmRooms().put(alarmRoom.getRoomId(), alarmRoom);
 
         return alarmRoom;
-    }
-
-    @Override
-    public void plusUserCnt(String roomId) {
-        log.info("cnt {}", AlarmMap.getInstance().getAlarmRooms().get(roomId).getUserCount());
-        AlarmRoomDto alarmRoom = AlarmMap.getInstance().getAlarmRooms().get(roomId);
-        alarmRoom.setUserCount(alarmRoom.getUserCount()+1);
-    }
-
-    @Override
-    public void minusUserCnt(String roomId) {
-        AlarmRoomDto alarmRoom = AlarmMap.getInstance().getAlarmRooms().get(roomId);
-        alarmRoom.setUserCount(alarmRoom.getUserCount()-1);
     }
 
     // 채팅방 유저 리스트에 유저 추가

@@ -18,6 +18,6 @@ public class AlarmRoomDto {
     @NotNull
     private String roomId;      //알람방 아이디
     private String roomName;    //알람방 이름
-    private long userCount;     //알람방 인원수
+    private String alarmType;     //알림 종류
     public ConcurrentMap<String, String> userList = new ConcurrentHashMap<>();
 }
