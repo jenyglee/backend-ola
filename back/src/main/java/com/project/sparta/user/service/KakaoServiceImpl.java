@@ -32,12 +32,15 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class KakaoServiceImpl implements KakaoService {
+
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final RedisTemplate<String, String> redisTemplate;
+
     @Override
-    public ResponseEntity<TokenDto> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
+    public ResponseEntity<TokenDto> kakaoLogin(String code, HttpServletResponse response)
+        throws JsonProcessingException {
         //1. '인가 코드'로 Access Token 요청
         String accessToken = getToken(code);
 
@@ -47,13 +50,14 @@ public class KakaoServiceImpl implements KakaoService {
         //3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
         //4. JWT 토큰 반환
-        String refreshToken = jwtUtil.generateRefreshToken(kakaoUser.getEmail(), kakaoUser.getRole());
+        String refreshToken = jwtUtil.generateRefreshToken(kakaoUser.getEmail(),
+            kakaoUser.getRole());
         //System.out.println("refreshToken = " + refreshToken);
         TokenDto tokenDto = new TokenDto(
-            jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl()),
-            refreshToken,
-            kakaoUser.getRole()
-            );
+            jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(),
+                kakaoUser.getGradeEnum(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl()),
+            refreshToken
+        );
         redisTemplate.opsForValue().set(
             kakaoUser.getEmail(),
             refreshToken,
@@ -69,7 +73,7 @@ public class KakaoServiceImpl implements KakaoService {
 
     // '인가 코드'로 Access Token 요청
     @Override
-    public String getToken(String code) throws JsonProcessingException{
+    public String getToken(String code) throws JsonProcessingException {
         //HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -82,12 +86,13 @@ public class KakaoServiceImpl implements KakaoService {
         body.add("code", code);
 
         // HTTP 요청 보내기
-        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body,
+            headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange("https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                kakaoTokenRequest,
-                String.class
+            HttpMethod.POST,
+            kakaoTokenRequest,
+            String.class
         );
 
         // HTTP 응답(JSON) -> 액세스 토큰 파싱
@@ -98,7 +103,7 @@ public class KakaoServiceImpl implements KakaoService {
     }
 
     // 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
-    private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException{
+    private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         //Http Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -108,10 +113,10 @@ public class KakaoServiceImpl implements KakaoService {
         HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
         RestTemplate rt = new RestTemplate();
         ResponseEntity<String> response = rt.exchange(
-                "https://kapi.kakao.com/v2/user/me", // 401 unAuthorize
-                HttpMethod.POST,
-                kakaoUserInfoRequest,
-                String.class
+            "https://kapi.kakao.com/v2/user/me", // 401 unAuthorize
+            HttpMethod.POST,
+            kakaoUserInfoRequest,
+            String.class
         );
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -119,10 +124,9 @@ public class KakaoServiceImpl implements KakaoService {
         // TODO  age, phoneNumber, userImageUrl 는 어떻게 가져와야하는지 알아보기(재원)
         long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
-                .get("nickname").asText();
+            .get("nickname").asText();
         String email = jsonNode.get("kakao_account")
-                .get("email").asText();
-
+            .get("email").asText();
 
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
 
@@ -134,7 +138,7 @@ public class KakaoServiceImpl implements KakaoService {
         // DB 에 중복된 Kakao Id 가 있는지 확인
         Long kakaoId = kakaoUserInfo.getId();
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
-                .orElse(null);
+            .orElse(null);
         if (kakaoUser == null) {
             // 카카오 사용자 email 동일한 email 가진 회원이 있는지 확인
             String kakaoEmail = kakaoUserInfo.getEmail();
@@ -152,7 +156,9 @@ public class KakaoServiceImpl implements KakaoService {
                 // email: kakao email
                 String email = kakaoUserInfo.getEmail();
 
-                kakaoUser = new User(kakaoId, kakaoUserInfo.getNickName(), encodedPassword, email, kakaoUserInfo.getAge(), kakaoUserInfo.getPhoneNumber() ,  kakaoUserInfo.getUserImageUrl());
+                kakaoUser = new User(kakaoId, kakaoUserInfo.getNickName(), encodedPassword, email,
+                    kakaoUserInfo.getAge(), kakaoUserInfo.getPhoneNumber(),
+                    kakaoUserInfo.getUserImageUrl());
             }
 
             userRepository.save(kakaoUser);

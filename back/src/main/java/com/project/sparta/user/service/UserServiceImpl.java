@@ -43,6 +43,7 @@ import static com.project.sparta.exception.api.Status.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final HashtagRepository hashtagRepository;
@@ -77,24 +78,26 @@ public class UserServiceImpl implements UserService {
         List<Long> longList = signupDto.getTagList();
         List<UserTag> userTagList = new ArrayList<>();
 
-        if(longList!=null)
-        {
+        if (longList != null) {
             for (Long along : longList) {
-                Hashtag hashtag = hashtagRepository.findById(along).orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
+                Hashtag hashtag = hashtagRepository.findById(along)
+                    .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
                 UserTag userTag = new UserTag(saveUser, hashtag);
                 userTagRepository.save(userTag);
                 userTagList.add(userTag);
             }
         }
-        
+
         // 3. User에 List<UserTag>를 넣어준다.
         saveUser.updateUserTags(userTagList);
     }
+
     //로그인
     @Override
     public ResponseEntity<TokenDto> login(LoginRequestDto requestDto) {
 
-        User user = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        User user = userRepository.findByEmail(requestDto.getEmail())
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
@@ -102,16 +105,16 @@ public class UserServiceImpl implements UserService {
         String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
         TokenDto tokenDto = new TokenDto(
-                jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
-                refresh_token,
-                user.getRole()
+            jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
+                user.getNickName(), user.getUserImageUrl()),
+            refresh_token
         );
 
         redisTemplate.opsForValue().set(
-                user.getEmail(),
-                refresh_token,
-                JwtUtil.REFRESH_TOKEN_TIME,
-                TimeUnit.MILLISECONDS
+            user.getEmail(),
+            refresh_token,
+            JwtUtil.REFRESH_TOKEN_TIME,
+            TimeUnit.MILLISECONDS
         );
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -122,29 +125,30 @@ public class UserServiceImpl implements UserService {
 
     //로그아웃
     @Transactional
-    public void logout(TokenDto tokenRequestDto){
+    public void logout(TokenDto tokenRequestDto) {
 
         String resultToekn = tokenRequestDto.getAccessToken();
 
-        if(!jwtUtil.validateToken(resultToekn)){
+        if (!jwtUtil.validateToken(resultToekn)) {
             throw new CustomException(INVALID_TOKEN);
         }
         Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
-        if(redisTemplate.opsForValue().get(authentication.getName())!=null){
+        if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
             redisTemplate.delete(authentication.getName());
         }
 
         Long expiration = jwtUtil.getExpiration(resultToekn);
 
-        redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue()
+            .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
     }
 
     // 이메일 중복확인
     @Override
     public void validateEmail(ValidateEmailDto emailDto) {
         Optional<User> findUser = userRepository.findByEmail(emailDto.getEmail());
-        if(findUser.isPresent()){
+        if (findUser.isPresent()) {
             throw new CustomException(CONFLICT_EMAIL);
         }
     }
@@ -153,7 +157,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void validateNickName(ValidateNickNameDto nickNameDto) {
         Optional<User> findUser = userRepository.findByNickName(nickNameDto.getNickName());
-        if(findUser.isPresent()){
+        if (findUser.isPresent()) {
             throw new CustomException(CONFLICT_NICKNAME);
         }
     }
@@ -209,20 +213,22 @@ public class UserServiceImpl implements UserService {
                 throw new CustomException(DISCORD_TOKEN);
             }
 
-            User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+            User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
 
-            String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
+            String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(),
+                user.getRole());
             TokenDto new_tokenDto = new TokenDto(
-                    jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getNickName(), user.getUserImageUrl()),
-                    new_refresh_token,
-                    user.getRole()
+                jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
+                    user.getNickName(), user.getUserImageUrl()),
+                new_refresh_token
             );
 
             redisTemplate.opsForValue().set(
-                    authentication.getName(),
-                    new_refresh_token,
-                    JwtUtil.REFRESH_TOKEN_TIME,
-                    TimeUnit.MILLISECONDS
+                authentication.getName(),
+                new_refresh_token,
+                JwtUtil.REFRESH_TOKEN_TIME,
+                TimeUnit.MILLISECONDS
             );
 
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -235,12 +241,12 @@ public class UserServiceImpl implements UserService {
 
     //자동 등업
     @Override
-    public void upgrade(UpgradeRequestDto requestDto, Long userId){
+    public void upgrade(UpgradeRequestDto requestDto, Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        if(requestDto.getGrade().equals("MANIA")){
+        if (requestDto.getGrade().equals("MANIA")) {
             user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
-        }else if(requestDto.getGrade().equals("GOD")){
+        } else if (requestDto.getGrade().equals("GOD")) {
             user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
         }
     }
@@ -300,11 +306,11 @@ public class UserServiceImpl implements UserService {
     public void changeGrade(UserGradeDto gradeDto, Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        if(gradeDto.getGrade() == 0){
+        if (gradeDto.getGrade() == 0) {
             user.changeGrade(UserGradeEnum.MOUNTAIN_CHILDREN);
-        }else if(gradeDto.getGrade() == 1){
+        } else if (gradeDto.getGrade() == 1) {
             user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
-        }else if(gradeDto.getGrade() == 2){
+        } else if (gradeDto.getGrade() == 2) {
             user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
         }
     }
@@ -315,13 +321,12 @@ public class UserServiceImpl implements UserService {
     public void changeStatus(UserStatusDto statusDto, Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        if(statusDto.getStatus() == 0){
+        if (statusDto.getStatus() == 0) {
             user.changeStatus(StatusEnum.USER_WITHDRAWAL);
-        }else if(statusDto.getStatus() == 1){
+        } else if (statusDto.getStatus() == 1) {
             user.changeStatus(StatusEnum.USER_REGISTERED);
         }
     }
-
 
 
 }

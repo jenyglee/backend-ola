@@ -10,12 +10,10 @@ import lombok.NoArgsConstructor;
 public class TokenDto {
     private String accessToken;
     private String refreshToken;
-    private UserRoleEnum role;
 
     @Builder
-    public TokenDto(String accessToken, String refreshToken, UserRoleEnum role) {
+    public TokenDto(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.role = role;
     }
 }

@@ -38,6 +38,7 @@ dependencies {
 
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
+    compile("com.querydsl:querydsl-jpa")
 
     //S3 의존성 추가
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
