@@ -510,7 +510,7 @@
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&orderByLike=likeDesc",
+                    url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },

@@ -796,7 +796,6 @@
     });
   }
 
-<<<<<<< HEAD
   function logout(){
     const accessToken = localStorage.getItem("accessToken");
     $.ajax({
@@ -818,7 +817,7 @@
       },
     })
   }
-=======
+  
   function connect(event) {
     // 연결하고자하는 Socket 의 endPoint
     var socket = new SockJS('http://localhost:8080/ws-stomp');
@@ -859,7 +858,6 @@
 
       // $("#alarm").append(str);
     }
->>>>>>> 38b22f8f5c24cf9080bb69647341c59b03369e71
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
