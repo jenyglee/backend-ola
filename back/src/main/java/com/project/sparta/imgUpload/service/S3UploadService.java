@@ -3,6 +3,7 @@ package com.project.sparta.imgUpload.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import com.project.sparta.imgUpload.dto.PreSignedURLResponseDto;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -119,10 +120,11 @@ public class S3UploadService {
 
 
     //미리 서명된 URL 생성 및 객체 업로드
-    public String signBucket(String fileName) {
+    public PreSignedURLResponseDto signBucket(String fileName) {
         S3Presigner preSigner = getPreSigner();
         String keyName = "ola/" + createFileName(fileName);
         String bucketName = bucket;
+
 
 
         try {
@@ -156,8 +158,13 @@ public class S3UploadService {
 
             connection.getResponseCode();
             System.out.println("HTTP response code is " + connection.getResponseCode());
+            PreSignedURLResponseDto preSignedURLResponseDto = PreSignedURLResponseDto.builder()
+                    .preSignedURL(url.toString())
+                    .imageName(keyName)
+                    .build();
 
-            return url.toString();
+
+            return preSignedURLResponseDto;
 
         } catch (S3Exception | IOException e) {
             e.getStackTrace();

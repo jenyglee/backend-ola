@@ -1,6 +1,7 @@
 package com.project.sparta.imgUpload.controller;
 
 
+import com.project.sparta.imgUpload.dto.PreSignedURLResponseDto;
 import com.project.sparta.imgUpload.service.S3UploadService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
@@ -37,9 +38,9 @@ public class S3Controller {
 //    }
 
     @PostMapping("/preSignedURL")
-    public String GeneratePreSignedURL(@RequestBody String fileName){
+    public PreSignedURLResponseDto GeneratePreSignedURL(@RequestBody String fileName){
 
-        String preSignedURL = s3UploadService.signBucket(fileName);
+        PreSignedURLResponseDto preSignedURL = s3UploadService.signBucket(fileName);
 
         return preSignedURL;
     }

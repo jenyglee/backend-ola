@@ -375,7 +375,7 @@
         </div>
         <div class="w_9">
           <div class="b_1">
-            <button type="button" id="btn_1" onclick="createRecommendBoaed()">
+            <button type="button" id="btn_1" onclick=" createRecommendBoaed()">
               게시글 등록
             </button>
           </div>
@@ -444,7 +444,6 @@
             altitude: $("#recommendBoardAltitude").val(),
             contents: $("#recommendBoardContents").val(),
             region: $("#recommendBoardRegion").val(),
-            imgList: imageUrlList,
           }),
           xhrFields: {
             withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
@@ -478,7 +477,6 @@
           success: function (response) {
             localStorage.setItem("accessToken", response.accessToken);
             localStorage.setItem("refreshToken", response.refreshToken);
-            createRecommendBoaed();
           },
           error: function (response) {
             console.log("에러 : ", response);
@@ -489,6 +487,7 @@
       //이미지경로리스트 전역변수 지정.
       var imageUrlList = [];
       const imageInput = $("#chooseFile")[0];
+      var imgName = "";
 
       function imgPresignedURL(input) {
         const accessToken = localStorage.getItem("accessToken");
@@ -516,17 +515,15 @@
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken);
           },
-          data: JSON.stringify({ fileName: imageInput.files[0].name }),
+          data: imageInput.files[0].name,
 
           xhrFields: {
             withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: function (response) {
             console.log("preSignedURL : ", response);
-            imageUrlList.push(imageUpload(response));
+            imageUpload(response);
             // put 으로 이미지 넘기는 함수 실행
-            return imageUrlList;
-            console.log("imageUrlList : ", imageUrlList);
           },
           error: function (request, status, error) {
             console.log("에러난다..!");
@@ -536,25 +533,32 @@
         });
       }
 
-      function imageUpload(presignedURL) {
+      function imageUpload(presignedURLObject) {
         const accessToken = localStorage.getItem("accessToken");
-        var reader = new FileReader();
         var file = $("#chooseFile")[0].files[0];
         // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
         console.log("presignedURL 주소 찍히는지 보자.");
-        console.log("presignedURL : ", presignedURL);
+        console.log("presignedURL : ", presignedURLObject);
         console.log("file : ", file);
+        console.log(
+          "presignedURLObject.imageName : ",
+          presignedURLObject.imageName
+        );
+        console.log(
+          "presignedURLObject.preSignedURL : ",
+          presignedURLObject.preSignedURL
+        );
 
         $.ajax({
           type: "PUT",
-          url: presignedURL,
+          url: presignedURLObject.preSignedURL,
           // dataType: "multipart",
-          enctype: "multipart/form-data",
-          // contentType: "application/json; charset=utf-8",
+          // enctype: "multipart/form-data",
+          contentType: "image/png",
           processData: false,
-          contentType: false,
+          // contentType: false,
           beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", accessToken);
+            // xlr.setRequestHeader("Authorization", accessToken);
           },
           data: file,
           xhrFields: {
@@ -562,8 +566,9 @@
             withCredentials: false,
           },
           success: function (response) {
+            imgName = presignedURLObject.imageName;
             console.log("이미지 수정완료 : ");
-            return imageUrlList;
+            console.log("이미지 imgName : ", imgName);
           },
           error: function (request, status, error) {
             console.log("에러난다..!");
