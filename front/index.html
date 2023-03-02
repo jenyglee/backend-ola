@@ -27,51 +27,44 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-        />
-        <script
-            type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
-        ></script>
         <style>
             .container {
                 width: 1200px;
                 /*height: 1000px;*/
                 padding: 0;
-                /*background-color: #FFFBF4;*/
-            }
-            .post-slider {
                 margin-top: 100px;
+                /* background-color: #fffbf4; */
             }
-            .post-slider .post-wrapper {
-                width: 100%;
-                /*height:350px;*/
-                margin: 0px auto;
+
+            #recommend,
+            #community {
                 display: flex;
-                gap: 5px;
+                flex-wrap: nowrap;
+                grid-template-columns: repeat(4, 1fr);
+                width: 1200px;
+                gap: 20px;
             }
-            .post-slider .post-wrapper .post {
-                width: 285px;
-                /*height:350px;*/
-                display: inline-block;
-                padding: 0 10px;
-                /*background:gray;*/
-            }
-            .post-img-wrap {
+            .post {
                 width: 100%;
-                height: 250px;
+                cursor: pointer;
+            }
+            .post .post-img-wrap {
+                width: 285px;
+                height: 218px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
             }
-
-            .post-img-wrap img {
-                height: 100%;
+            .post .post-img-wrap img {
+                width: 100%;
             }
+
+            /* #recommend .post .post-text
+            #recommend .post .post-text .title
+            #recommend .post .post-text .heart-wrap
+            #recommend .post .post-text .heart-wrap .heart-img-wrap */
+
             .top-area {
                 display: flex;
                 width: 100%;
@@ -93,7 +86,25 @@
                 font-size: 12px;
             }
 
-            .slick-prev,
+            .heart-wrap {
+                display: flex;
+            }
+
+            .heart-wrap .heart-img-wrap {
+                width: 18px;
+                height: 18px;
+                margin-right: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            .heart-wrap .heart-img-wrap img {
+                width: 100%;
+            }
+
+            /* .slick-prev,
             .slick-next {
                 background-color: white;
                 width: 50px;
@@ -101,7 +112,7 @@
                 margin-top: 100px;
                 border: none;
                 font-size: 20px;
-            }
+            } */
 
             .btn-style,
             .btn-style:active,
@@ -339,144 +350,24 @@
                         직접 크루원 모으기
                     </button>
                 </div>
-                <div class="post-wrapper">
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
+                <div id="community">
+                    <!-- 커뮤니티 리스트 들어갈 자리 -->
                 </div>
             </div>
             <div class="post-slider" style="margin-top: 50px">
                 <div class="top-area">
                     <h1 class="sider-title">지금 핫한 등산코스</h1>
                 </div>
-                <div class="post-wrapper">
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
-                    <div class="post">
-                        <div class="post-img-wrap">
-                            <img src="static/img/bestshot3.jpg" alt="사진" />
-                        </div>
-                        <div class="post-text">
-                            <p class="title">같이 등산할분~</p>
-                            <p class="count">1/5 참여중</p>
-                        </div>
-                    </div>
+                <div id="recommend">
+                    <!-- 코스추천 리스트 들어갈 자리 -->
                 </div>
             </div>
         </main>
-        <div class="tag-box">
+        <div
+            class="tag-box"
+            style="width: 1200px; margin: 0 auto; margin-top: 50px; margin-bottom: 100px"
+        >
+            <h1 class="sider-title">관심사로 찾는 커뮤니티</h1>
             <div
                 class="btn-group"
                 role="group"
@@ -522,12 +413,15 @@
 
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
-                 <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
-                <label class="btn btn-outline-primary" for="btncheck${i}">'${list[i].id}' ${list[i].name} </label>
-            `
+                        <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
+                        <label class="btn btn-outline-primary" for="btncheck${i}" onclick="moveCommunityWithHashtag(${list[i].id})">'${list[i].id}' ${list[i].name} </label>
+                    `
                     $(".btn-group").append(temp)
                 }
+                getCrewCommunityList()
+                getRecommendLikeList()
             })
+
             function handleToggleBellDropBox() {
                 $(".bell-dropbox").toggle()
                 $(".friend-dropbox").hide()
@@ -538,42 +432,123 @@
                 $(".bell-dropbox").hide()
             }
 
-            $(".post-wrapper").slick({
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-            })
+            // $(".post-wrapper").slick({
+            //     slidesToShow: 4,
+            //     slidesToScroll: 1,
+            //     autoplay: true,
+            //     autoplaySpeed: 2000,
+            // })
 
-            $(".slick-prev").text("<")
-            $(".slick-next").text(">")
+            // $(".slick-prev").text("<")
+            // $(".slick-next").text(">")
 
-            function getRecommendList(page, size) {
-                // 1. 데이터 초기화를 해야됨.
-                $("#cardBody").empty()
+            function getCrewCommunityList() {
                 const accessToken = localStorage.getItem("accessToken")
-
-                console.log("searchScore" + searchScore)
-                console.log("searchSeason" + searchSeason)
-                console.log("searchAltitude" + searchAltitude)
-                console.log("searchRegion" + searchRegion)
-                console.log("searchOrderByLike" + searchOrderByLike)
-
-                // 2. 통신해서 불러오기
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:8080/boards/recommends",
+                    // TODO 현재 모집중인 것들이 뜨게 하는 쿼리문 추가 필요
+                    url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
                     success: function (response) {
-                        console.log(response)
+                        console.log("커뮤니티 response : ", response)
+                        for (let i = 0; i < response.data.length; i++) {
+                            var temp = `
+                            <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})">
+                                <div class="post-img-wrap">
+                                    <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                </div>
+                                <div class="post-text">
+                                    <p class="title">${response.data[i].title}</p>
+                                    <p class="count">1/5 참여중</p>
+                                </div>
+                            </div>
+                            `
+                            $("#community").append(temp)
+                        }
+                    },
+                    error: function (response) {
+                        console.log(
+                            "response.responseJSON.message.substring(0, 11) : ",
+                            response.responseJSON.message.substring(0, 11)
+                        )
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                        }
+                    },
+                })
+            }
+
+            function getRecommendLikeList() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&orderByLike=likeDesc",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("코스추천 response : ", response)
+                        for (let i = 0; i < response.data.length; i++) {
+                            var temp = `
+                                <div class="post" onclick="moveRecommendDetail(${response.data[i].boardId})">
+                                    <div class="post-img-wrap">
+                                        <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                    </div>
+                                    <div class="post-text">
+                                        <p class="title">${response.data[i].title}</p>
+                                        <div class="heart-wrap">
+                                            <div class="heart-img-wrap">
+                                                <img src="static/img/heart.png" alt="좋아요 하트" />
+                                            </div>
+                                            <p style="margin-bottom: 0; font-size: 14px">${response.data[i].likeCount}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                            $("#recommend").append(temp)
+                        }
                     },
                     error: function (response) {
                         console.log("response : ", response)
                         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
                             regenerateToken()
                         }
+                    },
+                })
+            }
+
+            function moveCommunityWithHashtag(id) {
+                localStorage.setItem("hashtagId", id)
+                window.location = "template/h-1_communityMain.html"
+            }
+
+            function moveCommunityDetail(id) {
+                localStorage.setItem("communityId", id)
+                window.location = "template/h-2_communityDetail.html"
+            }
+            function moveRecommendDetail(id) {
+                localStorage.setItem("recommendId", id)
+                window.location = "template/g-2_recommendDetail.html"
+            }
+
+            function regenerateToken() {
+                var refreshToken = localStorage.getItem("refreshToken")
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/auth/token/regenerate",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        refreshToken: refreshToken,
+                    }),
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response.accessToken)
+                        localStorage.setItem("refreshToken", response.refreshToken)
+                        getRecommend()
+                    },
+                    error: function (response) {
+                        console.log("에러 : ", response)
                     },
                 })
             }

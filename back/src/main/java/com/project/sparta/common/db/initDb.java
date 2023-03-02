@@ -320,7 +320,7 @@ public class initDb {
                                         "백록담으로 향하는 전체적인 코스 설명부터 겨울 등산 준비물과 주의할 사항까지 꾹꾹 담았다. \n" + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(4L, 5L, 6L))
                                 .imgList(imgList)
                                 .build(),
                         user1
@@ -339,7 +339,7 @@ public class initDb {
                                         "왕복 2시간 정도 소요되는 등산코스랍니다! " + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(10L, 11L, 12L))
                                 .imgList(imgList)
                                 .build(),
                         user1
@@ -353,7 +353,7 @@ public class initDb {
                                         " 다양한 하이킹 코스를 만날 수 있는 곳이에요. 하이킹 초보자라도 걱정하지 마세요" + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(13L, 14L, 15L))
                                 .imgList(imgList)
                                 .build(),
                         user1
