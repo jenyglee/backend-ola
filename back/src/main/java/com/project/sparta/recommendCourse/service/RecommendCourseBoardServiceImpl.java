@@ -131,7 +131,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
-        
+
         //게시글 좋아요 삭제
         likeRecommendRepository.deleteLikeAllByInRecommendId(id);
 

@@ -323,11 +323,9 @@
             <div id="title" class="w_1">
                 <!-- 타이틀 들어갈 자리 -->
             </div>
-            <div class="w_2">
+            <div id="image-wrap" class="w_2">
                 <!-- 이미지 들어갈 자리 -->
-                <div style="height: 500px; overflow: hidden; display: flex; align-items: center;">
-                    <img style="width: 100%;" src="./../static/img/DefaultMountain.png"  alt = "이미지" />
-                </div>
+                
             </div>
             <!-- 선 -->
             <hr style="margin-top: 30px"/>
@@ -465,6 +463,16 @@
                 <div style="margin-top:20px">점수 : ${score}.0 / 높이 : ${altitude}m</div>
             `
             $("#title").append(tempTitle);
+
+            // 이미지
+            for (let i = 0; i < response.imgList.length; i++) {
+                var tempImage = `
+                    <div  style="height: 500px; overflow: hidden; display: flex; align-items: center; margin-bottom:30px">
+                        <img style="width: 100%;" src=${response.imgList[i]}  alt = "이미지" />    
+                    </div>
+                `
+                $("#image-wrap").append(tempImage);
+            }
 
             // 좋아요
             $("#like-btn").empty()
