@@ -17,45 +17,38 @@
           crossorigin="anonymous">
     <title>Title</title>
     <style>
+        body{
+            background-color: #F46B3F;
+        }
         .container {
-            width: 1200px;
-            /*height: 1000px;*/
             padding: 0;
-            /*background-color: #FFFBF4;*/
         }
 
         .main {
-            width: 1200px;
-            padding-top: 100px;
-            /*height: 1000px;*/
-            /*background-color: #FFFBF4;*/
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .main .midmain {
-            width: 600px;
-            height: 500px;
+            width: 400px;
+            /*height: 500px;*/
             justify-content: center;
         }
 
         .main_line{
-            width: 800px;
-            height: 800px;
-            border: 1px solid #cccccc;
-            border-radius: 10px;
-            padding-top: 100px;
-            padding-left: 100px;
+            background-color: white;
+            border-radius: 20px;
+            margin-top: 100px;
+            margin-bottom: 100px;
         }
 
         .midmain{
-            width: 600px;
-            height: 500px;
             justify-content: flex-end;
+            margin: 50px 30px;
         }
 
-        #loginbtn, #kakaologinbtn, #googleloginbtn, #naverloginbtn, #signuploginbtn {
+        #loginbtn, #kakaologinbtn, #signuploginbtn {
             width: 100%;
             height: 50px;
         }
@@ -170,23 +163,14 @@
 
                 <br><br><br>
                 <div class=lastmain">
-                    <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn">
+                    <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn" style="margin-bottom: 10px">
                         <button class="btn_2" type="button" style="border-radius: 5px;"
                             onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://localhost:5500/template/b-1_login.html&response_type=code'"
                         ><b>카카오 로그인</b></button>
                     </div>
-                    <br>
-                    <div class="d-grid gap-2 col-6 mx-auto" id="googleloginbtn">
-                        <button class="btn_3" type="button" style="border-radius: 5px;"><b>구글 로그인</b></button>
-                    </div>
-                    <br>
-                    <div class="d-grid gap-2 col-6 mx-auto" id="naverloginbtn">
-                        <button class="btn_4" type="button" style="border-radius: 5px;"><b>네이버 로그인</b></button>
-                    </div>
-                    <br>
                     <a href="c-1_signup.html" style="text-decoration: none">
                         <div class="d-grid gap-2 col-6 mx-auto" id="signuploginbtn">
-                            <button class="btn_1" type="button" style="border-radius: 5px;"><b>회원가입</b></button>
+                            <button class="btn_1" type="button" style="border-radius: 5px; background-color: white; border: 1px solid #F46B3F; color: #F46B3F"><b>회원가입</b></button>
                         </div>
                     </a>
                 </div>
@@ -235,7 +219,7 @@
 
             alert("로그인 성공")
             if(result.payload.role=="USER") {
-                window.location.href = "g-1_recommend.html";
+                window.location.href = "./../index.html";
             } else {
                 window.location.href = "k-1_manageUser.html";
             }
@@ -253,9 +237,6 @@
             "url": "http://" + window.location.hostname + ":8080/auth/login/kakao?code=" + code ,
             "method": "GET",
             "timeout": 0,
-            // "headers": {
-            //      "code": getCookie("code")
-            // },
         };
         
         $.ajax(settings).done(function (response,status,xhr) {
@@ -270,7 +251,7 @@
             // clearCookie('code');
             // alert("로그인 성공")
             if(result.payload.role=="USER") {
-                window.location.href = "g-1_recommend.html";
+                window.location.href = "./../index.html";
             } else {
                 window.location.href = "k-1_manageUser.html";
             }
@@ -281,49 +262,6 @@
             // clearCookie('code');
         })
     }
-
-    function setCookie(key, value, days) {
-	var exdate = new Date();
-	exdate.setDate(exdate.getDate() + days);
-	// 설정 일수만큼 현재시간에 만료값으로 지정
-
-	var cookie_value = value + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
-	document.cookie = key + '=' + cookie_value;
-}
-
-    function getCookie(key) {
-	let cName = key + '=';
-    console.log("cName : ", cName)
-	let cookieData = document.cookie;
-    console.log("cookieData : ", cookieData)
-	let cookie = cookieData.indexOf(key);
-    console.log("cookie : ", cookie)
-	let value = '';
-	if (cookie !== -1) {
-		cookie += cName.length;
-		let end = cookieData.indexOf(';', cookie);
-		if (end === -1) end = cookieData.length;
-		value = cookieData.substring(cookie, end);
-	}
-
-	// kakao 로그인 사용한 경우 Bearer 추가
-	if (value.indexOf('Bearer') === -1 && value !== '') {
-	  value = 'Bearer ' + value;
-	}
-
-	return value;
-
-}
-
-function clearCookie(key) {
-	// 토큰 값 ''으로 덮어쓰기
-	var exdate = new Date();
-	exdate.setDate(exdate.getDate() + 0);
-	document.cookie =
-		key + '=' + '' + '; expires=' + exdate.toUTCString();
-}
-
-
 
 </script>
 </body>

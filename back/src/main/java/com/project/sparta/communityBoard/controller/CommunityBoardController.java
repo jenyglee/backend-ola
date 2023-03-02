@@ -91,12 +91,11 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "8") int size,
         @RequestParam String title,
         @RequestParam String contents,
-        @RequestParam String nickname
-        //@RequestParam Long hashtagId
-    ) {
+        @RequestParam String nickname,
+        @RequestParam Long hashtagId) {
         long start = System.currentTimeMillis();
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getCacheAllCommunityBoard(
-            page, size, title, contents, nickname);
+            page, size, title, contents, nickname, hashtagId);
         long end = System.currentTimeMillis();
         System.out.println("Yes 쿼리 수행 시간 : ");
         System.out.print(end-start);
@@ -114,12 +113,11 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "8") int size,
         @RequestParam String title,
         @RequestParam String contents,
-        @RequestParam String nickname
-        //@RequestParam Long hashtagId
-    ) {
+        @RequestParam String nickname,
+        @RequestParam Long hashtagId) {
         long start = System.currentTimeMillis();
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
-            page, size, title, contents, nickname);
+            page, size, title, contents, nickname, hashtagId);
         long end = System.currentTimeMillis();
         System.out.println("No 쿼리 수행 시간 : ");
         System.out.print(end-start);
