@@ -52,7 +52,7 @@ public class UserController {
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인",response = Join.class)
     @GetMapping("/login/kakao")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         return kakaoService.kakaoLogin(code, response);
     }
 
