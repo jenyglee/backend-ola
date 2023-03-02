@@ -29,6 +29,7 @@ public class ChatController {
 
     private final MsgChatService msgChatService;
 
+
     @MessageMapping("/chat/enterUser")
     public void enterUser(@Payload ChatDto chat, SimpMessageHeaderAccessor headerAccessor){
 

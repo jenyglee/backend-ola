@@ -80,8 +80,8 @@ public class RecommendCourseController {
         @RequestParam(name = "season") String season,
         @RequestParam(name = "altitude") int altitude,
         @RequestParam(name = "region") String region,
-        @RequestParam(name = "orderByLike") String orderByLike) {  // likeDesc : 좋아요 많은순  idDesc : 날짜순
+        @RequestParam(name = "sort") String sort) {
         return recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season,
-            altitude, region, orderByLike);
+            altitude, region, sort);
     }
 }

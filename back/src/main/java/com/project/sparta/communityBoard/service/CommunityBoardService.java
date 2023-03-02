@@ -34,5 +34,7 @@ public interface CommunityBoardService {
 
     PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId);
 
+    CommunityBoardOneResponseDto getBoard(Long boardId);
+
     void autoGradeUp(Long chatCount,Long boardCount,User user , CommunityBoard communityBoard);
 }

@@ -61,10 +61,10 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         PostStatusEnum postStatusEnum, RecommendCondition condition) {
 
         List<RecommendResponseDto> recommendBoards = new ArrayList<>();
-        StringPath aliasLike = Expressions.stringPath("likeCount");
+        StringPath likeOrderBy = Expressions.stringPath("likeCount");
         StringPath dateOrderBy = Expressions.stringPath("dateOrderBy");
 
-        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getOrderByLike(), aliasLike, dateOrderBy);
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getOrderByLike(), likeOrderBy, dateOrderBy);
 
         QueryResults<Tuple> results = queryFactory
             .select(
@@ -227,14 +227,14 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
     }
 
     //좋아요 필터링
-    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath aliasLike,
+    private OrderSpecifier[] createOrderSpecifier(String orderByLike, StringPath likeOrderBy,
         StringPath dateOrderBy) {
 
         List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
         if (orderByLike.equals("likeDesc")) {
-            orderSpecifiers.add(new OrderSpecifier(Order.DESC, aliasLike));
-        } else if (orderByLike.equals("idDesc")) {
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC, likeOrderBy));
+        } else if (orderByLike.equals("dateDesc")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC, dateOrderBy));
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);

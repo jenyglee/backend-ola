@@ -1,10 +1,6 @@
 package com.project.sparta.chat.dto;
 
-import com.project.sparta.hashtag.entity.Hashtag;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import lombok.Data;
 
 
@@ -20,7 +16,7 @@ public class ChatRoom {
 
     private HashMap<String, String> userlist = new HashMap<>();
 
-    public ChatRoom create(String roomId, String roomeName){
+    public ChatRoom create(String roomId, String roomName){
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.roomId = roomId;
         chatRoom.roomName = roomName;
