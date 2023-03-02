@@ -47,10 +47,8 @@ dependencies {
     implementation platform('software.amazon.awssdk:bom:2.17.53')
     implementation 'software.amazon.awssdk:s3'
 
-    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+//     https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
     implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.415'
-
-
 
     // 웹 소켓
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -72,7 +70,6 @@ dependencies {
     // 캐시설정
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'net.sf.ehcache:ehcache:2.10.3'
-
 
     // MySql 추가
     // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j

@@ -387,19 +387,19 @@
       </button>
     </div>
     <div class="form-check" style="margin-top: 40px">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="checkChat()">
-      <label class="form-check-label" for="flexCheckDefault">
+      <input class="form-check-input" type="checkbox" value="Y" id="checkChat">
+      <label class="form-check-label" for="checkChat">
         크루원 구하기
       </label>
       <p style="font-size: 12px; font-weight: bold">  참여 인원 :
-        <input class="chatCnt-input" type="number" max="10" min="0" id="chatCnt-input" style="width: 50px" placeholder="0">명 (※최대 인원 10명)
+        <input class="chatCnt-input" type="number" max="10" min="0" id="chatCnt-input" style="width: 50px" placeholder="0">명 (※최소 2명/최대 인원 10명)
       </p>
     </div>
 
     <div class="w_9">
       <div class="b_1">
         <button type="button" id="btn_1" onclick="createCommunity()">
-          게시글 수정
+          게시글 등록
         </button>
       </div>
     </div>
@@ -416,7 +416,6 @@
   var communityId = localStorage.getItem("communityId");
   var imageUrlList = [];
   var tags = [];
-  var isChat = false;
 
   $(document).ready(function () {
     $(".friend-dropbox").hide();
@@ -445,17 +444,16 @@
     $(".bell-dropbox").hide();
   }
 
-
   $('.form-check-input').on('click', function() {
 
-    var valueCheck = $('.form-check-input:checked').val(); // 체크된 Radio 버튼의 값을 가져옵니다.
+    var valueCheck = $('.form-check-input:checked').val();
 
-    if ( valueCheck == 'y' ) {
-      $('.chatCnt-input').attr('disabled', false); // 과일 종류를 입력하는 input 을 활성화합니다.
-      $('.chatCnt-input').focus(); // 과일 종류를 입력하는 input 에 커서를 이동시킵니다.
+    if ( valueCheck == 'Y' ) {
+      $('.chatCnt-input').attr('disabled', false);
+      $('.chatCnt-input').focus();
     } else {
-      $('.chatCnt-input').val(''); // 입력된 과일 종류 값이 있으면, 초기화합니다.
-      $('.chatCnt-input').attr('disabled', true); // 과일 종류를 입력하는 input 을 비활성화합니다.
+      $('.chatCnt-input').val('');
+      $('.chatCnt-input').attr('disabled', true);
     }
   });
 
@@ -466,6 +464,30 @@
       alert("제목 또는 내용이 비었습니다.");
       return;
     }
+
+    var chatStatus = $('.form-check-input:checked').val();
+
+    if(chatStatus == "Y"){
+      if($('.chatCnt-input').val() == 0){
+        alert("크루 참여 인원을 작성해주세요.");
+        return;
+      }else if($('.chatCnt-input').val() == 1){
+        alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요");
+        $('.chatCnt-input').val('')
+        $('.chatCnt-input').focus();
+        return;
+      }else if($('.chatCnt-input').val() > 10){
+        alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요");
+        $('.chatCnt-input').val('')
+        $('.chatCnt-input').focus();
+        return;
+      }
+    }else{
+      chatStatus = "N";
+    }
+
+    var chatMemCnt = $('.chatCnt-input').val();
+
     $.ajax({
       type: "POST",
       url: "http://localhost:8080/boards/communities/",
@@ -476,10 +498,9 @@
       data: JSON.stringify({
         title : $("#title").val(),
         contents :  $("#contents").val(),
-        chatStatus : "N", // TODO 채팅 구현 후
-        chatMemCnt : 0,  // TODO 채팅 구현 후
+        chatStatus : chatStatus,
+        chatMemCnt : chatMemCnt,
         tagList : tags,
-        // imgList : imageUrlList
         imgList: imageUrlList,
       }),
       success: function (response) {

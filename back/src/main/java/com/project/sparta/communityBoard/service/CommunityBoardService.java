@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 public interface CommunityBoardService {
 
-    void createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
+    CommunityBoard createCommunityBoard(CommunityBoardRequestDto communityBoardRequestDto, User user);
 
     void updateCommunityBoard(Long boardId,
         CommunityBoardRequestDto communityBoardRequestDto, User user);
@@ -32,4 +32,5 @@ public interface CommunityBoardService {
 
     void adminDeleteCommunityBoard(Long boardId);
 
+    PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId);
 }

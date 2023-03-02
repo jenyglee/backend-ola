@@ -53,7 +53,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     //커뮤니티 생성
     @Override
     @Transactional
-    public void createCommunityBoard(CommunityBoardRequestDto requestDto,
+    public CommunityBoard createCommunityBoard(CommunityBoardRequestDto requestDto,
         User user) {
         CommunityBoard communityBoard = new CommunityBoard().builder()
             .title(requestDto.getTitle())
@@ -62,7 +62,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .chatMemCnt(requestDto.getChatMemCnt())
             .user(user)
             .build();
-        boardRepository.saveAndFlush(communityBoard);
+
+        CommunityBoard board = boardRepository.saveAndFlush(communityBoard);
 
         // 저장된 보드에 태그 넣기 TODO 따로 메서드로 추출하기
         List<CommunityTag> communityTagList = new ArrayList<>();
@@ -83,6 +84,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             communityImgList.add(communityImg);
         }
         communityBoard.updateCommunityImg(communityImgList);
+
+        return board;//채팅방 생성을 위한 return
     }
 
     //커뮤니티 수정
@@ -118,7 +121,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             requestDto.getContents(),
             communityTags,
             communityImgList,
-            requestDto.getChatStatus()
+            requestDto.getChatStatus(),
+            requestDto.getChatMemCnt()
         );
     }
 
@@ -246,7 +250,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             requestDto.getContents(),
             communityTags,
             communityImgList,
-            requestDto.getChatStatus()
+            requestDto.getChatStatus(),
+            requestDto.getChatMemCnt()
         );
     }
 
@@ -271,6 +276,22 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         // 4. 모든 연관관계를 지웠으니 이제 게시글을 지운다.
         boardRepository.deleteById(communityBoard.getId());
+    }
+
+    //내가 작성한 채팅방 리스트 전체조회
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId) {
+
+        // 1. 검색조건을 포함하여 전체조회
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.myChatBoardList(userId, pageRequest);
+
+        //2. 결과를 반환
+        List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
+        long totalCount = allCommunityBoardList.getTotalElements();
+
+        return new PageResponseDto<>(page, totalCount, content);
     }
 }
 

@@ -16,6 +16,13 @@ public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, Bo
   Page<CommunityBoard> findAll(Pageable pageable);
   Optional<CommunityBoard> findByIdAndUser_NickName(Long id, String nickName);
 
+
+  @Query("select count(cboard) from CommunityBoard cboard where cboard.user.Id=:userId and cboard.chatStatus='N'")
+  Long countMyCommunity(@Param("userId") Long userId);
+
+  @Query("select count(cboard) from CommunityBoard cboard where cboard.user.Id=:userId and cboard.chatStatus='Y'")
+  int countMyChat(@Param("userId") Long userId);
+
   @Query("delete from CommunityBoard cb where cb.id =:boardId")
   @Modifying
   void deleteById(@Param("boardId") Long boardId);
