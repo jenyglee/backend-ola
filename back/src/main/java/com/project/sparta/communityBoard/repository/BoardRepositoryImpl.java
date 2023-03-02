@@ -177,7 +177,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 communityBoard.createAt
             )
             .from(communityBoard)
-            .join(communityTag).on(communityTag.communityBoard.id.eq(communityBoard.id)) // ✨중복을 해결해주는 포인트!!
+            .join(communityTag).on(communityTag.communityBoard.id.eq(communityBoard.id))
             .where(
                 tileEq(condition.getTitle()),
                 contentsEq(condition.getContents()),
@@ -188,6 +188,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .distinct()
             .fetchResults();
         List<Tuple> boards = results.getResults();
 

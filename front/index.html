@@ -346,9 +346,18 @@
             <div class="post-slider">
                 <div class="top-area">
                     <h1 class="sider-title">현재 모집중인 크루</h1>
-                    <button type="button" class="btn btn-primary btn-style">
-                        직접 크루원 모으기
-                    </button>
+                    <div style="display: flex; align-items: center">
+                        <p style="margin-right: 10px; margin-top: 14px">
+                            직접 크루를 만들어보세요!
+                        </p>
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-style"
+                            onclick="moveCommunityCreate()"
+                        >
+                            모집글 작성하기
+                        </button>
+                    </div>
                 </div>
                 <div id="community">
                     <!-- 커뮤니티 리스트 들어갈 자리 -->
@@ -552,6 +561,10 @@
                         console.log("에러 : ", response)
                     },
                 })
+            }
+
+            function moveCommunityCreate() {
+                window.location = "./template/h-3_communityCreate.html"
             }
         </script>
     </body>
