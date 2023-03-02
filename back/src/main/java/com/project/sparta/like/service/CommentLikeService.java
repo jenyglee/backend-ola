@@ -6,4 +6,6 @@ public interface CommentLikeService {
 
     void likeComment(Long id, User user);
     void unLikeComment(Long id, User user);
+
+
 }

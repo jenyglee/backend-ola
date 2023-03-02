@@ -4,6 +4,7 @@ import com.project.sparta.chat.dto.ChatRoomDto;
 import com.project.sparta.chat.service.ChatServiceMain;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
+import com.project.sparta.communityBoard.dto.CommunityBoardGradeResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
@@ -50,7 +51,8 @@ public class CommunityBoardController {
         RedirectAttributes rttr) {
 
         CommunityBoard board = communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
-
+        CommunityBoardGradeResponseDto communityBoardGradeResponseDto = new CommunityBoardGradeResponseDto(board.getManiaResponse(),
+            board.getGodResponse());
         if (communityBoardRequestDto.getChatStatus().equals("Y")) {
             // 매개변수 : 방 이름, 방 인원수, 방 타입
             ChatRoomDto room;
@@ -63,7 +65,7 @@ public class CommunityBoardController {
             rttr.addFlashAttribute("roomName", room);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(communityBoardGradeResponseDto,HttpStatus.OK);
     }
 
     //커뮤니티 단건 조회
