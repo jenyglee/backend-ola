@@ -7,6 +7,7 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeRecommendRepository;
 import com.project.sparta.recommendCourse.dto.RecommendCondition;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
@@ -20,6 +21,7 @@ import com.project.sparta.recommendCourse.repository.RecommendCourseThumbnailRep
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import net.sf.ehcache.search.parser.MCriteria.Like;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
 
     private final RecommendCourseThumbnailRepository thumbnailRepository;
+    private final LikeRecommendRepository likeRecommendRepository;
     /**
      * 추천코스 게시글 등록 메서드
      *
@@ -128,6 +131,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
+
+        //게시글 좋아요 삭제
+        likeRecommendRepository.deleteLikeAllByInRecommendId(id);
 
         //게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());

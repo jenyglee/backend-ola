@@ -178,7 +178,7 @@
       height: 310px;
       width: 1200px;
       background-color: #FFFBF4;
-      margin-bottom: 100px;
+      margin-bottom: 50px;
     }
 
     .w_8 .b_16 {
@@ -233,6 +233,20 @@
       display: inline-block;
       margin-right: 20px;
     }
+
+    .logout,
+    .logout:hover,
+    .logout:active,
+    .logout:focus  {
+        width: 200px;
+        height : 50px;
+        border: 1px solid #F46B3F;
+        background-color: white;
+        border-radius: 5px;
+        color: #F46B3F;
+        margin-bottom: 100px;
+    }
+
 
   </style>
 </head>
@@ -371,8 +385,8 @@
       </div>
       <div class="b_17"></div>
     </div>
-    <div class="b_18"></div>
     </div>
+    <button type="button" class="btn btn-primary logout" onclick="logout()">로그아웃</button>
   </section>
 </main>
 <script>
@@ -397,7 +411,7 @@
         <div class="img-wrap">
           <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
         </div>
-        <p class="text" style="padding-top: 0">${menuProfile.sub}님</p>
+        <p class="text" style="padding-top: 0">${menuProfile.nickname}님</p>
     `
     $("#my-profile").append(tempProfile);
   }
@@ -492,6 +506,8 @@
         getMyInfo();
       },error: function(response){
         console.log("에러 : ", response)
+        alert("토근이 만료되었습니다. 로그인 페이지로 이동합니다.")
+        window.location = "b-1_login_html"
       }
     })
   }
@@ -780,6 +796,28 @@
     });
   }
 
+  function logout(){
+    const accessToken = localStorage.getItem("accessToken");
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/auth/logout",
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        accessToken : accessToken
+      }),
+      success: function (response) {
+        alert("로그아웃 되었습니다.")
+        window.location.href = "b-1_login.html";
+      },
+      error: function (response, status, error) {
+        if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+          regenerateToken()
+          logout()
+        }
+      },
+    })
+  }
+  
   function connect(event) {
     // 연결하고자하는 Socket 의 endPoint
     var socket = new SockJS('http://localhost:8080/ws-stomp');

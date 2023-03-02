@@ -6,6 +6,7 @@ import static com.project.sparta.user.entity.QUser.user;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
+import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.entity.QCommunityComment;
 import com.project.sparta.hashtag.entity.Hashtag;
@@ -14,8 +15,12 @@ import com.project.sparta.like.entity.QCommentLike;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQueryFactory;
 import java.time.LocalDateTime;
@@ -178,15 +183,19 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     //커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징
     @Override
     public Page<CommunityBoardAllResponseDto> communityAllList(
-        CommunitySearchCondition condition, Pageable pageable) {
+        CommunitySearchCondition condition, Pageable pageable) { // condition.getHashtagId()
+        StringPath likeCount = Expressions.stringPath("likeCount");
+        StringPath date = Expressions.stringPath("date");
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getSort(), likeCount, date);
+
         QueryResults<Tuple> results = queryFactory
             .select(
                 communityBoard.id,
                 communityBoard.user.nickName,
                 communityBoard.title,
                 ExpressionUtils.as(JPAExpressions.select(boardLike.board.count()).from(boardLike)
-                        .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                communityBoard.createAt
+                        .where(boardLike.board.id.eq(communityBoard.id)), "likeCount"),
+                communityBoard.createAt.as("date")
             )
             .from(communityBoard)
             .join(communityTag).on(communityTag.communityBoard.id.eq(communityBoard.id))
@@ -196,8 +205,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 nicknameEq(condition.getNickname()),
                 // 게시물에 있는 태그가 검색할 태그와 같은 것을 판별하는 과정
                 // (재원) communityBoard.tagList를 기준으로 찾으려니까 엄청난 삽질을 했다. 그냥 게시물에 있는 태그 가져온 뒤 그 태그가 검색할 태그와 같은지 찾으면 끝날 문제였는데.
-                hashtagEq(condition.getHashtagId())
+                hashtagEq(condition.getHashtagId()),
+                chatStatusEq(condition.getChatStatus())
             )
+            .orderBy(orderSpecifiers)
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .distinct()
@@ -212,10 +223,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             Long id = tuple.get(communityBoard.id);
             String nickName = tuple.get(communityBoard.user.nickName);
             String title = tuple.get(communityBoard.title);
-            Long likeCount = tuple.get(
+            Long likeSize = tuple.get(
                 ExpressionUtils.as(JPAExpressions.select(boardLike.board.count()).from(boardLike)
-                    .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"));
-            LocalDateTime createAt = tuple.get(communityBoard.createAt);
+                    .where(boardLike.board.id.eq(communityBoard.id)), "likeCount"));
+            LocalDateTime createAt = tuple.get(communityBoard.createAt.as("date"));
 
             List<String> imgList = queryFactory.select(communityBoardImg.url)
                 .from(communityBoardImg)
@@ -226,7 +237,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .boardId(id)
                 .nickName(nickName)
                 .title(title)
-                .communityLikeCnt(likeCount)
+                .communityLikeCnt(likeSize)
                 .imgList(imgList)
                 .createAt(createAt)
                 .build();
@@ -235,7 +246,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         return new PageImpl<>(contents, pageable, total);
     }
-
     @Override
     public Page<CommunityBoardAllResponseDto> communityMyList(Pageable pageable, Long userId) {
         List<CommunityBoardAllResponseDto> boards = queryFactory
@@ -345,5 +355,19 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
     private Predicate hashtagEq(Long hashtagId) {
         return hashtagId != 0 ? communityTag.hashtag.id.eq(hashtagId) : null;
+    }
+    private Predicate chatStatusEq(String chatStatus) {
+        return chatStatus != "" ? communityBoard.chatStatus.eq(chatStatus) : null;
+    }
+
+    // 동적 정렬
+    private OrderSpecifier[] createOrderSpecifier(String sort, StringPath likeCount, StringPath date){
+        List<OrderSpecifier> orders = new ArrayList<>();
+        if(sort.equals("likeDesc")){
+            orders.add(new OrderSpecifier(Order.DESC, likeCount));
+        }else if(sort.equals("dateDesc")){
+            orders.add(new OrderSpecifier(Order.DESC, date));
+        }
+        return orders.toArray(new OrderSpecifier[orders.size()]);
     }
 }
