@@ -36,14 +36,12 @@ public class S3Controller {
 //        return new ResponseEntity(imgList, HttpStatus.OK);
 //    }
 
-    @PostMapping("/presignedURL")
-    public String GeneratePresignedURL(@RequestParam String fileName,
-                                       @AuthenticationPrincipal UserDetailsImpl userDetails){
-        User user = userDetails.getUser();
+    @PostMapping("/preSignedURL")
+    public String GeneratePreSignedURL(@RequestBody String fileName){
 
-        String presignedURL = s3UploadService.signBucket(fileName);
+        String preSignedURL = s3UploadService.signBucket(fileName);
 
-        return presignedURL;
+        return preSignedURL;
     }
 
 
