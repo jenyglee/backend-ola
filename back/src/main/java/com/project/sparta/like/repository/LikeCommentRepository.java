@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-public interface LikeCommentRepository extends JpaRepository<CommentLike,Long> {
+public interface LikeCommentRepository extends JpaRepository<CommentLike,Long>{
 
 
     Optional<CommentLike> findByUserEmailAndComment(String email, CommunityComment comment);

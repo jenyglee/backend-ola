@@ -12,8 +12,6 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface LikeBoardRepository extends JpaRepository<BoardLike, Long> {
-
-
     Optional<BoardLike> findByUserEmailAndBoard(String email, CommunityBoard board);
 
     @Query("delete from BoardLike bl where bl.board.id = :boardId")

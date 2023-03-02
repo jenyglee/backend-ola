@@ -43,15 +43,15 @@ public class InfoController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    //TODO 자동 등업 API 제작
-    //자동 등업(명세서 수정)
-    @ApiOperation(value = "자동 등업", response = Join.class)
-    @PostMapping("/upgrade")
-    public ResponseEntity autoUpgrade(UpgradeRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        userService.upgrade(requestDto, userDetails.getUser().getId());
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    //TODO 자동 등업 API 제작
+//    //자동 등업(명세서 수정)
+//    @ApiOperation(value = "자동 등업", response = Join.class)
+//    @PostMapping("/upgrade")
+//    public ResponseEntity autoUpgrade(UpgradeRequestDto requestDto,
+//        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        userService.upgrade(requestDto, userDetails.getUser().getId());
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 
     // TODO 내가 쓴 코스추천 전체 조회 API 제작
     //내가 쓴 코스추천 전체 조회

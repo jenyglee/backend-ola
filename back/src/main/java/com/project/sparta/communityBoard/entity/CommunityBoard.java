@@ -44,8 +44,11 @@ public class CommunityBoard extends Timestamped {
     private List<CommunityBoardImg> imgList = new ArrayList<>();
 
     private String chatStatus;
-    private int maxMemCnt;
+    private int chatMemCnt;
+    private int maniaResponse;
+    private int godResponse;
     private int currentMemCnt;
+
 
     //TODO @OneToMany를 빼는 방식으로(게시물이 존재하지 않으면 댓글도 없음)
     @OneToMany(mappedBy = "communityBoardId", cascade = CascadeType.REMOVE)
@@ -56,14 +59,16 @@ public class CommunityBoard extends Timestamped {
 
 
     @Builder
-    public CommunityBoard(String title, String contents, String chatStatus, int maxMemCnt,
-        User user) {
+    public CommunityBoard(String title, String contents, String chatStatus, int chatMemCnt,
+        User user , int maniaResponse, int godResponse) {
         this.title = title;
         this.contents = contents;
         this.imgList = imgList;
         this.chatStatus = chatStatus;
-        this.maxMemCnt = maxMemCnt;
+        this.chatMemCnt = chatMemCnt;
         this.user = user;
+        this.maniaResponse = maniaResponse;
+        this.godResponse = godResponse;
     }
 
     public void updateCommunityTag(List<CommunityTag> tagList) {
@@ -75,16 +80,24 @@ public class CommunityBoard extends Timestamped {
     }
 
     public void updateBoard(String title, String contents, List<CommunityTag> tagList,
-        List<CommunityBoardImg> imgList, String chatStatus, int maxMemCnt) {
+        List<CommunityBoardImg> imgList, String chatStatus, int chatMemCnt) {
         this.title = title;
         this.contents = contents;
         this.tagList = tagList;
         this.imgList = imgList;
         this.chatStatus = chatStatus;
-        this.maxMemCnt = maxMemCnt;
+        this.chatMemCnt = chatMemCnt;
     }
 
     public void updateCurrentMemCnt(int currentMemCnt){
         this.currentMemCnt = currentMemCnt;
     }
+    public void set_maniaResponse(int maniaResponse){
+        this.maniaResponse = maniaResponse;
+    }
+
+    public void set_godResponse(int godResponse) {
+        this.godResponse = godResponse;
+    }
+
 }

@@ -33,4 +33,6 @@ public interface CommunityBoardService {
     void adminDeleteCommunityBoard(Long boardId);
 
     PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId);
+
+    void autoGradeUp(Long chatCount,Long boardCount,User user , CommunityBoard communityBoard);
 }
