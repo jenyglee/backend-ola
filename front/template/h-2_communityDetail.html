@@ -62,7 +62,7 @@
         display: flex;
         justify-content: start;
         align-items: center;
-        width: 550px;
+        width: 600px;
       }
       .tag-wrap > span,
       .like-title {
@@ -85,7 +85,12 @@
         width: 200px;
         background-color: #f46b3f;
         border: 1px solid #f46b3f;
-        margin-right: 20px;
+      }
+
+      .btn-chating-post:disabled{
+        width: 200px;
+        background-color: #D2D2D2;
+        border: 1px solid #D2D2D2;
       }
       /* 좋아요 레이아웃 css */
 
@@ -1074,21 +1079,26 @@
           async: false,
           success: function (response) {
 
+            console.log(response);
+
             $(".crew").empty();
 
-            let crew = `<div style="float: right; margin-left: 200px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+            if(response.maxUserCnt>0){
+              let crew = `<div style="float: right; margin-left: 200px">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
-            $(".crew").append(crew);
+              $(".crew").append(crew);
 
-            $('#enterChat').click(function(){
+              $('#enterChat').click(function(){
                 if(response.userCount==response.maxUserCnt){
                   window.alert("채팅방 정원이 초과되었습니다.");
                   $("#enterChat").attr("disabled", true);
                 }else{
                   enterRoom();
                 }
-            });
-
+              });
+            }else{
+              $("#enterChat").attr("disabled", true);
+            }
           }
         })
       }
