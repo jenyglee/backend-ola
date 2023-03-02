@@ -63,7 +63,7 @@ public class MsgChatService {
         while(room.getUserList().containsValue(tmp)){
             int ranNum = (int) (Math.random()*100)+1;
 
-            tmp = username+ranNum;
+            tmp = "유저 "+ranNum;
         }
 
         return tmp;
