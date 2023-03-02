@@ -352,16 +352,19 @@
         <!--          </div>-->
         <!--        </div>-->
 
+        <!-- enctype="multipart/form-data" -->
+
         <div class="w_8">
-          <form method="post" enctype="multipart/form-data">
+          <form method="post">
             <input
               type="file"
               id="chooseFile"
-              name="chooseFile"
+              name="fileName"
               accept="image/*"
-              multiple
-              onchange="imgUpload()"
             />
+            <button type="button" for="chooseFile" onclick="imgPresignedURL()">
+              사진등록
+            </button>
           </form>
           <!-- <input
             class="form-control"
@@ -403,7 +406,11 @@
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         var tempProfile = `
                       <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+                        <img class="img" style="width: 100%; height: auto" src=${
+                          menuProfile.profileImage
+                            ? menuProfile.profileImage
+                            : "./../static/img/icon_profile_default.png"
+                        } alt="프로필사진"/>
                       </div>
                       <p class="text">${menuProfile.nickname}님</p>
             `;
@@ -449,56 +456,98 @@
           error: function (response, status, error) {
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
             console.log(status, error);
-            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-              regenerateToken()
+            if (
+              response.responseJSON.message.substring(0, 11) == "JWT expired"
+            ) {
+              regenerateToken();
             }
           },
         });
       }
 
-      function regenerateToken(){
-        var refreshToken = localStorage.getItem("refreshToken")
+      function regenerateToken() {
+        var refreshToken = localStorage.getItem("refreshToken");
 
         $.ajax({
           type: "POST",
           url: "http://localhost:8080/auth/token/regenerate",
-          contentType : "application/json; charset=utf-8",
+          contentType: "application/json; charset=utf-8",
           data: JSON.stringify({
-            refreshToken: refreshToken
+            refreshToken: refreshToken,
           }),
           success: function (response) {
-            localStorage.setItem('accessToken', response.accessToken)
-            localStorage.setItem("refreshToken", response.refreshToken)
+            localStorage.setItem("accessToken", response.accessToken);
+            localStorage.setItem("refreshToken", response.refreshToken);
             createRecommendBoaed();
-          },error: function(response){
-            console.log("에러 : ", response)
-          }
-        })
+          },
+          error: function (response) {
+            console.log("에러 : ", response);
+          },
+        });
       }
-
 
       //이미지경로리스트 전역변수 지정.
       var imageUrlList = [];
+      const imageInput = $("#chooseFile")[0];
 
-      function imgUpload(input) {
+      function imgPresignedURL(input) {
         const accessToken = localStorage.getItem("accessToken");
-
-        const imageInput = $("#chooseFile")[0];
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        console.log("input.name 인풋 파일이름 찍히는지 보자.");
+        console.log("input.name : ", imageInput.files[0].name);
         console.log("$('#chooseFile'): ", $("#chooseFile"));
         console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
 
-        var formData = new FormData();
-        for (var i = 0; i < imageInput.files.length; i++) {
-          // formData.append("image", imageInput.files[i]);
-          formData.append("multipartFile", imageInput.files[i]);
-          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-        }
+        // var formData = new FormData();
+        // for (var i = 0; i < imageInput.files.length; i++) {
+        //   // formData.append("image", imageInput.files[i]);
+        //   formData.append("multipartFile", imageInput.files[i]);
+        //   console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        // }
 
         $.ajax({
           type: "POST",
-          url: `http://localhost:8080/s3/file`,
-          // dataType: "json",
+          url: `http://localhost:8080/s3/preSignedURL`,
+          // dataType: "text",
+          // enctype: "multipart/form-data",
+          contentType: "application/json; charset=utf-8",
+          processData: false,
+          contentType: false,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: JSON.stringify({ fileName: imageInput.files[0].name }),
+
+          xhrFields: {
+            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+          },
+          success: function (response) {
+            console.log("preSignedURL : ", response);
+            imageUrlList.push(imageUpload(response));
+            // put 으로 이미지 넘기는 함수 실행
+            return imageUrlList;
+            console.log("imageUrlList : ", imageUrlList);
+          },
+          error: function (request, status, error) {
+            console.log("에러난다..!");
+            console.log(request, status, error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+          },
+        });
+      }
+
+      function imageUpload(presignedURL) {
+        const accessToken = localStorage.getItem("accessToken");
+        var reader = new FileReader();
+        var file = $("#chooseFile")[0].files[0];
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        console.log("presignedURL 주소 찍히는지 보자.");
+        console.log("presignedURL : ", presignedURL);
+        console.log("file : ", file);
+
+        $.ajax({
+          type: "PUT",
+          url: presignedURL,
           // dataType: "multipart",
           enctype: "multipart/form-data",
           // contentType: "application/json; charset=utf-8",
@@ -507,26 +556,69 @@
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken);
           },
-          data: formData,
+          data: file,
           xhrFields: {
-            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            withCredentials: false,
           },
           success: function (response) {
-            console.log("여긴 찍혀? 1");
-            console.log("response", response);
-            for (let i = 0; i < response.length; i++) {
-              // imageUrlList.push(response[i].imgList[i]);
-              imageUrlList.push(response[i]);
-            }
-            console.log("imageUrlList : ", imageUrlList);
+            console.log("이미지 수정완료 : ");
             return imageUrlList;
           },
           error: function (request, status, error) {
-            console.log(error);
+            console.log("에러난다..!");
+            console.log(request, status, error);
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
       }
+
+      // function imgUpload(input) {
+      //   const accessToken = localStorage.getItem("accessToken");
+      //   const imageInput = $("#chooseFile")[0];
+      //   // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+      //   console.log("$('#chooseFile'): ", $("#chooseFile"));
+      //   console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+      //   var formData = new FormData();
+      //   for (var i = 0; i < imageInput.files.length; i++) {
+      //     // formData.append("image", imageInput.files[i]);
+      //     formData.append("multipartFile", imageInput.files[i]);
+      //     console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+      //   }
+
+      //   $.ajax({
+      //     type: "POST",
+      //     url: `http://localhost:8080/s3/file`,
+      //     // dataType: "json",
+      //     // dataType: "multipart",
+      //     enctype: "multipart/form-data",
+      //     // contentType: "application/json; charset=utf-8",
+      //     processData: false,
+      //     contentType: false,
+      //     beforeSend: function (xlr) {
+      //       xlr.setRequestHeader("Authorization", accessToken);
+      //     },
+      //     data: formData,
+      //     xhrFields: {
+      //       withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      //     },
+      //     success: function (response) {
+      //       console.log("여긴 찍혀? 1");
+      //       console.log("response", response);
+      //       for (let i = 0; i < response.length; i++) {
+      //         // imageUrlList.push(response[i].imgList[i]);
+      //         imageUrlList.push(response[i]);
+      //       }
+      //       console.log("imageUrlList : ", imageUrlList);
+      //       return imageUrlList;
+      //     },
+      //     error: function (request, status, error) {
+      //       console.log(error);
+      //       // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      //     },
+      //   });
+      // }
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async></script>
   </body>

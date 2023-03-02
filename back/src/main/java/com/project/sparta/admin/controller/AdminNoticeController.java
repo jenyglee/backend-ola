@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminNoticeController {
-
     private final NoticeBoardService noticeBoardService;
 
     //공지사항 작성

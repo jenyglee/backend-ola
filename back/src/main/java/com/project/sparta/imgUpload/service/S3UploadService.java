@@ -120,7 +120,7 @@ public class S3UploadService {
 
     //미리 서명된 URL 생성 및 객체 업로드
     public String signBucket(String fileName) {
-        S3Presigner presigner = getPreSigner();
+        S3Presigner preSigner = getPreSigner();
         String keyName = "ola/" + createFileName(fileName);
         String bucketName = bucket;
 
@@ -132,20 +132,20 @@ public class S3UploadService {
                     .contentType("image/png")
                     .build();
 
-            PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
+            PutObjectPresignRequest preSignRequest = PutObjectPresignRequest.builder()
                     .signatureDuration(Duration.ofMinutes(10))
                     .putObjectRequest(objectRequest)
                     .build();
 
-            PresignedPutObjectRequest presignedRequest = presigner.presignPutObject(presignRequest);
+            PresignedPutObjectRequest presignedRequest = preSigner.presignPutObject(preSignRequest);
             String myURL = presignedRequest.url().toString();
             System.out.println("Presigned URL to upload a file to: " +myURL);
             System.out.println("Which HTTP method needs to be used when uploading a file: " + presignedRequest.httpRequest().method());
 
-            // Upload content to the Amazon S3 bucket by using this URL.
+            // 이 URL을 사용하여 Amazon S3 버킷에 콘텐츠를 업로드합니다.
             URL url = presignedRequest.url();
 
-            // Create the connection and use it to upload the new object by using the presigned URL.
+            // 연결을 만들고 이 연결을 사용하여 미리 지정된 URL을 사용하여 새 개체를 업로드합니다.
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type","text/plain");
@@ -167,7 +167,7 @@ public class S3UploadService {
 
 
     //이름 난수화 함수
-    private String createFileName(String fileName) { // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 random으로 돌립니다.
+    private String createFileName(String fileName) { // 먼저 파일 업로드 시, 파일명을 난수화하기 위해 랜덤으로 돌립니다.
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
     }
 
