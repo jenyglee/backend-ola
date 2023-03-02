@@ -32,6 +32,7 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
        user);
     commentRepository.saveAndFlush(communityComment);
+
     return CommentResponseDto.builder()
         .id(communityComment.getId())
         .nickName(communityComment.getNickName())

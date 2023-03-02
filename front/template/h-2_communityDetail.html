@@ -111,6 +111,10 @@
       display: flex;
     }
 
+    #create-comment:hover{
+      color: white;
+    }
+
     .comment-create > button {
       margin-left: 20px;
       width: 100px;
@@ -505,7 +509,7 @@
               placeholder="댓글을 입력해주세요"
               style="outline: none"
           />
-          <button class="btn create-comment btn-outline-warning" onclick="commentCreate()">댓글쓰기</button>
+          <button class="btn create-comment btn-outline-warning" onclick="commentCreate()" id="create-comment">댓글쓰기</button>
         </div>
         <div id="comment-wrap"></div>
 
@@ -870,6 +874,7 @@
         contents: $("#comment").val(),
       }),
       success: function (response) {
+        console.log("댓글 성공")
         getCommunity(0);
       },
       error: function (response, status, error) {

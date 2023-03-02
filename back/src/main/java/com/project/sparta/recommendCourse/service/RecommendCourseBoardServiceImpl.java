@@ -142,9 +142,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     //코스 추천 전체 조회
     @Override
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
-        int score, String season, int altitude, String region, String orderByLike) {
+        int score, String season, int altitude, String region, String sort) {
 
-        RecommendCondition condition = new RecommendCondition(score, season, altitude, region, orderByLike);
+        RecommendCondition condition = new RecommendCondition(score, season, altitude, region, sort);
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
             pageRequest, VAILABLE, condition);
