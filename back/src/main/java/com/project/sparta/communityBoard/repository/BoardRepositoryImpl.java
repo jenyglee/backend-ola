@@ -1,20 +1,14 @@
 package com.project.sparta.communityBoard.repository;
-
 import static com.project.sparta.communityBoard.entity.QCommunityBoard.communityBoard;
-import static com.project.sparta.communityBoard.entity.QCommunityBoardImg.*;
+import static com.project.sparta.communityBoard.entity.QCommunityBoardImg.communityBoardImg;
 import static com.project.sparta.communityBoard.entity.QCommunityTag.communityTag;
 import static com.project.sparta.user.entity.QUser.user;
-
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
-import com.project.sparta.communityBoard.entity.CommunityBoardImg;
-import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.entity.QCommunityComment;
 import com.project.sparta.hashtag.entity.Hashtag;
-import com.project.sparta.like.entity.CommentLike;
 import com.project.sparta.like.entity.QBoardLike;
 import com.project.sparta.like.entity.QCommentLike;
 import com.querydsl.core.QueryResults;
@@ -48,7 +42,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     private final QCommunityComment communityComment = new QCommunityComment("comment");
 
     private final QCommentLike commentLike = new QCommentLike("commLike");
-
 
 
     @Override
@@ -87,6 +80,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .distinct()
             .fetchOne();
+
 
         String title = boardCol.get(communityBoard.title);
         String nickname = boardCol.get(communityBoard.user.nickName);
@@ -182,22 +176,11 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     //커뮤니티 게시글 + 커뮤니티 좋아요 + 페이징
-    //🔥 중복제거 해결 필요
     @Override
     public Page<CommunityBoardAllResponseDto> communityAllList(
         CommunitySearchCondition condition, Pageable pageable) {
         QueryResults<Tuple> results = queryFactory
             .select(
-                //Projections.constructor(CommunityBoardAllResponseDto.class,
-                //    communityBoard.id,
-                //    communityBoard.user.nickName,
-                //    communityBoard.title,
-                //    ExpressionUtils.as(
-                //        JPAExpressions.select(boardLike.board.count()).from(boardLike)
-                //            .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-                //    //Projections.list(communityBoardImg.url),
-                //    communityBoard.createAt
-                //)
                 communityBoard.id,
                 communityBoard.user.nickName,
                 communityBoard.title,
@@ -206,16 +189,22 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 communityBoard.createAt
             )
             .from(communityBoard)
-            //.leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
+            .join(communityTag).on(communityTag.communityBoard.id.eq(communityBoard.id))
             .where(
                 tileEq(condition.getTitle()),
                 contentsEq(condition.getContents()),
-                nicknameEq(condition.getNickname())
+                nicknameEq(condition.getNickname()),
+                // 게시물에 있는 태그가 검색할 태그와 같은 것을 판별하는 과정
+                // (재원) communityBoard.tagList를 기준으로 찾으려니까 엄청난 삽질을 했다. 그냥 게시물에 있는 태그 가져온 뒤 그 태그가 검색할 태그와 같은지 찾으면 끝날 문제였는데.
+                hashtagEq(condition.getHashtagId())
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .distinct()
             .fetchResults();
         List<Tuple> boards = results.getResults();
+
+        // 전체 개수
         long total = results.getTotal();
 
         List<CommunityBoardAllResponseDto> contents = new ArrayList<>();
@@ -243,35 +232,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .build();
             contents.add(build);
         }
-
-        //// 전체 개수 추출
-        //long total = queryFactory
-        //    .select(Projections.constructor(CommunityBoardAllResponseDto.class,
-        //            communityBoard.id,
-        //            communityBoard.user.nickName,
-        //            communityBoard.title,
-        //            ExpressionUtils.as(
-        //                JPAExpressions.select(boardLike.board.count()).from(boardLike)
-        //                    .where(boardLike.board.id.eq(communityBoard.id)), "communityLikeCnt"),
-        //            Projections.list(communityBoardImg.url),
-        //            communityBoard.createAt
-        //        )
-        //    )
-        //    .from(communityBoard)
-        //    .leftJoin(communityBoardImg)
-        //    .on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
-        //    .where(
-        //        tileEq(condition.getTitle()),
-        //        contentsEq(condition.getContents()),
-        //        nicknameEq(condition.getNickname())
-        //        //communityBoard.tagList.이게 객체면 .id 이건 List<CommunityTag>
-        //        //(JPAExpressions.select(communityTag.id).from(communityTag, communityBoard)
-        //        //    .where(communityTag.communityBoard.id.eq(communityBoard.id))).contains(
-        //        //    condition.getHashtagId())
-        //    )
-        //    .offset(pageable.getOffset())
-        //    .limit(pageable.getPageSize())
-        //    .fetchCount();
 
         return new PageImpl<>(contents, pageable, total);
     }
@@ -382,5 +342,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
     private Predicate nicknameEq(String nickname) {
         return nickname != "" ? communityBoard.user.nickName.contains(nickname) : null;
+    }
+    private Predicate hashtagEq(Long hashtagId) {
+        return hashtagId != 0 ? communityTag.hashtag.id.eq(hashtagId) : null;
     }
 }

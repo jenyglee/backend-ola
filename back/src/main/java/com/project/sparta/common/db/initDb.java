@@ -12,6 +12,7 @@ import com.project.sparta.communityComment.service.CommunityCommentService;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.like.service.BoardLikeService;
 import com.project.sparta.like.service.CommentLikeService;
+import com.project.sparta.like.service.RecommendCourseLikeService;
 import com.project.sparta.noticeBoard.dto.NoticeBoardRequestDto;
 import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.noticeBoard.service.NoticeBoardService;
@@ -50,6 +51,7 @@ public class initDb {
         initService.communityInit();
         initService.communityCommentInit();
         initService.communityLike();
+        initService.recommendLike();
         initService.noticeInit();
     }
 
@@ -75,9 +77,10 @@ public class initDb {
         NoticeBoardService noticeBoardService;
         @Autowired
         BoardLikeService boardLikeService;
-
         @Autowired
         CommentLikeService commentLikeService;
+        @Autowired
+        RecommendCourseLikeService recommendCourseLikeService;
 
         @Transactional
         public void hashtagInit(){
@@ -317,7 +320,7 @@ public class initDb {
                                         "백록담으로 향하는 전체적인 코스 설명부터 겨울 등산 준비물과 주의할 사항까지 꾹꾹 담았다. \n" + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(4L, 5L, 6L))
                                 .imgList(imgList)
                                 .build(),
                         user1
@@ -336,7 +339,7 @@ public class initDb {
                                         "왕복 2시간 정도 소요되는 등산코스랍니다! " + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(10L, 11L, 12L))
                                 .imgList(imgList)
                                 .build(),
                         user1
@@ -350,7 +353,7 @@ public class initDb {
                                         " 다양한 하이킹 코스를 만날 수 있는 곳이에요. 하이킹 초보자라도 걱정하지 마세요" + i)
                                 .chatStatus("N")
                                 .chatMemCnt(0)
-                                .tagList(Arrays.asList(7L, 8L, 9L))
+                                .tagList(Arrays.asList(13L, 14L, 15L))
                                 .imgList(imgList)
                                 .build(),
                         user1
@@ -390,6 +393,39 @@ public class initDb {
             commentLikeService.likeComment(2L, user6);
             commentLikeService.likeComment(2L, user7);
             commentLikeService.likeComment(2L, user8);
+        }
+
+        @Transactional
+        public void recommendLike() {
+            User user1 = em.find(User.class, 1L);
+            User user2 = em.find(User.class, 2L);
+            User user3 = em.find(User.class, 3L);
+            User user4 = em.find(User.class, 4L);
+            User user5 = em.find(User.class, 5L);
+            User user6 = em.find(User.class, 6L);
+            recommendCourseLikeService.likeRecommendCourse(4L, user1);
+            recommendCourseLikeService.likeRecommendCourse(4L, user2);
+            recommendCourseLikeService.likeRecommendCourse(4L, user3);
+            recommendCourseLikeService.likeRecommendCourse(4L, user4);
+            recommendCourseLikeService.likeRecommendCourse(4L, user5);
+            recommendCourseLikeService.likeRecommendCourse(4L, user6);
+            recommendCourseLikeService.likeRecommendCourse(1L, user1);
+            recommendCourseLikeService.likeRecommendCourse(1L, user2);
+            recommendCourseLikeService.likeRecommendCourse(1L, user3);
+            recommendCourseLikeService.likeRecommendCourse(1L, user4);
+            recommendCourseLikeService.likeRecommendCourse(1L, user5);
+            recommendCourseLikeService.likeRecommendCourse(9L, user1);
+            recommendCourseLikeService.likeRecommendCourse(9L, user2);
+            recommendCourseLikeService.likeRecommendCourse(9L, user3);
+            recommendCourseLikeService.likeRecommendCourse(9L, user4);
+            recommendCourseLikeService.likeRecommendCourse(12L, user1);
+            recommendCourseLikeService.likeRecommendCourse(12L, user2);
+            recommendCourseLikeService.likeRecommendCourse(12L, user3);
+            recommendCourseLikeService.likeRecommendCourse(17L, user1);
+            recommendCourseLikeService.likeRecommendCourse(17L, user2);
+            recommendCourseLikeService.likeRecommendCourse(2L, user1);
+
+
         }
 
         @Transactional
