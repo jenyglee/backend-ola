@@ -22,20 +22,21 @@ public class AdminServiceImpl implements AdminService {
     // ADMIN_TOKEN
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final UserRepository userRepository;
-    private final BoardRepository boardRepository;
-    private final RecommendCourseBoardRepository recommandCoursePostRepository;
-    private final RecommendCourseImgService recommendCourseImgService;
+    //todo no usages 안쓰는 필드값들 지우기 (일단 주석처리 해놓음)
+//    private final BoardRepository boardRepository;
+//    private final RecommendCourseBoardRepository recommandCoursePostRepository;
+//    private final RecommendCourseImgService recommendCourseImgService;
 
     // 어드민 회원가입
     private final PasswordEncoder encoder;
-    private final LikeBoardRepository likeBoardRepository;
+//    private final LikeBoardRepository likeBoardRepository;
 
     // 어드민 회원가입
     @Override
     public void signup(AdminSignupDto adminRequestSignupDto) {
-//        if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
-//            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
-//        }
+        if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
+            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
+        }
 
         User admin = User.adminBuilder()
             .email(adminRequestSignupDto.getEmail())
@@ -44,6 +45,8 @@ public class AdminServiceImpl implements AdminService {
             .build();
         userRepository.save(admin);
     }
+
+    //todo 주석처리 해놓은것들 안쓰는거면 지우기
 //
 //    @Override
 //    @Transactional

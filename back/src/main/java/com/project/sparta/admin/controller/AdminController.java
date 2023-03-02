@@ -6,12 +6,15 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 @Api(tags = {"어드민 API"})
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
+    //todo 어드민 권한만 들어올 수 있도록 설정추가(완료)
     private final AdminService adminService;
 
     // 어드민 회원가입

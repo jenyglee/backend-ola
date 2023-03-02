@@ -416,7 +416,7 @@
   var communityId = localStorage.getItem("communityId");
   var imageUrlList = [];
   var tags = [];
-
+  var gradetemp;
   $(document).ready(function () {
     $(".friend-dropbox").hide();
     $(".bell-dropbox").hide();
@@ -502,10 +502,24 @@
         chatMemCnt : chatMemCnt,
         tagList : tags,
         imgList: imageUrlList,
+        maniaResponse : 0,
+        godResponse :0,
       }),
       success: function (response) {
-        alert("작성완료")
-        window.location.href = "h-1_communityMain.html";
+
+        // if(response.)
+        console.log(response)
+        alert("커뮤니티 글 작성 완료")
+        if(response.maniaResponse==1){
+          console.log("등산매니아")
+          alert("축하드립니다. 등산 매니아로 등업 되셨습니다.")
+        }
+        else if(response.godResponse==1){
+          console.log("산신령")
+          alert("축하드립니다. 산신령으로 등업 되셨습니다.")
+        }
+
+        // window.location.href = "h-1_communityMain.html";
       },
       error: function (response, status, error) {
         if(response.responseJSON.message.substring(0, 11) == "JWT expired"){

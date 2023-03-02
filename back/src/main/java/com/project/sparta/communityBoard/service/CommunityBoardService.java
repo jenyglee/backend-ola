@@ -21,9 +21,9 @@ public interface CommunityBoardService {
 
     CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname);
     PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page, int size,
-        String titleCond, String contentsCond, String nicknameCond);
+        String titleCond, String contentsCond, String nicknameCond, Long hashtagId);
     PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
-        String titleCond, String contentsCond, String nicknameCond);
+        String titleCond, String contentsCond, String nicknameCond, Long hashtagId);
 
     PageResponseDto<List<CommunityBoardAllResponseDto>> getMyCommunityBoard(int page, int size, User user);
 
@@ -35,4 +35,6 @@ public interface CommunityBoardService {
     PageResponseDto<List<CommunityBoardAllResponseDto>> getMyChatBoardList(int page, int size, Long userId);
 
     CommunityBoardOneResponseDto getBoard(Long boardId);
+
+    void autoGradeUp(Long chatCount,Long boardCount,User user , CommunityBoard communityBoard);
 }

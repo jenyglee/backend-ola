@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminUserController {
+    //todo 어드민 권한만 들어올 수 있도록 설정추가(완료)
     private final UserService userService;
 
     // 회원 전체 조회

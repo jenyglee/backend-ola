@@ -13,6 +13,7 @@ import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.entity.CommunityBoardImg;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 
+import com.project.sparta.communityBoard.repository.BoardRepositoryImpl;
 import com.project.sparta.communityBoard.repository.CommunityBoardImgRepository;
 import com.project.sparta.communityBoard.repository.CommunityTagRepository;
 import com.project.sparta.communityComment.entity.CommunityComment;
@@ -25,6 +26,9 @@ import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.entity.UserGradeEnum;
+import com.project.sparta.user.entity.UserGradeEnum.Authority;
+import com.project.sparta.user.repository.UserRepository;
 import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,6 +53,12 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     private final LikeCommentRepository likeCommentRepository;
     private final LikeBoardRepository likeBoardRepository;
 
+    private final BoardRepositoryImpl boardRepositoryImpl;
+
+
+    long chatCount=0;
+    long boardCount = 0;
+    private final UserRepository userRepository;
 
     //커뮤니티 생성
     @Override
@@ -61,6 +71,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .chatStatus(requestDto.getChatStatus())
             .chatMemCnt(requestDto.getChatMemCnt())
             .user(user)
+            .godResponse(0)
+            .maniaResponse(0)
             .build();
 
         CommunityBoard board = boardRepository.saveAndFlush(communityBoard);
@@ -85,7 +97,40 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         }
         communityBoard.updateCommunityImg(communityImgList);
 
+        // 자동 등업
+        autoGradeUp(chatCount,boardCount,user,communityBoard);
+
         return board;//채팅방 생성을 위한 return
+    }
+
+    @Override
+    public void autoGradeUp(Long chatCount,Long boardCount,User user , CommunityBoard communityBoard){
+        if(boardCount<2){
+            boardCount = boardRepositoryImpl.getBoardCount(user.getId());
+        }
+        if(boardCount ==2){
+            // 등산매니아 업그레이드
+            communityBoard.set_maniaResponse(1);
+            System.out.println("등산 매니아 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
+            System.out.println("등급 : " + user.getGradeEnum());
+            userRepository.saveAndFlush(user);
+        }
+        if(boardCount>=2&& chatCount<=2){
+            // 1. 검색조건을 포함하여 전체조회
+            PageRequest pageRequest = PageRequest.of(0, 5);
+            Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.myChatBoardList(user.getId(), pageRequest);
+            //2. 결과를 반환
+            chatCount = allCommunityBoardList.getTotalElements();
+        }
+        if(chatCount ==2){
+            //산신령 업그레이드
+            System.out.println("산신령 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            communityBoard.set_godResponse(1);
+            user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
+            System.out.println("등급 : " + user.getGradeEnum());
+            userRepository.saveAndFlush(user);
+        }
     }
 
     //커뮤니티 수정
@@ -167,10 +212,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     @Cacheable(value="getallcommunity")
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page,
-        int size, String titleCond, String contentsCond, String nicknameCond) {
+        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId) {
         // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
-            contentsCond, nicknameCond);
+            contentsCond, nicknameCond, hashtagId);
 
         // 2. 검색조건을 포함하여 전체조회
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -187,10 +232,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional(readOnly = true)
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page,
-        int size, String titleCond, String contentsCond, String nicknameCond) {
+        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId) {
         // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
-            contentsCond, nicknameCond);
+            contentsCond, nicknameCond, hashtagId);
 
         // 2. 검색조건을 포함하여 전체조회
         PageRequest pageRequest = PageRequest.of(page, size);

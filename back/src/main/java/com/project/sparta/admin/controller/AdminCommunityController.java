@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +21,22 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminCommunityController {
-
+//todo 어드민 권한만 들어올 수 있도록 설정추가(완료)
     private final CommunityBoardService communityBoardService;
 
     // 커뮤니티 전체 조회
     @GetMapping("/boards/communities")
-    public ResponseEntity getCommunityList(@RequestParam int page, @RequestParam int size,
-        @RequestParam String title, @RequestParam String contents, @RequestParam String nickname
-        //@RequestParam Long hashtagId
-    ) {
+    public ResponseEntity getCommunityList(
+        @RequestParam int page,
+        @RequestParam int size,
+        @RequestParam String title,
+        @RequestParam String contents,
+        @RequestParam String nickname,
+        @RequestParam Long hashtagId) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
-            page, size, title, contents, nickname);
+            page, size, title, contents, nickname, hashtagId);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
