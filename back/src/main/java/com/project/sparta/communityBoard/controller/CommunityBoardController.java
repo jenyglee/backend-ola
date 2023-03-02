@@ -62,7 +62,6 @@ public class CommunityBoardController {
 
             rttr.addFlashAttribute("roomName", room);
         }
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

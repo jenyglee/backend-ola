@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
-@EnableWebSocketMessageBroker // 문자 채팅용
+@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     //웹 소켓 연결을 위한 엔드포인트 설정 및 stomp sub/pub 엔트 포인트 설정
@@ -26,4 +26,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //메세지를 발행하는 요청 url => 즉 메세지를 보낼 때
         registry.setApplicationDestinationPrefixes("/pub");
     }
+
 }

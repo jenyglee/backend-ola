@@ -521,7 +521,7 @@
       type: "GET",
       url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
           + searchScore + "&season=" + searchSeason
-          + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&orderByLike="
+          + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
@@ -596,7 +596,7 @@
     if (value === "0") {
       searchOrderByLike = "likeDesc"
     } else {
-      searchOrderByLike = "idDesc"
+      searchOrderByLike = "dateDesc"
     }
   }
 

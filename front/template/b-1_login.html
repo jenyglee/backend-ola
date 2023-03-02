@@ -198,6 +198,8 @@
     </section>
 </main>
 <script>
+    var stompClient = null;
+
     function decodeJWT(string){
         var arr = string.split('.');
         return { header: JSON.parse(atob(arr[0])), payload: JSON.parse(atob(arr[1])), secret: arr[2] }
@@ -234,6 +236,7 @@
             localStorage.setItem("menuProfile", JSON.stringify(result.payload));
 
             alert("로그인 성공")
+
             if(result.payload.role=="USER") {
                 window.location.href = "g-1_recommend.html";
             } else {
@@ -322,8 +325,6 @@ function clearCookie(key) {
 	document.cookie =
 		key + '=' + '' + '; expires=' + exdate.toUTCString();
 }
-
-
 
 </script>
 </body>

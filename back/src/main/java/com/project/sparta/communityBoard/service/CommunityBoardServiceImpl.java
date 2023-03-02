@@ -293,6 +293,22 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         return new PageResponseDto<>(page, totalCount, content);
     }
+
+    //알림 기능을 위함 게시글 단건 조회
+    @Override
+    @Transactional(readOnly = true)
+    public CommunityBoardOneResponseDto getBoard(Long boardId){
+
+        CommunityBoard board  = boardRepository.findById(boardId).orElseThrow(()-> new CustomException(
+            Status.NOT_FOUND_POST));
+
+        CommunityBoardOneResponseDto commBoardResponse = CommunityBoardOneResponseDto.builder()
+                                                                    .nickName(board.getUser().getNickName())
+                                                                    .title(board.getTitle())
+                                                                    .build();
+        return commBoardResponse;
+    }
+
 }
 
 //주성님의 고민의 흔적들..
