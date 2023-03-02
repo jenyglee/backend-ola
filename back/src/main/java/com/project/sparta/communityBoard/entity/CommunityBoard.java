@@ -44,7 +44,8 @@ public class CommunityBoard extends Timestamped {
     private List<CommunityBoardImg> imgList = new ArrayList<>();
 
     private String chatStatus;
-    private int chatMemCnt;
+    private int maxMemCnt;
+    private int currentMemCnt;
 
     //TODO @OneToMany를 빼는 방식으로(게시물이 존재하지 않으면 댓글도 없음)
     @OneToMany(mappedBy = "communityBoardId", cascade = CascadeType.REMOVE)
@@ -55,13 +56,13 @@ public class CommunityBoard extends Timestamped {
 
 
     @Builder
-    public CommunityBoard(String title, String contents, String chatStatus, int chatMemCnt,
+    public CommunityBoard(String title, String contents, String chatStatus, int maxMemCnt,
         User user) {
         this.title = title;
         this.contents = contents;
         this.imgList = imgList;
         this.chatStatus = chatStatus;
-        this.chatMemCnt = chatMemCnt;
+        this.maxMemCnt = maxMemCnt;
         this.user = user;
     }
 
@@ -74,12 +75,16 @@ public class CommunityBoard extends Timestamped {
     }
 
     public void updateBoard(String title, String contents, List<CommunityTag> tagList,
-        List<CommunityBoardImg> imgList, String chatStatus, int chatMemCnt) {
+        List<CommunityBoardImg> imgList, String chatStatus, int maxMemCnt) {
         this.title = title;
         this.contents = contents;
         this.tagList = tagList;
         this.imgList = imgList;
         this.chatStatus = chatStatus;
-        this.chatMemCnt = chatMemCnt;
+        this.maxMemCnt = maxMemCnt;
+    }
+
+    public void updateCurrentMemCnt(int currentMemCnt){
+        this.currentMemCnt = currentMemCnt;
     }
 }

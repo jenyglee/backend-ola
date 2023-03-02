@@ -59,7 +59,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
             .title(requestDto.getTitle())
             .contents(requestDto.getContents())
             .chatStatus(requestDto.getChatStatus())
-            .chatMemCnt(requestDto.getChatMemCnt())
+            .maxMemCnt(requestDto.getChatMemCnt())
             .user(user)
             .build();
 

@@ -57,7 +57,7 @@
                 overflow: hidden;
             }
             .post .post-img-wrap img {
-                width: 100%;
+                width: 140%;
             }
 
             /* #recommend .post .post-text
@@ -154,19 +154,19 @@
     <body>
         <header class="menu">
             <div class="bg-line"></div>
-            <div class="logo-wrap">
-                <img class="img" src="static/img/logo_main.png" alt="로고" />
+            <div class="logo-wrap" style="cursor: pointer" onclick="moveMainPage()">
+                <img class="img" src="./../static/img/logo_main.png" alt="로고" />
             </div>
             <div class="item-list">
                 <a href="./template/g-1_recommend.html">코스추천</a>
-                <a href="template/h-1_communityMain.html">커뮤니티</a>
+                <a href="./template/h-1_communityMain.html">커뮤니티</a>
                 <a href="./template/i-1_shopMain.html">쇼핑몰</a>
                 <a href="./template/j-1_noticeMain.html">공지사항</a>
             </div>
             <div class="right">
                 <div class="friend">
                     <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-                        <img class="img" src="static/img/icon_friends.png" />
+                        <img class="img" src="./../static/img/icon_friends.png" />
                     </div>
                     <div class="friend-dropbox">
                         <div class="search-area">
@@ -190,7 +190,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -202,7 +202,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -214,7 +214,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -230,7 +230,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -242,7 +242,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -254,7 +254,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -266,7 +266,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -278,7 +278,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -290,7 +290,7 @@
                                     <div class="img-wrap">
                                         <img
                                             class="img"
-                                            src="static/img/icon_profile_default.png"
+                                            src="./../static/img/icon_profile_default.png"
                                         />
                                     </div>
                                     <p class="name">오메가오메오메</p>
@@ -302,7 +302,7 @@
                 </div>
                 <div class="bell">
                     <div class="icon-bell" onclick="handleToggleBellDropBox()">
-                        <img class="img" src="static/img/icon_bell.png" />
+                        <img class="img" src="./../static/img/icon_bell.png" />
                     </div>
                     <div class="bell-dropbox">
                         <p>알람</p>
@@ -334,12 +334,12 @@
                         </ul>
                     </div>
                 </div>
-                <div class="my-profile-wrap">
-                    <div class="img-wrap">
-                        <img class="img" src="static/img/icon_profile_default.png " />
-                    </div>
-                    <p class="text">나와바리나와바님</p>
-                </div>
+                <a id="my-profile" class="my-profile-wrap" href="./template/f-1_myPage.html">
+                    <!--        <div class="img-wrap">-->
+                    <!--          <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+                    <!--        </div>-->
+                    <!--        <p class="text">나와바리나와바님</p>-->
+                </a>
             </div>
         </header>
         <main class="container">
@@ -419,7 +419,7 @@
             $(document).ready(function () {
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
-
+                getMenuProfile()
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
@@ -430,6 +430,22 @@
                 getCrewCommunityList()
                 getRecommendLikeList()
             })
+
+            function getMenuProfile() {
+                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+                console.log("menuProfile : ", menuProfile)
+                var tempProfile = `
+                    <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${
+                            menuProfile.profileImage
+                                ? menuProfile.profileImage
+                                : "./../static/img/icon_profile_default.png"
+                        } alt="프로필사진"/>
+                    </div>
+                    <p class="text">${menuProfile.nickname}님</p>
+            `
+                $("#my-profile").append(tempProfile)
+            }
 
             function handleToggleBellDropBox() {
                 $(".bell-dropbox").toggle()

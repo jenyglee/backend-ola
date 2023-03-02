@@ -74,13 +74,13 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "8") int commentSize,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         long start = System.currentTimeMillis();
-        CommunityBoardOneResponseDto CommunityBoardOneResponseDto = communityBoardService.getCommunityBoard(
+        CommunityBoardOneResponseDto result = communityBoardService.getCommunityBoard(
             boardId, commentPage, commentSize, userDetails.getUser().getNickName());
         long end = System.currentTimeMillis();
         System.out.println("No 캐시 쿼리 수행 시간 : ");
         System.out.print(end-start);
         System.out.print("ms");
-        return new ResponseEntity<>(CommunityBoardOneResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 
