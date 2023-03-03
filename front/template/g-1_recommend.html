@@ -469,11 +469,6 @@
 
   $(document).ready(function () {
     getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
-    // console.log("data :" ,data)
-    // for(i=0; i<data.length ; i++){
-    //   var responseURL = await getImageURL(data[i].imgList[0]);
-    //   console.log("responseURL : ", responseURL)
-    // }
     getMenuProfile();
   });
 
@@ -621,13 +616,6 @@
             console.log("ola : ",imgUrl)
             console.log("여긴 나와? : " , response.data[i].imgList[0])
             console.log("네번째")
-
-            // setTimeout(() => {
-            // console.log("ola : ",imgUrl)
-            // console.log("여긴 나와? : " , response.data[i].imgList[0])
-            // console.log("네번째") 
-            // }, 500);
-           
       
           
           }else{
@@ -715,13 +703,6 @@ async function getImageURL(objectKey) {
         // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
         console.log("objectKey 이미지 파일이름 찍히는지 보자.");
         console.log("objectKey : ", objectKey);
-    
-        // var formData = new FormData();
-        // for (var i = 0; i < imageInput.files.length; i++) {
-        //   // formData.append("image", imageInput.files[i]);
-        //   formData.append("multipartFile", imageInput.files[i]);
-        //   console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-        // }
 
         await $.ajax({
           type: "GET",
