@@ -436,9 +436,7 @@
                         $("#recommend-nickName").attr("value", nickName)
 
                         //사진넣기
-                        // $("#img-wrap").empty()
                         imageUrlList = response.imgList
-
                         for (let i = 0; i < response.imgList.length; i++) {
                             var tempImage = `
                                 <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
@@ -451,21 +449,6 @@
                             `
                             $("#img-wrap").append(tempImage)
                         }
-
-                        // for (let i = 0; i < response.imgList.length; i++) {
-                        //     var temp = `
-                        //         <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-                        //         <img src=${response.imgList[i]} alt="코스추천 사진" style="width: 100%"/>
-                        //         <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                        //             onclick="removeImage(${i})"
-                        //         >
-                        //             <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-                        //         </div>
-                        //         </div>
-                        //     `
-                        //     $("#img-wrap").append(tempProfile)
-                        //     imageUrlList.push(response.imgList[i])
-                        // }
                     },
                     error: function (response, status, error) {
                         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {

@@ -785,13 +785,13 @@
                     >
 
                       <img src=${
-              response.commentList[i].isLike
-                  ? "/static/img/heart.png"
-                  : "/static/img/unHeart.png"
-          } alt="좋아요아이콘"
-                        onClick="likeComment(${
-              response.commentList[i].isLike
-          }, ${response.commentList[i].id})"/>
+                            response.commentList[i].isLike
+                                ? "/static/img/heart.png"
+                                : "/static/img/unHeart.png"
+                        } alt="좋아요아이콘"
+                                        onClick="likeComment(${
+                            response.commentList[i].isLike
+                        }, ${response.commentList[i].id})"/>
                       <span>${response.commentList[i].likeCount}</span>
                     </div>
                   </div>
