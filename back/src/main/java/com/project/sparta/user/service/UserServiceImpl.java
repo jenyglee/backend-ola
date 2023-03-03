@@ -262,7 +262,7 @@ public class UserServiceImpl implements UserService {
         List<User> userList = results.getContent();
         long totalElements = results.getTotalElements();
 
-        // 3. 엔티티를 DTO로 변환
+        //3. 엔티티를 DTO로 변환
         List<UserListResponseDto> userResponseDtoList = new ArrayList<>();
         for (User user : userList) {
             UserListResponseDto userResponseDto = UserListResponseDto.builder()

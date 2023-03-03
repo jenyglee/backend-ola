@@ -368,12 +368,29 @@
                 <!-- enctype="multipart/form-data" -->
 
                 <div class="w_8">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data" style="margin-bottom: 5px">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="fileName"
+                            accept="image/*"
+                            multiple
+                        />
+                    </form>
+                    <button type="button" onclick="imgPresignedURL()">
+                        사진등록
+                    </button>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
+
+                    <!-- <form method="post">
                         <input type="file" id="chooseFile" name="fileName" accept="image/*" />
                         <button type="button" for="chooseFile" onclick="imgPresignedURL()">
                             사진등록
                         </button>
-                    </form>
+                    </form> -->
                     <!-- <input
             class="form-control"
             type="file"
@@ -515,20 +532,21 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    // url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    url: `http://localhost:8080/s3/preSignedURL`,
                     // dataType: "text",
                     // enctype: "multipart/form-data",
-                    contentType: "application/json; charset=utf-8",
+                    // contentType: "application/json; charset=utf-8",
                     processData: false,
-                    contentType: false,
+                    contentType: 'image/png',
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken);
                     },
                     data: JSON.stringify({ fileName: imageInput.files[0].name }),
 
-                    xhrFields: {
-                        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-                    },
+                    // xhrFields: {
+                    //     withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    // },
                     success: function (response) {
                         console.log("preSignedURL : ", response)
                         imageUrlList.push(imageUpload(response))
