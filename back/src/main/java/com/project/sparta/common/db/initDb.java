@@ -176,7 +176,6 @@ public class initDb {
                             .email("admin@naver.com")
                             .password("1234")
                             .nickName("admin")
-                            .phoneNumber("01012345678")
                             .adminToken("AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC")
                             .build()
             );

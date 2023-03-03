@@ -439,7 +439,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/boards/recommends`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends`,
                     // dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xlr) {
@@ -476,7 +476,8 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/auth/token/regenerate",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    // url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -495,6 +496,7 @@
             //이미지경로리스트 전역변수 지정.
             var imageUrlList = []
             const imageInput = $("#chooseFile")[0]
+            var imgName = ""
 
             function imgPresignedURL(input) {
                 const accessToken = localStorage.getItem("accessToken")
@@ -513,14 +515,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/s3/preSignedURL`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
                     // dataType: "text",
                     // enctype: "multipart/form-data",
                     contentType: "application/json; charset=utf-8",
                     processData: false,
                     contentType: false,
                     beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
+                        xlr.setRequestHeader("Authorization", accessToken);
                     },
                     data: JSON.stringify({ fileName: imageInput.files[0].name }),
 
@@ -531,8 +533,6 @@
                         console.log("preSignedURL : ", response)
                         imageUrlList.push(imageUpload(response))
                         // put 으로 이미지 넘기는 함수 실행
-                        return imageUrlList
-                        console.log("imageUrlList : ", imageUrlList)
                     },
                     error: function (request, status, error) {
                         console.log("에러난다..!")
@@ -544,23 +544,22 @@
 
             function imageUpload(presignedURL) {
                 const accessToken = localStorage.getItem("accessToken")
-                var reader = new FileReader()
                 var file = $("#chooseFile")[0].files[0]
                 // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
                 console.log("presignedURL 주소 찍히는지 보자.")
-                console.log("presignedURL : ", presignedURL)
+                console.log("presignedURLObject.preSignedURL : ", presignedURLObject.preSignedURL)
                 console.log("file : ", file)
 
                 $.ajax({
                     type: "PUT",
-                    url: presignedURL,
+                    url: presignedURLObject.preSignedURL,
                     // dataType: "multipart",
                     enctype: "multipart/form-data",
                     // contentType: "application/json; charset=utf-8",
                     processData: false,
-                    contentType: false,
+                    contentType: "image/png",
                     beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
+                        // xlr.setRequestHeader("Authorization", accessToken)
                     },
                     data: file,
                     xhrFields: {
@@ -568,8 +567,11 @@
                         withCredentials: false,
                     },
                     success: function (response) {
-                        console.log("이미지 수정완료 : ")
-                        return imageUrlList
+                        imgName = presignedURLObject.imageName;
+                        imageUrlList.push(imgName);
+                        console.log("이미지 수정완료 : ");
+                        console.log("이미지 imgName : ", imgName);
+                        console.log("이미지 imageUrlList : ", imageUrlList);
                     },
                     error: function (request, status, error) {
                         console.log("에러난다..!")
@@ -595,7 +597,7 @@
 
             //   $.ajax({
             //     type: "POST",
-            //     url: `http://localhost:8080/s3/file`,
+            //     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
             //     // dataType: "json",
             //     // dataType: "multipart",
             //     enctype: "multipart/form-data",

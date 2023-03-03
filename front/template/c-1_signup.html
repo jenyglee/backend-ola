@@ -273,10 +273,23 @@
                 $("#sign-btn").show()
                 $("#next-btn").hide()
             }
-            function handleSignupAdmin(){
-                    console.log("어드민 회원가입")
+            function handleSignupAdmin() {
+                console.log("어드민 회원가입")
                 var admin_settings = {
-                    "url": "http://localhost:8080/auth/signup/admin",
+<<<<<<< HEAD
+                    url: "http://localhost:8080/auth/signup/admin",
+                    method: "POST",
+                    timeout: 0,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    data: JSON.stringify({
+                        email: $("#email").val(),
+                        password: $("#password").val(),
+                        nickName: $("#nickname").val(),
+                        adminToken: "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC",
+=======
+                    "url": "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup/admin",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {
@@ -286,21 +299,20 @@
                         "email": $('#email').val(),
                         "password": $('#password').val(),
                         "nickName": $('#nickname').val(),
-                        "adminToken" : "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"
+                        "adminToken" : "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC",
+>>>>>>> e566ccc4321aeaa632e84a7ccbaac8f70aadcbd2
                     }),
-                };
-                if($('#adminPassword').val() == "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC")
-                {
-                    $.ajax(admin_settings).done(function (response) {
-                        alert("관리자를 확인했습니다.")
-                        window.location.href = "b-1_login.html";
-                    })
-                    .fail(function (response){
-                        alert("입력값을 확인해주세요.")
-                    });
                 }
-                else
-                {
+                if ($("#adminPassword").val() == "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC") {
+                    $.ajax(admin_settings)
+                        .done(function (response) {
+                            alert("관리자를 확인했습니다.")
+                            window.location.href = "b-1_login.html"
+                        })
+                        .fail(function (response) {
+                            alert("입력값을 확인해주세요.")
+                        })
+                } else {
                     alert("관리자 비밀번호를 확인해주세요")
                 }
             }
@@ -324,7 +336,7 @@
             function handleSignupAdmin() {
                 console.log("어드민 회원가입")
                 var admin_settings = {
-                    url: "http://localhost:8080/auth/signup/admin",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup/admin",
                     method: "POST",
                     timeout: 0,
                     headers: {
@@ -334,9 +346,35 @@
                         email: $("#email").val(),
                         password: $("#password").val(),
                         nickName: $("#nickname").val(),
+<<<<<<< HEAD
+                        adminToken: $("#adminPassword").val(),
                     }),
                 }
-                if ($("#adminPassword").val() == "0206") {
+                $.ajax(admin_settings)
+                    .done(function (response) {
+                        alert("관리자로 회원가입을 완료했습니다.")
+                        window.location.href = "b-1_login.html"
+                    })
+                    .fail(function (error) {
+                        alert(error.responseJSON.message)
+                    })
+                // if ($("#adminPassword").val() == "0206") {
+                //     $.ajax(admin_settings)
+                //         .done(function (response) {
+                //             alert("관리자를 확인했습니다.")
+                //             window.location.href = "b-1_login.html"
+                //         })
+                //         .fail(function (response) {
+                //             alert("입력값을 확인해주세요.")
+                //         })
+                // } else {
+                //     alert("관리자 비밀번호를 확인해주세요")
+                // }
+=======
+                        adminToken : "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"
+                    }),
+                }
+                if ($("#adminPassword").val() == "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC") {
                     $.ajax(admin_settings)
                         .done(function (response) {
                             alert("관리자를 확인했습니다.")
@@ -348,6 +386,7 @@
                 } else {
                     alert("관리자 비밀번호를 확인해주세요")
                 }
+>>>>>>> e566ccc4321aeaa632e84a7ccbaac8f70aadcbd2
             }
 
             var imageUrlList = []
@@ -369,7 +408,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/s3/file`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
                     // dataType: "json",
                     // dataType: "multipart",
                     enctype: "multipart/form-data",
