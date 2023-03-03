@@ -876,11 +876,42 @@
       success: function (response) {
         console.log("댓글 성공")
         getCommunity(0);
+        createAlarm();
       },
       error: function (response, status, error) {
         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
           regenerateToken()
           commentCreate();
+        }
+      }
+    });
+  }
+
+  //알람 생성
+  function createAlarm(){
+    var accessToken = localStorage.getItem("accessToken");
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    let myNickname = menuProfile.nickname;
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/alarm",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        message : " 글에 " +  myNickname +  "님이 댓글을 달았습니다.",
+        boardId : communityId,
+        boardType :"community",
+      }),
+      success: function (response) {
+        console.log("알림 insert 성공")
+      },
+      error: function (response, status, error) {
+        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+          regenerateToken()
+          createAlarm();
         }
       }
     });

@@ -75,6 +75,7 @@ public class SecurityConfig {
             .antMatchers("/admin/**").authenticated()
             .antMatchers("/friends/**").authenticated()
             .antMatchers("/product/**").authenticated()
+            .antMatchers("/alarm").authenticated()
             .anyRequest().permitAll()
             .and().addFilterBefore(new JwtAuthFilter(jwtUtil, redisTemplate),
                 UsernamePasswordAuthenticationFilter.class);
