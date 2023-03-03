@@ -598,7 +598,7 @@
           </nav>
         </div>
         <div class="btns">
-          <button
+          <!-- <button
               type="button"
               class="modifyBtn btn btn-primary btn-search"
               onclick="moveModifyPage()"
@@ -619,7 +619,7 @@
               onclick="moveCommunityMainPage()"
           >
             목록
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -666,7 +666,7 @@
     $(".bell-dropbox").hide();
   }
 
-  function getCommunity(commentPage) {
+  async function getCommunity(commentPage) {
     var accessToken = localStorage.getItem("accessToken");
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
     $.ajax({
@@ -680,8 +680,8 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
       },
-      success: function (response) {
-
+      success: async function (response) {
+        console.log("response : ", response)
         roomMemberCnt();
         // 컨텐츠 넣기
         $("#contents-area").empty();
@@ -694,12 +694,18 @@
         $("#contents-area").append(tempContentsArea);
 
         for (let i = 0; i < response.imgList.length; i++) {
-          let temp = `
-                <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
-                  <img src=${response.imgList[i]} alt="이미지" style="width: 100%"/>
-                </div>
-              `;
-          $("#contents-area").append(temp);
+            var imgUrl = "";
+            if (response.imgList[i]){
+                imgUrl = await getImageURL(response.imgList[i]);
+            }else{
+                imgUrl = "./../static/img/mountain-default.png"
+            }
+            let temp = `
+                    <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
+                    <img src=${imgUrl} alt="이미지" style="width: 100%"/>
+                    </div>
+                `;
+            $("#contents-area").append(temp);
         }
 
         // 태그 넣기
@@ -799,24 +805,11 @@
                   <div class="btn-date-wrap">
                     <div class="comment-btn-box">
                       <!-- TODO 자기 userId만 수정 삭제 버튼이 뜨게 수정 -->
-                      <!-- <button type="button" class="comment-btn" >${
-              response.commentList[i].nickName == menuProfile.nickname
-                  ? "수정"
-                  : ""
-          }</button> -->
-                      <button type="button" class="comment-btn" onclick="commentDelete(${
-              response.commentList[i].id
-          })">${
-              response.commentList[i].nickName == menuProfile.nickname
-                  ? "삭제"
-                  : ""
-          }</button>
+                      <!-- <button type="button" class="comment-btn" >${response.commentList[i].nickName == menuProfile.nickname? "수정": ""}</button> -->
+                      <button type="button" class="comment-btn" onclick="commentDelete(${response.commentList[i].id})">${response.commentList[i].nickName == menuProfile.nickname? "삭제": ""}</button>
                     </div>
                     <div class="date-box">
-                      <p>${response.commentList[i].createAt.substring(
-              0,
-              10
-          )}</p>
+                      <p>${response.commentList[i].createAt.substring(0,10)}</p>
                     </div>
                   </div>
                 </div>
@@ -824,6 +817,64 @@
               `;
           $("#comment-wrap").append(tempComment);
         }
+            // 버튼
+            $(".btns").empty()
+            if(menuProfile.nickname == response.nickName){
+                var tempBtn = `
+                    <button
+                        type="button"   
+                        class="modifyBtn btn btn-primary btn-search"
+                        onclick="moveModifyPage()"
+                    >
+                        수정
+                    </button>
+                    <button
+                        type="button"
+                        class="deleteBtn btn btn-primary btn-search"
+                        onclick="deleteBeforeRoomCheck()"
+                    >
+                        삭제
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-search"
+                        style="background-color: #f46b3f; border: none; color: white"
+                        onclick="moveCommunityMainPage()"
+                    >
+                        목록
+                    </button>
+                `
+                $(".btns").append(tempBtn)
+            }else{
+                console.log("asdasd")
+                var tempBtn = `
+                    <button
+                        type="button"   
+                        class="modifyBtn btn btn-primary btn-search"
+                        style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                        onclick="noMove()"
+                    >
+                        수정
+                    </button>
+                    <button
+                        type="button"
+                        class="deleteBtn btn btn-primary btn-search"
+                        style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                        onclick="noMove()"
+                    >
+                        삭제
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-search"
+                        style="background-color: #f46b3f; border: none; color: white"
+                        onclick="moveCommunityMainPage()"
+                    >
+                        목록
+                    </button>
+                `
+                $(".btns").append(tempBtn)
+            }
         // menuProfile
         // <button type="button" className="comment-btn">${response.commentList[i].nickName
         //     ==}</button>
@@ -836,6 +887,36 @@
       },
     });
   }
+
+  async function getImageURL(objectKey) {
+    var loadData = "";
+    const accessToken = localStorage.getItem("accessToken");
+
+    await $.ajax({
+        type: "GET",
+        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
+        contentType: "application/json",
+        processData: false,
+        beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+        },
+        data: objectKey,
+        xhrFields: {
+        withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+        },
+        success: await function (response) {
+            loadData = response       
+        },
+        error: function (request, status, error) {
+        
+        console.log("에러난다..!");
+        console.log(request, status, error);
+        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+        },
+        
+    });
+    return loadData
+    }
 
   function deleteCommunity() {
     $.ajax({
@@ -851,6 +932,7 @@
       success: function (response) {
         alert("삭제 완료");
         window.location.href = "h-1_communityMain.html";
+
       },
       error: function (response, status, error) {
         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
@@ -863,6 +945,8 @@
 
   function commentCreate() {
     var accessToken = localStorage.getItem("accessToken");
+    console.log("communityId : ", communityId);
+    console.log('$("#comment").val() : ', $("#comment").val())
     $.ajax({
       type: "POST",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/comments/communities/" + communityId,
@@ -1114,6 +1198,7 @@
         }
       }
     })
+    
   }
 
   function enterRoom() {
@@ -1179,6 +1264,10 @@
   function moveMainPage(){
     window.location = "./../index.html"
   }
+
+    function noMove(){
+        alert("내가 쓴 커뮤니티가 아닙니다.")
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </body>
