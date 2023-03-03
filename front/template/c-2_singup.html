@@ -195,17 +195,6 @@
                 console.log("result3 : ", result3)
                 console.log("input값에서 입력한 값 :", JSON.parse(result3))
 
-<<<<<<< HEAD
-                // var settings = {
-                //     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup",
-                //     method: "POST",
-                //     timeout: 0,
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     data: result3,
-                // }
-=======
                 var settings = {
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup",
                     method: "POST",
@@ -215,23 +204,22 @@
                     },
                     data: result3,
                 }
->>>>>>> e566ccc4321aeaa632e84a7ccbaac8f70aadcbd2
 
-                // $.ajax(settings)
-                //     .done(function (response) {
-                //         localStorage.setItem("signup3", result3)
-                //         console.log(response)
-                //         alert("회원가입 완료")
-                //         window.location.href = "c-3_singup.html"
-                //     })
-                //     .fail(function (response) {
-                //         console.log(result3)
-                //         console.log(settings.data)
-                //         console.log(response)
-                //         alert("회원가입 실패")
-                //     })
+                $.ajax(settings)
+                    .done(function (response) {
+                        localStorage.setItem("signup3", result3)
+                        console.log(response)
+                        alert("회원가입 완료")
+                        window.location.href = "c-3_singup.html"
+                    })
+                    .fail(function (response) {
+                        console.log(result3)
+                        console.log(settings.data)
+                        console.log(response)
+                        alert("회원가입 실패")
+                    })
 
-                // window.location.href = "c-3_singup.html";
+                window.location.href = "c-3_singup.html"
             }
         </script>
     </body>

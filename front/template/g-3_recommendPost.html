@@ -454,7 +454,7 @@
 
             function createRecommendBoaed() {
                 const accessToken = localStorage.getItem("accessToken")
-
+                console.log("imageUrlList : ", imageUrlList) // []
                 $.ajax({
                     type: "POST",
                     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends`,
@@ -526,8 +526,8 @@
 
                 $.ajax({
                     type: "POST",
-                    // url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
-                    url: `http://localhost:8080/s3/preSignedURL`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    // url: `http://localhost:8080/s3/preSignedURL`,
                     // dataType: "text",
                     enctype: "multipart/form-data",
                     // contentType: "application/json; charset=utf-8",
@@ -536,8 +536,8 @@
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken);
                     },
-                    data: JSON.stringify({ fileName: imageInput.files[0].name }),
-                    // data: imageInput.files[0].name,
+                    // data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                    data: imageInput.files[0].name,
 
 
                     // xhrFields: {
@@ -545,7 +545,9 @@
                     // },
                     success: function (response) {
                         console.log("preSignedURL : ", response)
-                        imageUrlList.push(imageUpload(response))
+                        imageUpload(response)
+                        imageUrlList.push(response.imageName)
+                        console.log("imageUrlList : ", imageUrlList)
                         // put 으로 이미지 넘기는 함수 실행
                     },
                     error: function (request, status, error) {
@@ -559,43 +561,23 @@
             function imageUpload(presignedURLObject) {
                 const accessToken = localStorage.getItem("accessToken")
                 var file = $("#chooseFile")[0].files[0]
-<<<<<<< HEAD
-                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
-                console.log("presignedURL 주소 찍히는지 보자.")
-                console.log("presignedURLObject.preSignedURL : ", presignedURLObject.preSignedURL)
-                console.log("file : ", file)
-=======
->>>>>>> 6aaca60caba764f9a9a700488ff479212f4a266d
 
                 $.ajax({
                     type: "PUT",
                     url: presignedURLObject.preSignedURL,
-<<<<<<< HEAD
-                    // dataType: "multipart",
-                    enctype: "multipart/form-data",
-                    // contentType: "application/json; charset=utf-8",
-                    processData: false,
-                    contentType: "image/png",
-                    beforeSend: function (xlr) {
-                        // xlr.setRequestHeader("Authorization", accessToken)
-                    },
-=======
                     contentType: 'image/png',
                     processData: false,
                     // beforeSend: function (xlr) {
                     //     xlr.setRequestHeader("Authorization", accessToken)
                     // },
->>>>>>> 6aaca60caba764f9a9a700488ff479212f4a266d
                     data: file,
                     xhrFields: {
                         withCredentials: false,  // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
                     },
                     success: function (response) {
-                        imgName = presignedURLObject.imageName;
-                        imageUrlList.push(imgName);
-                        console.log("이미지 수정완료 : ");
-                        console.log("이미지 imgName : ", imgName);
-                        console.log("이미지 imageUrlList : ", imageUrlList);
+                        console.log("response : ")
+                        console.log("이미지 수정완료 : ")
+                        
                     },
                     error: function (request, status, error) {
                         console.log("에러난다..!")

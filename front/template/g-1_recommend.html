@@ -598,38 +598,20 @@
         xlr.setRequestHeader("Authorization", accessToken)
       },
       success: async function (response) {
-        console.log("첫번째") 
-        console.log("response : " , response)
-
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
           $('.totalCnt').append(cnt)
 
         for (let i = 0; i < response.data.length; i++) {
+            var imgUrl = "";
+            if (response.data[i].imgList[0]){
+                imgUrl = await getImageURL(response.data[i].imgList[0]);
+            }else{
+                imgUrl = "./../static/img/mountain-default.png"
+            }
 
-          console.log("response.data[i].imgList[i] : " , response.data[i].imgList[0])
-
-          var imgUrl = response.data[i].imgList[0]
-          
-          if (imgUrl.includes("ola")){
-            imgUrl = await getImageURL(response.data[i].imgList[0]);
-            console.log("ola : ",imgUrl)
-            console.log("여긴 나와? : " , response.data[i].imgList[0])
-            console.log("네번째")
-      
-          
-          }else{
-            if (imgUrl === null) {
-            imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
-          } else if (imgUrl.includes(".png")) {
-            imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
-          }
-          }
-        
-        
-
-          // 데이터 바인딩
-          const temp =
+            // 데이터 바인딩
+            const temp =
               `
               <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
                     <div class="img-wrap"
@@ -693,30 +675,27 @@
       }
     })
   }
-
-
   
 async function getImageURL(objectKey) {
     var loadData = "";
-    console.log("두번째") 
         const accessToken = localStorage.getItem("accessToken");
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
         console.log("objectKey 이미지 파일이름 찍히는지 보자.");
         console.log("objectKey : ", objectKey);
 
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
+        //   url: "http://localhost:8080/s3/getPreSignedURL?fileName="+ objectKey,
           // dataType: "text",
           // enctype: "multipart/form-data",
           contentType: "application/json",
           processData: false,
           // contentType: false,
-          // beforeSend: function (xlr) {
-          //   xlr.setRequestHeader("Authorization", accessToken);
-          // },
-          // data: objectKey,
-
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken);
+          },
+          data: objectKey,
           xhrFields: {
             // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
             withCredentials:false
