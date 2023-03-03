@@ -413,7 +413,7 @@
         <!-- 좋아요 셀렉트박스 -->
         <select class="select-like form-serch-select form-select"
                 aria-label="Default select example" id="likeChoice"
-                style="width: 130px" onclick="orderByLikeChoice(value)">
+                style="width: 130px" onchange="orderByLikeChoice(value)">
           <option value="0">좋아요순</option>
           <option value="1">날짜 순</option>
         </select>
@@ -425,7 +425,7 @@
       </div>
     </div>
     <!--   페이지네이션/작성버튼     -->
-    <div id="bottom-btn" class="wrap_4" style="position: relative; margin-bottom: 100px">
+    <div class="wrap_4" style="position: relative; margin-bottom: 100px">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item">
@@ -448,7 +448,10 @@
           </li>
         </ul>
       </nav>
+      <div id="bottom-btn">
+          <!-- 작성버튼 들어갈 자리 -->
 <!--      <button type="button" id="btn_1" onclick="moveCreatePage()">게시글 작성</button>-->
+        </div>
     </div>
   </section>
 </main>
@@ -460,7 +463,7 @@
   var searchSeason = "";
   var searchScore = 0;
   var searchAltitude = 0;
-  var searchOrderByLike = "LikeDesc"
+  var searchOrderByLike = "likeDesc"
   var preSignedImageURL = "";
 
 
@@ -507,7 +510,7 @@
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
-
+    
     console.log("searchScore" + searchScore)
     console.log("searchSeason" + searchSeason)
     console.log("searchAltitude" + searchAltitude)
@@ -520,7 +523,7 @@
       type: "GET",
       url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
           + searchScore + "&season=" + searchSeason
-          + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&orderByLike="
+          + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
@@ -580,6 +583,7 @@
           $('#cardBody').append(temp)
         }
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        $("#bottom-btn").empty();
         if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
           var createBtnTemp = `
             <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>
@@ -693,8 +697,9 @@ async function getImageURL(objectKey) {
     if (value === "0") {
       searchOrderByLike = "likeDesc"
     } else {
-      searchOrderByLike = "idDesc"
+      searchOrderByLike = "dateDesc"
     }
+    getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
   }
 
   function moveCreatePage(){

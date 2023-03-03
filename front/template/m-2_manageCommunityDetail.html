@@ -1,473 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/normalize.css"/>
-    <link rel="stylesheet" href="../css/main.css"/>
-    <link rel="stylesheet" href="../css/reset.css"/>
-    <link rel="stylesheet" href="../css/menu.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="theme-color" content="#fafafa">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <title>관리자 커뮤니티 관리</title>
-    <style>
-        .container {
-            width: 1900px;
-            height: 1000px;
-            padding: 0;
-            background-color: WHITE;
-            align-items: center;
-            display: inline-block;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="../css/normalize.css" />
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/menu.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta name="theme-color" content="#fafafa" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <title>관리자 커뮤니티 관리</title>
+        <style>
+            .container {
+                width: 1900px;
+                height: 1000px;
+                padding: 0;
+                background-color: WHITE;
+                align-items: center;
+                display: inline-block;
+            }
 
-        .wrap {
-            width: 2000px;
-            height: 1000px;
-            float: left;
-            display: inline-block;
-        }
+            .wrap {
+                width: 2000px;
+                height: 1000px;
+                float: left;
+                display: inline-block;
+            }
 
-        .w_1 {
-            width: 300px;
-            height: 1000px;
-            background-color: #F46B3F;
-            display: inline-block;
-            float: left;
-        }
+            .w_1 {
+                width: 300px;
+                height: 1000px;
+                background-color: #f46b3f;
+                display: inline-block;
+                float: left;
+            }
 
-        .w_2 {
-            width: 1500px;
-            height: 1000px;
-            background-color: white;
-            display: inline-block;
-            float: left;
-        }
+            .w_2 {
+                width: 1500px;
+                height: 1000px;
+                background-color: white;
+                display: inline-block;
+                float: left;
+            }
 
-        .w_2 span {
-            margin-left: 100px;
-        }
+            .w_2 span {
+                margin-left: 100px;
+            }
 
-        .b_1 {
-            height: 70px;
-        }
+            .b_1 {
+                height: 70px;
+            }
 
-        .b_2 {
-            text-align: center;
-            font-size: 30px;
-            color: WHITE;
-            width: 300px;
-            height: 150px;
-            display: inline-block;
-        }
+            .b_2 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 150px;
+                display: inline-block;
+            }
 
-        .b_2 .b_2_1 {
-            text-align: center;
-            font-size: 30px;
-            color: WHITE;
-            width: 300px;
-            height: 50px;
-            display: inline-block;
-        }
+            .b_2 .b_2_1 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 50px;
+                display: inline-block;
+            }
 
-        .b_2 .b_2_2 {
-            height: 40px;
-            width: 300px;
-            display: inline-block;
-        }
+            .b_2 .b_2_2 {
+                height: 40px;
+                width: 300px;
+                display: inline-block;
+            }
 
-        .b_2 .b_2_2 button {
-            height: 40px;
-            width: 100px;
-            border-radius: 50px;
-            font-size: 15px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            color: white;
-            margin-right: 100px;
-        }
+            .b_2 .b_2_2 button {
+                height: 40px;
+                width: 100px;
+                border-radius: 50px;
+                font-size: 15px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                color: white;
+                margin-right: 100px;
+            }
 
-        .b_4 {
-            height: 70px;
-            display: inline-block;
-        }
+            .b_4 {
+                height: 70px;
+                display: inline-block;
+            }
 
-        .b_5 {
-            width: 200px;
-            margin-left: 55px;
-            display: inline-block;
-        }
+            .b_5 {
+                width: 200px;
+                margin-left: 55px;
+                display: inline-block;
+            }
 
-        .b_5 a {
-            font-size: 15px;
-            color: WHITE;
-            text-decoration: none;
-            font-weight: normal;
-        }
+            .b_5 a {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: none;
+                font-weight: normal;
+            }
 
-        .b_5 a:hover {
-            font-size: 15px;
-            color: WHITE;
-            text-decoration: underline;
-        }
+            .b_5 a:hover {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: underline;
+            }
 
+            /*#############################################*/
+            .b_6 {
+                width: 1500px;
+                height: 100px;
+            }
 
-        /*#############################################*/
-        .b_6 {
-            width: 1500px;
-            height: 100px;
-        }
+            .b_7 {
+                width: 1500px;
+                height: 60px;
+            }
 
-        .b_7 {
-            width: 1500px;
-            height: 60px;
-        }
+            .b_8 {
+                width: 1500px;
+                height: 250px;
+            }
 
-        .b_8 {
-            width: 1500px;
-            height: 250px;
-        }
+            .b_9 {
+                width: 1500px;
+                height: 50px;
+            }
 
-        .b_9 {
-            width: 1500px;
-            height: 50px;
-        }
+            .b_10 {
+                width: 1500px;
+                height: 50px;
+                float: left;
+            }
 
-        .b_10 {
-            width: 1500px;
-            height: 50px;
-            float: left;
-        }
+            .b_13 {
+                width: 1500px;
+                height: 80px;
+            }
 
-        .b_13 {
-            width: 1500px;
-            height: 80px;
-        }
+            .b_7 input {
+                width: 1000px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
 
-        .b_7 input {
-            width: 1000px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
+            .b_8 .b_8_1 {
+                width: 220px;
+                height: 50px;
+                float: left;
+            }
 
+            .b_8 .b_8_2 textarea {
+                width: 1000px;
+                height: 200px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                resize: none;
+                display: inline-block;
+            }
 
-        .b_8 .b_8_1 {
-          width: 220px;
-          height: 50px;
-          float: left;
-        }
+            .b_9 input {
+                width: 590px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                display: inline-block;
+            }
 
-        .b_8 .b_8_2 textarea {
-            width: 1000px;
-            height: 200px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-            resize: none;
-            display: inline-block;
-        }
+            .b_10 .b_10_1 input {
+                width: 100px;
+                height: 30px;
+                border-radius: 5px;
+                display: inline-block;
+                border: 1px solid #d2d2d2;
+                margin-left: 10px;
+            }
 
-        .b_9 input {
-            width: 590px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-            display: inline-block;
-        }
+            .b_13 .b_13_0 {
+                width: 20px;
+                height: 50px;
+                display: inline-block;
+                float: left;
+            }
 
+            .b_13 .b_13_1,
+            .b_13 .b_13_2,
+            .b_13 .b_13_3 {
+                width: 200px;
+                height: 50px;
+                display: inline-block;
+                float: right;
+                margin-top: 10px;
+            }
 
-        .b_10 .b_10_1 input {
-            width: 100px;
-            height: 30px;
-            border-radius: 5px;
-            display: inline-block;
-            border: 1px solid #D2D2D2;
-            margin-left: 10px;
-        }
+            .b_13 .b_13_3 {
+                margin-right: 250px;
+            }
 
-        .b_13 .b_13_0 {
-            width: 20px;
-            height: 50px;
-            display: inline-block;
-            float: left;
-        }
+            .b_13 .b_13_2,
+            .b_13 .b_13_3 {
+                margin-left: 10px;
+            }
 
-        .b_13 .b_13_1, .b_13 .b_13_2, .b_13 .b_13_3 {
-            width: 200px;
-            height: 50px;
-            display: inline-block;
-            float: right;
-            margin-top: 10px;
-        }
+            .b_0 {
+                width: 1500px;
+                height: 80px;
+            }
 
-        .b_13 .b_13_3 {
-            margin-right: 250px;
-        }
+            #btn_1 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
 
-        .b_13 .b_13_2, .b_13 .b_13_3 {
-            margin-left: 10px;
-        }
+            #btn_2 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
 
-        .b_0 {
-            width: 1500px;
-            height: 80px;
-        }
+            #btn_3 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+                color: white;
+                font-weight: bolder;
+                font-size: 17px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div style="display: flex">
+                <div
+                    style="
+                        width: 300px;
+                        height: 100vh;
+                        padding-top: 100px;
+                        padding-left: 50px;
+                        background-color: #f46b3f;
+                    "
+                >
+                    <div style="">
+                        <div style="font-size: 26px; color: white" id="manager_name"></div>
 
-        #btn_1 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 5px;
-            color: #F46B3F;
-            font-weight: bolder;
-            font-size: 17px;
-        }
+                        <button
+                            style="
+                                width: 84px;
+                                height: 36px;
+                                border-radius: 18px;
+                                border: 1px solid white;
+                                color: white;
+                                background-color: #f46b3f;
+                                margin-top: 10px;
+                            "
+                            type="button"
+                            class="logout"
+                            onclick="gotologout()"
+                        >
+                            로그아웃
+                        </button>
+                    </div>
 
-        #btn_2 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 5px;
-            color: #F46B3F;
-            font-weight: bolder;
-            font-size: 17px;
-        }
-
-        #btn_3 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            border-radius: 5px;
-            color: white;
-            font-weight: bolder;
-            font-size: 17px;
-        }
-
-    </style>
-</head>
-<body>
-
-<main>
-    <div style="display: flex">
-        <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
-            <div style="">
-                <div style="font-size: 26px; color: white" id ="manager_name">
+                    <div style="margin-top: 100px">
+                        <a style="text-decoration: none; color: white" href="./k-1_manageUser.html"
+                            >회원관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./l-1_manageRecommend.html"
+                            >등산 추천 코스 관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./m-1_manageCommunity.html"
+                            ><b>커뮤니티 관리</b></a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./n-1_manageNotice.html"
+                            >공지사항 관리</a
+                        >
+                    </div>
                 </div>
-
-                <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                        type="button" class="logout" onclick="gotologout()">로그아웃</button>
-
+                <section style="margin-left: 100px; margin-top: 100px">
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">제목</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            placeholder="이메일을 입력하세요"
+                        />
+                    </div>
+                    <div style="margin-bottom: 30px">
+                        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">내용</p>
+                        <textarea
+                            class="form-control"
+                            id="contents"
+                            rows="3"
+                            placeholder="내용을 입력하세요"
+                        ></textarea>
+                    </div>
+                    <div style="margin-bottom: 30px">
+                        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+                            이미지
+                        </p>
+                        <div id="img_list"></div>
+                    </div>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">태그</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag1"
+                            placeholder="태그명을 입력하세요"
+                            style="margin-bottom: 5px"
+                        />
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag2"
+                            placeholder="태그명을 입력하세요"
+                            style="margin-bottom: 5px"
+                        />
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag3"
+                            placeholder="태그명을 입력하세요"
+                            style="margin-bottom: 5px"
+                        />
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag4"
+                            placeholder="태그명을 입력하세요"
+                            style="margin-bottom: 5px"
+                        />
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag5"
+                            placeholder="태그명을 입력하세요"
+                            style="margin-bottom: 5px"
+                        />
+                    </div>
+                    <div>
+                        <button type="button" id="btn_1" onclick="deleteCommunity()">삭제</button>
+                        <button type="button" id="btn_2" onclick="updateCommunity()">수정</button>
+                        <button type="button" id="btn_3" onclick="listCommunity()">목록</button>
+                    </div>
+                </section>
             </div>
+        </main>
+    </body>
+    <script>
+        let Listtag = []
+        let temp_img = []
 
-            <div style="margin-top: 100px">
-                <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
-                <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html">등산 추천 코스 관리</a><br><br>
-                <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html"><b>커뮤니티 관리</b></a><br><br>
-                <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html">공지사항 관리</a>
-            </div>
-        </div>
-        <section style="margin-left: 100px; margin-top:100px;">
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="title" placeholder="이메일을 입력하세요">
-            </div>
-            <div style="margin-bottom: 30px;">
-                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
-                <textarea class="form-control" id="contents" rows="3" placeholder="내용을 입력하세요"></textarea>
-            </div>
-            <div style="margin-bottom: 30px;">
-                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">이미지</p>
-                <div id="img_list">
-                </div>
-            </div>
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">태그</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id=tag1 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id=tag2 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id=tag3 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id=tag4 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-                <input type="text" class="form-control" id=tag5 placeholder="태그명을 입력하세요" style="margin-bottom: 5px">
-            </div>
-            <div>
-                <button type="button" id="btn_1" onclick="deleteCommunity()">삭제</button>
-                <button type="button" id="btn_2" onclick="updateCommunity()">수정</button>
-                <button type="button" id="btn_3" onclick="listCommunity()">목록</button>
-            </div>
-        </section>
-    </div>
-</main>
-</body>
-<script>
-    let Listtag = []
-    let temp_img =[]
-
-
-    $(document).ready(function () {
-        getCommunity();
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        if(menuProfile.role=="ADMIN"){
-            const temp = `<span>${menuProfile.nickname} 매니저</span>`
-            $(manager_name).append(temp)
-        }
-    });
-    function gotologout(){
-        const accessToken = localStorage.getItem("accessToken");
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/auth/logout",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({
-                accessToken : accessToken
-            }),
-            success: function (response) {
-                alert("로그아웃 되었습니다.")
-                window.location.href = "b-1_login.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.httpStatus === "BAD_REQUEST"){
-                    regenerateToken()
-                    gotologout()
-                }
-            },
-        })
-    }
-    function listCommunity(){
-        window.location.href="m-1_manageCommunity.html"
-    }
-
-    function getCommunity(){
-        const id = localStorage.getItem("communityId")
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/admin/boards/communities/"+ id + "?commentPage=0&commentSize=5",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            success: function (response) {
-                console.log("response : ", response)
-                // 카테고리가 영어로 들어와서 한글로 반환
-
-                $('#title').val(response.title)
-                $('#contents').val(response.contents)
-                for(let i=0;i<response.tagList.length;i++)
-                {
-                    console.log(response.tagList[i].name)
-                    $('#tag'+(i+1)).val(response.tagList[i].name)
-                    Listtag.push(response.tagList[i].id)
-                }
-
-                for(let i=0;i<response.imgList.length;i++)
-                {
-                    temp_img[i] = response.imgList[i]
-                    const temp = `<img style = "width: 50%" id="img_list${i}" src=${temp_img[i]}>`
-                    $('#img_list').append(temp)
-                }
-
-
-                // for(let i=0;i<response.imgList.length;i++)
-                // {
-                //     console.log(response.imgList[i])
-                //     $('#img'+i+1).src(response.imgList[i])
-                // }
-
-
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    getCommunity()
-                }
-            },
-        })
-    }
-
-    function updateCommunity(){
-        const id = localStorage.getItem("communityId")
-        // console.log("$(\"#title\").val() : ", $("#title").val())
-        // console.log("$(\"#contents\").val() : ", $("#contents").val())
-        // console.log("category : ", category)
-        // console.log("id : ", id)
-
-        console.log(Listtag)
-        $.ajax({
-            type: "PATCH",
-            url: `http://localhost:8080/admin/boards/communities/${id}`,
-            // dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            data: JSON.stringify({
-                title :  $('#title').val(),
-                contents : $('#contents').val(),
-                chatStatus : "N",
-                chatMemCnt : 0,
-                tagList : Listtag,
-                imgList : temp_img
-
-            }),
-            success: function (response) {
-                alert("수정 완료")
-                window.location.href = "m-1_manageCommunity.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    updateCommunity()
-                }
-            },
-        })
-    }
-
-    function deleteCommunity(){
-        const id = localStorage.getItem("communityId")
-        $.ajax({
-            type: "DELETE",
-            url: `http://localhost:8080/admin/boards/communities/${id}`,
-            // dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            // data: JSON.stringify({
-            //     "title" : $("#title").val(),
-            //     "contents" : $("#contents").val(),
-            //     "category" : category
-            // }),
-            success: function (response) {
-                alert("삭제 완료")
-                window.location.href = "m-1_manageCommunity.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    deleteCommunity()
-                }
-            },
-        })
-    }
-
-    function regenerateToken(){
-        var refreshToken = localStorage.getItem("refreshToken")
-
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/auth/token/regenerate",
-            contentType : "application/json; charset=utf-8",
-            data: JSON.stringify({
-                refreshToken: refreshToken
-            }),
-            success: function (response) {
-                localStorage.setItem('accessToken', response.accessToken)
-                localStorage.setItem("refreshToken", response.refreshToken)
-            },
-            error: function(response){
-                console.log("에러 : ", response)
+        $(document).ready(function () {
+            getCommunity()
+            var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+            if (menuProfile.role == "ADMIN") {
+                const temp = `<span>${menuProfile.nickname} 매니저</span>`
+                $(manager_name).append(temp)
             }
         })
-    }
-</script>
+        function gotologout() {
+            const accessToken = localStorage.getItem("accessToken")
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/auth/logout",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    accessToken: accessToken,
+                }),
+                success: function (response) {
+                    alert("로그아웃 되었습니다.")
+                    window.location.href = "b-1_login.html"
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                        regenerateToken()
+                        gotologout()
+                    }
+                },
+            })
+        }
+        function listCommunity() {
+            window.location.href = "m-1_manageCommunity.html"
+        }
+
+        function getCommunity() {
+            const id = localStorage.getItem("communityId")
+            $.ajax({
+                type: "GET",
+                url:
+                    "http://localhost:8080/admin/boards/communities/" +
+                    id +
+                    "?commentPage=0&commentSize=5",
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                },
+                success: function (response) {
+                    console.log("response : ", response)
+                    // 카테고리가 영어로 들어와서 한글로 반환
+
+                    $("#title").val(response.title)
+                    $("#contents").val(response.contents)
+                    for (let i = 0; i < response.tagList.length; i++) {
+                        console.log(response.tagList[i].name)
+                        $("#tag" + (i + 1)).val(response.tagList[i].name)
+                        Listtag.push(response.tagList[i].id)
+                    }
+
+                    for (let i = 0; i < response.imgList.length; i++) {
+                        temp_img[i] = response.imgList[i]
+                        const temp = `<img style = "width: 50%" id="img_list${i}" src=${temp_img[i]}>`
+                        $("#img_list").append(temp)
+                    }
+
+                    // for(let i=0;i<response.imgList.length;i++)
+                    // {
+                    //     console.log(response.imgList[i])
+                    //     $('#img'+i+1).src(response.imgList[i])
+                    // }
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        regenerateToken()
+                        getCommunity()
+                    }
+                },
+            })
+        }
+
+        function updateCommunity() {
+            const id = localStorage.getItem("communityId")
+            // console.log("$(\"#title\").val() : ", $("#title").val())
+            // console.log("$(\"#contents\").val() : ", $("#contents").val())
+            // console.log("category : ", category)
+            // console.log("id : ", id)
+
+            console.log(Listtag)
+            $.ajax({
+                type: "PATCH",
+                url: `http://localhost:8080/admin/boards/communities/${id}`,
+                // dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                },
+                data: JSON.stringify({
+                    title: $("#title").val(),
+                    contents: $("#contents").val(),
+                    chatStatus: "N",
+                    chatMemCnt: 0,
+                    tagList: Listtag,
+                    imgList: temp_img,
+                }),
+                success: function (response) {
+                    alert("수정 완료")
+                    window.location.href = "m-1_manageCommunity.html"
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        regenerateToken()
+                        updateCommunity()
+                    }
+                },
+            })
+        }
+
+        function deleteCommunity() {
+            const id = localStorage.getItem("communityId")
+            $.ajax({
+                type: "DELETE",
+                url: `http://localhost:8080/admin/boards/communities/${id}`,
+                // dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                },
+                // data: JSON.stringify({
+                //     "title" : $("#title").val(),
+                //     "contents" : $("#contents").val(),
+                //     "category" : category
+                // }),
+                success: function (response) {
+                    alert("삭제 완료")
+                    window.location.href = "m-1_manageCommunity.html"
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        regenerateToken()
+                        deleteCommunity()
+                    }
+                },
+            })
+        }
+
+        function regenerateToken() {
+            var refreshToken = localStorage.getItem("refreshToken")
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/auth/token/regenerate",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    refreshToken: refreshToken,
+                }),
+                success: function (response) {
+                    localStorage.setItem("accessToken", response.accessToken)
+                    localStorage.setItem("refreshToken", response.refreshToken)
+                },
+                error: function (response) {
+                    console.log("에러 : ", response)
+                },
+            })
+        }
+    </script>
 </html>

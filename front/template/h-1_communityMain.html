@@ -377,6 +377,7 @@
       var nickname = ""
       var chatStatus = ""
       var sort = ""
+      var hashtagId = 0;
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
@@ -408,7 +409,9 @@
 
       function getCommunityList(page) {
         const accessToken = localStorage.getItem("accessToken")
-        var hashtagId = localStorage.getItem("hashtagId")
+        if(localStorage.getItem("hashtagId") != null){
+            hashtagId = localStorage.getItem("hashtagId")
+        }
         console.log("chatStatus : ", chatStatus)
         // console.log("hashtagId : ", hashtagId)
         formatSearchText();
