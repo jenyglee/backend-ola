@@ -1,16 +1,11 @@
 package com.project.sparta.friend.repository;
 
-import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.entity.QFriend;
 import com.project.sparta.hashtag.entity.QHashtag;
 import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.user.entity.*;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
@@ -26,8 +21,6 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
     QUser user = new QUser("user");
 
     QUserTag userTag = new QUserTag("userTag");
-
-    QHashtag hashtag = new QHashtag("Hashtag");
 
     QFriend friend = new QFriend("friend");
 
@@ -64,7 +57,6 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
                 user.Id.ne(userInfo.getId()),           //현재 로그인한 유저 정보 아닌거
                 builder,                                //현재 나랑 하나라도 맞는 태그를 가진 유저
                 fbuilder)                               //내 친구가 아닌 유저
-            .orderBy(NumberExpression.random().asc())
             .distinct()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
