@@ -603,14 +603,11 @@
         xlr.setRequestHeader("Authorization", accessToken)
       },
       success: async function (response) {
-        console.log("response : " , response)
-
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
           $('.totalCnt').append(cnt)
 
         for (let i = 0; i < response.data.length; i++) {
-            console.log("i : ", i, "response.data[i].imgList[0]", response.data[i].imgList[0])
             var imgUrl = "";
             if (response.data[i].imgList[0]){
                 imgUrl = await getImageURL(response.data[i].imgList[0]);
