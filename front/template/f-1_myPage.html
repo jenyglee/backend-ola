@@ -413,7 +413,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/info/me",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -476,7 +476,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
       contentType : "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken
@@ -491,7 +491,6 @@
     })
   }
 
-  //친구 검색
   function searchFriend() {
     let targetNickname = document.getElementById('searchNickName').value;
     const accessToken = localStorage.getItem("accessToken")
@@ -500,7 +499,7 @@
       type: "GET",
       contentType: "application/json",
       dataType: "json",
-      url: "http://localhost:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -549,14 +548,13 @@
     });
   }
 
-  //추천 친구 리스트
   function recommendFriedList() {
     const accessToken = localStorage.getItem("accessToken")
 
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends/recommends?page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -602,14 +600,13 @@
     });
   }
 
-  //내 친구 리스트
   function myFriedList() {
     const accessToken = localStorage.getItem("accessToken");
 
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -656,14 +653,14 @@
     });
   }
 
-  //친구 추가
+
   function addFriend(targetId) {
     const accessToken = localStorage.getItem("accessToken");
 
     $.ajax({
       type: "POST",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -685,14 +682,14 @@
       }
     });
   }
-  //친구 삭제
+
   function deleteFriend(targetId) {
     const accessToken = localStorage.getItem("accessToken");
 
     $.ajax({
       type: "DELETE",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -794,7 +791,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends/recommends?page=0&size=12",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=12",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -843,6 +840,71 @@
       }
     });
   }
+  //알림 조회
+  function selectAlarm(){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "GET",
+      contentType: "application/json",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        $("#alarm").empty();
+
+        let result = null;
+        let changeImg = null;
+
+        for(var i=0; i<response.data.length; i++){
+
+          board_Id = response.data[i].boardId;
+          alarmId = response.data[i].alarmId;
+          if(response.data[i].readStatus=="N"){
+
+            $(".icon-bell").empty();
+
+            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+
+            $(".icon-bell").append(changeImg);
+
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }else{
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }
+        }
+      }
+    });
+  }
+
+  function setCommunityId(board_Id, alarmId){
+    updateAlarmStats(alarmId);
+    localStorage.setItem("communityId", board_Id)
+    location.replace('h-2_communityDetail.html');
+  }
+
+  function updateAlarmStats(alarmId){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "PATCH",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId=" + alarmId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        console.log("업데이트 ")
+        selectAlarm();
+      }
+    });
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
+  }
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

@@ -200,7 +200,7 @@
         const accessToken = localStorage.getItem("accessToken");
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/auth/logout",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({
                 accessToken : accessToken
@@ -223,7 +223,7 @@
         const id = localStorage.getItem("userId")
         $.ajax({
             type: "GET",
-            url: `http://localhost:8080/admin/users/${id}`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/users/${id}`,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -299,7 +299,7 @@
         const id = localStorage.getItem("userId")
         $.ajax({
             type: "PATCH",
-            url: `http://localhost:8080/admin/users/${id}/grade`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/users/${id}/grade`,
             // dataType: "text",
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
@@ -332,7 +332,7 @@
         changeVal = change_val == 0 ? 1:0
         $.ajax({
             type: "PATCH",
-            url: `http://localhost:8080/admin/users/${id}/status`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/users/${id}/status`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
@@ -361,7 +361,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/auth/token/regenerate",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
             contentType : "application/json; charset=utf-8",
             data: JSON.stringify({
                 refreshToken: refreshToken
