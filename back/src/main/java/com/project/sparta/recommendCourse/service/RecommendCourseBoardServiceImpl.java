@@ -4,30 +4,25 @@ package com.project.sparta.recommendCourse.service;
 import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
 
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
+import com.project.sparta.like.repository.LikeRecommendRepository;
 import com.project.sparta.recommendCourse.dto.RecommendCondition;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.entity.RecommendCourseImg;
-import com.project.sparta.recommendCourse.entity.RecommendCourseThumbnail;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepository;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
-import com.project.sparta.recommendCourse.repository.RecommendCourseThumbnailRepository;
-import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +33,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
 
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
 
-    private final RecommendCourseThumbnailRepository thumbnailRepository;
+    private final LikeRecommendRepository likeRecommendRepository;
     /**
      * 추천코스 게시글 등록 메서드
      *
@@ -66,7 +61,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
             recommendCourseBoardImgRepository.save(courseImg);
         }
-        thumbnailRepository.save(new RecommendCourseThumbnail(requestPostDto.getThumbnail(), board));
     }
 
 
@@ -123,11 +117,11 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
 
-        //게시글 썸네일 이미지 삭제
-        thumbnailRepository.deleteByRecommendCourseBoardId(id);
-
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
+
+        //게시글 좋아요 삭제
+        likeRecommendRepository.deleteLikeAllByInRecommendId(id);
 
         //게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());
@@ -199,8 +193,6 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         //삭제하려는 board 있는지 확인
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
-        //게시글 썸네일 이미지 삭제
-        thumbnailRepository.deleteByRecommendCourseBoardId(id);
 
         //게시글 이미지 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);

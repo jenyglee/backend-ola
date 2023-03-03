@@ -413,9 +413,9 @@
         <!-- 좋아요 셀렉트박스 -->
         <select class="select-like form-serch-select form-select"
                 aria-label="Default select example" id="likeChoice"
-                style="width: 130px" onclick="orderByLikeChoice(value)">
-          <option value="0">좋아요순</option>
-          <option value="1">날짜 순</option>
+                style="width: 130px; display: block;" onclick="orderByLikeChoice(value)">
+        <option value="0">좋아요순</option>
+        <option value="1">날짜 순</option>
         </select>
 
       </div>
@@ -460,7 +460,7 @@
   var searchSeason = "";
   var searchScore = 0;
   var searchAltitude = 0;
-  var searchOrderByLike = "LikeDesc"
+  var searchOrderByLike = "likeDesc"
 
 
   $(document).ready(function () {
@@ -475,7 +475,7 @@
             <div class="img-wrap">
               <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
             </div>
-            <p class="text">${menuProfile.sub}님</p>
+            <p class="text">${menuProfile.nickname}님</p>
         `
     $("#my-profile").append(tempProfile);
   }
@@ -506,12 +506,14 @@
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
-
-    console.log("searchScore" + searchScore)
-    console.log("searchSeason" + searchSeason)
-    console.log("searchAltitude" + searchAltitude)
-    console.log("searchRegion" + searchRegion)
-    console.log("searchOrderByLike" + searchOrderByLike)
+    console.log("accessToken : ", accessToken)
+    console.log("page : ", page)
+    console.log("size : ", size)
+    console.log("searchScore : " + searchScore)
+    console.log("searchSeason : " + searchSeason)
+    console.log("searchAltitude : " + searchAltitude)
+    console.log("searchRegion : " + searchRegion)
+    console.log("searchOrderByLike : " + searchOrderByLike)
 
 
     // 2. 통신해서 불러오기
@@ -521,6 +523,7 @@
           + searchScore + "&season=" + searchSeason
           + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
+    // url: "http://localhost:8080/boards/recommends?page=0&size=8&score=0&season=&altitude=0&region=&sort=likeDesc",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -534,12 +537,12 @@
 
         for (let i = 0; i < response.data.length; i++) {
 
-          var imgUrl = response.data[i].thumbnail
-          if (imgUrl === null) {
-            imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
-          } else if (imgUrl.includes(".png")) {
-            imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
-          }
+        //   var imgUrl = response.data[i].thumbnail
+        //   if (imgUrl === null) {
+        //     imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
+        //   } else if (imgUrl.includes(".png")) {
+        //     imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
+        //   }
 
           // 데이터 바인딩
           const temp =
@@ -547,7 +550,7 @@
               <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
+                        <img style="width: 120%" src=${response.data[i].imgList[0]} alt="디폴트 산 이미지"/>
                     </div>
                     <div class="text-wrap" style="font-size: 14px;">
                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
@@ -565,6 +568,7 @@
           $('#cardBody').append(temp)
         }
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        $("#bottom-btn").empty()
         if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
           var createBtnTemp = `
             <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>

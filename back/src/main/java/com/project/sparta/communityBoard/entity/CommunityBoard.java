@@ -35,8 +35,6 @@ public class CommunityBoard extends Timestamped {
     private String contents;  //내용
 //    @OneToMany
 //    private List<Hashtag> tagList = new ArrayList<>();  //채팅방 태그리스트
-
-
     @OneToMany(mappedBy = "communityBoard", cascade = CascadeType.REMOVE)
     private List<CommunityTag> tagList = new ArrayList<>();
 
@@ -47,6 +45,7 @@ public class CommunityBoard extends Timestamped {
     private int chatMemCnt;
     private int maniaResponse;
     private int godResponse;
+    private int currentMemCnt;
 
 
     //TODO @OneToMany를 빼는 방식으로(게시물이 존재하지 않으면 댓글도 없음)
@@ -86,6 +85,10 @@ public class CommunityBoard extends Timestamped {
         this.imgList = imgList;
         this.chatStatus = chatStatus;
         this.chatMemCnt = chatMemCnt;
+    }
+
+    public void updateCurrentMemCnt(int currentMemCnt){
+        this.currentMemCnt = currentMemCnt;
     }
     public void set_maniaResponse(int maniaResponse){
         this.maniaResponse = maniaResponse;

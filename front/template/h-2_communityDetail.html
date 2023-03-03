@@ -486,14 +486,12 @@
         </div>
         <div class="chating-btn-wrap">
           <button type="button" class="btn btn-primary btn-chating-post" id="enterChat"
-                  onclick="roomMemberCnt()">채팅방
-            참여하기
+                  onclick="roomMemberCnt()">채팅방 참여하기
           </button>
           </a>
         </div>
       </div>
       <!-- 좋아요 레이아웃-->
-      <!-- TODO 버튼으로 만들고 좋아요/좋아요해제 연동 -->
       <div id="like-wrap" style="display: flex; align-items: center">
         <span class="like-title">좋아요</span>
         <div id="like-btn" style="display: flex; align-items: center">
@@ -653,7 +651,7 @@
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
         ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
-          <p class="text">${menuProfile.sub}님</p>
+          <p class="text">${menuProfile.nickname}님</p>
 `;
     $("#my-profile").append(tempProfile);
   }
@@ -1124,7 +1122,7 @@
       url: "http://localhost:8080/chat/room?roomId=" + communityId,
       async: false,
       success: function () {
-        location.href = "./h-4_chat.html?roomId=" + communityId;
+        window.open('./h-4_chat.html?roomId='+ communityId, 'name', "left=100,top=100,width=740,height=700")
       }
     })
   }
@@ -1136,7 +1134,7 @@
       async: false,
       success: function (response) {
 
-        console.log(response);
+        console.log("response : ", response);
 
         $(".crew").empty();
 

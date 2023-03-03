@@ -94,9 +94,6 @@ public class RecommendCourseBoard extends Timestamped {
         this.postStatus = postStatus;
     }
 
-    public void isOwner(Long userId) {
-    }
-
     public void validateOwner(Long userId) {
     }
 }

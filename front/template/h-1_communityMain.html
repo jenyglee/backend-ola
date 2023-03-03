@@ -315,13 +315,22 @@
           <div id="total-count">
 <!--            <b>총 <span style="color: #F46B3F">100</span> 건&nbsp;</b>-->
           </div>
-          <select
-            class="select-like form-serch-select form-select"
-            aria-label="Default select example"
-          >
-            <option value="0">좋아요순</option>
-            <option value="1">날짜 순</option>
-          </select>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="margin-right: 10px;">
+                    <input class="form-check-input" type="checkbox" id="checkChat" onchange="selectChat()">
+                    <label class="form-check-label" for="checkChat" >
+                        크루원 모집중
+                    </label>
+                </div>
+                <select
+                    class="select-like form-serch-select form-select"
+                    aria-label="Default select example"
+                    onchange="setSort(value)"
+                >
+                    <option value="0">좋아요 순</option>  
+                    <option value="1">최신 순</option>
+                </select>
+            </div>
         </div>
         <!-- 카드 -->
         <div id="post-list" class="article-wrap" style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
@@ -366,6 +375,8 @@
       var title = ""
       var contents = ""
       var nickname = ""
+      var chatStatus = ""
+      var sort = ""
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
@@ -381,7 +392,7 @@
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
-          <p class="text">${menuProfile.sub}님</p>
+          <p class="text">${menuProfile.nickname}님</p>
 `
         $("#my-profile").append(tempProfile);
       }
@@ -395,17 +406,18 @@
         $(".bell-dropbox").hide();
       }
 
-
       function getCommunityList(page) {
         const accessToken = localStorage.getItem("accessToken")
         var hashtagId = localStorage.getItem("hashtagId")
-        console.log("hashtagId : ", hashtagId)
+        console.log("chatStatus : ", chatStatus)
+        // console.log("hashtagId : ", hashtagId)
         formatSearchText();
         // 2. 통신해서 불러오기
         $.ajax({
           type: "GET",
           // TODO 
-          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents + "&nickname=" + nickname + "&hashtagId=" + hashtagId,
+          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents 
+            + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
@@ -540,6 +552,26 @@
         }else if(category == "2"){
           nickname = $("#serch-text").val();
         }
+      }
+
+      function setSort(value) {
+            sort = "";
+            if(value == "0"){
+                sort = "likeDesc"
+            }else if(value == "1"){
+                sort = "dateDesc"
+            }
+            getCommunityList(0);
+      }
+
+      function selectChat(){
+          var checked = $('.form-check-input:checked').val()
+          if(checked){
+            chatStatus = "Y"
+          }else{
+            chatStatus = ""
+          }
+          getCommunityList(0);
       }
 
       function setCommunityId(id){
