@@ -65,7 +65,7 @@ public class AlarmServiceImpl implements AlarmService{
 
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        Page<Alarm> alarms = alarmRespository.findMyAlarmList(user.getId(), pageRequest);
+        Page<Alarm> alarms = alarmRespository.findMyAlarmList(user.getId(), pageRequest, user.getNickName());
 
         Page<AlarmResponseDto> alarmList = alarms.map(alarm -> new AlarmResponseDto(alarm.getId(), alarm.getMessage(), alarm.getUserNickName(), alarm.getReadStatus(), alarm.getBoardId()));
         List<AlarmResponseDto> content = alarmList.getContent();

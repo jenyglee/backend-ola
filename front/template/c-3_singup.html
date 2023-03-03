@@ -47,8 +47,8 @@
 </head>
 <body>
 <header class="menu">
-  <div class="logo-wrap">
-    <img class="img" src="../static/img/logo_main.png" alt="로고" />
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="#">코스추천</a>
@@ -96,6 +96,9 @@
   function community()
   {
     window.location.href ="h-1_communityMain.html";
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
   }
 </script>
 </body>
