@@ -1,5 +1,7 @@
 package com.project.sparta.admin.service.impl;
 
+import static com.project.sparta.exception.api.Status.*;
+
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.communityBoard.repository.BoardRepository;
@@ -10,6 +12,7 @@ import com.project.sparta.recommendCourse.repository.RecommendCourseBoardReposit
 import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,20 @@ public class AdminServiceImpl implements AdminService {
     // 어드민 회원가입
     @Override
     public void signup(AdminSignupDto adminRequestSignupDto) {
+        // 관리자 비밀번호 잘못 입력
         if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
-            throw new CustomException(Status.INVALID_ADMIN_TOKEN);
+            throw new CustomException(INVALID_ADMIN_TOKEN);
+        }
+        // 이미 존재하는 이메일
+        Optional<User> sameEmail = userRepository.findByEmail(adminRequestSignupDto.getEmail());
+        if(sameEmail.isPresent()){
+            throw new CustomException(CONFLICT_EMAIL);
+        }
+        //이미 존재하는 닉네임
+        Optional<User> sameNickname = userRepository.findByNickName(
+            adminRequestSignupDto.getNickName());
+        if(sameNickname.isPresent()){
+            throw new CustomException(CONFLICT_NICKNAME);
         }
 
         User admin = User.adminBuilder()
