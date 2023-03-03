@@ -1,6 +1,9 @@
 package com.project.sparta.security.jwt;
 
 
+import static com.project.sparta.exception.api.Status.INVALID_TOKEN;
+
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.security.UserDetailServiceImpl;
 import com.project.sparta.user.entity.UserGradeEnum;
 import com.project.sparta.user.entity.UserRoleEnum;

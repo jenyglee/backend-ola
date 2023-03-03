@@ -173,7 +173,9 @@
                 isDuplicateName()
 
                 // 연결하고자하는 Socket 의 endPoint
-                var socket = new SockJS("http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/ws-stomp")
+                var socket = new SockJS(
+                    "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/ws-stomp"
+                )
                 stompClient = Stomp.over(socket)
 
                 stompClient.connect({}, onConnected, onError)

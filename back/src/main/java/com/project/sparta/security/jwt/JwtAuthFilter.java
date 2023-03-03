@@ -1,7 +1,10 @@
 package com.project.sparta.security.jwt;
 
+import static com.project.sparta.exception.api.Status.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.dto.SecurityExceptionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +38,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             if (!Objects.isNull(token)) {
                 if (!jwtUtil.validateToken(token)) {
-                    // 유효성 검사 후 발생하는 exception에 따라서 토큰 재발급 처리해야함
-                    // 클라이언트에게 에러를 보내주고
-                    // 클라이언트 -> 갱신된 api호출 -> api
-                    // throw new AuthenticationException();
                     response.sendError(401, "토큰이 만료되었습니다.");
                 }
 
