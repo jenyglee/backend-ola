@@ -42,6 +42,7 @@ public class RecommendCourseBoard extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
+
     @Builder
     public RecommendCourseBoard(int score, String title, String season, int altitude,
         String contents, String region, String orderByLike, PostStatusEnum postStatus, Long userId) {

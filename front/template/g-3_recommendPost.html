@@ -66,18 +66,47 @@
                 width: 500px;
             }
 
-            .inputLabel {
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- ############# 네비게이션 #############-->
-        <header class="menu">
-            <div class="bg-line"></div>
-            <div class="logo-wrap">
-                <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+      .inputLabel {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ############# 네비게이션 #############-->
+    <header class="menu">
+      <div class="bg-line"></div>
+      <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+      </div>
+      <div class="item-list">
+        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f"
+          >코스추천</a
+        >
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
+      </div>
+      <div class="right">
+        <div class="friend">
+          <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+            <img class="img" src="./../static/img/icon_friends.png" />
+          </div>
+          <div class="friend-dropbox">
+            <div class="search-area">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput0"
+                  placeholder="닉네임 검색"
+                />
+              </div>
+              <div class="btn-wrap">
+                <button type="button" class="btn btn-primary search-btn">
+                  검색
+                </button>
+              </div>
             </div>
             <div class="item-list">
                 <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f"
@@ -410,7 +439,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends`,
+                    url: `http://localhost:8080/boards/recommends`,
                     // dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xlr) {
@@ -447,7 +476,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -484,7 +513,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    url: `http://localhost:8080/s3/preSignedURL`,
                     // dataType: "text",
                     // enctype: "multipart/form-data",
                     contentType: "application/json; charset=utf-8",
@@ -566,7 +595,7 @@
 
             //   $.ajax({
             //     type: "POST",
-            //     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
+            //     url: `http://localhost:8080/s3/file`,
             //     // dataType: "json",
             //     // dataType: "multipart",
             //     enctype: "multipart/form-data",

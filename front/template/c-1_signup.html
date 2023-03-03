@@ -273,6 +273,37 @@
                 $("#sign-btn").show()
                 $("#next-btn").hide()
             }
+            function handleSignupAdmin(){
+                    console.log("어드민 회원가입")
+                var admin_settings = {
+                    "url": "http://localhost:8080/auth/signup/admin",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "email": $('#email').val(),
+                        "password": $('#password').val(),
+                        "nickName": $('#nickname').val(),
+                        "adminToken" : "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"
+                    }),
+                };
+                if($('#adminPassword').val() == "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC")
+                {
+                    $.ajax(admin_settings).done(function (response) {
+                        alert("관리자를 확인했습니다.")
+                        window.location.href = "b-1_login.html";
+                    })
+                    .fail(function (response){
+                        alert("입력값을 확인해주세요.")
+                    });
+                }
+                else
+                {
+                    alert("관리자 비밀번호를 확인해주세요")
+                }
+            }
 
             function handleNext() {
                 //유저 회원가입, 인풋값 저장 후 다음페이지로 이동
@@ -293,7 +324,7 @@
             function handleSignupAdmin() {
                 console.log("어드민 회원가입")
                 var admin_settings = {
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup/admin",
+                    url: "http://localhost:8080/auth/signup/admin",
                     method: "POST",
                     timeout: 0,
                     headers: {
@@ -338,7 +369,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
+                    url: `http://localhost:8080/s3/file`,
                     // dataType: "json",
                     // dataType: "multipart",
                     enctype: "multipart/form-data",

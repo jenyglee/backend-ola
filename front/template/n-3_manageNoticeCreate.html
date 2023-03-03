@@ -296,7 +296,7 @@
             function postNotice() {
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/notices`,
+                    url: `http://localhost:8080/admin/boards/notices`,
                     // dataType: "text",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xlr) {
@@ -323,7 +323,7 @@
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
+                    url: "http://localhost:8080/auth/logout",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         accessToken: accessToken,
@@ -345,7 +345,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,

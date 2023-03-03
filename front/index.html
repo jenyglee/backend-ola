@@ -472,7 +472,7 @@
                 $.ajax({
                     type: "GET",
                     // TODO 현재 모집중인 것들이 뜨게 하는 쿼리문 추가 필요
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y",
+                    url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
@@ -510,7 +510,7 @@
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
+                    url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
@@ -563,7 +563,7 @@
                 var refreshToken = localStorage.getItem("refreshToken")
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,

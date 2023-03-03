@@ -85,30 +85,54 @@
             }
             /* 스크롤바 숨기기 */
 
-            .item-details-text::-webkit-scrollbar {
-                display: none;
-            }
-            .btns {
-                display: flex;
-                justify-content: flex-end;
-                margin-bottom: 100px;
-            }
-            .btns > button,
-            .btns > button:hover {
-                width: 160px;
-                height: 50px;
-                background-color: #f46b3f;
-                border: none;
-                color: white;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- ############# 네비게이션 #############-->
-        <header class="menu">
-            <div class="bg-line"></div>
-            <div class="logo-wrap">
-                <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+        .item-details-text{
+            margin: 30px;
+            height: 300px;
+            overflow-y: scroll;
+
+        }
+
+        .buy-btn > button:hover {
+            background-color: #f46b3f;
+            border: none;
+        }
+        /* 스크롤바 숨기기 */
+
+        .item-details-text::-webkit-scrollbar{
+            display: none;
+        }
+        .btns{
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 100px;
+        }
+        .btns > button,
+        .btns > button:hover{
+            width: 160px;
+            height: 50px;
+            background-color: #F46B3F;
+            border: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- ############# 네비게이션 #############-->
+<header class="menu">
+    <div class="bg-line"></div>
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+    </div>
+    <div class="item-list">
+        <a href="./g-1_recommend.html">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html" style="font-weight: bold; color: #F46B3F">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
+    </div>
+    <div class="right">
+        <div class="friend">
+            <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                <img class="img" src="./../static/img/icon_friends.png" />
             </div>
             <div class="item-list">
                 <a href="./g-1_recommend.html">코스추천</a>
@@ -365,29 +389,19 @@
                 $("#my-profile").append(tempProfile)
             }
 
-            function handleToggleBellDropBox() {
-                $(".bell-dropbox").toggle()
-                $(".friend-dropbox").hide()
-            }
+    function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+    }
 
-            function handleToggleFriendDropBox() {
-                $(".friend-dropbox").toggle()
-                $(".bell-dropbox").hide()
-            }
-            function handleCreateGuestBook() {
-                $.ajax({
-                    type: "GET",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hastags", // CORS 에러 << 백엔드가 클라이언트한테 말합니다., " 너 뭐 돼? " " 아 너 재원이구나 "
-                    data: {
-                        name: "sasas",
-                    },
-                    success: function (response) {
-                        console.log(response)
-                        alert(response.msc)
-                        window.location.reload()
-                    },
-                })
-            }
-        </script>
-    </body>
+    function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+    }
+
+    function moveMainPage(){
+        window.location = "./../index.html"
+    }
+</script>
+</body>
 </html>

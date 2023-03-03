@@ -1,168 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="manifest" href="site.webmanifest" />
-        <link rel="apple-touch-icon" href="icon.png" />
-        <!-- Place favicon.ico in the root directory -->
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <link rel="apple-touch-icon" href="icon.png"/>
+  <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="../css/normalize.css" />
-        <link rel="stylesheet" href="../css/main.css" />
-        <link rel="stylesheet" href="../css/reset.css" />
-        <link rel="stylesheet" href="../css/menu.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <meta name="theme-color" content="#fafafa" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
-        />
-        <title>올라 커뮤니티</title>
-        <style>
-            .container {
-                width: 1200px;
-                padding: 0;
-                margin-bottom: 150px;
-                /* background-color: #fffbf4; */
-            }
+  <link rel="stylesheet" href="../css/normalize.css"/>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <link rel="stylesheet" href="../css/reset.css"/>
+  <link rel="stylesheet" href="../css/menu.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <meta name="theme-color" content="#fafafa">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+  <title>올라 커뮤니티</title>
+  <style>
+    .container {
+      width: 1200px;
+      padding: 0;
+      margin-bottom: 150px;
+      /* background-color: #fffbf4; */
+    }
 
-            /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
-            .btn:active,
-            .btn:focus,
-            .btn:hover {
-                outline: none !important;
-                /* box-shadow:none !important; */
-                background-color: #f46b3f;
-                border: 1px solid #f46b3f;
-            }
+    /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+    .btn:active, .btn:focus, .btn:hover {
+      outline: none !important;
+      /* box-shadow:none !important; */
+      background-color: #F46B3F;
+      border: 1px solid #F46B3F;
+    }
 
-            .cteate-post > label {
-                position: absolute;
-                top: 17px;
-                left: 20px;
-                transition: all 0.5s;
-                font-size: 16px;
-                color: gray;
-            }
+    .cteate-post > label {
+      position: absolute;
+      top: 17px;
+      left: 20px;
+      transition: all .5s;
+      font-size: 16px;
+      color: gray;
+    }
 
-            .cteate-content > label {
-                position: absolute;
-                top: 17px;
-                left: 20px;
-                transition: all 0.5s;
-                font-size: 16px;
-                color: gray;
-            }
-            .tag-upload-box > span {
-                width: 70px;
-                height: 50px;
-                font-size: 20px;
-                margin: 0;
-            }
-            .creat-tag > label {
-                position: absolute;
-                left: 20px;
-                transition: all 0.5s;
-                font-size: 16px;
-                color: gray;
-            }
+    .cteate-content > label {
+      position: absolute;
+      top: 17px;
+      left: 20px;
+      transition: all .5s;
+      font-size: 16px;
+      color: gray;
+    }
+    .tag-upload-box > span {
+      width: 70px;
+      height: 50px;
+      font-size: 20px;
+      margin: 0;
+    }
+    .creat-tag > label {
+      position: absolute;
+      left: 20px;
+      transition: all .5s;
+      font-size: 16px;
+      color: gray;
+    }
 
-            .creat-tag > input {
-                width: 1130px;
-                height: 50px;
-            }
+    .creat-tag > input {
+      width: 1130px;
+      height: 50px;
+    }
 
-            .b_10_1 input {
-                width: 100px;
-                height: 30px;
-                border-radius: 5px;
-                display: inline-block;
-                border: 1px solid #d2d2d2;
-                margin-left: 10px;
-                top: 30px;
-            }
+    .b_10_1 input {
+      width: 100px;
+      height: 30px;
+      border-radius: 5px;
+      display: inline-block;
+      border: 1px solid #D2D2D2;
+      margin-left: 10px;
+      top: 30px;
+    }
 
-            .chatCnt-input {
-                border: 1px solid #d2d2d2;
-                border-radius: 5px;
-            }
+    .chatCnt-input{
+      border: 1px solid #D2D2D2;
+      border-radius: 5px;
+    }
 
-            /* 업로드 파일 css */
-            .filebox input[type="file"] {
-                position: absolute;
-                width: 0;
-                height: 0;
-                padding: 0;
-                overflow: hidden;
-                border: 0;
-            }
+    /* 업로드 파일 css */
+    .filebox input[type="file"] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+    }
 
-            #btn_1 {
-                width: 200px;
-                height: 50px;
-                border: 1px solid white;
-                background-color: #f46b3f;
-                border-radius: 5px;
-                color: white;
-                float: right;
-            }
-            #btn_2,
-            #btn_3 {
-                width: 100px;
-                height: 100%;
-                border: 1px solid white;
-                color: white;
-                background-color: #f46b3f;
-                border-radius: 5px;
-            }
-            .w_3 input,
-            .w_4 input,
-            .w_5 input {
-                width: 350px;
-            }
-            .w_7 textarea {
-                height: 150px;
-                resize: none;
-            }
-            .w_8 input {
-                width: 500px;
-            }
-            .inputLabel {
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-            .form-control {
-                margin-bottom: 5px;
-            }
-            #tag-search-input {
-                width: 200px;
-            }
+    #btn_1{
+      width: 200px;
+      height: 50px;
+      border: 1px solid white;
+      background-color: #f46b3f;
+      border-radius: 5px;
+      color: white;
+      float: right;
+    }
+    #btn_2,
+    #btn_3{
+      width: 100px;
+      height: 100%;
+      border: 1px solid white;
+      color: white;
+      background-color: #f46b3f;
+      border-radius: 5px;
+    }
+    .w_3 input,
+    .w_4 input,
+    .w_5 input {
+      width: 350px;
+    }
+    .w_7 textarea {
+      height: 150px;
+      resize: none;
+    }
+    .w_8 input {
+      width: 500px;
+    }
+    .inputLabel {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-control{
+      margin-bottom: 5px;
+    }
+    #tag-search-input{
+      width: 200px;
+    }
 
-            .tag-select-box {
-                width: 370px;
-                height: 200px;
-                padding: 20px 20px 0;
-                overflow: scroll;
-                background-color: white;
-                border: 1px solid #ced4da;
-                border-radius: 5px;
-                margin-top: 10px;
-            }
-            .tag-select-box .item {
-                width: 100%;
-                margin-bottom: 10px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- ############# 네비게이션 #############-->
-        <header class="menu">
-            <div class="bg-line"></div>
-            <div class="logo-wrap">
-                <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+    .tag-select-box{
+      width: 370px;
+      height: 200px;
+      padding: 20px 20px 0;
+      overflow: scroll;
+      background-color: white;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .tag-select-box .item{
+      width: 100%;
+      margin-bottom: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+<!-- ############# 네비게이션 #############-->
+<header class="menu">
+  <div class="bg-line"></div>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+  </div>
+  <div class="item-list">
+    <a href="./g-1_recommend.html">코스추천</a>
+    <a href="h-1_communityMain.html" style="font-weight: bold; color: #F46B3F">커뮤니티</a>
+    <a href="./i-1_shopMain.html">쇼핑몰</a>
+    <a href="./j-1_noticeMain.html">공지사항</a>
+  </div>
+  <div class="right">
+    <div class="friend">
+      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+        <img class="img" src="./../static/img/icon_friends.png"/>
+      </div>
+      <div class="friend-dropbox">
+        <div class="search-area">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1"
+                   placeholder="닉네임 검색">
+          </div>
+          <div class="btn-wrap">
+            <button type="button" class="btn btn-primary search-btn">검색</button>
+          </div>
+        </div>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">1:1 채팅</button>
+            </div>
+          </li>
+        </ul>
+        <div class="line"></div>
+        <p class="recommend-title">추천 친구</p>
+        <ul class="friend-list">
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
+            </div>
+          </li>
+          <li>
+            <div class="left">
+              <div class="img-wrap">
+                <img class="img" src="./../static/img/icon_profile_default.png"/>
+              </div>
+              <p class="name">오메가오메오메</p>
+              <button type="button" class="btn btn-link">친구 추가</button>
             </div>
             <div class="item-list">
                 <a href="./g-1_recommend.html">코스추천</a>
@@ -561,7 +646,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/",
+                    url: "http://localhost:8080/boards/communities/",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
@@ -641,7 +726,7 @@
                 $.ajax({
                     type: "POST",
                     url:
-                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?name=" +
+                        "http://localhost:8080/hashtags?name=" +
                         $("#tag-add").val(),
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
@@ -667,7 +752,7 @@
                 $.ajax({
                     type: "GET",
                     url:
-                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=0&limit=20&name=" +
+                        "http://localhost:8080/hashtags?offset=0&limit=20&name=" +
                         tagName,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
@@ -677,8 +762,8 @@
                         $(".tag-select-box").empty()
                         for (let i = 0; i < response.data.length; i++) {
                             var temp = `
-            <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
-          `
+                                <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+                            `
                             $(".tag-select-box").append(temp)
                         }
                     },
@@ -708,7 +793,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
+                    url: `http://localhost:8080/s3/file`,
                     // dataType: "json",
                     // dataType: "multipart",
                     enctype: "multipart/form-data",
@@ -751,7 +836,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,

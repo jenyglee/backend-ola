@@ -84,7 +84,7 @@
 <body>
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
@@ -362,7 +362,7 @@
         // 2. 통신해서 불러오기
         $.ajax({
             type: "GET",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
+            url: "http://localhost:8080/boards/notices?category=" + categoryStr + "&page=" + page + "&size=10",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -414,7 +414,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+            url: "http://localhost:8080/auth/token/regenerate",
             contentType : "application/json; charset=utf-8",
             data: JSON.stringify({
                 refreshToken: refreshToken
@@ -427,6 +427,9 @@
                 console.log("에러 : ", response)
             }
         })
+    }
+    function moveMainPage(){
+        window.location = "./../index.html"
     }
 
 </script>

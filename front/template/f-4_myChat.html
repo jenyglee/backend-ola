@@ -81,7 +81,7 @@
 <body>
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
@@ -323,7 +323,7 @@
             type: "GET",
             contentType : "application/json",
             dataType	: "json",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me/boards/chat?page=" + page + "&size=8",
+            url: "http://localhost:8080/info/me/boards/chat?page=" + page + "&size=8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -365,7 +365,7 @@
             type: "GET",
             contentType : "application/json",
             dataType	: "json",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me/boards/recommends?page=" + page + "&size=8",
+            url: "http://localhost:8080/info/me/boards/recommends?page=" + page + "&size=8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -409,7 +409,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+            url: "http://localhost:8080/auth/token/regenerate",
             contentType : "application/json; charset=utf-8",
             data: JSON.stringify({
                 refreshToken: refreshToken
@@ -423,7 +423,9 @@
             }
         })
     }
-
+    function moveMainPage(){
+        window.location = "./../index.html"
+    }
 </script>
 </body>
 

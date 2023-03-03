@@ -266,7 +266,7 @@
     const accessToken = localStorage.getItem("accessToken");
     $.ajax({
       type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
+      url: "http://localhost:8080/auth/logout",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify({
         accessToken : accessToken
@@ -297,7 +297,7 @@
     if(menuProfile.role=="ADMIN") {
       $.ajax({
         type: "GET",
-        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/communities?page=" + page
+        url: "http://localhost:8080/admin/boards/communities?page=" + page
             + "&size=10&title=&contents=&nickname=",
         beforeSend: function (xlr) {
           xlr.setRequestHeader("Authorization", accessToken)
@@ -338,7 +338,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+      url: "http://localhost:8080/auth/token/regenerate",
       contentType : "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken

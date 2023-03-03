@@ -106,8 +106,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
-        <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
         <a href="./g-1_recommend.html">코스추천</a>
@@ -415,7 +415,7 @@
             contentType : "application/json",
             dataType	: "json",
             type: 'GET',
-            url: 'http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/product/search?query=' + products + '&limit=8&offset='+offset+'&sort='+sort,
+            url: 'http://localhost:8080/product/search?query=' + products + '&limit=8&offset='+offset+'&sort='+sort,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -463,7 +463,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/product/search?query=등산화&limit=8&offset=0&sort=sim",
+            url: "http://localhost:8080/product/search?query=등산화&limit=8&offset=0&sort=sim",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -502,7 +502,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+            url: "http://localhost:8080/auth/token/regenerate",
             contentType : "application/json; charset=utf-8",
             data: JSON.stringify({
                 refreshToken: refreshToken
@@ -516,7 +516,9 @@
             }
         })
     }
-
+    function moveMainPage(){
+        window.location = "./../index.html"
+    }
 </script>
 </body>
 </html>

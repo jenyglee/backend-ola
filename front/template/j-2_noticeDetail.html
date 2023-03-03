@@ -45,7 +45,7 @@
         <!-- ############# 네비게이션 #############-->
         <header class="menu">
             <div class="bg-line"></div>
-            <div class="logo-wrap">
+            <div class="logo-wrap" style="cursor: pointer" onclick="moveMainPage()">
                 <img class="img" src="./../static/img/logo_main.png" alt="로고" />
             </div>
             <div class="item-list">
@@ -307,7 +307,7 @@
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
-                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/notices/${id}`,
+                    url: `http://localhost:8080/boards/notices/${id}`,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
@@ -351,7 +351,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -375,6 +375,10 @@
             ga("set", "anonymizeIp", true)
             ga("set", "transport", "beacon")
             ga("send", "pageview")
+
+            function moveMainPage() {
+                window.location = "./../index.html"
+            }
         </script>
     </body>
 </html>

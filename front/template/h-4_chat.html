@@ -173,9 +173,7 @@
                 isDuplicateName()
 
                 // 연결하고자하는 Socket 의 endPoint
-                var socket = new SockJS(
-                    "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/ws-stomp"
-                )
+                var socket = new SockJS("http://localhost:8080/ws-stomp")
                 stompClient = Stomp.over(socket)
 
                 stompClient.connect({}, onConnected, onError)
@@ -206,7 +204,7 @@
             function isDuplicateName() {
                 $.ajax({
                     type: "GET",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/duplicateName",
+                    url: "http://localhost:8080/chat/duplicateName",
                     data: {
                         username: myNickname,
                         roomId: roomId,
@@ -226,7 +224,7 @@
             //
             //     $.ajax({
             //         type: "GET",
-            //         url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/userlist",
+            //         url: "http://localhost:8080/chat/userlist",
             //         data: {
             //             "roomId": roomId
             //         },

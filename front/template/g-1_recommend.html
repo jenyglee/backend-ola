@@ -413,9 +413,9 @@
         <!-- 좋아요 셀렉트박스 -->
         <select class="select-like form-serch-select form-select"
                 aria-label="Default select example" id="likeChoice"
-                style="width: 130px; display: block;" onclick="orderByLikeChoice(value)">
-        <option value="0">좋아요순</option>
-        <option value="1">날짜 순</option>
+                style="width: 130px" onchange="orderByLikeChoice(value)">
+          <option value="0">좋아요순</option>
+          <option value="1">날짜 순</option>
         </select>
 
       </div>
@@ -425,7 +425,7 @@
       </div>
     </div>
     <!--   페이지네이션/작성버튼     -->
-    <div id="bottom-btn" class="wrap_4" style="position: relative; margin-bottom: 100px">
+    <div class="wrap_4" style="position: relative; margin-bottom: 100px">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item">
@@ -448,7 +448,10 @@
           </li>
         </ul>
       </nav>
+      <div id="bottom-btn">
+          <!-- 작성버튼 들어갈 자리 -->
 <!--      <button type="button" id="btn_1" onclick="moveCreatePage()">게시글 작성</button>-->
+        </div>
     </div>
   </section>
 </main>
@@ -461,10 +464,16 @@
   var searchScore = 0;
   var searchAltitude = 0;
   var searchOrderByLike = "likeDesc"
+  var preSignedImageURL = "";
 
 
   $(document).ready(function () {
     getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
+    // console.log("data :" ,data)
+    // for(i=0; i<data.length ; i++){
+    //   var responseURL = await getImageURL(data[i].imgList[0]);
+    //   console.log("responseURL : ", responseURL)
+    // }
     getMenuProfile();
   });
 
@@ -475,7 +484,7 @@
             <div class="img-wrap">
               <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
             </div>
-            <p class="text">${menuProfile.nickname}님</p>
+            <p class="text">${menuProfile.sub}님</p>
         `
     $("#my-profile").append(tempProfile);
   }
@@ -500,36 +509,102 @@
   }
 
   //파라미터 변수가 이상함..ㅠㅠ
-  //http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
-  //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..?
-  function getRecommendList(page, size) {
+  //http://localhost:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
+  
+  async function getRecommendList(page, size) {
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
-    console.log("accessToken : ", accessToken)
-    console.log("page : ", page)
-    console.log("size : ", size)
-    console.log("searchScore : " + searchScore)
-    console.log("searchSeason : " + searchSeason)
-    console.log("searchAltitude : " + searchAltitude)
-    console.log("searchRegion : " + searchRegion)
-    console.log("searchOrderByLike : " + searchOrderByLike)
+    
+    console.log("searchScore" + searchScore)
+    console.log("searchSeason" + searchSeason)
+    console.log("searchAltitude" + searchAltitude)
+    console.log("searchRegion" + searchRegion)
+    console.log("searchOrderByLike" + searchOrderByLike)
 
 
-    // 2. 통신해서 불러오기
+    // // 2. 통신해서 불러오기
+    // $.ajax({
+    //   type: "GET",
+    //   url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
+    //       + searchScore + "&season=" + searchSeason
+    //       + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&orderByLike="
+    //       + searchOrderByLike,
+    //   beforeSend: function (xlr) {
+    //     xlr.setRequestHeader("Authorization", accessToken)
+    //   },
+    //   success: function (response) {
+
+    //     console.log("response : " , response)
+
+    //       $('.totalCnt').empty()
+    //       const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
+    //       $('.totalCnt').append(cnt)
+
+    //     for (let i = 0; i < response.data.length; i++) {
+
+    //       var imgUrl = response.data[i].thumbnail
+    //       if (imgUrl === null) {
+    //         imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
+    //       } else if (imgUrl.includes(".png")) {
+    //         imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
+    //       }
+
+    //       // 데이터 바인딩
+    //       const temp =
+    //           `
+    //           <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
+    //                 <div class="img-wrap"
+    //                      style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+    //                     <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
+    //                 </div>
+    //                 <div class="text-wrap" style="font-size: 14px;">
+    //                     <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+    //                     <div style="display: flex;">
+    //                         <div class="img-wrap"
+    //                              style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+    //                             <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
+    //                         </div>
+    //                         <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
+    //                     </div>
+    //                 </div>
+    //             </a>
+    //           `
+
+    //       $('#cardBody').append(temp)
+    //     }
+    //     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    //     if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
+    //       var createBtnTemp = `
+    //         <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>
+    //       `
+    //     }else if(menuProfile.grade == "MOUNTAIN_GOD"){
+    //       var createBtnTemp = `
+    //         <button type="button" id="btn_1" onclick="moveCreatePage()">게시글 작성</button>
+    //       `
+    //     }
+    //     $("#bottom-btn").append(createBtnTemp)
+    //   },error: function(response){
+    //       console.log("response : ", response)
+    //       if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+    //             regenerateToken()
+    //       }
+    //   }
+    // })
+
+    // 2. 통신해서 불러오기 2
     $.ajax({
       type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
+      url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
           + searchScore + "&season=" + searchSeason
           + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
-    // url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=8&score=0&season=&altitude=0&region=&sort=likeDesc",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
-
-        console.log(response)
+      success: async function (response) {
+        console.log("첫번째") 
+        console.log("response : " , response)
 
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
@@ -537,12 +612,33 @@
 
         for (let i = 0; i < response.data.length; i++) {
 
-        //   var imgUrl = response.data[i].thumbnail
-        //   if (imgUrl === null) {
-        //     imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
-        //   } else if (imgUrl.includes(".png")) {
-        //     imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
-        //   }
+          console.log("response.data[i].imgList[i] : " , response.data[i].imgList[0])
+
+          var imgUrl = response.data[i].imgList[0]
+          
+          if (imgUrl.includes("ola")){
+            imgUrl = await getImageURL(response.data[i].imgList[0]);
+            console.log("ola : ",imgUrl)
+            console.log("여긴 나와? : " , response.data[i].imgList[0])
+            console.log("네번째")
+
+            // setTimeout(() => {
+            // console.log("ola : ",imgUrl)
+            // console.log("여긴 나와? : " , response.data[i].imgList[0])
+            // console.log("네번째") 
+            // }, 500);
+           
+      
+          
+          }else{
+            if (imgUrl === null) {
+            imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
+          } else if (imgUrl.includes(".png")) {
+            imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
+          }
+          }
+        
+        
 
           // 데이터 바인딩
           const temp =
@@ -550,7 +646,7 @@
               <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 120%" src=${response.data[i].imgList[0]} alt="디폴트 산 이미지"/>
+                        <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
                     </div>
                     <div class="text-wrap" style="font-size: 14px;">
                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
@@ -568,7 +664,7 @@
           $('#cardBody').append(temp)
         }
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        $("#bottom-btn").empty()
+        $("#bottom-btn").empty();
         if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
           var createBtnTemp = `
             <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>
@@ -579,6 +675,8 @@
           `
         }
         $("#bottom-btn").append(createBtnTemp)
+        
+        return response.data
       },error: function(response){
           console.log("response : ", response)
           if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
@@ -593,7 +691,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+      url: "http://localhost:8080/auth/token/regenerate",
       contentType : "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken
@@ -607,6 +705,60 @@
       }
     })
   }
+
+
+  
+async function getImageURL(objectKey) {
+    var loadData = "";
+    console.log("두번째") 
+        const accessToken = localStorage.getItem("accessToken");
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        console.log("objectKey 이미지 파일이름 찍히는지 보자.");
+        console.log("objectKey : ", objectKey);
+    
+        // var formData = new FormData();
+        // for (var i = 0; i < imageInput.files.length; i++) {
+        //   // formData.append("image", imageInput.files[i]);
+        //   formData.append("multipartFile", imageInput.files[i]);
+        //   console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+        // }
+
+        await $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/s3/getPreSignedURL?fileName="+ objectKey,
+          // dataType: "text",
+          // enctype: "multipart/form-data",
+          contentType: "application/json",
+          processData: false,
+          // contentType: false,
+          // beforeSend: function (xlr) {
+          //   xlr.setRequestHeader("Authorization", accessToken);
+          // },
+          // data: objectKey,
+
+          xhrFields: {
+            // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            withCredentials:false
+          },
+          success: await function (response) {
+            console.log("세번째") 
+            console.log("preSignedURL : ", response);
+            loadData = response       
+           
+          },
+          error: function (request, status, error) {
+            
+            console.log("에러난다..!");
+            console.log(request, status, error);
+            // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+          },
+          
+        });
+       return loadData
+      }
+
+
+
 
   function regionChoice(value) {
     console.log(value)
@@ -635,6 +787,7 @@
     } else {
       searchOrderByLike = "dateDesc"
     }
+    getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
   }
 
   function moveCreatePage(){
