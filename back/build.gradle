@@ -83,7 +83,7 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 
     //✨AWS RDS에 세팅된 MySQL에 접속시 주석하기
-    //runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'com.h2database:h2'
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"

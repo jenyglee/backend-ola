@@ -197,7 +197,8 @@
     </section>
 </main>
 <script>
-    const accessToken = localStorage.getItem("accessToken")
+
+
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
@@ -234,6 +235,8 @@
     }
 
     function getMyCommunityList(page){
+        const accessToken = localStorage.getItem("accessToken")
+
         $("#postList").empty();
         $.ajax({
             type: "GET",
@@ -276,11 +279,11 @@
     }
 
     function getMyRecommendList(page){
+        const accessToken = localStorage.getItem("accessToken")
         $("#postList").empty();
         $.ajax({
             type: "GET",
             contentType : "application/json",
-            dataType	: "json",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me/boards/recommends?page=" + page + "&size=8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
@@ -345,14 +348,14 @@
 
     //친구 검색
     function searchFriend() {
-        let targetNickname = document.getElementById('searchNickName').value;
         const accessToken = localStorage.getItem("accessToken")
+        let targetNickname = document.getElementById('searchNickName').value;
 
         $.ajax({
             type: "GET",
             contentType: "application/json",
             dataType: "json",
-            url: "http://localhost:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -404,11 +407,9 @@
     //추천 친구 리스트
     function recommendFriedList() {
         const accessToken = localStorage.getItem("accessToken")
-
         $.ajax({
             type: "GET",
-            contentType: "application/json",
-            url: "http://localhost:8080/friends/recommends?page=0&size=5",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -450,18 +451,19 @@
                         $(".friend-list-2").append(sideFriend);
                     }
                 }
+            },
+            error :  function (response, status, error){
             }
         });
     }
 
     //내 친구 리스트
     function myFriedList() {
-        const accessToken = localStorage.getItem("accessToken");
-
+        const accessToken = localStorage.getItem("accessToken")
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: "http://localhost:8080/friends?page=0&size=5",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -510,12 +512,11 @@
 
     //친구 추가
     function addFriend(targetId) {
-        const accessToken = localStorage.getItem("accessToken");
-
+        const accessToken = localStorage.getItem("accessToken")
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -539,12 +540,11 @@
     }
     //친구 삭제
     function deleteFriend(targetId) {
-        const accessToken = localStorage.getItem("accessToken");
-
+        const accessToken = localStorage.getItem("accessToken")
         $.ajax({
             type: "DELETE",
             contentType: "application/json",
-            url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -566,15 +566,13 @@
         });
     }
 
-
     //알림 조회
     function selectAlarm(){
         const accessToken = localStorage.getItem("accessToken")
-
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: "http://localhost:8080/alarm?page=0&size=10",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
@@ -583,6 +581,11 @@
 
                 let result = null;
                 let changeImg = null;
+
+                if(response.data.length==0){
+                    result =`<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
+                    $("#alarm").append(result);
+                }
 
                 for(var i=0; i<response.data.length; i++){
 
@@ -609,10 +612,9 @@
     //알람 읽음 상태로 변경
     function updateAlarmStats(alarmId){
         const accessToken = localStorage.getItem("accessToken")
-
         $.ajax({
             type: "PATCH",
-            url: "http://localhost:8080/alarm?alarmId=" + alarmId,
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId=" + alarmId,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
