@@ -423,19 +423,19 @@
         $(".bell-dropbox").hide();
       }
       // 단건 코스조회
-      function getRecommend() {
+      async function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
 
         $.ajax({
-          type: "GET",
-          url: `http://localhost:8080/boards/recommends/${id}`,
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader(
-              "Authorization",
-              localStorage.getItem("accessToken")
-            );
-          },
+            type: "GET",
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
           success: async function (response) {
             var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
             console.log("response : ", response);
@@ -473,10 +473,7 @@
                 imgUrl = await getImageURL(imgUrl)
                 console.log("imgUrl2 : ",imgUrl)
               }
-              
-
-              
-
+            
                 var tempImage = `
                     <div  style="height: 500px; overflow: hidden; display: flex; align-items: center; margin-bottom:30px">
                         <img style="width: 100%;" src=${imgUrl}  alt = "이미지" />    
@@ -521,6 +518,7 @@
             $("#contents").append(tempContents)
 
             // 버튼 
+            console.log("menuProfile : ", menuProfile)
             $(".btns").empty()
             if(menuProfile.nickname == response.nickName){
                 var tempBtn = `
@@ -593,7 +591,7 @@
         const id = localStorage.getItem("recommendId");
         $.ajax({
             type: "POST",
-            url: `http://localhost:8080/like/recommends/${id}`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader(
@@ -617,7 +615,7 @@
         const id = localStorage.getItem("recommendId");
         $.ajax({
             type: "DELETE",
-            url: `http://localhost:8080/like/recommends/${id}`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader(
@@ -636,8 +634,6 @@
             },
         });
       }
-
-      
 
       function regenerateToken(){
         var refreshToken = localStorage.getItem("refreshToken")
@@ -664,7 +660,7 @@
         console.log("id : " + id);
         $.ajax({
           type: "DELETE",
-          url: `http://localhost:8080/boards/recommends/${id}`,
+          url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
@@ -690,15 +686,11 @@
 
        async function getImageURL(objectKey) {
         var loadData = "";
-        console.log("두번째") 
         const accessToken = localStorage.getItem("accessToken");
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
-        console.log("objectKey 이미지 파일이름 찍히는지 보자.");
-        console.log("objectKey : ", objectKey);
 
         await $.ajax({
           type: "GET",
-          url: "http://localhost:8080/s3/getPreSignedURL?fileName="+ objectKey,
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
           // dataType: "text",
           // enctype: "multipart/form-data",
           contentType: "application/json",
@@ -789,9 +781,6 @@
         function noMove(){
             alert("내가 쓴 코스추천이 아닙니다.")
         }
-      function moveMainPage(){
-        window.location = "./../index.html"
-      }
 
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async></script>
