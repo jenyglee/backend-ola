@@ -491,6 +491,7 @@
     })
   }
 
+  //친구 검색
   function searchFriend() {
     let targetNickname = document.getElementById('searchNickName').value;
     const accessToken = localStorage.getItem("accessToken")
@@ -548,6 +549,7 @@
     });
   }
 
+  //추천 친구 리스트
   function recommendFriedList() {
     const accessToken = localStorage.getItem("accessToken")
 
@@ -600,6 +602,7 @@
     });
   }
 
+  //내 친구 리스트
   function myFriedList() {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -653,7 +656,7 @@
     });
   }
 
-
+  //친구 추가
   function addFriend(targetId) {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -682,7 +685,7 @@
       }
     });
   }
-
+  //친구 삭제
   function deleteFriend(targetId) {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -712,6 +715,78 @@
   }
 
 
+  //알림 조회
+  function selectAlarm(){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "GET",
+      contentType: "application/json",
+      url: "http://localhost:8080/alarm?page=0&size=10",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        $("#alarm").empty();
+
+        let result = null;
+        let changeImg = null;
+
+        if(response.data.length==0){
+          result =`<li style="color: #f46b3f">현재 알림이 없습니다</li>`;
+          $("#alarm").append(result);
+        }
+
+        for(var i=0; i<response.data.length; i++){
+
+          board_Id = response.data[i].boardId;
+          alarmId = response.data[i].alarmId;
+          if(response.data[i].readStatus=="N"){
+
+            $(".icon-bell").empty();
+
+            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+
+            $(".icon-bell").append(changeImg);
+
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }else{
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }
+        }
+      }
+    });
+  }
+  //알람 읽음 상태로 변경
+  function updateAlarmStats(alarmId){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "PATCH",
+      url: "http://localhost:8080/alarm?alarmId=" + alarmId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        console.log("업데이트 ")
+        selectAlarm();
+      }
+    });
+  }
+  //로컬 스토리지에 boardId 저장
+  function setCommunityId(board_Id, alarmId){
+    updateAlarmStats(alarmId);
+    localStorage.setItem("communityId", board_Id)
+    location.replace('h-2_communityDetail.html');
+  }
+  //메인으로 돌아가기
+  function moveMainPage(){
+    window.location = "./../index.html"
+  }
+
+  //마이페이지 추천 친구 리스트(메뉴바 추천친구와 리스트 사이즈, html 붙이는 부분도 달라서 새로 만듬)
   function mainRecommendFriendList() {
     const accessToken = localStorage.getItem("accessToken")
     console.log("accessToken : ", accessToken)
@@ -768,71 +843,6 @@
       }
     });
   }
-  //알림 조회
-  function selectAlarm(){
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      contentType: "application/json",
-      url: "http://localhost:8080/alarm?page=0&size=10",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success : function (response){
-        $("#alarm").empty();
-
-        let result = null;
-        let changeImg = null;
-
-        for(var i=0; i<response.data.length; i++){
-
-          board_Id = response.data[i].boardId;
-          alarmId = response.data[i].alarmId;
-          if(response.data[i].readStatus=="N"){
-
-            $(".icon-bell").empty();
-
-            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
-
-            $(".icon-bell").append(changeImg);
-
-            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
-          }else{
-            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
-          }
-        }
-      }
-    });
-  }
-
-  function setCommunityId(board_Id, alarmId){
-    updateAlarmStats(alarmId);
-    localStorage.setItem("communityId", board_Id)
-    location.replace('h-2_communityDetail.html');
-  }
-
-  function updateAlarmStats(alarmId){
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "PATCH",
-      url: "http://localhost:8080/alarm?alarmId=" + alarmId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success : function (response){
-        console.log("업데이트 ")
-        selectAlarm();
-      }
-    });
-  }
-  function moveMainPage(){
-    window.location = "./../index.html"
-  }
-
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
