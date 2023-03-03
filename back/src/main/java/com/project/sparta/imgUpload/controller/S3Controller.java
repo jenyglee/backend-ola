@@ -46,7 +46,7 @@ public class S3Controller {
     }
 
     @GetMapping("/getPreSignedURL")
-    public String GetPreSignedURL(@RequestBody String fileName){
+    public String GetPreSignedURL(@RequestParam("fileName") String fileName){
 
         String getPreSignedURL = s3UploadService.getPresignedURL(fileName);
 
