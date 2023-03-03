@@ -686,19 +686,14 @@ async function getImageURL(objectKey) {
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
-        //   url: "http://localhost:8080/s3/getPreSignedURL?fileName="+ objectKey,
-          // dataType: "text",
-          // enctype: "multipart/form-data",
           contentType: "application/json",
           processData: false,
-          // contentType: false,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken);
           },
           data: objectKey,
           xhrFields: {
-            // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-            withCredentials:false
+            withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: await function (response) {
             console.log("세번째") 
