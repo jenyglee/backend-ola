@@ -39,8 +39,8 @@ public class FriendController {
 
     @GetMapping("/friends/recommends")
     public ResponseEntity AllRecomentFriendList(
-        @RequestParam(name = "page", defaultValue = "0") int page,
-        @RequestParam(name = "size", defaultValue = "10") int size,
+        @RequestParam(name = "page") int page,
+        @RequestParam(name = "size") int size,
         @AuthenticationPrincipal UserDetailsImpl user) {
 
         PageResponseDto<List<FriendInfoReponseDto>> friendList = friendService.AllRecomentFriendList(
