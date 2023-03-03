@@ -45,12 +45,7 @@ public enum Status {
 
     // 401 -> 잘못된 인증 및 인가 정보
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 비밀번호를 잘못 입력했습니다."),
-
-    //500 -> SERVER ERROR
-    INVALID_SERVER(HttpStatus.INTERNAL_SERVER_ERROR, "잘못된 REFRESH 토큰입니다.");
-
-
-
+    INVALID_SERVER(HttpStatus.BAD_REQUEST, "잘못된 REFRESH 토큰입니다.");
     private HttpStatus httpStatus;
     private String message;
 
