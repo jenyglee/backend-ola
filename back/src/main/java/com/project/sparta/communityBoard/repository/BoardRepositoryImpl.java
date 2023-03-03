@@ -129,28 +129,27 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     communityComment.nickName,
                     communityComment.contents,
                     communityComment.createAt,
+                    // 댓글의 좋아요 수
                     JPAExpressions
                         .select(commentLike.count())
                         .from(commentLike)
                         .where(commentLike.comment.Id.eq(communityComment.Id)),
-                    // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
+                    // 내가 이 댓글을 좋아요 했는지
                     JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
                             .otherwise(false))
                         .from(commentLike)
                         .where(
-                            communityComment.Id.eq(commentLike.comment.Id),
+                            // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
                             commentLike.userNickName.eq(username)
                         ),
                     user.userImageUrl
                 )
             )
-            .from(communityBoard, communityComment, commentLike, user)
-            .where(
-                communityBoard.id.eq(boardId),
-                communityComment.communityBoardId.eq(communityBoard.id),
-                communityComment.nickName.eq(user.nickName)
-            )
-            .distinct()
+            .from(communityBoard)
+            .join(commentLike).on(commentLike.comment.Id.eq(communityComment.Id))
+            .join(communityComment).on(communityComment.communityBoardId.eq(communityBoard.id))
+            .join(user).on(user.nickName.eq(communityComment.nickName))
+            //.distinct()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();

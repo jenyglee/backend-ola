@@ -37,9 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/boards")
 @Slf4j
 public class CommunityBoardController {
-
     private final CommunityBoardService communityBoardService;
-
     private final ChatServiceMain chatServiceMain;
 
     //커뮤니티 작성
@@ -75,39 +73,15 @@ public class CommunityBoardController {
         @RequestParam(defaultValue = "0") int commentPage,
         @RequestParam(defaultValue = "8") int commentSize,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        long start = System.currentTimeMillis();
+        //long start = System.currentTimeMillis();
         CommunityBoardOneResponseDto result = communityBoardService.getCommunityBoard(
             boardId, commentPage, commentSize, userDetails.getUser().getNickName());
-        long end = System.currentTimeMillis();
-        System.out.println("No 캐시 쿼리 수행 시간 : ");
-        System.out.print(end-start);
-        System.out.print("ms");
+        //long end = System.currentTimeMillis();
+        //System.out.println("No 캐시 쿼리 수행 시간 : ");
+        //System.out.print(end-start);
+        //System.out.print("ms");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-    @ApiOperation(value = "캐시 커뮤니티 전체 조회", response = Join.class)
-    @GetMapping("/communities/cache")
-    public ResponseEntity getCacheAllCommunityBoard(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "8") int size,
-        @RequestParam String title,
-        @RequestParam String contents,
-        @RequestParam String nickname,
-        @RequestParam Long hashtagId,
-        @RequestParam String chatStatus,
-        @RequestParam String sort) {
-        long start = System.currentTimeMillis();
-        PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getCacheAllCommunityBoard(
-            page, size, title, contents, nickname, hashtagId, chatStatus, sort);
-        long end = System.currentTimeMillis();
-        System.out.println("Yes 쿼리 수행 시간 : ");
-        System.out.print(end-start);
-        System.out.print("ms");
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
 
     //커뮤니티 전체 조회
     @ApiOperation(value = "커뮤니티 전체 조회", response = Join.class)
