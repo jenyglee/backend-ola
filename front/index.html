@@ -417,6 +417,12 @@
                 { id: 23, name: "3시간걸리는산" },
             ]
             $(document).ready(function () {
+                var accessToken = localStorage.getItem("accessToken")
+                if (accessToken == null) {
+                    console.log("accessToken : ", accessToken)
+                    window.location.href = "./template/b-1_login.html"
+                }
+
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
                 getMenuProfile()
@@ -472,7 +478,7 @@
                 $.ajax({
                     type: "GET",
                     // TODO 현재 모집중인 것들이 뜨게 하는 쿼리문 추가 필요
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },

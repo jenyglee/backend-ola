@@ -376,11 +376,12 @@
                             name="fileName"
                             accept="image/*"
                             multiple
+                            onchange="imgPresignedURL()"
                         />
                     </form>
-                    <button type="button" onclick="imgPresignedURL()">
+                    <!-- <button type="button" onclick="imgPresignedURL()">
                         사진등록
-                    </button>
+                    </button> -->
                     <div id="img-wrap" style="display: flex; gap: 5px">
                         <!-- 이미지 들어가는 자리 -->
                     </div>
@@ -523,29 +524,24 @@
                 console.log("$('#chooseFile'): ", $("#chooseFile"))
                 console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
 
-                // var formData = new FormData();
-                // for (var i = 0; i < imageInput.files.length; i++) {
-                //   // formData.append("image", imageInput.files[i]);
-                //   formData.append("multipartFile", imageInput.files[i]);
-                //   console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-                // }
-
                 $.ajax({
                     type: "POST",
                     // url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
                     url: `http://localhost:8080/s3/preSignedURL`,
                     // dataType: "text",
-                    // enctype: "multipart/form-data",
+                    enctype: "multipart/form-data",
                     // contentType: "application/json; charset=utf-8",
                     processData: false,
-                    contentType: 'image/png',
+                    contentType: false,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken);
                     },
                     data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                    // data: imageInput.files[0].name,
+
 
                     // xhrFields: {
-                    //     withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    //     withCredentials: true, // 클라이언트와 서버가 통4신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
                     // },
                     success: function (response) {
                         console.log("preSignedURL : ", response)
@@ -560,17 +556,21 @@
                 })
             }
 
-            function imageUpload(presignedURL) {
+            function imageUpload(presignedURLObject) {
                 const accessToken = localStorage.getItem("accessToken")
                 var file = $("#chooseFile")[0].files[0]
+<<<<<<< HEAD
                 // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
                 console.log("presignedURL 주소 찍히는지 보자.")
                 console.log("presignedURLObject.preSignedURL : ", presignedURLObject.preSignedURL)
                 console.log("file : ", file)
+=======
+>>>>>>> 6aaca60caba764f9a9a700488ff479212f4a266d
 
                 $.ajax({
                     type: "PUT",
                     url: presignedURLObject.preSignedURL,
+<<<<<<< HEAD
                     // dataType: "multipart",
                     enctype: "multipart/form-data",
                     // contentType: "application/json; charset=utf-8",
@@ -579,10 +579,16 @@
                     beforeSend: function (xlr) {
                         // xlr.setRequestHeader("Authorization", accessToken)
                     },
+=======
+                    contentType: 'image/png',
+                    processData: false,
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+>>>>>>> 6aaca60caba764f9a9a700488ff479212f4a266d
                     data: file,
                     xhrFields: {
-                        // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-                        withCredentials: false,
+                        withCredentials: false,  // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
                     },
                     success: function (response) {
                         imgName = presignedURLObject.imageName;
@@ -599,52 +605,6 @@
                 })
             }
 
-            // function imgUpload(input) {
-            //   const accessToken = localStorage.getItem("accessToken");
-            //   const imageInput = $("#chooseFile")[0];
-            //   // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-            //   console.log("$('#chooseFile'): ", $("#chooseFile"));
-            //   console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
-
-            //   var formData = new FormData();
-            //   for (var i = 0; i < imageInput.files.length; i++) {
-            //     // formData.append("image", imageInput.files[i]);
-            //     formData.append("multipartFile", imageInput.files[i]);
-            //     console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-            //   }
-
-            //   $.ajax({
-            //     type: "POST",
-            //     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
-            //     // dataType: "json",
-            //     // dataType: "multipart",
-            //     enctype: "multipart/form-data",
-            //     // contentType: "application/json; charset=utf-8",
-            //     processData: false,
-            //     contentType: false,
-            //     beforeSend: function (xlr) {
-            //       xlr.setRequestHeader("Authorization", accessToken);
-            //     },
-            //     data: formData,
-            //     xhrFields: {
-            //       withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-            //     },
-            //     success: function (response) {
-            //       console.log("여긴 찍혀? 1");
-            //       console.log("response", response);
-            //       for (let i = 0; i < response.length; i++) {
-            //         // imageUrlList.push(response[i].imgList[i]);
-            //         imageUrlList.push(response[i]);
-            //       }
-            //       console.log("imageUrlList : ", imageUrlList);
-            //       return imageUrlList;
-            //     },
-            //     error: function (request, status, error) {
-            //       console.log(error);
-            //       // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
-            //     },
-            //   });
-            // }
         </script>
         <script src="https://www.google-analytics.com/analytics.js" async></script>
     </body>
