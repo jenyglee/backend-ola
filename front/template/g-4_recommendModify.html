@@ -405,7 +405,7 @@
 
             var imageUrlList = []
 
-            function getRecommend() {
+            async function getRecommend() {
                 const id = localStorage.getItem("recommendId")
                 $.ajax({
                     type: "GET",
@@ -413,7 +413,7 @@
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
                     },
-                    success: function (response) {
+                    success: async function (response) {
                         console.log("response : ", response)
                         const score = response.score
                         const title = response.title
@@ -436,11 +436,16 @@
                         $("#recommend-nickName").attr("value", nickName)
 
                         //사진넣기
-                        imageUrlList = response.imgList
                         for (let i = 0; i < response.imgList.length; i++) {
+                            var imgUrl = ""
+                            if (response.imgList[i]) {
+                                imgUrl = await getImageURL(response.imgList[i])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
                             var tempImage = `
                                 <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-                                    <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
+                                    <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
                                     <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
                                     onclick="removeImage(${i})" />
                                     <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
@@ -459,12 +464,49 @@
                 })
             }
 
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+                console.log("objectKey 이미지 파일이름 찍히는지 보자.")
+                console.log("objectKey : ", objectKey)
+
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        console.log("세번째")
+                        console.log("preSignedURL : ", response)
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
+            }
+
             //수정 api연동
             function updateRecommend() {
                 const id = localStorage.getItem("recommendId")
                 $.ajax({
                     type: "PATCH",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/" + id,
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/" +
+                        id,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
                     },

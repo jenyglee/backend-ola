@@ -666,7 +666,7 @@
     $(".bell-dropbox").hide();
   }
 
-  function getCommunity(commentPage) {
+  async function getCommunity(commentPage) {
     var accessToken = localStorage.getItem("accessToken");
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
     $.ajax({
@@ -680,7 +680,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
       },
-      success: function (response) {
+      success: async function (response) {
 
         roomMemberCnt();
         // 컨텐츠 넣기
@@ -694,12 +694,18 @@
         $("#contents-area").append(tempContentsArea);
 
         for (let i = 0; i < response.imgList.length; i++) {
-          let temp = `
-                <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
-                  <img src=${response.imgList[i]} alt="이미지" style="width: 100%"/>
-                </div>
-              `;
-          $("#contents-area").append(temp);
+            var imgUrl = "";
+            if (response.imgList[i]){
+                imgUrl = await getImageURL(response.imgList[i]);
+            }else{
+                imgUrl = "./../static/img/mountain-default.png"
+            }
+            let temp = `
+                    <div style="width: 400px; height: 247px; display: flex; justify-content: center; align-items: center; overflow: hidden; background-color: #D2D2D2; margin-bottom: 15px; margin-left: 20px">
+                    <img src=${imgUrl} alt="이미지" style="width: 100%"/>
+                    </div>
+                `;
+            $("#contents-area").append(temp);
         }
 
         // 태그 넣기
@@ -836,6 +842,42 @@
       },
     });
   }
+
+  async function getImageURL(objectKey) {
+    var loadData = "";
+    const accessToken = localStorage.getItem("accessToken");
+    // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+    console.log("objectKey 이미지 파일이름 찍히는지 보자.");
+    console.log("objectKey : ", objectKey);
+
+    await $.ajax({
+        type: "GET",
+        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
+        contentType: "application/json",
+        processData: false,
+        beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+        },
+        data: objectKey,
+        xhrFields: {
+        withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+        },
+        success: await function (response) {
+        console.log("세번째") 
+        console.log("preSignedURL : ", response);
+        loadData = response       
+        
+        },
+        error: function (request, status, error) {
+        
+        console.log("에러난다..!");
+        console.log(request, status, error);
+        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+        },
+        
+    });
+    return loadData
+    }
 
   function deleteCommunity() {
     $.ajax({
