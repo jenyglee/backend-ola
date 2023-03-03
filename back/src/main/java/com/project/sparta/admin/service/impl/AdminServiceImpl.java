@@ -25,15 +25,8 @@ public class AdminServiceImpl implements AdminService {
     // ADMIN_TOKEN
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     private final UserRepository userRepository;
-    //todo no usages 안쓰는 필드값들 지우기 (일단 주석처리 해놓음)
-//    private final BoardRepository boardRepository;
-//    private final RecommendCourseBoardRepository recommandCoursePostRepository;
-//    private final RecommendCourseImgService recommendCourseImgService;
-
     // 어드민 회원가입
     private final PasswordEncoder encoder;
-//    private final LikeBoardRepository likeBoardRepository;
-
     // 어드민 회원가입
     @Override
     public void signup(AdminSignupDto adminRequestSignupDto) {
@@ -60,23 +53,5 @@ public class AdminServiceImpl implements AdminService {
             .build();
         userRepository.save(admin);
     }
-
-    //todo 주석처리 해놓은것들 안쓰는거면 지우기
-//
-//    @Override
-//    @Transactional
-//    public void deleteCommunityBoard(Long community_board_id) {
-//        boardRepository.findById(community_board_id)
-//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
-//        boardRepository.deleteById(community_board_id);
-//    }
-//
-//    @Override
-//    public ManagerPersonResponseDto getOneUser(Long id){
-//        User user = userRepository.findById(id).orElseThrow(()-> new CustomException(Status.INVALID_USER));
-//        ManagerPersonResponseDto managerPersonResponseDto = new ManagerPersonResponseDto(user);
-//        return managerPersonResponseDto;
-//    }
-
 }
 

@@ -428,7 +428,7 @@
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         $.ajax({
           type: "GET",
-          url: `http://localhost:8080/boards/recommends/${id}`,
+          url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
               "Authorization",
@@ -581,7 +581,7 @@
         const id = localStorage.getItem("recommendId");
         $.ajax({
             type: "POST",
-            url: `http://localhost:8080/like/recommends/${id}`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader(
@@ -605,7 +605,7 @@
         const id = localStorage.getItem("recommendId");
         $.ajax({
             type: "DELETE",
-            url: `http://localhost:8080/like/recommends/${id}`,
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
             contentType: "application/json; charset=utf-8",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader(
@@ -632,7 +632,7 @@
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:8080/auth/token/regenerate",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
           contentType : "application/json; charset=utf-8",
           data: JSON.stringify({
             refreshToken: refreshToken
@@ -652,7 +652,7 @@
         console.log("id : " + id);
         $.ajax({
           type: "DELETE",
-          url: `http://localhost:8080/boards/recommends/${id}`,
+          url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
           contentType: "application/json; charset=utf-8",
           beforeSend: function (xlr) {
             xlr.setRequestHeader(
@@ -692,7 +692,7 @@
 
         $.ajax({
           type: "POST",
-          url: `http://localhost:8080/s3/file`,
+          url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
           // dataType: "json",
           // dataType: "multipart",
           enctype: "multipart/form-data",

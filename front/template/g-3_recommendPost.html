@@ -439,7 +439,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/boards/recommends`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends`,
                     // dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xlr) {
@@ -476,7 +476,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/auth/token/regenerate",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -513,7 +513,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/s3/preSignedURL`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
                     // dataType: "text",
                     // enctype: "multipart/form-data",
                     contentType: "application/json; charset=utf-8",
@@ -595,7 +595,7 @@
 
             //   $.ajax({
             //     type: "POST",
-            //     url: `http://localhost:8080/s3/file`,
+            //     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
             //     // dataType: "json",
             //     // dataType: "multipart",
             //     enctype: "multipart/form-data",
