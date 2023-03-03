@@ -409,7 +409,7 @@
                 const id = localStorage.getItem("recommendId")
                 $.ajax({
                     type: "GET",
-                    url: `http://localhost:8080/boards/recommends/${id}`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
                     },
@@ -481,7 +481,9 @@
                 const id = localStorage.getItem("recommendId")
                 $.ajax({
                     type: "PATCH",
-                    url: "http://localhost:8080/boards/recommends/" + id,
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/" +
+                        id,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
                     },
@@ -513,7 +515,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/auth/token/regenerate",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -545,7 +547,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: `http://localhost:8080/s3/file`,
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
                     // dataType: "json",
                     // dataType: "multipart",
                     enctype: "multipart/form-data",

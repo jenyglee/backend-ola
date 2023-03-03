@@ -1,460 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/normalize.css"/>
-    <link rel="stylesheet" href="../css/main.css"/>
-    <link rel="stylesheet" href="../css/reset.css"/>
-    <link rel="stylesheet" href="../css/menu.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta name="theme-color" content="#fafafa">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <title>관리자 코스추천 관리</title>
-    <style>
-        .container {
-            width: 1900px;
-            height: 1000px;
-            padding: 0;
-            background-color: WHITE;
-            align-items: center;
-            display: inline-block;
-        }
-
-        .wrap {
-            width: 2000px;
-            height: 1000px;
-            float: left;
-            display: inline-block;
-        }
-
-        .w_1 {
-            width: 300px;
-            height: 1000px;
-            background-color: #F46B3F;
-            display: inline-block;
-            float: left;
-        }
-
-        .w_2 {
-            width: 1500px;
-            height: 1000px;
-            background-color: white;
-            display: inline-block;
-            float: left;
-        }
-
-        .w_2 span {
-            margin-left: 100px;
-        }
-
-        .b_1 {
-            height: 70px;
-        }
-
-        .b_2 {
-            text-align: center;
-            font-size: 30px;
-            color: WHITE;
-            width: 300px;
-            height: 150px;
-            display: inline-block;
-        }
-
-        .b_2 .b_2_1 {
-            text-align: center;
-            font-size: 30px;
-            color: WHITE;
-            width: 300px;
-            height: 50px;
-            display: inline-block;
-        }
-
-        .b_2 .b_2_2 {
-            height: 40px;
-            width: 300px;
-            display: inline-block;
-        }
-
-        .b_2 .b_2_2 button {
-            height: 40px;
-            width: 100px;
-            border-radius: 50px;
-            font-size: 15px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            color: white;
-            margin-right: 100px;
-        }
-
-        .b_4 {
-            height: 70px;
-            display: inline-block;
-        }
-
-        .b_5 {
-            width: 200px;
-            margin-left: 55px;
-            display: inline-block;
-        }
-
-        .b_5 a {
-            font-size: 15px;
-            color: WHITE;
-            text-decoration: none;
-            font-weight: normal;
-        }
-
-        .b_5 a:hover {
-            font-size: 15px;
-            color: WHITE;
-            text-decoration: underline;
-        }
-
-
-        /*#############################################*/
-        .b_6 {
-            width: 1500px;
-            height: 100px;
-        }
-
-        .b_7, .b_8, .b_9, .b_10, .b_11 {
-            width: 1500px;
-            height: 100px;
-        }
-
-        .b_13 {
-            width: 1500px;
-            height: 80px;
-        }
-
-        .b_7 input {
-            width: 1000px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
-
-        .b_8 input {
-            width: 500px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
-
-        .b_9 input {
-            width: 500px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
-
-        .b_10 input {
-            width: 500px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
-
-        .b_11 input {
-            width: 500px;
-            height: 40px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-        }
-
-        .b_12 {
-            width: 1500px;
-            height: 200px;
-            line-height: 50px;
-        }
-
-        .b_12 .b_12_1{
-            margin-left: 100px;
-            display: inline-block;
-            text-align: justify;
-            float: left;
-        }
-
-        .b_12 .b_12_2 textarea {
-            width: 1000px;
-            height: 200px;
-            border: 1px solid #D2D2D2;
-            border-radius: 5px;
-            resize: none;
-        }
-
-        .b_13 .b_13_0 {
-            width: 20px;
-            height: 50px;
-            display: inline-block;
-            float: left;
-        }
-
-        .b_13 .b_13_1, .b_13 .b_13_2, .b_13 .b_13_3 {
-            width: 200px;
-            height: 50px;
-            display: inline-block;
-            float: right;
-            margin-top: 10px;
-        }
-
-        .b_13 .b_13_3 {
-            margin-right: 280px;
-        }
-
-        .b_13 .b_13_2, .b_13 .b_13_3 {
-            margin-left: 10px;
-        }
-
-        .b_0 {
-            width: 1500px;
-            height: 50px;
-        }
-
-        #btn_1 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 5px;
-            color: #F46B3F;
-            font-weight: bolder;
-            font-size: 17px;
-        }
-
-        #btn_2 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid #F46B3F;
-            background-color: white;
-            border-radius: 5px;
-            color: #F46B3F;
-            font-weight: bolder;
-            font-size: 17px;
-        }
-
-        #btn_3 {
-            width: 180px;
-            height: 50px;
-            border: 1px solid white;
-            background-color: #F46B3F;
-            border-radius: 5px;
-            color: white;
-            font-weight: bolder;
-            font-size: 17px;
-        }
-
-    </style>
-</head>
-<body>
-
-<main>
-    <div style="display: flex">
-        <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
-            <div style="">
-                <div style="font-size: 26px; color: white" id ="manager_name">
-                </div>
-
-                <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                        type="button" class="logout" onclick="gotologout()">로그아웃</button>
-
-            </div>
-
-            <div style="margin-top: 100px">
-                <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
-                <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html"><b>등산 추천 코스 관리</b></a><br><br>
-                <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html">커뮤니티 관리</a><br><br>
-                <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html">공지사항 관리</a>
-            </div>
-        </div>
-        <section style="margin-left: 100px; margin-top:100px;">
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
-            </div>
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">점수</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="score" placeholder="점수를 입력하세요">
-            </div>
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">최고의 계절</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="season" placeholder="계절을 입력하세요">
-            </div>
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">해발고도</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="altitude" placeholder="해발고도 입력하세요(-제외)">
-            </div>
-            <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">주소</p>
-            <div style="margin-bottom: 30px">
-                <input type="text" class="form-control" id="address" placeholder="주소를 입력하세요">
-            </div>
-            <div style="margin-bottom: 50px;">
-                <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
-                <textarea class="form-control" id="contents" rows="3" placeholder="내용을 입력하세요"></textarea>
-            </div>
-            <div>
-                <button type="button" id="btn_1" onclick="deleteRecommend()">삭제</button>
-                <button type="button" id="btn_2" onclick="updateRecommend()">수정</button>
-                <button type="button" id="btn_3" onclick="listRecommend()">목록</button>
-            </div>
-        </section>
-    </div>
-</main>
-<script>
-    $(document).ready(function () {
-        getRecommend(0,"");
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        if(menuProfile.role=="ADMIN"){
-            const temp = `<span>${menuProfile.nickname} 매니저</span>`
-            $(manager_name).append(temp)
-        }
-    });
-
-    function listRecommend(){
-        window.location.href="l-1_manageRecommend.html"
-    }
-
-    function gotologout(){
-        const accessToken = localStorage.getItem("accessToken");
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/auth/logout",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({
-                accessToken : accessToken
-            }),
-            success: function (response) {
-                alert("로그아웃 되었습니다.")
-                window.location.href = "b-1_login.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.httpStatus === "BAD_REQUEST"){
-                    regenerateToken()
-                    gotologout()
-                }
-            },
-        })
-    }
-
-    function getRecommend(){
-        const id = localStorage.getItem("recommendId")
-        $.ajax({
-            type: "GET",
-            url: `http://localhost:8080/admin/boards/recommends/${id}`,
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            // data: {
-            //   name: "sasas",
-            // },
-            success: function (response) {
-                console.log("response : ", response)
-                // 카테고리가 영어로 들어와서 한글로 반환
-
-                $('#score').val(response.score)
-                $('#title').val(response.title)
-                $('#altitude').val(response.altitude)
-                $('#contents').val(response.contents)
-                $('#season').val(response.season)
-                $('#address').val(response.region)
-
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    getRecommend()
-                }
-            },
-        })
-    }
-
-    function updateRecommend(){
-        const id = localStorage.getItem("recommendId")
-        // console.log("$(\"#title\").val() : ", $("#title").val())
-        // console.log("$(\"#contents\").val() : ", $("#contents").val())
-        // console.log("category : ", category)
-        // console.log("id : ", id)
-        $.ajax({
-            type: "PATCH",
-            url: `http://localhost:8080/admin/boards/recommends/${id}`,
-            // dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            data: JSON.stringify({
-               score : $('#score').val(),
-               title :  $('#title').val(),
-               altitude : $('#altitude').val(),
-               contents : $('#contents').val(),
-               season : $('#season').val(),
-                region : $('#address').val(),
-                imgList : ["https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg",
-                    "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
-                    "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg"]
-            }),
-            success: function (response) {
-                alert("수정 완료")
-                window.location.href = "l-1_manageRecommend.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    updateRecommend()
-                }
-            },
-        })
-    }
-
-    function deleteRecommend(){
-        const id = localStorage.getItem("recommendId")
-        $.ajax({
-            type: "DELETE",
-            url: `http://localhost:8080/admin/boards/recommends/${id}`,
-            // dataType: "text",
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-            },
-            // data: JSON.stringify({
-            //     "title" : $("#title").val(),
-            //     "contents" : $("#contents").val(),
-            //     "category" : category
-            // }),
-            success: function (response) {
-                alert("삭제 완료")
-                window.location.href = "l-1_manageRecommend.html";
-            },
-            error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-                    regenerateToken()
-                    deleteRecommend()
-                }
-            },
-        })
-    }
-
-    function regenerateToken(){
-        var refreshToken = localStorage.getItem("refreshToken")
-
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/auth/token/regenerate",
-            contentType : "application/json; charset=utf-8",
-            data: JSON.stringify({
-                refreshToken: refreshToken
-            }),
-            success: function (response) {
-                localStorage.setItem('accessToken', response.accessToken)
-                localStorage.setItem("refreshToken", response.refreshToken)
-            },
-            error: function(response){
-                console.log("에러 : ", response)
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="../css/normalize.css" />
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/menu.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta name="theme-color" content="#fafafa" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <title>관리자 코스추천 관리</title>
+        <style>
+            .container {
+                width: 1900px;
+                height: 1000px;
+                padding: 0;
+                background-color: WHITE;
+                align-items: center;
+                display: inline-block;
             }
-        })
-    }
-</script>
-</body>
+
+            .wrap {
+                width: 2000px;
+                height: 1000px;
+                float: left;
+                display: inline-block;
+            }
+
+            .w_1 {
+                width: 300px;
+                height: 1000px;
+                background-color: #f46b3f;
+                display: inline-block;
+                float: left;
+            }
+
+            .w_2 {
+                width: 1500px;
+                height: 1000px;
+                background-color: white;
+                display: inline-block;
+                float: left;
+            }
+
+            .w_2 span {
+                margin-left: 100px;
+            }
+
+            .b_1 {
+                height: 70px;
+            }
+
+            .b_2 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 150px;
+                display: inline-block;
+            }
+
+            .b_2 .b_2_1 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 50px;
+                display: inline-block;
+            }
+
+            .b_2 .b_2_2 {
+                height: 40px;
+                width: 300px;
+                display: inline-block;
+            }
+
+            .b_2 .b_2_2 button {
+                height: 40px;
+                width: 100px;
+                border-radius: 50px;
+                font-size: 15px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                color: white;
+                margin-right: 100px;
+            }
+
+            .b_4 {
+                height: 70px;
+                display: inline-block;
+            }
+
+            .b_5 {
+                width: 200px;
+                margin-left: 55px;
+                display: inline-block;
+            }
+
+            .b_5 a {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: none;
+                font-weight: normal;
+            }
+
+            .b_5 a:hover {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: underline;
+            }
+
+            /*#############################################*/
+            .b_6 {
+                width: 1500px;
+                height: 100px;
+            }
+
+            .b_7,
+            .b_8,
+            .b_9,
+            .b_10,
+            .b_11 {
+                width: 1500px;
+                height: 100px;
+            }
+
+            .b_13 {
+                width: 1500px;
+                height: 80px;
+            }
+
+            .b_7 input {
+                width: 1000px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            .b_8 input {
+                width: 500px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            .b_9 input {
+                width: 500px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            .b_10 input {
+                width: 500px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            .b_11 input {
+                width: 500px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            .b_12 {
+                width: 1500px;
+                height: 200px;
+                line-height: 50px;
+            }
+
+            .b_12 .b_12_1 {
+                margin-left: 100px;
+                display: inline-block;
+                text-align: justify;
+                float: left;
+            }
+
+            .b_12 .b_12_2 textarea {
+                width: 1000px;
+                height: 200px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                resize: none;
+            }
+
+            .b_13 .b_13_0 {
+                width: 20px;
+                height: 50px;
+                display: inline-block;
+                float: left;
+            }
+
+            .b_13 .b_13_1,
+            .b_13 .b_13_2,
+            .b_13 .b_13_3 {
+                width: 200px;
+                height: 50px;
+                display: inline-block;
+                float: right;
+                margin-top: 10px;
+            }
+
+            .b_13 .b_13_3 {
+                margin-right: 280px;
+            }
+
+            .b_13 .b_13_2,
+            .b_13 .b_13_3 {
+                margin-left: 10px;
+            }
+
+            .b_0 {
+                width: 1500px;
+                height: 50px;
+            }
+
+            #btn_1 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
+
+            #btn_2 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
+
+            #btn_3 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+                color: white;
+                font-weight: bolder;
+                font-size: 17px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div style="display: flex">
+                <div
+                    style="
+                        width: 300px;
+                        height: 100vh;
+                        padding-top: 100px;
+                        padding-left: 50px;
+                        background-color: #f46b3f;
+                    "
+                >
+                    <div style="">
+                        <div style="font-size: 26px; color: white" id="manager_name"></div>
+
+                        <button
+                            style="
+                                width: 84px;
+                                height: 36px;
+                                border-radius: 18px;
+                                border: 1px solid white;
+                                color: white;
+                                background-color: #f46b3f;
+                                margin-top: 10px;
+                            "
+                            type="button"
+                            class="logout"
+                            onclick="gotologout()"
+                        >
+                            로그아웃
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 100px">
+                        <a style="text-decoration: none; color: white" href="./k-1_manageUser.html"
+                            >회원관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./l-1_manageRecommend.html"
+                            ><b>등산 추천 코스 관리</b></a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./m-1_manageCommunity.html"
+                            >커뮤니티 관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./n-1_manageNotice.html"
+                            >공지사항 관리</a
+                        >
+                    </div>
+                </div>
+                <section style="margin-left: 100px; margin-top: 100px">
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">제목</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            placeholder="제목을 입력하세요"
+                        />
+                    </div>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">점수</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="score"
+                            placeholder="점수를 입력하세요"
+                        />
+                    </div>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
+                        최고의 계절
+                    </p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="season"
+                            placeholder="계절을 입력하세요"
+                        />
+                    </div>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">해발고도</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="altitude"
+                            placeholder="해발고도 입력하세요(-제외)"
+                        />
+                    </div>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">주소</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="address"
+                            placeholder="주소를 입력하세요"
+                        />
+                    </div>
+                    <div style="margin-bottom: 50px">
+                        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">내용</p>
+                        <textarea
+                            class="form-control"
+                            id="contents"
+                            rows="3"
+                            placeholder="내용을 입력하세요"
+                        ></textarea>
+                    </div>
+                    <div>
+                        <button type="button" id="btn_1" onclick="deleteRecommend()">삭제</button>
+                        <button type="button" id="btn_2" onclick="updateRecommend()">수정</button>
+                        <button type="button" id="btn_3" onclick="listRecommend()">목록</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <script>
+            $(document).ready(function () {
+                getRecommend(0, "")
+                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+                if (menuProfile.role == "ADMIN") {
+                    const temp = `<span>${menuProfile.nickname} 매니저</span>`
+                    $(manager_name).append(temp)
+                }
+            })
+
+            function listRecommend() {
+                window.location.href = "l-1_manageRecommend.html"
+            }
+
+            function gotologout() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        accessToken: accessToken,
+                    }),
+                    success: function (response) {
+                        alert("로그아웃 되었습니다.")
+                        window.location.href = "b-1_login.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                            regenerateToken()
+                            gotologout()
+                        }
+                    },
+                })
+            }
+
+            function getRecommend() {
+                const id = localStorage.getItem("recommendId")
+                $.ajax({
+                    type: "GET",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/recommends/${id}`,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    // data: {
+                    //   name: "sasas",
+                    // },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // 카테고리가 영어로 들어와서 한글로 반환
+
+                        $("#score").val(response.score)
+                        $("#title").val(response.title)
+                        $("#altitude").val(response.altitude)
+                        $("#contents").val(response.contents)
+                        $("#season").val(response.season)
+                        $("#address").val(response.region)
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            getRecommend()
+                        }
+                    },
+                })
+            }
+
+            function updateRecommend() {
+                const id = localStorage.getItem("recommendId")
+                // console.log("$(\"#title\").val() : ", $("#title").val())
+                // console.log("$(\"#contents\").val() : ", $("#contents").val())
+                // console.log("category : ", category)
+                // console.log("id : ", id)
+                $.ajax({
+                    type: "PATCH",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/recommends/${id}`,
+                    // dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    data: JSON.stringify({
+                        score: $("#score").val(),
+                        title: $("#title").val(),
+                        altitude: $("#altitude").val(),
+                        contents: $("#contents").val(),
+                        season: $("#season").val(),
+                        region: $("#address").val(),
+                        imgList: [
+                            "https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg",
+                            "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
+                            "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
+                        ],
+                    }),
+                    success: function (response) {
+                        alert("수정 완료")
+                        window.location.href = "l-1_manageRecommend.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            updateRecommend()
+                        }
+                    },
+                })
+            }
+
+            function deleteRecommend() {
+                const id = localStorage.getItem("recommendId")
+                $.ajax({
+                    type: "DELETE",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/recommends/${id}`,
+                    // dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    // data: JSON.stringify({
+                    //     "title" : $("#title").val(),
+                    //     "contents" : $("#contents").val(),
+                    //     "category" : category
+                    // }),
+                    success: function (response) {
+                        alert("삭제 완료")
+                        window.location.href = "l-1_manageRecommend.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            deleteRecommend()
+                        }
+                    },
+                })
+            }
+
+            function regenerateToken() {
+                var refreshToken = localStorage.getItem("refreshToken")
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        refreshToken: refreshToken,
+                    }),
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response.accessToken)
+                        localStorage.setItem("refreshToken", response.refreshToken)
+                    },
+                    error: function (response) {
+                        console.log("에러 : ", response)
+                    },
+                })
+            }
+        </script>
+    </body>
 </html>

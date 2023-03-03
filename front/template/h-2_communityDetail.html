@@ -672,7 +672,7 @@
     $.ajax({
       type: "GET",
       url:
-          "http://localhost:8080/boards/communities/" +
+          "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
           communityId +
           "?commentPage=" +
           commentPage +
@@ -840,7 +840,7 @@
   function deleteCommunity() {
     $.ajax({
       type: "DELETE",
-      url: `http://localhost:8080/boards/communities/${communityId}`,
+      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/${communityId}`,
       contentType: "application/json; charset=utf-8",
       beforeSend: function (xlr) {
         xlr.setRequestHeader(
@@ -865,7 +865,7 @@
     var accessToken = localStorage.getItem("accessToken");
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/comments/communities/" + communityId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/comments/communities/" + communityId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
       },
@@ -895,7 +895,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/alarm",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
       },
@@ -922,7 +922,7 @@
     console.log("commentId : ", commentId);
     $.ajax({
       type: "DELETE",
-      url: "http://localhost:8080/communities/comments/" + commentId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/communities/comments/" + commentId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
       },
@@ -947,7 +947,7 @@
     console.log("id : " + id);
     $.ajax({
       type: "DELETE",
-      url: `http://localhost:8080/boards/communities/${id}`,
+      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/${id}`,
       // dataType: "text",
       contentType: "application/json; charset=utf-8",
       beforeSend: function (xlr) {
@@ -972,7 +972,7 @@
   function likeCommunity() {
     $.ajax({
       type: "POST",
-      url: `http://localhost:8080/like/communities/${communityId}`,
+      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/communities/${communityId}`,
       contentType: "application/json; charset=utf-8",
       beforeSend: function (xlr) {
         xlr.setRequestHeader(
@@ -995,7 +995,7 @@
   function unlikeCommunity() {
     $.ajax({
       type: "DELETE",
-      url: `http://localhost:8080/like/communities/${communityId}`,
+      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/communities/${communityId}`,
       contentType: "application/json; charset=utf-8",
       beforeSend: function (xlr) {
         xlr.setRequestHeader(
@@ -1022,7 +1022,7 @@
     if (isLike) {
       $.ajax({
         type: "DELETE",
-        url: `http://localhost:8080/like/comments/${commentId}`,
+        url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/comments/${commentId}`,
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xlr) {
           xlr.setRequestHeader("Authorization", accessToken);
@@ -1040,7 +1040,7 @@
     } else {
       $.ajax({
         type: "POST",
-        url: `http://localhost:8080/like/comments/${commentId}`,
+        url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/comments/${commentId}`,
         contentType: "application/json; charset=utf-8",
         beforeSend: function (xlr) {
           xlr.setRequestHeader("Authorization", accessToken);
@@ -1063,7 +1063,7 @@
     console.log("unlikeComment");
     $.ajax({
       type: "DELETE",
-      url: `http://localhost:8080/like/comments/${commentId}`,
+      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/comments/${commentId}`,
       contentType: "application/json; charset=utf-8",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"));
@@ -1085,7 +1085,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken
@@ -1102,7 +1102,7 @@
   function deleteBeforeRoomCheck() {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/chat/room?roomId=" + communityId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
       success: function (response) {
         if (response.userCount > 0) {
@@ -1119,7 +1119,7 @@
   function enterRoom() {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/chat/room?roomId=" + communityId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
       success: function () {
         window.open('./h-4_chat.html?roomId='+ communityId, 'name', "left=100,top=100,width=740,height=700")
@@ -1130,7 +1130,7 @@
   function roomMemberCnt() {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/chat/room?roomId=" + communityId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
       success: function (response) {
 
@@ -1161,7 +1161,7 @@
   function deleteChatRoom() {
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/chat/delRoom?roomId=" + communityId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/delRoom?roomId=" + communityId,
       async: false,
       success: function (response) {
         console.log("채팅방 삭제 성공");

@@ -377,6 +377,7 @@
       var nickname = ""
       var chatStatus = ""
       var sort = ""
+      var hashtagId = 0;
       $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
@@ -408,7 +409,9 @@
 
       function getCommunityList(page) {
         const accessToken = localStorage.getItem("accessToken")
-        var hashtagId = localStorage.getItem("hashtagId")
+        if(localStorage.getItem("hashtagId") != null){
+            hashtagId = localStorage.getItem("hashtagId")
+        }
         console.log("chatStatus : ", chatStatus)
         // console.log("hashtagId : ", hashtagId)
         formatSearchText();
@@ -416,7 +419,7 @@
         $.ajax({
           type: "GET",
           // TODO 
-          url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents 
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents 
             + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
@@ -478,7 +481,7 @@
         console.log("page : ", page)
         $.ajax({
           type: "GET",
-          url: "http://localhost:8080/hashtags?offset=" + page + "&limit=23&name=",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=" + page + "&limit=23&name=",
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
@@ -523,7 +526,7 @@
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:8080/auth/token/regenerate",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
           contentType : "application/json; charset=utf-8",
           data: JSON.stringify({
             refreshToken: refreshToken

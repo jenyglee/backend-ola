@@ -269,7 +269,7 @@
       // 2. 통신해서 불러오기
       $.ajax({
           type: "GET",
-          url: "http://localhost:8080/notice-boards?offset=" + offset + "&limit=10",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/notice-boards?offset=" + offset + "&limit=10",
           beforeSend: function (xlr) {
               xlr.setRequestHeader("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYWEzIiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NzYzNjU4ODgsImlhdCI6MTY3NjM2MjI4OH0.s8e9O7R1j0gd1Vb9jOon7R21cKG5y-ZjNPvGN2ANws8")
           },
@@ -304,7 +304,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/auth/token/regenerate",
+            url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
             contentType : "application/json; charset=utf-8",
             data: JSON.stringify({
                 refreshToken: refreshToken

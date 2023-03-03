@@ -500,7 +500,7 @@
   }
 
   //파라미터 변수가 이상함..ㅠㅠ
-  //http://localhost:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
+  //http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=5&score=0&season=&altitude=0&region=&orderByLike=boardId
   //체크박스 누르는것에 따라 변수가 달라지게 해야함  $("input:checkbox[id='one']").prop("checked", true);  이런식 맞나..?
   function getRecommendList(page, size) {
     // 1. 데이터 초기화를 해야됨.
@@ -519,11 +519,11 @@
     // 2. 통신해서 불러오기
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
           + searchScore + "&season=" + searchSeason
           + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
-    // url: "http://localhost:8080/boards/recommends?page=0&size=8&score=0&season=&altitude=0&region=&sort=likeDesc",
+    // url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=8&score=0&season=&altitude=0&region=&sort=likeDesc",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -593,7 +593,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
       contentType : "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken

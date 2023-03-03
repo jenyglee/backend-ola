@@ -1,314 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="../css/normalize.css"/>
-  <link rel="stylesheet" href="../css/main.css"/>
-  <link rel="stylesheet" href="../css/reset.css"/>
-  <link rel="stylesheet" href="../css/menu.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <title>관리자 공지사항관리</title>
-  <style>
-    .container {
-      width: 1900px;
-      height: 1000px;
-      padding: 0;
-      background-color: WHITE;
-      align-items: center;
-      display: inline-block;
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="../css/normalize.css" />
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/menu.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta name="theme-color" content="#fafafa" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+        />
+        <title>관리자 공지사항관리</title>
+        <style>
+            .container {
+                width: 1900px;
+                height: 1000px;
+                padding: 0;
+                background-color: WHITE;
+                align-items: center;
+                display: inline-block;
+            }
 
-    .wrap {
-      width: 2000px;
-      height: 1000px;
-      float: left;
-      display: inline-block;
-    }
+            .wrap {
+                width: 2000px;
+                height: 1000px;
+                float: left;
+                display: inline-block;
+            }
 
-    .wrap .w_1 {
-      width: 300px;
-      height: 1000px;
-      background-color: #F46B3F;
-      display: inline-block;
-      float: left;
-    }
+            .wrap .w_1 {
+                width: 300px;
+                height: 1000px;
+                background-color: #f46b3f;
+                display: inline-block;
+                float: left;
+            }
 
-    .wrap .w_2 {
-      width: 1500px;
-      height: 1000px;
-      background-color: white;
-      display: inline-block;
-      float: left;
-    }
+            .wrap .w_2 {
+                width: 1500px;
+                height: 1000px;
+                background-color: white;
+                display: inline-block;
+                float: left;
+            }
 
-    .w_1 .b_1 {
-      height: 70px;
-    }
+            .w_1 .b_1 {
+                height: 70px;
+            }
 
-    .w_1 .b_2 {
-      text-align: center;
-      font-size: 30px;
-      color: WHITE;
-      width: 300px;
-      height: 150px;
-      display: inline-block;
-    }
+            .w_1 .b_2 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 150px;
+                display: inline-block;
+            }
 
-    .w_1 .b_2 .b_2_1 {
-      text-align: center;
-      font-size: 30px;
-      color: WHITE;
-      width: 300px;
-      height: 50px;
-      display: inline-block;
-    }
+            .w_1 .b_2 .b_2_1 {
+                text-align: center;
+                font-size: 30px;
+                color: WHITE;
+                width: 300px;
+                height: 50px;
+                display: inline-block;
+            }
 
-    .w_1 .b_2 .b_2_2 {
-      height: 40px;
-      width: 300px;
-      display: inline-block;
-    }
+            .w_1 .b_2 .b_2_2 {
+                height: 40px;
+                width: 300px;
+                display: inline-block;
+            }
 
-    .w_1 .b_2 .b_2_2 button {
-      height: 40px;
-      width: 100px;
-      border-radius: 50px;
-      font-size: 15px;
-      border: 1px solid white;
-      background-color: #F46B3F;
-      color: white;
-      margin-right: 100px;
-    }
+            .w_1 .b_2 .b_2_2 button {
+                height: 40px;
+                width: 100px;
+                border-radius: 50px;
+                font-size: 15px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                color: white;
+                margin-right: 100px;
+            }
 
-    .w_1 .b_4 {
-      height: 70px;
-      display: inline-block;
-    }
+            .w_1 .b_4 {
+                height: 70px;
+                display: inline-block;
+            }
 
-    .w_1 .b_5 {
-      width: 200px;
-      margin-left: 55px;
-      display: inline-block;
-    }
+            .w_1 .b_5 {
+                width: 200px;
+                margin-left: 55px;
+                display: inline-block;
+            }
 
-    .w_1 .b_5 a {
-      font-size: 15px;
-      color: WHITE;
-      text-decoration: none;
-      font-weight: normal;
-    }
+            .w_1 .b_5 a {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: none;
+                font-weight: normal;
+            }
 
-    .w_1 .b_5 a:hover {
-      font-size: 15px;
-      color: WHITE;
-      text-decoration: underline;
-    }
+            .w_1 .b_5 a:hover {
+                font-size: 15px;
+                color: WHITE;
+                text-decoration: underline;
+            }
 
-    .b_6 {
-      width: 1700px;
-      height: 140px;
-    }
+            .b_6 {
+                width: 1700px;
+                height: 140px;
+            }
 
-    .b_7 {
-      width: 1700px;
-      height: 60px;
-    }
+            .b_7 {
+                width: 1700px;
+                height: 60px;
+            }
 
-    .b_7 select {
-      width: 200px;
-      border: 1px solid #D2D2D2;
-      border-radius: 5px;
-      display: inline-block;
-    }
+            .b_7 select {
+                width: 200px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                display: inline-block;
+            }
 
-    .b_7 span, .b_8 span, .b_9_1 {
-      margin-left: 100px;
-    }
+            .b_7 span,
+            .b_8 span,
+            .b_9_1 {
+                margin-left: 100px;
+            }
 
-    .b_8 {
-      width: 1700px;
-      height: 60px;
-    }
+            .b_8 {
+                width: 1700px;
+                height: 60px;
+            }
 
-    .b_8 input {
-      width: 1000px;
-      height: 40px;
-      border: 1px solid #D2D2D2;
-      border-radius: 5px;
-    }
+            .b_8 input {
+                width: 1000px;
+                height: 40px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
 
-    .b_9_2 textarea {
-      width: 1000px;
-      display: inline-block;
-      float: left;
-      resize: none;
-      height: 250px;
-      border: 1px solid #D2D2D2;
-      border-radius: 5px;
-    }
+            .b_9_2 textarea {
+                width: 1000px;
+                display: inline-block;
+                float: left;
+                resize: none;
+                height: 250px;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
 
-    #btn_1 {
-      width: 180px;
-      height: 50px;
-      border: 1px solid #F46B3F;
-      background-color: white;
-      border-radius: 5px;
-      color: #F46B3F;
-      font-weight: bolder;
-      font-size: 17px;
-    }
+            #btn_1 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
 
-    #btn_2 {
-      width: 180px;
-      height: 50px;
-      border: 1px solid #F46B3F;
-      background-color: white;
-      border-radius: 5px;
-      color: #F46B3F;
-      font-weight: bolder;
-      font-size: 17px;
-    }
+            #btn_2 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid #f46b3f;
+                background-color: white;
+                border-radius: 5px;
+                color: #f46b3f;
+                font-weight: bolder;
+                font-size: 17px;
+            }
 
-    #btn_3 {
-      width: 180px;
-      height: 50px;
-      border: 1px solid white;
-      background-color: #F46B3F;
-      border-radius: 5px;
-      color: white;
-      font-weight: bolder;
-      font-size: 17px;
-    }
-  </style>
-</head>
-<body>
+            #btn_3 {
+                width: 180px;
+                height: 50px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+                color: white;
+                font-weight: bolder;
+                font-size: 17px;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container">
+            <div style="display: flex">
+                <div
+                    style="
+                        width: 300px;
+                        height: 100vh;
+                        padding-top: 100px;
+                        padding-left: 50px;
+                        background-color: #f46b3f;
+                    "
+                >
+                    <div style="">
+                        <div style="font-size: 26px; color: white">
+                            <span>이재원</span>
+                            <span>매니저</span>
+                        </div>
 
-<main class="container">
-  <div style="display: flex">
-    <div style="width: 300px; height:100vh; padding-top: 100px; padding-left: 50px; background-color: #F46B3F">
-      <div style="">
-        <div style="font-size: 26px; color: white">
-          <span>이재원</span>
-          <span>매니저</span>
-        </div>
+                        <button
+                            style="
+                                width: 84px;
+                                height: 36px;
+                                border-radius: 18px;
+                                border: 1px solid white;
+                                color: white;
+                                background-color: #f46b3f;
+                                margin-top: 10px;
+                            "
+                            type="button"
+                            class="logout"
+                            onclick=""
+                        >
+                            로그아웃
+                        </button>
+                    </div>
+                    <div style="margin-top: 100px">
+                        <a style="text-decoration: none; color: white" href="./k-1_manageUser.html"
+                            >회원관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./l-1_manageRecommend.html"
+                            >등산 추천 코스 관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./m-1_manageCommunity.html"
+                            >커뮤니티 관리</a
+                        ><br /><br />
+                        <a
+                            style="text-decoration: none; color: white"
+                            href="./n-1_manageNotice.html"
+                            ><b>공지사항 관리</b></a
+                        >
+                    </div>
+                </div>
+                <section style="margin-left: 100px; margin-top: 100px">
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">카테고리</p>
+                    <select
+                        class="form-serch-select form-select"
+                        aria-label="Default select example"
+                        style="margin-bottom: 30px"
+                        onchange="setCategory(value)"
+                    >
+                        <option id="option-1" value="0">서비스</option>
+                        <option id="option-2" value="1">업데이트</option>
+                        <option id="option-3" value="2">이벤트</option>
+                    </select>
+                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">제목</p>
+                    <div style="margin-bottom: 30px">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="title"
+                            placeholder="제목을 입력하세요"
+                        />
+                    </div>
+                    <div style="margin-bottom: 30px">
+                        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">내용</p>
+                        <textarea
+                            class="form-control"
+                            id="contents"
+                            rows="3"
+                            placeholder="내용을 입력하세요"
+                        ></textarea>
+                    </div>
+                    <div>
+                        <button type="button" id="btn_2">취소</button>
+                        <button type="button" id="btn_3" onclick="postNotice()">작성하기</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <script>
+            let category
+            $(document).ready(function () {
+                category = "0"
+            })
 
-        <button style="width: 84px; height: 36px; border-radius: 18px; border: 1px solid white; color: white; background-color:#F46B3F; margin-top: 10px; "
-                type="button" class="logout" onclick="">로그아웃</button>
-      </div>
-      <div style="margin-top: 100px">
-        <a style="text-decoration: none; color: white;" href="./k-1_manageUser.html">회원관리</a><br><br>
-        <a style="text-decoration: none; color: white;" href="./l-1_manageRecommend.html">등산 추천 코스 관리</a><br><br>
-        <a style="text-decoration: none; color: white;" href="./m-1_manageCommunity.html">커뮤니티 관리</a><br><br>
-        <a style="text-decoration: none; color: white;" href="./n-1_manageNotice.html"><b>공지사항 관리</b></a>
-      </div>
-    </div>
-    <section style="margin-left: 100px; margin-top:100px;">
-      <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">카테고리</p>
-      <select
-          class="form-serch-select form-select"
-          aria-label="Default select example"
-          style="margin-bottom: 30px"
-          onchange="setCategory(value)"
-      >
-        <option id="option-1" value="0">서비스</option>
-        <option id="option-2" value="1">업데이트</option>
-        <option id="option-3" value="2">이벤트</option>
-      </select>
-      <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">제목</p>
-      <div style="margin-bottom: 30px">
-        <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
-      </div>
-      <div style="margin-bottom: 30px;">
-        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">내용</p>
-        <textarea class="form-control" id="contents" rows="3" placeholder="내용을 입력하세요"></textarea>
-      </div>
-      <div>
-        <button type="button" id="btn_2">취소</button>
-        <button type="button" id="btn_3" onclick="postNotice()">작성하기</button>
-      </div>
-    </section>
-  </div>
-</main>
-<script>
-  let category;
-  $(document).ready(function () {
-    category = "0";
-  });
+            function setCategory(categoryNum) {
+                category = categoryNum
+            }
 
-  function setCategory(categoryNum){
-    category = categoryNum;
-  }
+            function postNotice() {
+                $.ajax({
+                    type: "POST",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/notices`,
+                    // dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    data: JSON.stringify({
+                        title: $("#title").val(),
+                        contents: $("#contents").val(),
+                        category: category,
+                    }),
+                    success: function (response) {
+                        alert("작성 완료")
+                        window.location.href = "n-1_manageNotice.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            postNotice()
+                        }
+                    },
+                })
+            }
+            function gotologout() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        accessToken: accessToken,
+                    }),
+                    success: function (response) {
+                        alert("로그아웃 되었습니다.")
+                        window.location.href = "b-1_login.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                            regenerateToken()
+                            gotologout()
+                        }
+                    },
+                })
+            }
+            function regenerateToken() {
+                var refreshToken = localStorage.getItem("refreshToken")
 
-  function postNotice(){
-    $.ajax({
-      type: "POST",
-      url: `http://localhost:8080/admin/boards/notices`,
-      // dataType: "text",
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-      },
-      data: JSON.stringify({
-        "title" : $("#title").val(),
-        "contents" : $("#contents").val(),
-        "category" : category
-      }),
-      success: function (response) {
-        alert("작성 완료")
-        window.location.href = "n-1_manageNotice.html";
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-          regenerateToken()
-          postNotice()
-        }
-      },
-    })
-  }
-  function gotologout(){
-    const accessToken = localStorage.getItem("accessToken");
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/auth/logout",
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        accessToken : accessToken
-      }),
-      success: function (response) {
-        alert("로그아웃 되었습니다.")
-        window.location.href = "b-1_login.html";
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.httpStatus === "BAD_REQUEST"){
-          regenerateToken()
-          gotologout()
-        }
-      },
-    })
-  }
-  function regenerateToken(){
-    var refreshToken = localStorage.getItem("refreshToken")
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
-      contentType : "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-      },
-      error: function(response){
-        console.log("에러 : ", response)
-      }
-    })
-  }
-</script>
-</body>
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        refreshToken: refreshToken,
+                    }),
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response.accessToken)
+                        localStorage.setItem("refreshToken", response.refreshToken)
+                    },
+                    error: function (response) {
+                        console.log("에러 : ", response)
+                    },
+                })
+            }
+        </script>
+    </body>
 </html>

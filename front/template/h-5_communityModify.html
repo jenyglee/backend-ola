@@ -1,620 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="manifest" href="site.webmanifest"/>
-  <link rel="apple-touch-icon" href="icon.png"/>
-  <!-- Place favicon.ico in the root directory -->
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="manifest" href="site.webmanifest" />
+        <link rel="apple-touch-icon" href="icon.png" />
+        <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css"/>
-  <link rel="stylesheet" href="../css/main.css"/>
-  <link rel="stylesheet" href="../css/reset.css"/>
-  <link rel="stylesheet" href="../css/menu.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa"/>
-  <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-  />
-  <title>올라 커뮤니티</title>
-  <style>
-    .container {
-      width: 1200px;
-      padding: 0;
-      margin-bottom: 150px;
-    }
-
-    /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
-    .btn:active,
-    .btn:focus,
-    .btn:hover {
-      outline: none !important;
-      /* box-shadow:none !important; */
-      background-color: #f46b3f;
-      border: 1px solid #f46b3f;
-    }
-
-    .cteate-post > label {
-      position: absolute;
-      top: 17px;
-      left: 20px;
-      transition: all 0.5s;
-      font-size: 16px;
-      color: gray;
-    }
-
-    .cteate-content > label {
-      position: absolute;
-      top: 17px;
-      left: 20px;
-      transition: all 0.5s;
-      font-size: 16px;
-      color: gray;
-    }
-
-    .tag-upload-box > span {
-      width: 70px;
-      height: 50px;
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .creat-tag > label {
-      position: absolute;
-      left: 20px;
-      transition: all 0.5s;
-      font-size: 16px;
-      color: gray;
-    }
-
-    .creat-tag > input {
-      width: 1130px;
-      height: 50px;
-    }
-
-    .b_10_1 input {
-      width: 100px;
-      height: 30px;
-      border-radius: 5px;
-      display: inline-block;
-      border: 1px solid #d2d2d2;
-      margin-left: 10px;
-      top: 30px;
-    }
-
-    .chatCnt-input {
-      border: 1px solid #d2d2d2;
-      border-radius: 5px;
-    }
-
-    /* 업로드 파일 css */
-    .filebox input[type="file"] {
-      position: absolute;
-      width: 0;
-      height: 0;
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-    }
-
-    .w_2,
-    .w_4,
-    .w_8,
-    .w_9 {
-      padding: 0px;
-      width: 1200px;
-      margin-bottom: 20px;
-    }
-
-    .w_7 {
-      width: 1200px;
-      /*height: 400px;*/
-    }
-
-    #btn_1 {
-      width: 200px;
-      height: 50px;
-      border: 1px solid white;
-      background-color: #f46b3f;
-      border-radius: 5px;
-      color: white;
-      float: right;
-    }
-
-    #btn_2,
-    #btn_3 {
-      width: 100px;
-      height: 100%;
-      border: 1px solid white;
-      color: white;
-      background-color: #f46b3f;
-      border-radius: 5px;
-    }
-
-    .w_3 input,
-    .w_4 input,
-    .w_5 input {
-      width: 350px;
-    }
-
-    .w_7 textarea {
-      height: 150px;
-      resize: none;
-    }
-
-    .w_8 input {
-      width: 500px;
-    }
-
-    .inputLabel {
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .form-control {
-      margin-bottom: 5px;
-    }
-
-    #tag-search-input {
-      width: 200px;
-    }
-
-    .tag-select-box {
-      width: 370px;
-      height: 200px;
-      padding: 20px 20px 0;
-      overflow: scroll;
-      background-color: white;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    .tag-select-box .item {
-      width: 100%;
-      margin-bottom: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-<!-- ############# 네비게이션 #############-->
-<header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-  </div>
-  <div class="item-list">
-    <a href="./g-1_recommend.html">코스추천</a>
-    <a
-        href="h-1_communityMain.html"
-        style="font-weight: bold; color: #f46b3f"
-    >커뮤니티</a
-    >
-    <a href="./i-1_shopMain.html">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png"/>
-      </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input
-                type="text"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="닉네임 검색"
-            />
-          </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn">
-              검색
-            </button>
-          </div>
-        </div>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">1:1 채팅</button>
-            </div>
-          </li>
-        </ul>
-        <div class="line"></div>
-        <p class="recommend-title">추천 친구</p>
-        <ul class="friend-list">
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img
-                    class="img"
-                    src="./../static/img/icon_profile_default.png"
-                />
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-          <li>
-            <a href="#"
-            >공지사항 내용이 추가되었습니다 언능 확인해주세요!</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
-      <!--      <div class="img-wrap">-->
-      <!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-      <!--      </div>-->
-      <!--      <p class="text">나와바리나와바님</p>-->
-    </a>
-  </div>
-</header>
-
-<!-- ############# 작업공간 #############-->
-<!-- 메인 컨테이너 -->
-<main class="container">
-  <h3 style="margin: 30px 0; font-weight: bold">커뮤니티 수정</h3>
-  <section>
-    <p class="inputLabel">제목</p>
-    <div class="w_2">
-      <input
-          type="text"
-          class="form-control"
-          id="title"
-          placeholder="제목을 입력하세요"
-      />
-    </div>
-    <p class="inputLabel">내용</p>
-    <div class="w_7">
-          <textarea
-              class="form-control"
-              id="contents"
-              rows="3"
-              placeholder="내용을 입력하세요"
-          ></textarea>
-    </div>
-    <div class="w_8" style="margin-top: 30px">
-      <!--      <input-->
-      <!--          class="form-control"-->
-      <!--          type="file"-->
-      <!--          id="formFileMultiple"-->
-      <!--          multiple-->
-      <!--      />-->
-      <form method="post" enctype="multipart/form-data">
-        <input
-            type="file"
-            id="chooseFile"
-            class="form-control"
-            name="chooseFile"
-            accept="image/*"
-            multiple
-            onchange="imgUpload()"
+        <link rel="stylesheet" href="../css/normalize.css" />
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/menu.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta name="theme-color" content="#fafafa" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
         />
-      </form>
-      <div id="img-wrap" style="display: flex; gap: 5px">
-        <!-- 이미지 들어가는 자리 -->
-      </div>
-    </div>
-    <div
-        style="
-            display: flex;
-            height: 35px;
-            align-items: center;
-            margin-top: 20px;
-          "
-    >
-      <p class="inputLabel" style="margin-right: 20px">태그</p>
-      <input
-          type="text"
-          class="form-control"
-          id="tag-search-input"
-          style="height: 100%; margin-right: 10px; margin-bottom: 0"
-          placeholder="태그를 입력하세요"
-      />
-      <button id="btn_2" type="button" onclick="searchTags()">검색</button>
-      <div
-          id="tag-select-list"
-          style="display: flex; margin-left: 20px"
-      ></div>
-      <p
-          style="
-              margin: 0;
-              font-size: 12px;
-              font-weight: bold;
-              color: #f46b3f;
-              margin-left: 10px;
-              cursor: pointer;
-            "
-          onclick="removeTag()"
-      >
-        전체 지우기
-      </p>
-    </div>
-    <ul class="tag-select-box">
-      <!--      <li class="item">봄산</li>-->
-      <!--      <li class="item">봄산</li>-->
-      <!--      <li class="item">봄산</li>-->
-    </ul>
-    <!--    <div id="tag-wrap" class="w_4">-->
-    <!--      <input-->
-    <!--          type="text"-->
-    <!--          class="form-control"-->
-    <!--          placeholder="태그를 입력하세요"-->
-    <!--      />-->
-    <!--    </div>-->
+        <title>올라 커뮤니티</title>
+        <style>
+            .container {
+                width: 1200px;
+                padding: 0;
+                margin-bottom: 150px;
+            }
 
-    <p class="inputLabel" style="margin-right: 20px">태그 직접 추가</p>
-    <div style="display: flex">
-      <input
-          type="text"
-          class="form-control"
-          id="tag-add"
-          style="
-              width: 250px;
-              height: 100%;
-              margin-right: 10px;
-              margin-bottom: 0;
-            "
-          placeholder="태그를 입력하세요"
-      />
-      <button id="btn_3" type="button" onclick="addTag()">추가</button>
-    </div>
-    <div class="form-check" style="margin-top: 40px">
-      <input
-          class="form-check-input"
-          type="checkbox"
-          value="Y"
-          id="flexCheckDefault"
-          onchange="checkChat()"
-      />
-      <label class="form-check-label" for="flexCheckDefault">
-        크루원 구하기
-      </label>
-      <p style="font-size: 12px; font-weight: bold">
-        참여 인원 :
-        <input
-            class="chatCnt-input"
-            type="number"
-            max="10"
-            min="0"
-            id="chatCnt-input"
-            style="width: 50px"
-            placeholder="0"
-        />명 (※최소 인원 2명/최대 인원 10명)
-      </p>
-    </div>
+            /* 부트스트랩 버튼의 호버, 포커스 기능 빼기 */
+            .btn:active,
+            .btn:focus,
+            .btn:hover {
+                outline: none !important;
+                /* box-shadow:none !important; */
+                background-color: #f46b3f;
+                border: 1px solid #f46b3f;
+            }
 
-    <div class="w_9">
-      <div class="b_1">
-        <button type="button" id="btn_1" onclick="updateCommunity()">
-          게시글 수정
-        </button>
-      </div>
-    </div>
-  </section>
-</main>
-<script>
-  // 파일 업로드 스크립트 설정
-  $("#file").on("change", function () {
-    var fileName = $("#file").val();
-    $(".upload-name").val(fileName);
-  });
+            .cteate-post > label {
+                position: absolute;
+                top: 17px;
+                left: 20px;
+                transition: all 0.5s;
+                font-size: 16px;
+                color: gray;
+            }
 
-  $(".form-check-input").on("click", function () {
+            .cteate-content > label {
+                position: absolute;
+                top: 17px;
+                left: 20px;
+                transition: all 0.5s;
+                font-size: 16px;
+                color: gray;
+            }
 
-    var checked = $('.form-check-input').is(':checked');
+            .tag-upload-box > span {
+                width: 70px;
+                height: 50px;
+                font-size: 20px;
+                margin: 0;
+            }
 
-    if (checked) {
-      $(".chatCnt-input").attr("disabled", false);
-      $(".chatCnt-input").focus();
-    } else {
-      $(".chatCnt-input").val('0');
-      $(".chatCnt-input").attr("disabled", true);
-      $("#flexCheckDefault").val('N');
-    }
-  });
+            .creat-tag > label {
+                position: absolute;
+                left: 20px;
+                transition: all 0.5s;
+                font-size: 16px;
+                color: gray;
+            }
 
-</script>
-<script>
-  var communityId = localStorage.getItem("communityId");
-  var accessToken = localStorage.getItem("accessToken");
-  var imageUrlList = [];
-  var tags = [];
-  var isChat = false;
+            .creat-tag > input {
+                width: 1130px;
+                height: 50px;
+            }
 
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-    getMenuProfile();
-    getCommunity();
-    searchTags();
-    console.log("communityId : ", communityId);
-  });
+            .b_10_1 input {
+                width: 100px;
+                height: 30px;
+                border-radius: 5px;
+                display: inline-block;
+                border: 1px solid #d2d2d2;
+                margin-left: 10px;
+                top: 30px;
+            }
 
-  function getMenuProfile() {
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    var tempProfile = `
+            .chatCnt-input {
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+            }
+
+            /* 업로드 파일 css */
+            .filebox input[type="file"] {
+                position: absolute;
+                width: 0;
+                height: 0;
+                padding: 0;
+                overflow: hidden;
+                border: 0;
+            }
+
+            .w_2,
+            .w_4,
+            .w_8,
+            .w_9 {
+                padding: 0px;
+                width: 1200px;
+                margin-bottom: 20px;
+            }
+
+            .w_7 {
+                width: 1200px;
+                /*height: 400px;*/
+            }
+
+            #btn_1 {
+                width: 200px;
+                height: 50px;
+                border: 1px solid white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+                color: white;
+                float: right;
+            }
+
+            #btn_2,
+            #btn_3 {
+                width: 100px;
+                height: 100%;
+                border: 1px solid white;
+                color: white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+            }
+
+            .w_3 input,
+            .w_4 input,
+            .w_5 input {
+                width: 350px;
+            }
+
+            .w_7 textarea {
+                height: 150px;
+                resize: none;
+            }
+
+            .w_8 input {
+                width: 500px;
+            }
+
+            .inputLabel {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .form-control {
+                margin-bottom: 5px;
+            }
+
+            #tag-search-input {
+                width: 200px;
+            }
+
+            .tag-select-box {
+                width: 370px;
+                height: 200px;
+                padding: 20px 20px 0;
+                overflow: scroll;
+                background-color: white;
+                border: 1px solid #ced4da;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+
+            .tag-select-box .item {
+                width: 100%;
+                margin-bottom: 10px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ############# 네비게이션 #############-->
+        <header class="menu">
+            <div class="bg-line"></div>
+            <div class="logo-wrap">
+                <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+            </div>
+            <div class="item-list">
+                <a href="./g-1_recommend.html">코스추천</a>
+                <a href="h-1_communityMain.html" style="font-weight: bold; color: #f46b3f"
+                    >커뮤니티</a
+                >
+                <a href="./i-1_shopMain.html">쇼핑몰</a>
+                <a href="./j-1_noticeMain.html">공지사항</a>
+            </div>
+            <div class="right">
+                <div class="friend">
+                    <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                        <img class="img" src="./../static/img/icon_friends.png" />
+                    </div>
+                    <div class="friend-dropbox">
+                        <div class="search-area">
+                            <div class="mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleFormControlInput1"
+                                    placeholder="닉네임 검색"
+                                />
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary search-btn">
+                                    검색
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="line"></div>
+                        <p class="recommend-title">추천 친구</p>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bell">
+                    <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                        <img class="img" src="./../static/img/icon_bell.png" />
+                    </div>
+                    <div class="bell-dropbox">
+                        <p>알람</p>
+                        <ul>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+                    <!--      <div class="img-wrap">-->
+                    <!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+                    <!--      </div>-->
+                    <!--      <p class="text">나와바리나와바님</p>-->
+                </a>
+            </div>
+        </header>
+
+        <!-- ############# 작업공간 #############-->
+        <!-- 메인 컨테이너 -->
+        <main class="container">
+            <h3 style="margin: 30px 0; font-weight: bold">커뮤니티 수정</h3>
+            <section>
+                <p class="inputLabel">제목</p>
+                <div class="w_2">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        placeholder="제목을 입력하세요"
+                    />
+                </div>
+                <p class="inputLabel">내용</p>
+                <div class="w_7">
+                    <textarea
+                        class="form-control"
+                        id="contents"
+                        rows="3"
+                        placeholder="내용을 입력하세요"
+                    ></textarea>
+                </div>
+                <div class="w_8" style="margin-top: 30px">
+                    <!--      <input-->
+                    <!--          class="form-control"-->
+                    <!--          type="file"-->
+                    <!--          id="formFileMultiple"-->
+                    <!--          multiple-->
+                    <!--      />-->
+                    <form method="post" enctype="multipart/form-data">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="chooseFile"
+                            accept="image/*"
+                            multiple
+                            onchange="imgUpload()"
+                        />
+                    </form>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
+                </div>
+                <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
+                    <p class="inputLabel" style="margin-right: 20px">태그</p>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="tag-search-input"
+                        style="height: 100%; margin-right: 10px; margin-bottom: 0"
+                        placeholder="태그를 입력하세요"
+                    />
+                    <button id="btn_2" type="button" onclick="searchTags()">검색</button>
+                    <div id="tag-select-list" style="display: flex; margin-left: 20px"></div>
+                    <p
+                        style="
+                            margin: 0;
+                            font-size: 12px;
+                            font-weight: bold;
+                            color: #f46b3f;
+                            margin-left: 10px;
+                            cursor: pointer;
+                        "
+                        onclick="removeTag()"
+                    >
+                        전체 지우기
+                    </p>
+                </div>
+                <ul class="tag-select-box">
+                    <!--      <li class="item">봄산</li>-->
+                    <!--      <li class="item">봄산</li>-->
+                    <!--      <li class="item">봄산</li>-->
+                </ul>
+                <!--    <div id="tag-wrap" class="w_4">-->
+                <!--      <input-->
+                <!--          type="text"-->
+                <!--          class="form-control"-->
+                <!--          placeholder="태그를 입력하세요"-->
+                <!--      />-->
+                <!--    </div>-->
+
+                <p class="inputLabel" style="margin-right: 20px">태그 직접 추가</p>
+                <div style="display: flex">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="tag-add"
+                        style="width: 250px; height: 100%; margin-right: 10px; margin-bottom: 0"
+                        placeholder="태그를 입력하세요"
+                    />
+                    <button id="btn_3" type="button" onclick="addTag()">추가</button>
+                </div>
+                <div class="form-check" style="margin-top: 40px">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="Y"
+                        id="flexCheckDefault"
+                        onchange="checkChat()"
+                    />
+                    <label class="form-check-label" for="flexCheckDefault"> 크루원 구하기 </label>
+                    <p style="font-size: 12px; font-weight: bold">
+                        참여 인원 :
+                        <input
+                            class="chatCnt-input"
+                            type="number"
+                            max="10"
+                            min="0"
+                            id="chatCnt-input"
+                            style="width: 50px"
+                            placeholder="0"
+                        />명 (※최소 인원 2명/최대 인원 10명)
+                    </p>
+                </div>
+
+                <div class="w_9">
+                    <div class="b_1">
+                        <button type="button" id="btn_1" onclick="updateCommunity()">
+                            게시글 수정
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script>
+            // 파일 업로드 스크립트 설정
+            $("#file").on("change", function () {
+                var fileName = $("#file").val()
+                $(".upload-name").val(fileName)
+            })
+
+            $(".form-check-input").on("click", function () {
+                var checked = $(".form-check-input").is(":checked")
+
+                if (checked) {
+                    $(".chatCnt-input").attr("disabled", false)
+                    $(".chatCnt-input").focus()
+                } else {
+                    $(".chatCnt-input").val("0")
+                    $(".chatCnt-input").attr("disabled", true)
+                    $("#flexCheckDefault").val("N")
+                }
+            })
+        </script>
+        <script>
+            var communityId = localStorage.getItem("communityId")
+            var accessToken = localStorage.getItem("accessToken")
+            var imageUrlList = []
+            var tags = []
+            var isChat = false
+
+            $(document).ready(function () {
+                $(".friend-dropbox").hide()
+                $(".bell-dropbox").hide()
+                getMenuProfile()
+                getCommunity()
+                searchTags()
+                console.log("communityId : ", communityId)
+            })
+
+            function getMenuProfile() {
+                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+                var tempProfile = `
           <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
-        ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+            <img class="img" style="width: 100%; height: auto" src=${
+                menuProfile.profileImage
+                    ? menuProfile.profileImage
+                    : "./../static/img/icon_profile_default.png"
+            } alt="프로필사진"/>
           </div>
           <p class="text">${menuProfile.nickname}님</p>
-    `;
-    $("#my-profile").append(tempProfile);
-  }
+    `
+                $("#my-profile").append(tempProfile)
+            }
 
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
+            function handleToggleBellDropBox() {
+                $(".bell-dropbox").toggle()
+                $(".friend-dropbox").hide()
+            }
 
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
+            function handleToggleFriendDropBox() {
+                $(".friend-dropbox").toggle()
+                $(".bell-dropbox").hide()
+            }
 
-  function getCommunity() {
-    const accessToken = localStorage.getItem("accessToken");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/boards/communities/" + communityId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      success: function (response) {
-        console.log("response : ", response);
-        // 제목 넣기
-        $("#title").attr("value", response.title);
+            function getCommunity() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
+                        communityId,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        // 제목 넣기
+                        $("#title").attr("value", response.title)
 
-        // 내용 넣기
-        $("#contents").val(response.contents);
+                        // 내용 넣기
+                        $("#contents").val(response.contents)
 
-        // 사진 넣기
-        for (let i = 0; i < response.imgList.length; i++) {
-          var temp = `
+                        // 사진 넣기
+                        for (let i = 0; i < response.imgList.length; i++) {
+                            var temp = `
                 <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
                   <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
                   <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
@@ -622,107 +590,110 @@
                     <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
                   </div>
                 </div>
-              `;
-          $("#img-wrap").append(temp);
-          imageUrlList.push(response.imgList[i]); // [url]
-        }
+              `
+                            $("#img-wrap").append(temp)
+                            imageUrlList.push(response.imgList[i]) // [url]
+                        }
 
-        // 태그 넣기
-        for (let i = 0; i < response.tagList.length; i++) {
-          var temp = `
+                        // 태그 넣기
+                        for (let i = 0; i < response.tagList.length; i++) {
+                            var temp = `
             <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
               ${response.tagList[i].id}
             </div>
-          `;
-          $("#tag-select-list").append(temp);
-          tags.push(response.tagList[i].id);
-        }
+          `
+                            $("#tag-select-list").append(temp)
+                            tags.push(response.tagList[i].id)
+                        }
 
-        if (response.chatStatus == "Y") {
-          $("#flexCheckDefault").prop("checked", true);
-          $("#chatCnt-input").val(response.chatMemCnt);
-        } else {
-          $("#flexCheckDefault").prop("checked", false);
-          $("#chatCnt-input").val('');
-        }
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          getCommunity();
-        }
-      },
-    });
-  }
+                        if (response.chatStatus == "Y") {
+                            $("#flexCheckDefault").prop("checked", true)
+                            $("#chatCnt-input").val(response.chatMemCnt)
+                        } else {
+                            $("#flexCheckDefault").prop("checked", false)
+                            $("#chatCnt-input").val("")
+                        }
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            getCommunity()
+                        }
+                    },
+                })
+            }
 
-  function searchTags() {
-    const accessToken = localStorage.getItem("accessToken");
-    var tagName = $("#tag-search-input").val();
-    $.ajax({
-      type: "GET",
-      url:
-          "http://localhost:8080/hashtags?offset=0&limit=20&name=" + tagName,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      success: function (response) {
-        console.log("response : ", response);
-        $(".tag-select-box").empty();
-        for (let i = 0; i < response.data.length; i++) {
-          var temp = `
+            function searchTags() {
+                const accessToken = localStorage.getItem("accessToken")
+                var tagName = $("#tag-search-input").val()
+                $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=0&limit=20&name=" +
+                        tagName,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        $(".tag-select-box").empty()
+                        for (let i = 0; i < response.data.length; i++) {
+                            var temp = `
                 <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
-              `;
-          $(".tag-select-box").append(temp);
-        }
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          searchTags();
-        }
-      },
-    });
-  }
+              `
+                            $(".tag-select-box").append(temp)
+                        }
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            searchTags()
+                        }
+                    },
+                })
+            }
 
-  // 수정하기
-  function updateCommunity() {
-    const accessToken = localStorage.getItem("accessToken");
-    console.log($("#flexCheckDefault").val())
-    console.log($("#chatCnt-input").val())
+            // 수정하기
+            function updateCommunity() {
+                const accessToken = localStorage.getItem("accessToken")
+                console.log($("#flexCheckDefault").val())
+                console.log($("#chatCnt-input").val())
 
-    $.ajax({
-      type: "PATCH",
-      url: "http://localhost:8080/boards/communities/" + communityId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        title: $("#title").val(),
-        contents: $("#contents").val(),
-        chatStatus: $("#flexCheckDefault").val(),
-        chatMemCnt: $("#chatCnt-input").val(),
-        tagList: tags,
-        imgList: imageUrlList,
-      }),
-      success: function (response) {
-        updateChat(communityId, $("#chatCnt-input").val());
-        alert("수정완료");
-        window.location.href = "h-1_communityMain.html";
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken();
-        }
-      },
-    });
-  }
+                $.ajax({
+                    type: "PATCH",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
+                        communityId,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        title: $("#title").val(),
+                        contents: $("#contents").val(),
+                        chatStatus: $("#flexCheckDefault").val(),
+                        chatMemCnt: $("#chatCnt-input").val(),
+                        tagList: tags,
+                        imgList: imageUrlList,
+                    }),
+                    success: function (response) {
+                        updateChat(communityId, $("#chatCnt-input").val())
+                        alert("수정완료")
+                        window.location.href = "h-1_communityMain.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                        }
+                    },
+                })
+            }
 
-  function removeImage(index) {
-    imageUrlList.splice(index, 1);
-    $("#img-wrap").empty();
-    for (let i = 0; i < imageUrlList.length; i++) {
-      var temp = `
+            function removeImage(index) {
+                imageUrlList.splice(index, 1)
+                $("#img-wrap").empty()
+                for (let i = 0; i < imageUrlList.length; i++) {
+                    var temp = `
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
               <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
               <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
@@ -731,140 +702,143 @@
                 <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
               </div>
             </div>
-          `;
-      $("#img-wrap").append(temp);
-    }
-  }
+          `
+                    $("#img-wrap").append(temp)
+                }
+            }
 
-  function addTagList(id) {
-    for (let i = 0; i < tags.length; i++) {
-      if (tags[i] == id) {
-        alert("이미 선택했습니다.");
-        return;
-      }
-    }
-    tags.push(id);
-    $("#tag-select-list").empty();
-    for (let i = 0; i < tags.length; i++) {
-      var temp = `
+            function addTagList(id) {
+                for (let i = 0; i < tags.length; i++) {
+                    if (tags[i] == id) {
+                        alert("이미 선택했습니다.")
+                        return
+                    }
+                }
+                tags.push(id)
+                $("#tag-select-list").empty()
+                for (let i = 0; i < tags.length; i++) {
+                    var temp = `
         <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
           ${tags[i]}
         </div>
-      `;
-      $("#tag-select-list").append(temp);
-    }
-  }
+      `
+                    $("#tag-select-list").append(temp)
+                }
+            }
 
-  function addTag() {
-    const accessToken = localStorage.getItem("accessToken");
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/hashtags?name=" + $("#tag-add").val(),
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      success: function (response) {
-        alert("추가 완료");
-        $("#tag-add").empty();
-        searchTags();
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          addTag(commentId);
-        }
-      },
-    });
-  }
+            function addTag() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?name=" +
+                        $("#tag-add").val(),
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        alert("추가 완료")
+                        $("#tag-add").empty()
+                        searchTags()
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            addTag(commentId)
+                        }
+                    },
+                })
+            }
 
-  function removeTag() {
-    tags = [];
-    $("#tag-select-list").empty();
-  }
+            function removeTag() {
+                tags = []
+                $("#tag-select-list").empty()
+            }
 
-  function checkChat() {
-  }
+            function checkChat() {}
 
-  function imgUpload(input) {
-    const accessToken = localStorage.getItem("accessToken");
+            function imgUpload(input) {
+                const accessToken = localStorage.getItem("accessToken")
 
-    const imageInput = $("#chooseFile")[0];
-    // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-    console.log("$('#chooseFile'): ", $("#chooseFile"));
-    console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+                const imageInput = $("#chooseFile")[0]
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+                console.log("$('#chooseFile'): ", $("#chooseFile"))
+                console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
 
-    var formData = new FormData();
-    for (var i = 0; i < imageInput.files.length; i++) {
-      // formData.append("image", imageInput.files[i]);
-      formData.append("multipartFile", imageInput.files[i]);
-      console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-    }
+                var formData = new FormData()
+                for (var i = 0; i < imageInput.files.length; i++) {
+                    // formData.append("image", imageInput.files[i]);
+                    formData.append("multipartFile", imageInput.files[i])
+                    console.log("imageInput.files[i].name : ", imageInput.files[i].name)
+                }
 
-    $.ajax({
-      type: "POST",
-      url: `http://localhost:8080/s3/file`,
-      // dataType: "json",
-      // dataType: "multipart",
-      enctype: "multipart/form-data",
-      // contentType: "application/json; charset=utf-8",
-      processData: false,
-      contentType: false,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      data: formData,
-      xhrFields: {
-        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-      },
-      success: function (response) {
-        $("#img-wrap").empty()
-        console.log("response", response);
-        for (let i = 0; i < response.length; i++) {
-          imageUrlList.push(response[i]);
-        }
+                $.ajax({
+                    type: "POST",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
+                    // dataType: "json",
+                    // dataType: "multipart",
+                    enctype: "multipart/form-data",
+                    // contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: formData,
+                    xhrFields: {
+                        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: function (response) {
+                        $("#img-wrap").empty()
+                        console.log("response", response)
+                        for (let i = 0; i < response.length; i++) {
+                            imageUrlList.push(response[i])
+                        }
 
-        return imageUrlList;
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          imgUpload(input)
-        }
-      },
-    });
-  }
+                        return imageUrlList
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            imgUpload(input)
+                        }
+                    },
+                })
+            }
 
-  function regenerateToken() {
-    var refreshToken = localStorage.getItem("refreshToken")
+            function regenerateToken() {
+                var refreshToken = localStorage.getItem("refreshToken")
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-      }, error: function (response) {
-        console.log("에러 : ", response)
-      }
-    })
-  }
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        refreshToken: refreshToken,
+                    }),
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response.accessToken)
+                        localStorage.setItem("refreshToken", response.refreshToken)
+                    },
+                    error: function (response) {
+                        console.log("에러 : ", response)
+                    },
+                })
+            }
 
-  function updateChat(communityId, roomMaxCnt) {
-
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/chat/updateRoom?roomId=" + communityId + "&roomMaxCnt="
-          + roomMaxCnt,
-      success: function () {
-        console.log("수정 성공")
-      }
-    })
-  }
-
-</script>
-</body>
+            function updateChat(communityId, roomMaxCnt) {
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/updateRoom?roomId=" +
+                        communityId +
+                        "&roomMaxCnt=" +
+                        roomMaxCnt,
+                    success: function () {
+                        console.log("수정 성공")
+                    },
+                })
+            }
+        </script>
+    </body>
 </html>
