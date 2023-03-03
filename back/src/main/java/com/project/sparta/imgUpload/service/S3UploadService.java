@@ -1,6 +1,8 @@
 package com.project.sparta.imgUpload.service;
 
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.project.sparta.imgUpload.dto.PreSignedURLResponseDto;
@@ -13,9 +15,13 @@ import org.springframework.web.server.ResponseStatusException;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -24,6 +30,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 
@@ -119,12 +126,46 @@ public class S3UploadService {
 //    }
 
 
-    //미리 서명된 URL 생성 및 객체 업로드
+        //PresignedURL 조회
+    public String getPresignedURL(String fileName) {
+//        Regions clientRegion = Regions.AP_NORTHEAST_2;
+        S3Presigner preSigner = getPreSigner();
+        String bucketName = "sparta-ola";
+        String objectKey = fileName; //S3에 올릴 오브젝트 키
+
+        // 미리 지정된 URL이 60분 후에 만료되도록 설정합니다.
+        java.util.Date expiration = new java.util.Date();
+        long expTimeMillis = Instant.now().toEpochMilli();
+        expTimeMillis += 1000 * 60 * 60;
+        expiration.setTime(expTimeMillis);
+
+        try {
+            // 미리 서명된 URL을 생성합니다.
+            GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                    new GeneratePresignedUrlRequest(bucketName, objectKey)
+                            .withMethod(HttpMethod.GET)
+                            .withExpiration(expiration);
+            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+            String preSignedURL = url.toString();
+
+
+            URL imgurl = amazonS3.getUrl(bucketName, objectKey);
+            System.out.println("img URL: " + imgurl.toString());
+            return preSignedURL;
+
+        } catch (AmazonServiceException e) {
+            // 호출이 성공적으로 전송되었지만 Amazon S3에서 처리할 수 없습니다.
+            // 오류 응답을 반환했습니다.
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+        //미리 서명된 URL 생성 및 객체 업로드
     public PreSignedURLResponseDto signBucket(String fileName) {
         S3Presigner preSigner = getPreSigner();
         String keyName = "ola/" + createFileName(fileName);
         String bucketName = bucket;
-
 
 
         try {
