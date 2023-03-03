@@ -444,6 +444,7 @@
             altitude: $("#recommendBoardAltitude").val(),
             contents: $("#recommendBoardContents").val(),
             region: $("#recommendBoardRegion").val(),
+            imgList: imageUrlList,
           }),
           xhrFields: {
             withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
@@ -567,8 +568,10 @@
           },
           success: function (response) {
             imgName = presignedURLObject.imageName;
+            imageUrlList.push(imgName);
             console.log("이미지 수정완료 : ");
             console.log("이미지 imgName : ", imgName);
+            console.log("이미지 imageUrlList : ", imageUrlList);
           },
           error: function (request, status, error) {
             console.log("에러난다..!");
