@@ -1,83 +1,53 @@
 package com.project.sparta.alarm.controller;
 
-import com.project.sparta.alarm.dto.AlarmDto;
-import com.project.sparta.alarm.dto.AlarmMessageDto;
-import com.project.sparta.alarm.dto.AlarmRoomDto;
-import com.project.sparta.alarm.dto.AlarmMap;
+import com.project.sparta.alarm.dto.AlarmRequetDto;
+import com.project.sparta.alarm.dto.AlarmResponseDto;
 import com.project.sparta.alarm.service.AlarmService;
-import com.project.sparta.chat.dto.ChatDto;
-import com.project.sparta.chat.dto.ChatRoomDto;
-import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
-import com.project.sparta.communityBoard.service.CommunityBoardServiceImpl;
-import java.time.LocalDateTime;
-import javax.annotation.PostConstruct;
+import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.security.UserDetailsImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.stereotype.Controller;
+import org.hibernate.mapping.Join;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@Api(tags = {"알람 API"})
+@RestController
 @RequiredArgsConstructor
-@Slf4j
 public class AlarmController {
 
     private final AlarmService alarmService;
 
-    private final SimpMessageSendingOperations template;
-
-    private final CommunityBoardServiceImpl communityBoardService;
-
-    // 1. 사용자 마다 각자의 방을 만든다. => 방이름을 유저 nickName
-    @PostMapping("/alarm/createRoom")
-    public void createRoom(@RequestParam("roomName") String name,
-        @RequestParam("alarmType") String chatType) {
-
-        AlarmRoomDto room = alarmService.createAlarmRoom(name, chatType);
-
-        log.info("CREATE Chat Room [{}]", room);
+    //알람 내용 저장
+    @ApiOperation(value = "알림 생성", response = Join.class)
+    @PostMapping("/alarm")
+    public void createAlarm(@RequestBody AlarmRequetDto alarmRequetDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        alarmService.createAlarm(alarmRequetDto, userDetails.getUser().getNickName());
     }
 
-    // 화면단에서 게시글의 주인의 방을 구독하고 -> 메세지를 보냄
-    @MessageMapping("/alarm/enterUser")
-    public void enterUser(@Payload AlarmDto alarm, SimpMessageHeaderAccessor headerAccessor) {
-
-        //채팅방에 유저 추가 및 UserUUID 반환
-        String userUUID = alarmService.addUser(AlarmMap.getInstance().getAlarmRooms(),
-            alarm.getRoomName(), alarm.getSender());
-
-        //반환 결과를 socket session에 userUUID로 저장
-        headerAccessor.getSessionAttributes().put("userUUID", userUUID);
-        headerAccessor.getSessionAttributes().put("roomName", alarm.getRoomName());
-
-        template.convertAndSend("/sub/alarm/room/" + alarm.getRoomName(), alarm);
+    //알람 내용 조회
+    @ApiOperation(value = "나의 알림 전체 조회", response = Join.class)
+    @GetMapping("/alarm")
+    public ResponseEntity getMyAlarmList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size){
+        PageResponseDto<List<AlarmResponseDto>> alarmResponseDto = alarmService.getMyAlarmList(userDetails.getUser(), page, size);
+        return new ResponseEntity(alarmResponseDto, HttpStatus.OK);
     }
 
-    // 그럼 해당 메세지를 받는 사용자는 로그인하고 나서 자신의 방에 있는 메세지를 받아 볼 수 있음
-    @MessageMapping("/alarm/message")
-    public void alarmSendMessage(@RequestParam Long boardId, @Payload AlarmDto alarm) {
-
-        CommunityBoardOneResponseDto board = communityBoardService.getBoard(boardId);
-
-//        LocalDateTime now = LocalDateTime.now();
-//        AlarmMessageDto messageDto = AlarmMessageDto.builder()
-//            .title(board.getTitle())
-//            .writerNickName(board.getNickName())
-//            .sendNickName(userDetail.getUser().getNickName())
-//            .boardType("댓글")
-//            .time(now)
-//            .build();
-//
-//        alarmController.alarmSendMessage("1", messageDto);
-//        template.convertAndSend("/sub/alarm/room/" + roomId, messageDto);
+    //알람 읽으면 AlarmStatus가 수정됨
+    @ApiOperation(value = "나의 알림 상태값 수정", response = Join.class)
+    @PatchMapping("/alarm")
+    public void updateAlarmStatus(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
+        alarmService.updateAlarmStatus(userDetails.getUser().getId(),alarmId);
     }
 }
-
-
-
-

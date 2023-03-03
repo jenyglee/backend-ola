@@ -15,13 +15,6 @@ public class WebConfig implements WebMvcConfigurer {
              .allowedOriginPatterns("*")
              .exposedHeaders("Authorization");
      }
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//            //.allowedOrigins("http://localhost:63342/")
-//            .allowedOrigins("*")
-//            .exposedHeaders("Authorization");
-//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

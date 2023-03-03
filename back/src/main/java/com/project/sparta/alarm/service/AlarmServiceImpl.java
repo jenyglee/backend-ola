@@ -1,48 +1,86 @@
 package com.project.sparta.alarm.service;
 
-import com.project.sparta.alarm.dto.AlarmMessageDto;
-import com.project.sparta.alarm.dto.AlarmRoomDto;
-import com.project.sparta.alarm.dto.AlarmMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
+import com.project.sparta.alarm.dto.AlarmRequetDto;
+import com.project.sparta.alarm.dto.AlarmResponseDto;
+import com.project.sparta.alarm.entity.Alarm;
+import com.project.sparta.alarm.repository.AlarmRespository;
+import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.entity.CommunityBoard;
+import com.project.sparta.communityBoard.repository.BoardRepository;
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.exception.api.Status;
+import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
+import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
+import com.project.sparta.user.entity.User;
+import com.project.sparta.user.repository.UserRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class AlarmServiceImpl implements AlarmService{
 
+    private final AlarmRespository alarmRespository;
+    private final BoardRepository boardRepository;
+    private final RecommendCourseBoardRepository recommendCourseBoardRepository;
+    private final UserRepository userRepository;
+
     @Override
-    public AlarmRoomDto createAlarmRoom(String roomName, String alarmType) {
+    public void createAlarm(AlarmRequetDto alarmRequetDto, String nickName) {
 
-        AlarmRoomDto alarmRoom = AlarmRoomDto.builder()
-            .roomName(roomName)
-            .alarmType(alarmType) // 최대 인원수 제한
-            .build();
+        if(alarmRequetDto.getBoardType().equals("community")){
+           CommunityBoard board = boardRepository.findById(alarmRequetDto.getBoardId()).orElseThrow(()-> new CustomException(
+               Status.NOT_FOUND_POST));
 
-        alarmRoom.setUserList(new ConcurrentHashMap<String, String>());
+            Alarm alarm = Alarm.builder()
+                .message(board.getTitle() + alarmRequetDto.getMessage())
+                .boardId(board.getId())
+                .userId(board.getUser().getId())
+                .userNickName(board.getUser().getNickName())
+                .readStatus("N")
+                .writerNickName(nickName)
+                .build();
+            alarmRespository.saveAndFlush(alarm);
 
-        // map 에 채팅룸 아이디와 만들어진 채팅룸을 저장
-        AlarmMap.getInstance().getAlarmRooms().put(alarmRoom.getRoomId(), alarmRoom);
+        }else if (alarmRequetDto.getBoardType().equals("recommend")){
+            RecommendCourseBoard board = recommendCourseBoardRepository.findById(alarmRequetDto.getBoardId()).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
-        return alarmRoom;
+            User user = userRepository.findById(board.getUserId()).orElseThrow(()-> new CustomException(Status.NOT_FOUND_USER));
+
+            Alarm alarm = Alarm.builder()
+                .message(alarmRequetDto.getMessage())
+                .boardId(board.getId())
+                .userId(board.getUserId())
+                .userNickName(user.getNickName())
+                .readStatus("N")
+                .build();
+            alarmRespository.saveAndFlush(alarm);
+        }
+    }
+    @Override
+    public PageResponseDto<List<AlarmResponseDto>> getMyAlarmList(User user, int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<Alarm> alarms = alarmRespository.findMyAlarmList(user.getId(), pageRequest, user.getNickName());
+
+        Page<AlarmResponseDto> alarmList = alarms.map(alarm -> new AlarmResponseDto(alarm.getId(), alarm.getMessage(), alarm.getUserNickName(), alarm.getReadStatus(), alarm.getBoardId()));
+        List<AlarmResponseDto> content = alarmList.getContent();
+
+        long totalCount = alarmList.getTotalElements();
+        return new PageResponseDto<>(page, totalCount, content);
     }
 
-    // 채팅방 유저 리스트에 유저 추가
     @Override
-    public String addUser(Map<String, AlarmRoomDto> alarm, String roomId, String userName){
-        AlarmRoomDto alarmRoom = alarm.get(roomId);
-        String userUUID = UUID.randomUUID().toString();
+    public void updateAlarmStatus(Long userId, Long alarmId) {
 
-        //아이디 중복 확인 후 userList 에 추가
-        alarmRoom.getUserList().put(userUUID, userName);
+        Alarm alarm = alarmRespository.findByIdAndUserId(alarmId, userId).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
 
-        // hashmap 에서 concurrentHashMap 으로 변경
-        ConcurrentHashMap<String, String> userList = (ConcurrentHashMap<String, String>)alarmRoom.getUserList();
-        userList.put(userUUID, userName);
+        alarm.update(alarm.getId(), alarm.getMessage(), alarm.getUserId(), alarm.getUserNickName(), alarm.getBoardId(), "Y", alarm.getWriterNickName());
 
-        return userUUID;
+        alarmRespository.saveAndFlush(alarm);
     }
-
 }

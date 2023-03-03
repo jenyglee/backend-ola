@@ -158,8 +158,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
@@ -249,292 +249,446 @@
               <p class="name">오메가오메오메</p>
               <button type="button" class="btn btn-link">친구 추가</button>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
+            <div class="item-list">
+                <a href="./g-1_recommend.html">코스추천</a>
+                <a href="h-1_communityMain.html" style="font-weight: bold; color: #f46b3f"
+                    >커뮤니티</a
+                >
+                <a href="./i-1_shopMain.html">쇼핑몰</a>
+                <a href="./j-1_noticeMain.html">공지사항</a>
             </div>
-          </li>
-          <li>
-            <div class="left">
-              <div class="img-wrap">
-                <img class="img" src="./../static/img/icon_profile_default.png"/>
-              </div>
-              <p class="name">오메가오메오메</p>
-              <button type="button" class="btn btn-link">친구 추가</button>
+            <div class="right">
+                <div class="friend">
+                    <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                        <img class="img" src="./../static/img/icon_friends.png" />
+                    </div>
+                    <div class="friend-dropbox">
+                        <div class="search-area">
+                            <div class="mb-3">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleFormControlInput1"
+                                    placeholder="닉네임 검색"
+                                />
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary search-btn">
+                                    검색
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">1:1 채팅</button>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="line"></div>
+                        <p class="recommend-title">추천 친구</p>
+                        <ul class="friend-list">
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="left">
+                                    <div class="img-wrap">
+                                        <img
+                                            class="img"
+                                            src="./../static/img/icon_profile_default.png"
+                                        />
+                                    </div>
+                                    <p class="name">오메가오메오메</p>
+                                    <button type="button" class="btn btn-link">친구 추가</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bell">
+                    <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                        <img class="img" src="./../static/img/icon_bell.png" />
+                    </div>
+                    <div class="bell-dropbox">
+                        <p>알람</p>
+                        <ul>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                            <li>
+                                <a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+                    <!--      <div class="img-wrap">-->
+                    <!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
+                    <!--      </div>-->
+                    <!--      <p class="text">나와바리나와바님</p>-->
+                </a>
             </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
-<!--      <div class="img-wrap">-->
-<!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-<!--      </div>-->
-<!--      <p class="text">나와바리나와바님</p>-->
-    </a>
-  </div>
+        </header>
 
-</header>
+        <!-- ############# 작업공간 #############-->
+        <!-- 메인 컨테이너 -->
+        <main class="container">
+            <h3 style="margin: 30px 0; font-weight: bold">커뮤니티 작성</h3>
+            <section>
+                <p class="inputLabel">제목</p>
+                <div class="w_2">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        placeholder="제목을 입력하세요"
+                    />
+                </div>
+                <p class="inputLabel">내용</p>
+                <div class="w_7">
+                    <textarea
+                        class="form-control"
+                        id="contents"
+                        rows="3"
+                        placeholder="내용을 입력하세요"
+                    ></textarea>
+                </div>
+                <div class="w_8" style="margin-top: 30px">
+                    <!--      <input-->
+                    <!--          class="form-control"-->
+                    <!--          type="file"-->
+                    <!--          id="formFileMultiple"-->
+                    <!--          multiple-->
+                    <!--      />-->
+                    <form method="post" enctype="multipart/form-data">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="chooseFile"
+                            accept="image/*"
+                            multiple
+                            onchange="imgUpload()"
+                        />
+                    </form>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
+                </div>
+                <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
+                    <p class="inputLabel" style="margin-right: 20px">태그</p>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="tag-search-input"
+                        style="height: 100%; margin-right: 10px; margin-bottom: 0"
+                        placeholder="태그를 입력하세요"
+                    />
+                    <button id="btn_2" type="button" onclick="searchTags()">검색</button>
+                    <div id="tag-select-list" style="display: flex; margin-left: 20px"></div>
+                    <p
+                        style="
+                            margin: 0;
+                            font-size: 12px;
+                            font-weight: bold;
+                            color: #f46b3f;
+                            margin-left: 10px;
+                            cursor: pointer;
+                        "
+                        onclick="removeTag()"
+                    >
+                        전체 지우기
+                    </p>
+                </div>
+                <ul class="tag-select-box">
+                    <!--      <li class="item">봄산</li>-->
+                    <!--      <li class="item">봄산</li>-->
+                    <!--      <li class="item">봄산</li>-->
+                </ul>
+                <!--    <div id="tag-wrap" class="w_4">-->
+                <!--      <input-->
+                <!--          type="text"-->
+                <!--          class="form-control"-->
+                <!--          placeholder="태그를 입력하세요"-->
+                <!--      />-->
+                <!--    </div>-->
 
-<!-- ############# 작업공간 #############-->
-<!-- 메인 컨테이너 -->
-<main class="container">
-  <h3 style="margin: 30px 0; font-weight: bold">커뮤니티 작성</h3>
-  <section>
-    <p class="inputLabel">제목</p>
-    <div class="w_2">
-      <input
-          type="text"
-          class="form-control"
-          id="title"
-          placeholder="제목을 입력하세요"
-      />
-    </div>
-    <p class="inputLabel">내용</p>
-    <div class="w_7">
-          <textarea
-              class="form-control"
-              id="contents"
-              rows="3"
-              placeholder="내용을 입력하세요"
-          ></textarea>
-    </div>
-    <div class="w_8" style="margin-top: 30px">
-<!--      <input-->
-<!--          class="form-control"-->
-<!--          type="file"-->
-<!--          id="formFileMultiple"-->
-<!--          multiple-->
-<!--      />-->
-      <form method="post" enctype="multipart/form-data">
-        <input
-            type="file"
-            id="chooseFile"
-            class="form-control"
-            name="chooseFile"
-            accept="image/*"
-            multiple
-            onchange="imgUpload()"
-        />
-      </form>
-      <div id="img-wrap" style="display: flex; gap: 5px">
-        <!-- 이미지 들어가는 자리 -->
-      </div>
-    </div>
-    <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
-      <p class="inputLabel" style="margin-right: 20px;">태그</p>
-      <input
-          type="text"
-          class="form-control"
-          id="tag-search-input"
-          style="height: 100%; margin-right: 10px; margin-bottom: 0;"
-          placeholder="태그를 입력하세요"
-      />
-      <button id="btn_2" type="button" onclick="searchTags()">
-        검색
-      </button>
-      <div id="tag-select-list" style="display: flex; margin-left: 20px">
-      </div>
-      <p style="margin: 0; font-size: 12px; font-weight: bold; color: #F46B3F; margin-left: 10px; cursor: pointer" onclick="removeTag()">전체 지우기</p>
-    </div>
-    <ul class="tag-select-box">
-      <!--      <li class="item">봄산</li>-->
-      <!--      <li class="item">봄산</li>-->
-      <!--      <li class="item">봄산</li>-->
-    </ul>
-    <!--    <div id="tag-wrap" class="w_4">-->
-    <!--      <input-->
-    <!--          type="text"-->
-    <!--          class="form-control"-->
-    <!--          placeholder="태그를 입력하세요"-->
-    <!--      />-->
-    <!--    </div>-->
+                <p class="inputLabel" style="margin-right: 20px">태그 직접 추가</p>
+                <div style="display: flex">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="tag-add"
+                        style="width: 250px; height: 100%; margin-right: 10px; margin-bottom: 0"
+                        placeholder="태그를 입력하세요"
+                    />
+                    <button id="btn_3" type="button" onclick="addTag()">추가</button>
+                </div>
+                <div class="form-check" style="margin-top: 40px">
+                    <input class="form-check-input" type="checkbox" value="Y" id="checkChat" />
+                    <label class="form-check-label" for="checkChat"> 크루원 구하기 </label>
+                    <p style="font-size: 12px; font-weight: bold">
+                        참여 인원 :
+                        <input
+                            class="chatCnt-input"
+                            type="number"
+                            max="10"
+                            min="0"
+                            id="chatCnt-input"
+                            style="width: 50px"
+                            placeholder="0"
+                            disabled
+                        />명 (※최소 2명/최대 인원 10명)
+                    </p>
+                </div>
 
-    <p class="inputLabel" style="margin-right: 20px;">태그 직접 추가</p>
-    <div style="display: flex">
-      <input
-          type="text"
-          class="form-control"
-          id="tag-add"
-          style="width: 250px; height: 100%; margin-right: 10px; margin-bottom: 0;"
-          placeholder="태그를 입력하세요"
-      />
-      <button id="btn_3" type="button" onclick="addTag()">
-        추가
-      </button>
-    </div>
-    <div class="form-check" style="margin-top: 40px">
-      <input class="form-check-input" type="checkbox" value="Y" id="checkChat">
-      <label class="form-check-label" for="checkChat">
-        크루원 구하기
-      </label>
-      <p style="font-size: 12px; font-weight: bold">  참여 인원 :
-        <input class="chatCnt-input" type="number" max="10" min="0" id="chatCnt-input" style="width: 50px" placeholder="0" disabled>명 (※최소 2명/최대 인원 10명)
-      </p>
-    </div>
-
-    <div class="w_9">
-      <div class="b_1">
-        <button type="button" id="btn_1" onclick="createCommunity()">
-          게시글 등록
-        </button>
-      </div>
-    </div>
-  </section>
-</main>
-<script>
-  // 파일 업로드 스크립트 설정
-  $("#file").on('change', function () {
-    var fileName = $("#file").val();
-    $(".upload-name").val(fileName);
-  });
-</script>
-<script>
-  var communityId = localStorage.getItem("communityId");
-  var imageUrlList = [];
-  var tags = [];
-  var gradetemp;
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-    getMenuProfile();
-    searchTags();
-  });
-  function getMenuProfile(){
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    var tempProfile = `
+                <div class="w_9">
+                    <div class="b_1">
+                        <button type="button" id="btn_1" onclick="createCommunity()">
+                            게시글 등록
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script>
+            // 파일 업로드 스크립트 설정
+            $("#file").on("change", function () {
+                var fileName = $("#file").val()
+                $(".upload-name").val(fileName)
+            })
+        </script>
+        <script>
+            var communityId = localStorage.getItem("communityId")
+            var imageUrlList = []
+            var tags = []
+            var gradetemp
+            $(document).ready(function () {
+                $(".friend-dropbox").hide()
+                $(".bell-dropbox").hide()
+                getMenuProfile()
+                searchTags()
+            })
+            function getMenuProfile() {
+                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+                var tempProfile = `
           <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+            <img class="img" style="width: 100%; height: auto" src=${
+                menuProfile.profileImage
+                    ? menuProfile.profileImage
+                    : "./../static/img/icon_profile_default.png"
+            } alt="프로필사진"/>
           </div>
           <p class="text">${menuProfile.nickname}님</p>
 `
-    $("#my-profile").append(tempProfile);
-  }
+                $("#my-profile").append(tempProfile)
+            }
 
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
+            function handleToggleBellDropBox() {
+                $(".bell-dropbox").toggle()
+                $(".friend-dropbox").hide()
+            }
 
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
-  }
+            function handleToggleFriendDropBox() {
+                $(".friend-dropbox").toggle()
+                $(".bell-dropbox").hide()
+            }
 
-  $('.form-check-input').on('click', function() {
+            $(".form-check-input").on("click", function () {
+                var valueCheck = $(".form-check-input:checked").val()
 
-    var valueCheck = $('.form-check-input:checked').val();
+                if (valueCheck == "Y") {
+                    $(".chatCnt-input").attr("disabled", false)
+                    $(".chatCnt-input").focus()
+                } else {
+                    $(".chatCnt-input").val("")
+                    $(".chatCnt-input").attr("disabled", true)
+                }
+            })
 
-    if ( valueCheck == 'Y' ) {
-      $('.chatCnt-input').attr('disabled', false);
-      $('.chatCnt-input').focus();
-    } else {
-      $('.chatCnt-input').val('');
-      $('.chatCnt-input').attr('disabled', true);
-    }
-  });
+            // 작성하기
+            function createCommunity() {
+                var accessToken = localStorage.getItem("accessToken")
+                if ($("#title").val() == "" || $("#contents").val() == "") {
+                    alert("제목 또는 내용이 비었습니다.")
+                    return
+                }
 
-  // 작성하기
-  function createCommunity() {
-    var accessToken = localStorage.getItem("accessToken");
-    if($("#title").val() == "" || $("#contents").val() == ""){
-      alert("제목 또는 내용이 비었습니다.");
-      return;
-    }
+                var chatStatus = $(".form-check-input:checked").val()
 
-    var chatStatus = $('.form-check-input:checked').val();
+                if (chatStatus == "Y") {
+                    if ($(".chatCnt-input").val() == 0) {
+                        alert("크루 참여 인원을 작성해주세요.")
+                        return
+                    } else if ($(".chatCnt-input").val() == 1) {
+                        alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
+                        $(".chatCnt-input").val("")
+                        $(".chatCnt-input").focus()
+                        return
+                    } else if ($(".chatCnt-input").val() > 10) {
+                        alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
+                        $(".chatCnt-input").val("")
+                        $(".chatCnt-input").focus()
+                        return
+                    }
+                } else {
+                    chatStatus = "N"
+                }
 
-    if(chatStatus == "Y"){
-      if($('.chatCnt-input').val() == 0){
-        alert("크루 참여 인원을 작성해주세요.");
-        return;
-      }else if($('.chatCnt-input').val() == 1){
-        alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요");
-        $('.chatCnt-input').val('')
-        $('.chatCnt-input').focus();
-        return;
-      }else if($('.chatCnt-input').val() > 10){
-        alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요");
-        $('.chatCnt-input').val('')
-        $('.chatCnt-input').focus();
-        return;
-      }
-    }else{
-      chatStatus = "N";
-    }
+                var chatMemCnt = $(".chatCnt-input").val()
 
-    var chatMemCnt = $('.chatCnt-input').val();
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/boards/communities/",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        title: $("#title").val(),
+                        contents: $("#contents").val(),
+                        chatStatus: chatStatus,
+                        chatMemCnt: chatMemCnt,
+                        tagList: tags,
+                        imgList: imageUrlList,
+                        maniaResponse: 0,
+                        godResponse: 0,
+                    }),
+                    success: function (response) {
+                        // if(response.)
+                        console.log(response)
+                        alert("커뮤니티 글 작성 완료")
+                        if (response.maniaResponse == 1) {
+                            console.log("등산매니아")
+                            alert("축하드립니다. 등산 매니아로 등업 되셨습니다.")
+                        } else if (response.godResponse == 1) {
+                            console.log("산신령")
+                            alert("축하드립니다. 산신령으로 등업 되셨습니다.")
+                        }
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/boards/communities/",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        title : $("#title").val(),
-        contents :  $("#contents").val(),
-        chatStatus : chatStatus,
-        chatMemCnt : chatMemCnt,
-        tagList : tags,
-        imgList: imageUrlList,
-        maniaResponse : 0,
-        godResponse :0,
-      }),
-      success: function (response) {
+                        // window.location.href = "h-1_communityMain.html";
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            createCommunity()
+                        }
+                    },
+                })
+            }
 
-        // if(response.)
-        console.log(response)
-        alert("커뮤니티 글 작성 완료")
-        if(response.maniaResponse==1){
-          console.log("등산매니아")
-          alert("축하드립니다. 등산 매니아로 등업 되셨습니다.")
-        }
-        else if(response.godResponse==1){
-          console.log("산신령")
-          alert("축하드립니다. 산신령으로 등업 되셨습니다.")
-        }
-
-        // window.location.href = "h-1_communityMain.html";
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-          regenerateToken()
-          createCommunity()
-        }
-      },
-    })
-  }
-
-  function removeImage(index){
-    imageUrlList.splice(index,1);
-    $("#img-wrap").empty();
-    for(let i=0; i<imageUrlList.length; i++) {
-      var temp = `
+            function removeImage(index) {
+                imageUrlList.splice(index, 1)
+                $("#img-wrap").empty()
+                for (let i = 0; i < imageUrlList.length; i++) {
+                    var temp = `
             <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
               <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
               <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
@@ -544,154 +698,158 @@
               </div>
             </div>
           `
-      $("#img-wrap").append(temp);
-    }
-  }
+                    $("#img-wrap").append(temp)
+                }
+            }
 
-  function addTagList(id){
-    for (let i=0; i<tags.length; i++){
-      if(tags[i] == id){
-        alert("이미 선택했습니다.")
-        return;
-      }
-    }
-    tags.push(id)
-    $("#tag-select-list").empty();
-    for (let i=0; i<tags.length; i++){
-      var temp = `
+            function addTagList(id) {
+                for (let i = 0; i < tags.length; i++) {
+                    if (tags[i] == id) {
+                        alert("이미 선택했습니다.")
+                        return
+                    }
+                }
+                tags.push(id)
+                $("#tag-select-list").empty()
+                for (let i = 0; i < tags.length; i++) {
+                    var temp = `
         <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
           ${tags[i]}
         </div>
       `
-      $("#tag-select-list").append(temp);
-    }
-  }
+                    $("#tag-select-list").append(temp)
+                }
+            }
 
-  function addTag(){
-    var accessToken = localStorage.getItem("accessToken");
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/hashtags?name=" + $("#tag-add").val(),
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        alert("추가 완료")
-        $("#tag-add").empty();
-        searchTags();
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-          regenerateToken()
-          addTag()
-        }
-      },
-    })
-  }
+            function addTag() {
+                var accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url:
+                        "http://localhost:8080/hashtags?name=" +
+                        $("#tag-add").val(),
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        alert("추가 완료")
+                        $("#tag-add").empty()
+                        searchTags()
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            addTag()
+                        }
+                    },
+                })
+            }
 
-  function searchTags(){
-    var accessToken = localStorage.getItem("accessToken");
-    var tagName = $("#tag-search-input").val();
-    console.log("tagName : ", tagName);
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8080/hashtags?offset=0&limit=20&name=" + tagName,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("response : ", response);
-        $(".tag-select-box").empty();
-        for(let i=0; i<response.data.length; i++){
-          var temp = `
-            <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
-          `
-          $(".tag-select-box").append(temp);
-        }
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-          regenerateToken()
-          searchTags()
-        }
-      },
-    })
-  }
+            function searchTags() {
+                var accessToken = localStorage.getItem("accessToken")
+                var tagName = $("#tag-search-input").val()
+                console.log("tagName : ", tagName)
+                $.ajax({
+                    type: "GET",
+                    url:
+                        "http://localhost:8080/hashtags?offset=0&limit=20&name=" +
+                        tagName,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        $(".tag-select-box").empty()
+                        for (let i = 0; i < response.data.length; i++) {
+                            var temp = `
+                                <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+                            `
+                            $(".tag-select-box").append(temp)
+                        }
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            searchTags()
+                        }
+                    },
+                })
+            }
 
-  function imgUpload(input) {
-    const accessToken = localStorage.getItem("accessToken");
+            function imgUpload(input) {
+                const accessToken = localStorage.getItem("accessToken")
 
-    const imageInput = $("#chooseFile")[0];
-    // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-    console.log("$('#chooseFile'): ", $("#chooseFile"));
-    console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+                const imageInput = $("#chooseFile")[0]
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+                console.log("$('#chooseFile'): ", $("#chooseFile"))
+                console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
 
-    var formData = new FormData();
-    for (var i = 0; i < imageInput.files.length; i++) {
-      // formData.append("image", imageInput.files[i]);
-      formData.append("multipartFile", imageInput.files[i]);
-      console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-    }
+                var formData = new FormData()
+                for (var i = 0; i < imageInput.files.length; i++) {
+                    // formData.append("image", imageInput.files[i]);
+                    formData.append("multipartFile", imageInput.files[i])
+                    console.log("imageInput.files[i].name : ", imageInput.files[i].name)
+                }
 
-    $.ajax({
-      type: "POST",
-      url: `http://localhost:8080/s3/file`,
-      // dataType: "json",
-      // dataType: "multipart",
-      enctype: "multipart/form-data",
-      // contentType: "application/json; charset=utf-8",
-      processData: false,
-      contentType: false,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken);
-      },
-      data: formData,
-      xhrFields: {
-        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-      },
-      success: function (response) {
-        console.log("여긴 찍혀? 1");
-        console.log("response", response);
-        for (let i = 0; i < response.length; i++) {
-          // imageUrlList.push(response[i].imgList[i]);
-          imageUrlList.push(response[i]);
-        }
-        console.log("imageUrlList : ", imageUrlList);
-        return imageUrlList;
-      },
-      error: function (response, status, error) {
-        if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-          regenerateToken()
-          imgUpload(input)
-        }
-      },
-    });
-  }
+                $.ajax({
+                    type: "POST",
+                    url: `http://localhost:8080/s3/file`,
+                    // dataType: "json",
+                    // dataType: "multipart",
+                    enctype: "multipart/form-data",
+                    // contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: formData,
+                    xhrFields: {
+                        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: function (response) {
+                        console.log("여긴 찍혀? 1")
+                        console.log("response", response)
+                        for (let i = 0; i < response.length; i++) {
+                            // imageUrlList.push(response[i].imgList[i]);
+                            imageUrlList.push(response[i])
+                        }
+                        console.log("imageUrlList : ", imageUrlList)
+                        return imageUrlList
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            imgUpload(input)
+                        }
+                    },
+                })
+            }
 
-  function removeTag(){
-    tags = [];
-    $("#tag-select-list").empty();
-  }
+            function removeTag() {
+                tags = []
+                $("#tag-select-list").empty()
+            }
 
-  function regenerateToken(){
-    var refreshToken = localStorage.getItem("refreshToken")
+            function regenerateToken() {
+                var refreshToken = localStorage.getItem("refreshToken")
 
-    $.ajax({
-      type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
-      contentType : "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-      },
-      error: function(response){
-        console.log("에러 : ", response)
-      }
-    })
-  }
-</script>
-</body>
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/auth/token/regenerate",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        refreshToken: refreshToken,
+                    }),
+                    success: function (response) {
+                        localStorage.setItem("accessToken", response.accessToken)
+                        localStorage.setItem("refreshToken", response.refreshToken)
+                    },
+                    error: function (response) {
+                        console.log("에러 : ", response)
+                    },
+                })
+            }
+        </script>
+    </body>
 </html>

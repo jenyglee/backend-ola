@@ -116,7 +116,7 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
@@ -191,6 +191,7 @@
 
     function handleLogin() {
         var settings = {
+            // "url": "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/login",
             "url": "http://localhost:8080/auth/login",
             "method": "POST",
             "timeout": 0,
@@ -265,7 +266,9 @@
             // clearCookie('code');
         })
     }
-
+    function moveMainPage(){
+        window.location = "./../index.html"
+    }
 </script>
 </body>
 

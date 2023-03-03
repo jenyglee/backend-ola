@@ -255,8 +255,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
@@ -616,7 +616,7 @@
               type="button"
               class="btn btn-primary btn-search"
               style="background-color: #f46b3f; border: none; color: white"
-              onclick="moveMainPage()"
+              onclick="moveCommunityMainPage()"
           >
             목록
           </button>
@@ -876,11 +876,42 @@
       success: function (response) {
         console.log("댓글 성공")
         getCommunity(0);
+        createAlarm();
       },
       error: function (response, status, error) {
         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
           regenerateToken()
           commentCreate();
+        }
+      }
+    });
+  }
+
+  //알람 생성
+  function createAlarm(){
+    var accessToken = localStorage.getItem("accessToken");
+    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    let myNickname = menuProfile.nickname;
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/alarm",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify({
+        message : " 글에 " +  myNickname +  "님이 댓글을 달았습니다.",
+        boardId : communityId,
+        boardType :"community",
+      }),
+      success: function (response) {
+        console.log("알림 insert 성공")
+      },
+      error: function (response, status, error) {
+        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+          regenerateToken()
+          createAlarm();
         }
       }
     });
@@ -1142,8 +1173,11 @@
     window.location.href = "h-5_communityModify.html";
   }
 
-  function moveMainPage() {
+  function moveCommunityMainPage() {
     window.location.href = "h-1_communityMain.html";
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
   }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
