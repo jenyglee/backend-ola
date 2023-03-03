@@ -1,8 +1,8 @@
-package com.project.sparta.alarm2.controller;
+package com.project.sparta.alarm.controller;
 
-import com.project.sparta.alarm2.dto.AlarmRequetDto;
-import com.project.sparta.alarm2.dto.AlarmResponseDto;
-import com.project.sparta.alarm2.service.AlarmService;
+import com.project.sparta.alarm.dto.AlarmRequetDto;
+import com.project.sparta.alarm.dto.AlarmResponseDto;
+import com.project.sparta.alarm.service.AlarmService;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;

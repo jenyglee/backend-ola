@@ -1,9 +1,9 @@
-package com.project.sparta.alarm2.service;
+package com.project.sparta.alarm.service;
 
-import com.project.sparta.alarm2.dto.AlarmRequetDto;
-import com.project.sparta.alarm2.dto.AlarmResponseDto;
-import com.project.sparta.alarm2.entity.Alarm;
-import com.project.sparta.alarm2.repository.AlarmRespository;
+import com.project.sparta.alarm.dto.AlarmRequetDto;
+import com.project.sparta.alarm.dto.AlarmResponseDto;
+import com.project.sparta.alarm.entity.Alarm;
+import com.project.sparta.alarm.repository.AlarmRespository;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
@@ -11,7 +11,6 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
-import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import java.util.List;

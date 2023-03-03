@@ -1,4 +1,4 @@
-package com.project.sparta.alarm2.entity;
+package com.project.sparta.alarm.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import javax.persistence.Column;

@@ -1,6 +1,6 @@
-package com.project.sparta.alarm2.repository;
+package com.project.sparta.alarm.repository;
 
-import com.project.sparta.alarm2.entity.Alarm;
+import com.project.sparta.alarm.entity.Alarm;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

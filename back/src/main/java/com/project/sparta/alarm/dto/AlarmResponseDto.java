@@ -1,4 +1,4 @@
-package com.project.sparta.alarm2.dto;
+package com.project.sparta.alarm.dto;
 
 import lombok.Builder;
 import lombok.Getter;
