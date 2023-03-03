@@ -466,11 +466,6 @@
 
   $(document).ready(function () {
     getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
-    // console.log("data :" ,data)
-    // for(i=0; i<data.length ; i++){
-    //   var responseURL = await getImageURL(data[i].imgList[0]);
-    //   console.log("responseURL : ", responseURL)
-    // }
     getMenuProfile();
   });
 
@@ -520,76 +515,7 @@
     console.log("searchOrderByLike" + searchOrderByLike)
 
 
-    // // 2. 통신해서 불러오기
-    // $.ajax({
-    //   type: "GET",
-    //   url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
-    //       + searchScore + "&season=" + searchSeason
-    //       + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&orderByLike="
-    //       + searchOrderByLike,
-    //   beforeSend: function (xlr) {
-    //     xlr.setRequestHeader("Authorization", accessToken)
-    //   },
-    //   success: function (response) {
-
-    //     console.log("response : " , response)
-
-    //       $('.totalCnt').empty()
-    //       const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
-    //       $('.totalCnt').append(cnt)
-
-    //     for (let i = 0; i < response.data.length; i++) {
-
-    //       var imgUrl = response.data[i].thumbnail
-    //       if (imgUrl === null) {
-    //         imgUrl = "https://ak-d.tripcdn.com/images/100m1f000001gzon8658E.jpg"
-    //       } else if (imgUrl.includes(".png")) {
-    //         imgUrl = "https://www.me.go.kr/home/file/preview.do?fileId=30126&fileSeq=1"
-    //       }
-
-    //       // 데이터 바인딩
-    //       const temp =
-    //           `
-    //           <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
-    //                 <div class="img-wrap"
-    //                      style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-    //                     <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
-    //                 </div>
-    //                 <div class="text-wrap" style="font-size: 14px;">
-    //                     <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-    //                     <div style="display: flex;">
-    //                         <div class="img-wrap"
-    //                              style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-    //                             <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-    //                         </div>
-    //                         <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
-    //                     </div>
-    //                 </div>
-    //             </a>
-    //           `
-
-    //       $('#cardBody').append(temp)
-    //     }
-    //     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    //     if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
-    //       var createBtnTemp = `
-    //         <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>
-    //       `
-    //     }else if(menuProfile.grade == "MOUNTAIN_GOD"){
-    //       var createBtnTemp = `
-    //         <button type="button" id="btn_1" onclick="moveCreatePage()">게시글 작성</button>
-    //       `
-    //     }
-    //     $("#bottom-btn").append(createBtnTemp)
-    //   },error: function(response){
-    //       console.log("response : ", response)
-    //       if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
-    //             regenerateToken()
-    //       }
-    //   }
-    // })
-
-    // 2. 통신해서 불러오기 2
+    // 2. 통신해서 불러오기 
     $.ajax({
       type: "GET",
       url: "http://localhost:8080/boards/recommends?page=" + page + "&size=" + size + "&score="
@@ -618,13 +544,6 @@
             console.log("ola : ",imgUrl)
             console.log("여긴 나와? : " , response.data[i].imgList[0])
             console.log("네번째")
-
-            // setTimeout(() => {
-            // console.log("ola : ",imgUrl)
-            // console.log("여긴 나와? : " , response.data[i].imgList[0])
-            // console.log("네번째") 
-            // }, 500);
-           
       
           
           }else{
@@ -711,13 +630,6 @@ async function getImageURL(objectKey) {
         // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
         console.log("objectKey 이미지 파일이름 찍히는지 보자.");
         console.log("objectKey : ", objectKey);
-    
-        // var formData = new FormData();
-        // for (var i = 0; i < imageInput.files.length; i++) {
-        //   // formData.append("image", imageInput.files[i]);
-        //   formData.append("multipartFile", imageInput.files[i]);
-        //   console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-        // }
 
         await $.ajax({
           type: "GET",

@@ -426,6 +426,7 @@
       function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+
         $.ajax({
           type: "GET",
           url: `http://localhost:8080/boards/recommends/${id}`,
@@ -435,7 +436,7 @@
               localStorage.getItem("accessToken")
             );
           },
-          success: function (response) {
+          success: async function (response) {
             var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
             console.log("response : ", response);
             const score = response.score;
@@ -465,9 +466,20 @@
 
             // 이미지
             for (let i = 0; i < response.imgList.length; i++) {
+              var imgUrl = response.imgList[i]
+              console.log("imgUrl : ",imgUrl)
+
+              if(imgUrl.includes("ola")){
+                imgUrl = await getImageURL(imgUrl)
+                console.log("imgUrl2 : ",imgUrl)
+              }
+              
+
+              
+
                 var tempImage = `
                     <div  style="height: 500px; overflow: hidden; display: flex; align-items: center; margin-bottom:30px">
-                        <img style="width: 100%;" src=${response.imgList[i]}  alt = "이미지" />    
+                        <img style="width: 100%;" src=${imgUrl}  alt = "이미지" />    
                     </div>
                 `
                 $("#image-wrap").append(tempImage);
@@ -675,53 +687,97 @@
 
        var imageUrlList = [];
 
-      function imgUpload(input) {
+
+       async function getImageURL(objectKey) {
+        var loadData = "";
+        console.log("두번째") 
         const accessToken = localStorage.getItem("accessToken");
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        console.log("objectKey 이미지 파일이름 찍히는지 보자.");
+        console.log("objectKey : ", objectKey);
 
-        const imageInput = $("#chooseFile")[0];
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-        console.log("$('#chooseFile'): ", $("#chooseFile"));
-        console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
-
-        var formData = new FormData();
-        for (var i = 0; i < imageInput.files.length; i++) {
-          // formData.append("image", imageInput.files[i]);
-          formData.append("multipartFile", imageInput.files[i]);
-          console.log("imageInput.files[i].name : ", imageInput.files[i].name);
-        }
-
-        $.ajax({
-          type: "POST",
-          url: `http://localhost:8080/s3/file`,
-          // dataType: "json",
-          // dataType: "multipart",
-          enctype: "multipart/form-data",
-          // contentType: "application/json; charset=utf-8",
+        await $.ajax({
+          type: "GET",
+          url: "http://localhost:8080/s3/getPreSignedURL?fileName="+ objectKey,
+          // dataType: "text",
+          // enctype: "multipart/form-data",
+          contentType: "application/json",
           processData: false,
-          contentType: false,
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", accessToken);
-          },
-          data: formData,
+          // contentType: false,
+          // beforeSend: function (xlr) {
+          //   xlr.setRequestHeader("Authorization", accessToken);
+          // },
+          // data: objectKey,
+
           xhrFields: {
-            withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+            withCredentials:false
           },
-          success: function (response) {
-            console.log("여긴 찍혀? 1");
-            console.log("response", response);
-            for (let i = 0; i < response.length; i++) {
-              // imageUrlList.push(response[i].imgList[i]);
-              imageUrlList.push(response[i]);
-            }
-            console.log("imageUrlList : ", imageUrlList);
-            return imageUrlList;
+          success: await function (response) {
+            console.log("세번째") 
+            console.log("preSignedURL : ", response);
+            loadData = response       
+           
           },
           error: function (request, status, error) {
-            console.log(error);
+            
+            console.log("에러난다..!");
+            console.log(request, status, error);
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
+          
         });
+       return loadData
       }
+
+
+      // function imgUpload(input) {
+      //   const accessToken = localStorage.getItem("accessToken");
+
+      //   const imageInput = $("#chooseFile")[0];
+      //   // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+      //   console.log("$('#chooseFile'): ", $("#chooseFile"));
+      //   console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files);
+
+      //   var formData = new FormData();
+      //   for (var i = 0; i < imageInput.files.length; i++) {
+      //     // formData.append("image", imageInput.files[i]);
+      //     formData.append("multipartFile", imageInput.files[i]);
+      //     console.log("imageInput.files[i].name : ", imageInput.files[i].name);
+      //   }
+
+      //   $.ajax({
+      //     type: "POST",
+      //     url: `http://localhost:8080/s3/file`,
+      //     // dataType: "json",
+      //     // dataType: "multipart",
+      //     enctype: "multipart/form-data",
+      //     // contentType: "application/json; charset=utf-8",
+      //     processData: false,
+      //     contentType: false,
+      //     beforeSend: function (xlr) {
+      //       xlr.setRequestHeader("Authorization", accessToken);
+      //     },
+      //     data: formData,
+      //     xhrFields: {
+      //       withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      //     },
+      //     success: function (response) {
+      //       console.log("여긴 찍혀? 1");
+      //       console.log("response", response);
+      //       for (let i = 0; i < response.length; i++) {
+      //         // imageUrlList.push(response[i].imgList[i]);
+      //         imageUrlList.push(response[i]);
+      //       }
+      //       console.log("imageUrlList : ", imageUrlList);
+      //       return imageUrlList;
+      //     },
+      //     error: function (request, status, error) {
+      //       console.log(error);
+      //       // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      //     },
+      //   });
+      // }
         function moveModifyPage() {
             window.location.href = "g-4_recommendModify.html";
         }
