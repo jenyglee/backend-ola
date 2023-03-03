@@ -270,7 +270,7 @@
     const accessToken = localStorage.getItem("accessToken");
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/auth/logout",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
       contentType: "application/json; charset=utf-8",
       data: JSON.stringify({
         accessToken : accessToken
