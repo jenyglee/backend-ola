@@ -107,7 +107,7 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
@@ -302,7 +302,7 @@
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
-          <p class="text">${menuProfile.sub}님</p>
+          <p class="text">${menuProfile.nickname}님</p>
 `
         $("#my-profile").append(tempProfile);
     }
@@ -329,6 +329,9 @@
                 window.location.reload();
             },
         })
+    }
+    function moveMainPage(){
+        window.location = "./../index.html"
     }
 </script>
 </body>

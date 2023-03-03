@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.sparta.communityComment.dto.CommentResponseDto;
 
 @Api(tags = {"커뮤니티 보드 댓글 API"})
 @RestController
@@ -25,13 +24,16 @@ public class CommunityCommnetController {
 
     private final CommunityCommentService commentService;
 
+
     //커뮤니티 댓글 작성
     @ApiOperation(value = "커뮤니티 댓글 작성", response = Join.class)
     @PostMapping("/comments/communities/{boardId}")
     public ResponseEntity createCommunityComment(@PathVariable Long boardId
         , @RequestBody CommunityRequestDto communityRequestDto
         , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+
         commentService.createCommunityComments(boardId, communityRequestDto, userDetail.getUser());
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

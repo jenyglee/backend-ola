@@ -23,52 +23,58 @@
       .container {
         width: 1200px;
         padding: 0;
+        margin-top: 100px;
+        margin-bottom: 100px;
       }
 
       .w_1 {
         width: 1200px;
-        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
       }
 
-      .w_2 {
-        width: 1200px;
-        height: 550px;
+      .w_1 .score {
+          font-size: 24px;
+      }
+
+      .w_1 .title{
+          font-size: 50px;
+          font-weight: bold;
+      }
+
+      .w_1 .season{
+          font-size: 30px;
+      }
+
+      .w_1 .above{
+          font-size: 24px;
       }
 
       .w_3 {
-        width: 1200px;
-        height: 240px;
-        margin-left: 50px;
+        margin-bottom: 100px;
       }
 
-      .score,
-      .title,
-      .above,
-      .season
-      {
-        width: 1200px;
-        height: 33px;
-        text-align: center;
-        padding: 0px;
-      }
+      .like-title {
+      /*width: 70px;*/
+      margin-right: 20px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 15px;
+      font-weight: bold;
+      /*margin-left: 10px;*/
+    }
 
-      /*.address{*/
-      /*  width: 1200px;*/
-      /*  height: 33px;*/
-      /*  margin-left: 50px;*/
-      /*  padding: 0px;*/
-      /*}*/
+
+
+      .address{
+          margin-bottom: 50px;
+      }
 
       .w_1_1 {
         width: 1200px;
         height: 33px;
-      }
-
-      .w_2 img {
-        height: 550px;
-        object-fit: cover;
-        position: center;
-        margin-left: 210px;
       }
 
       .btns {
@@ -90,13 +96,19 @@
         border: none;
         color: white;
       }
+
+      .disable {
+          border: 1px solid #E4E4E4;
+          background-color: #F1F1F1;
+          color: #ADADAD;
+      }
     </style>
   </head>
   <body>
     <!-- ############# 네비게이션 #############-->
     <header class="menu">
       <div class="bg-line"></div>
-      <div class="logo-wrap">
+      <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
       <div class="item-list">
@@ -308,9 +320,75 @@
       <section class="detailBoard">
         <!--   작업공간   -->
         <div class="wrap" id="boardWrap">
+            <div id="title" class="w_1">
+                <!-- 타이틀 들어갈 자리 -->
+            </div>
+            <div id="image-wrap" class="w_2">
+                <!-- 이미지 들어갈 자리 -->
+                
+            </div>
+            <!-- 선 -->
+            <hr style="margin-top: 30px"/>
+
+            <!-- 좋아요 -->
+            <div id="like-wrap" style="display: flex; align-items: center">
+                <span class="like-title">좋아요</span>
+                <div id="like-btn" style="display: flex; align-items: center; ">
+                  <!-- 좋아요 버튼 자리 -->
+                  <!-- <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;">
+                      <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
+                  </div>
+                  <p style="margin-bottom: 0;">5500</p> -->
+                </div>
+              </div>
+            <!-- <div style="display: flex;">
+                  <div class="img-wrap" style="width:18px; height: 18px; margin-left:50px; margin-bottom:20px; margin-right:5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                       <img style="width: 100%" src="/static/img/unHeart.png" alt="좋아요 하트"/>
+                  </div>
+                  <p style="margin-bottom: 0px; font-size: 14px; font-weight: bolder">${likeCount}</p>
+            </div> -->
+
+            <!-- 주소와 내용 -->
+            <div id="contents" class="w_3" >
+                <!-- <div class="address">
+                  <b>주소 : </b>
+                  <span>${region}</span>
+                </div>
+                <div>
+                  <span>
+                    ${contents}
+                  </span>
+                </div> -->
+              </div>
+        </div>
+
+
         </div>
           <div class="btns">
-
+              <!-- 버튼 들어갈 자리 -->
+            <!-- <button
+                type="button"
+                class="modifyBtn btn btn-primary btn-search"
+                onclick="moveModifyPage()"
+            >
+            수정
+            </button>
+            <button
+                type="button"
+                class="deleteBtn btn btn-primary btn-search"
+                style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                onclick="deleteBeforeRoomCheck()"
+            >
+            삭제
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-search"
+                style="background-color: #f46b3f; border: none; color: white"
+                onclick="moveMainPage()"
+            >
+            목록
+            </button> -->
           </div>
         </div>
       </section>
@@ -330,7 +408,7 @@
           <div class="img-wrap">
             <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
           </div>
-          <p class="text">${menuProfile.sub}님</p>
+          <p class="text">${menuProfile.nickname}님</p>
 `;
         $("#my-profile").append(tempProfile);
       }
@@ -358,131 +436,137 @@
             );
           },
           success: function (response) {
+            var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
             console.log("response : ", response);
-
             const score = response.score;
             const title = response.title;
-            const createDate = response.createDate.substring(0, 10);
             const season = response.season;
             const altitude = response.altitude;
             const contents = response.contents;
             const region = response.region;
-            const imgList = response.imgList;
             const likeCount = response.likeCount;
-            const nickName = response.nickName;
             const isLike = response.isLike;
+            
+            //상단 타이틀
+            $("#title").empty()
+            $("#image-wrap").empty();
 
-            let temp = null;
-            let btnTemp = null;
-            let myNickname = menuProfile.nickname;
-            //로그인한 사용자와 게시물 작성자가 같을 경우
-            if(myNickname==nickName){
-              btnTemp = ` <button type="button" class="modifyBtn btn btn-primary btn-search" onclick="location.href='g-4_recommendModify.html'">수정</button>`;
+            var tempTitle = `
+                <div class="title">
+                    ${title}
+                </div>
+                <div class="season">
+                    <span>등산하기 좋은 계절 : </span>
+                    <b style="color: #f46b3f;">${season}</b>
+                </div>
+                <div style="margin-top:20px">점수 : ${score}.0 / 높이 : ${altitude}m</div>
+            `
+            $("#title").append(tempTitle);
 
-              btnTemp +=  `<button type="button" class="deleteBtn btn btn-primary btn-search" onclick="deleteRecommend()">삭제</button>`;
-
-              btnTemp +=  `<button type="button" class="btn btn-primary btn-search" style="background-color: #f46b3f; border: none; color: white"
-                                onclick="location.href='g-1_recommend.html'">목록</button>`
-            }else{
-              btnTemp = `<button type="button" class="btn btn-primary btn-search" style="background-color: #f46b3f; border: none; color: white"
-                                onclick="location.href='g-1_recommend.html'">목록</button>`
-            }
-            $(".btns").append(btnTemp);
-
-            //좋아요 부분
-            if(isLike==true){
-              // 데이터 바인딩
-               temp = `<div class="w_1">
-                    <div class="w_1_1"></div>
-                    <div class="score">
-                      <b style="color: #f46b3f">${score}.0</b>
+            // 이미지
+            for (let i = 0; i < response.imgList.length; i++) {
+                var tempImage = `
+                    <div  style="height: 500px; overflow: hidden; display: flex; align-items: center; margin-bottom:30px">
+                        <img style="width: 100%;" src=${response.imgList[i]}  alt = "이미지" />    
                     </div>
-                    <div class="title">
-                      <h3>${title}</h3>
-                    </div>
-                    <div class="season">
-                      <b style="color: #f46b3f;">${season}</b>
-                      <b style="font-size: 15px">이 최고의 계절</b>
-                    </div>
-                    <div class="above">
-                      <b>해발 ${altitude}</b>
-                      <b>M</b>
-                    </div>
-                    <div class="w_1_1"></div>
-                  </div>
-                  <div class="w_2">
-                    <img src=${imgList[0]} alt = "이미지" />
-                  </div>
-
-                  <hr style="margin-top: 30px"/>
-                   <div style="display: flex;">
-                         <div class="img-wrap" style="width:18px; height: 18px; margin-left:50px; margin-bottom:20px; margin-right:5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                              <img style="width: 100%" src="/static/img/unHeart.png" alt="좋아요 하트"/>
-                         </div>
-                         <p style="margin-bottom: 0px; font-size: 14px; font-weight: bolder">${likeCount}</p>
-                   </div>
-                  <div class="w_3" >
-                    <div class="address">
-                      <b>주소 : </b>
-                      <span>${region}</span>
-                    </div>
-                    <br />
-                    <div>
-                      <span>
-                        ${contents}
-                      </span>
-                    </div>
-                  </div>
-                  <br />`;
-            }else{
-              // 로그인한 회원이 좋아요를 누르지 않았을 때
-              temp = `
-              <div class="w_1">
-            <div class="w_1_1"></div>
-            <div class="score">
-              <b style="color: #f46b3f">${score}.0</b>
-            </div>
-            <div class="title">
-              <h3>${title}</h3>
-            </div>
-            <div class="season">
-              <b style="color: #f46b3f;">${season}</b>
-              <b style="font-size: 15px">이 최고의 계절</b>
-            </div>
-            <div class="above">
-              <b>해발 ${altitude}</b>
-              <b>M</b>
-            </div>
-            <div class="w_1_1"></div>
-          </div>
-          <div class="w_2">
-            <img src=${imgList[0]} alt = "이미지" />
-          </div>
-
-          <hr style="margin-top: 30px"/>
-           <div style="display: flex;">
-                 <div class="img-wrap" style="width:18px; height: 18px; margin-left:50px; margin-bottom:20px; margin-right:5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                      <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트"/>
-                 </div>
-                 <p style="margin-bottom: 0px; font-size: 14px; font-weight: bolder">${likeCount}</p>
-           </div>
-          <div class="w_3" >
-            <div class="address">
-              <b>주소 : </b>
-              <span>${region}</span>
-            </div>
-            <br />
-            <div>
-              <span>
-                ${contents}
-              </span>
-            </div>
-          </div>
-          <br />
-              `;
+                `
+                $("#image-wrap").append(tempImage);
             }
 
-            $("#boardWrap").append(temp);
+            // 좋아요
+            $("#like-btn").empty()
+            if(isLike){
+                var tempLike = `
+                    <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="unlikeBoard()">
+                        <img style="width: 100%;" src="./../static/img/heart.png" alt="좋아요 이미지" />
+                    </div>
+                    <p style="margin-bottom: 0;">${likeCount}</p>
+                `
+                $("#like-btn").append(tempLike)
+            }else {
+                var tempLike = `
+                    <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="likeBoard()">
+                        <img style="width: 100%;" src="./../static/img/unheart.png" alt="좋아요 이미지" />
+                    </div>
+                    <p style="margin-bottom: 0;">${likeCount}</p>
+                `
+                $("#like-btn").append(tempLike)
+            }
+
+            // 주소/내용
+            $("#contents").empty()
+            var tempContents = `
+                <div class="address">
+                  <b>주소 : </b>
+                  <span>${region}</span>
+                </div>
+                <div>
+                  <span>
+                    ${contents}
+                  </span>
+                </div>
+            `
+            $("#contents").append(tempContents)
+
+            // 버튼 
+            $(".btns").empty()
+            if(menuProfile.nickname == response.nickName){
+                var tempBtn = `
+                    <button
+                        type="button"
+                        class="modifyBtn btn btn-primary"
+                        onclick="moveModifyPage()"
+                    >
+                    수정
+                    </button>
+                    <button
+                        type="button"
+                        class="deleteBtn btn btn-primary"
+                        onclick="deleteRecommend()"
+                    >
+                    삭제
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        style="background-color: #f46b3f; border: none; color: white"
+                        onclick="moveMainPage()"
+                    >
+                    목록
+                    </button>
+                `
+                $(".btns").append(tempBtn)
+            }else{
+                console.log("asdasd")
+                var tempBtn = `
+                    <button
+                        type="button"
+                        class="modifyBtn btn btn-primary"
+                        style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                        onclick="noMove()"
+                    >
+                    수정
+                    </button>
+                    <button
+                        type="button"
+                        class="deleteBtn btn btn-primary"
+                        style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                        onclick="noMove()"
+                    >
+                    삭제
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        style="background-color: #f46b3f; border: none; color: white"
+                        onclick="moveMainPage()"
+                    >
+                    목록
+                    </button>
+                `
+                $(".btns").append(tempBtn)
+            }
+            
           }
           ,error: function (response){
             if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
@@ -492,6 +576,56 @@
 
         });
       }
+
+      function likeBoard(){
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+            type: "POST",
+            url: `http://localhost:8080/like/recommends/${id}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
+            success: function (response) {
+                getRecommend(0);
+            },
+            error: function (response, status, error) {
+                if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    regenerateToken()
+                    likeBoard();
+                }
+            },
+        });
+      }
+
+      function unlikeBoard(){
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8080/like/recommends/${id}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
+            success: function (response) {
+                getRecommend();
+            },
+            error: function (response, status, error) {
+                if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    regenerateToken()
+                    unlikeBoard();
+                }
+            },
+        });
+      }
+
+      
 
       function regenerateToken(){
         var refreshToken = localStorage.getItem("refreshToken")
@@ -538,8 +672,6 @@
           },
         });
       }
-
-
 
        var imageUrlList = [];
 
@@ -589,6 +721,20 @@
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
         });
+      }
+        function moveModifyPage() {
+            window.location.href = "g-4_recommendModify.html";
+        }
+
+        function moveMainPage() {
+            window.location.href = "g-1_recommend.html";
+        }
+
+        function noMove(){
+            alert("내가 쓴 코스추천이 아닙니다.")
+        }
+      function moveMainPage(){
+        window.location = "./../index.html"
       }
 
     </script>

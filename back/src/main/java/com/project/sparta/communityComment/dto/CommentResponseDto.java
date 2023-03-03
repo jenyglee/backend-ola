@@ -1,8 +1,6 @@
 package com.project.sparta.communityComment.dto;
 
-import com.project.sparta.communityComment.entity.CommunityComment;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

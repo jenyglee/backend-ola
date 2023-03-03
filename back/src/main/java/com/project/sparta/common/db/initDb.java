@@ -190,9 +190,6 @@ public class initDb {
                 imgList.add("https://post-phinf.pstatic.net/MjAyMjExMTRfMTAy/MDAxNjY4NDEwNDg0NTkz.hUhqseEkRWWDOYH39iEysl9jDZ0IyjOGx2gxc25wtGIg.BY9N8plvaiNKPsEaisWfVuNtSDU6p8J7_IscgwGhAWcg.JPEG/20201225062642116.jpg?type=w1200");
                 imgList.add("https://post-phinf.pstatic.net/MjAyMjExMTVfMzAw/MDAxNjY4NDc0NzQyNjQ3.rPp-yqJsgfQ1SLBzykTxy20QrsWHyfDD_2K4yUnHTh0g.KZIlUrdyDNBPGBWCxJ2zE9QiNDIOBvZMeQk6IcesQ4sg.JPEG/20211114125551444.jpg?type=w1200");
 
-
-                String thumbnail = "https://www.50plus.or.kr/upload/im/2017/11/3b8e4193-bbec-4058-928d-1934d8a8e01e.jpg";
-
                 recommendCourseBoardService.creatRecommendCourseBoard(
                         RecommendRequestDto.builder()
                                 .score(1)
@@ -205,7 +202,6 @@ public class initDb {
                                         "모두 겨울 산행을 즐기기 좋은 산이에요!" + i)
                                 .region("강원도 양양군 서면 오색리 #설악산")
                                 .imgList(imgList)
-                                .thumbnail(thumbnail)
                                 .build()
                         , 9L
                 );
@@ -214,7 +210,6 @@ public class initDb {
                 List<String> imgList = new ArrayList<>();
                 imgList.add("https://post-phinf.pstatic.net/MjAxOTEwMTBfMjcg/MDAxNTcwNjg5NDg0NDg4.zRnWItLpMcVHeDGrBBtpugR5TZZ_m-PCzKF19ohXtuAg.2UtUY1lXS0XBhHKJISOhEWZQUeMDWLgPbk-OlsBNWp0g.JPEG/%EC%95%84%EC%B0%A8%EC%82%B0_.jpg?type=w1200");
                 imgList.add("https://post-phinf.pstatic.net/MjAxOTEwMTBfMjcy/MDAxNTcwNjg5NTc3NzQy.KUosD9Z66FF5sHHxtmbE34jHOdT5JmkGetCoeSp0z88g.30uEuNuOKxA-InFTTloCPvdxOi2fyZTjD7sT_CMDbaYg.JPEG/1989966.jpg?type=w1200");
-                String thumbnail = "https://cdn.mhns.co.kr/news/photo/202011/420732_549374_3013.jpg";
 
                 recommendCourseBoardService.creatRecommendCourseBoard(
                         RecommendRequestDto.builder()
@@ -227,7 +222,6 @@ public class initDb {
                                         " 어떤 산이 있는지 함께 만나볼까요?" + i)
                                 .region("서울특별시 서초구 #청계산")
                                 .imgList(imgList)
-                                .thumbnail(thumbnail)
                                 .build()
                         , 9L
                 );
@@ -237,7 +231,6 @@ public class initDb {
 
                 imgList.add("https://cdn.imweb.me/upload/S2021011502a2f4eeeb339/49bef1f0d3ca7.jpeg");
                 imgList.add("https://cdn.imweb.me/upload/S2021011502a2f4eeeb339/75ed9c2fa54ef.png");
-                String thumbnail = "http://db.kookje.co.kr/news2000/photo/2022/0203/L20220203.22012000210i1.jpg";
 
                 recommendCourseBoardService.creatRecommendCourseBoard(
                         RecommendRequestDto.builder()
@@ -254,7 +247,6 @@ public class initDb {
                                         "게다가 벚꽃 너머 보이는 아름다운 바다까지 한 데 어우러져 그야말로 감동의 뷰를 자아내요." + i)
                                 .region("경상도 창원시 진해구")
                                 .imgList(imgList)
-                                .thumbnail(thumbnail)
                                 .build()
                         , 9L
                 );
@@ -264,8 +256,6 @@ public class initDb {
 
                 imgList.add("https://cdn.san.chosun.com/news/photo/202207/21486_79137_2732.jpg");
                 imgList.add("https://cdn.san.chosun.com/news/photo/202207/21486_79138_2733.jpg");
-
-                String thumbnail = "https://t1.daumcdn.net/cfile/tistory/1214144F4FD9948407";
 
                 recommendCourseBoardService.creatRecommendCourseBoard(
                         RecommendRequestDto.builder()
@@ -278,7 +268,6 @@ public class initDb {
                                         " 영종도와 인근 섬들 가운데 가장 먼저 산꾼들이 찾기 시작한 곳이 바로 무의도다." + i)
                                 .region("전라도 영광군 대마면 남산리")
                                 .imgList(imgList)
-                                .thumbnail(thumbnail)
                                 .build()
                         , 9L
                 );

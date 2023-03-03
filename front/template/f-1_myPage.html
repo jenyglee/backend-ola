@@ -240,8 +240,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
@@ -285,25 +285,14 @@
         <img class="img" src="./../static/img/icon_bell.png"/>
       </div>
       <div class="bell-dropbox">
-        <p>알람</p>
-        <ul>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+        <p style="margin-bottom: 10px">알람</p>
+        <ul id="alarm">
+
         </ul>
       </div>
     </div>
     <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
        href="./f-1_myPage.html">
-      <!--      <div class="img-wrap">-->
-      <!--        <img class="img" src="./../static/img/icon_profile_default.png "/>-->
-      <!--      </div>-->
-      <!--      <p class="text">나와바리나와바님</p>-->
     </a>
   </div>
 
@@ -356,21 +345,6 @@
     </div>
     <div class="w_7"></div>
     <div id="tagList" class="w_6">
-      <!--      <div class="b_10">-->
-      <!--        <p>#등산데이트</p>-->
-      <!--      </div>-->
-      <!--      <div class="b_11">-->
-      <!--        <p>#등산입문자</p>-->
-      <!--      </div>-->
-      <!--      <div class="b_12">-->
-      <!--        <p>#가을산</p>-->
-      <!--      </div>-->
-      <!--      <div class="b_13">-->
-      <!--        <p>#30대40대</p>-->
-      <!--      </div>-->
-      <!--      <div class="b_14">-->
-      <!--        #주변맛집-->
-      <!--      </div>-->
       <div class="b_15"></div>
     </div>
     <div class="w_7"></div>
@@ -395,6 +369,12 @@
   </section>
 </main>
 <script>
+
+  var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+  let myNickname = menuProfile.nickname;
+  var board_Id = 0;
+  var alarmId = 0;
+
   $(document).ready(function () {
     $(".bell-dropbox").hide();
     $(".friend-dropbox").hide();
@@ -402,7 +382,8 @@
     getMyInfo();
     myFriedList();
     recommendFriedList();
-    mainRecommendFriendList()
+    mainRecommendFriendList();
+    selectAlarm();
   });
 
   function getMenuProfile() {
@@ -532,9 +513,9 @@
         let result = null;
 
         if(response.data.length==0){
-            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
+          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
 
-            $(".friend-list-3").append(result);
+          $(".friend-list-3").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
             let image = response.data[i].friendImage;
@@ -583,7 +564,7 @@
         let tagName = [];
 
         if(response.data.length==0){
-            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
+          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
 
           $(".friend-list-2").append(result);
         }else{
@@ -731,12 +712,6 @@
   }
 
 
-
-  function reloadDivArea() {
-    $(".friend-div").load(location.href+' .friend-div');
-  }
-
-
   function mainRecommendFriendList() {
     const accessToken = localStorage.getItem("accessToken")
     console.log("accessToken : ", accessToken)
@@ -793,7 +768,73 @@
       }
     });
   }
-</script>
-</body>
+  //알림 조회
+  function selectAlarm(){
+    const accessToken = localStorage.getItem("accessToken")
 
+    $.ajax({
+      type: "GET",
+      contentType: "application/json",
+      url: "http://localhost:8080/alarm?page=0&size=10",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        $("#alarm").empty();
+
+        let result = null;
+        let changeImg = null;
+
+        for(var i=0; i<response.data.length; i++){
+
+          board_Id = response.data[i].boardId;
+          alarmId = response.data[i].alarmId;
+          if(response.data[i].readStatus=="N"){
+
+            $(".icon-bell").empty();
+
+            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+
+            $(".icon-bell").append(changeImg);
+
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }else{
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }
+        }
+      }
+    });
+  }
+
+  function setCommunityId(board_Id, alarmId){
+    updateAlarmStats(alarmId);
+    localStorage.setItem("communityId", board_Id)
+    location.replace('h-2_communityDetail.html');
+  }
+
+  function updateAlarmStats(alarmId){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "PATCH",
+      url: "http://localhost:8080/alarm?alarmId=" + alarmId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        console.log("업데이트 ")
+        selectAlarm();
+      }
+    });
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
+  }
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</body>
 </html>

@@ -18,6 +18,4 @@ public interface CommentRepository extends JpaRepository<CommunityComment, Long>
     @Query("delete from CommunityComment cc where cc.communityBoardId=:boardId")
     @Modifying
     void deleteCommentAllByInBoardId(@Param("boardId") Long boardId);
-
-//    List<CommunityComment> findAllByCommunityBoardId(Long boardId);
 }

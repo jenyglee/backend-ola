@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface RecommendCourseBoardImgRepository extends JpaRepository<RecommendCourseImg,Long> {
-
-
     @Query("delete from RecommendCourseImg r where r.recommendCourseBoard.id=:boardId")
     @Modifying
     void deleteBoard(@Param("boardId") Long boardId);

@@ -212,10 +212,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     @Cacheable(value="getallcommunity")
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page,
-        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId) {
+        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort) {
         // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
-            contentsCond, nicknameCond, hashtagId);
+            contentsCond, nicknameCond, hashtagId, chatStatus, sort);
 
         // 2. 검색조건을 포함하여 전체조회
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -232,10 +232,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional(readOnly = true)
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page,
-        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId) {
+        int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort) {
         // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
-            contentsCond, nicknameCond, hashtagId);
+            contentsCond, nicknameCond, hashtagId, chatStatus, sort);
 
         // 2. 검색조건을 포함하여 전체조회
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -338,6 +338,22 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 
         return new PageResponseDto<>(page, totalCount, content);
     }
+
+    //알림 기능을 위함 게시글 단건 조회
+    @Override
+    @Transactional(readOnly = true)
+    public CommunityBoardOneResponseDto getBoard(Long boardId){
+
+        CommunityBoard board  = boardRepository.findById(boardId).orElseThrow(()-> new CustomException(
+            Status.NOT_FOUND_POST));
+
+        CommunityBoardOneResponseDto commBoardResponse = CommunityBoardOneResponseDto.builder()
+                                                                    .nickName(board.getUser().getNickName())
+                                                                    .title(board.getTitle())
+                                                                    .build();
+        return commBoardResponse;
+    }
+
 }
 
 //주성님의 고민의 흔적들..
