@@ -45,14 +45,14 @@ public class initDb {
 
     @PostConstruct
     public void init(){
-        initService.hashtagInit();
-        initService.userInit();
-        initService.recommendInit();
-        initService.communityInit();
-        initService.communityCommentInit();
-        initService.communityLike();
-        initService.recommendLike();
-        initService.noticeInit();
+        //initService.hashtagInit();
+        //initService.userInit();
+        //initService.recommendInit();
+        //initService.communityInit();
+        //initService.communityCommentInit();
+        //initService.communityLike();
+        //initService.recommendLike();
+        //initService.noticeInit();
     }
 
     @Component

@@ -45,7 +45,10 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-            .requestMatchers(PathRequest.toH2Console())
+
+            //✨AWS RDS에 세팅된 MySQL에 접속시 주석하기
+            //.requestMatchers(PathRequest.toH2Console()) // h2 콘솔 테이블 사용을 허용
+
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
             .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외 -> api 나오면 수정 요함
             .antMatchers(HttpMethod.POST,
