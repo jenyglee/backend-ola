@@ -81,7 +81,7 @@
 <header class="menu">
     <div class="bg-line"></div>
     <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
-        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+        <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
     </div>
     <div class="item-list">
         <a href="./g-1_recommend.html">코스추천</a>
@@ -89,20 +89,24 @@
         <a href="./i-1_shopMain.html">쇼핑몰</a>
         <a href="./j-1_noticeMain.html">공지사항</a>
     </div>
-    <div class="right">
+    <div class="right" style="margin-top: 10px">
         <div class="friend">
             <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-                <img class="img" src="./../static/img/icon_friends.png" />
+                <img class="img" src="./../static/img/icon_friends.png"/>
             </div>
             <div class="friend-dropbox">
                 <div class="search-area">
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="닉네임 검색">
+                        <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
+                               style="width: 240px; height: 40px">
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn btn-primary search-btn">검색</button>
+                        <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
+                                style="height: 40px;">검색
+                        </button>
                     </div>
                 </div>
+
                 <div class="friend-div">
                     <ul class="friend-list-3"></ul>
 
@@ -111,8 +115,9 @@
                         <p class="recommend-title">내 친구목록</p>
                     </ul>
 
+                    <div class="line"></div>
+
                     <ul class="friend-list-2">
-                        <div class="line"></div>
                         <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
                     </ul>
                 </div>
@@ -120,18 +125,23 @@
         </div>
         <div class="bell">
             <div class="icon-bell" onclick="handleToggleBellDropBox()">
-                <img class="img" src="./../static/img/icon_bell.png" />
+                <img class="img" src="./../static/img/icon_bell.png"/>
             </div>
             <div class="bell-dropbox">
                 <p style="margin-bottom: 10px">알람</p>
                 <ul id="alarm">
+
                 </ul>
             </div>
         </div>
-        <a id="my-profile" class="my-profile-wrap" href="./f-1_myPage.html">
+        <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
+           href="./f-1_myPage.html">
         </a>
+        <!--          <div class="img-wrap">-->
+        <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
+        <!--          </div>-->
+        <!--          <p class="text">나와바리나와바님</p>-->
     </div>
-
 </header>
 <main class="container">
     <section class="">
@@ -227,6 +237,26 @@
     function handleToggleFriendDropBox() {
         $(".friend-dropbox").toggle();
         $(".bell-dropbox").hide();
+
+        //사람버튼 클릭 시 기존 데이터 reload 되도록
+        $(".friend-div").empty();
+
+        let result = `<ul class="friend-list-3"></ul>
+
+
+          <ul class="friend-list-1">
+            <p class="recommend-title">내 친구목록</p>
+          </ul>
+
+          <div class="line"></div>
+
+          <ul class="friend-list-2">
+            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+          </ul>`
+
+        $(".friend-div").append(result);
+        myFriedList();
+        recommendFriedList();
     }
 
     function changeList(num){
@@ -348,13 +378,16 @@
 
     //친구 검색
     function searchFriend() {
+        let targetNickname = $("#searchNickName").val();
         const accessToken = localStorage.getItem("accessToken")
-        let targetNickname = document.getElementById('searchNickName').value;
+
+        if($("#searchNickName").val()==''){
+            alert("닉네임을 입력해주세요.");
+            return;
+        }
 
         $.ajax({
             type: "GET",
-            contentType: "application/json",
-            dataType: "json",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
@@ -364,8 +397,8 @@
                 $(".friend-list-1").empty();
                 $(".friend-list-2").empty();
                 $(".friend-list-3").empty();
+                $(".line").remove();
 
-                let tagName = [];
                 let result = null;
 
                 if(response.data.length==0){
@@ -378,8 +411,8 @@
                         let friendId = response.data[i].friendId;
                         let name = response.data[i].friendName;
                         let tags = response.data[i].hashtagList;
+                        let tagName = [];
 
-                        tagName = [];
                         for (let j = 0; j < tags.length; j++) {
                             tagName.push("#" + tags[j].name);
                         }
@@ -400,6 +433,7 @@
                         $(".friend-list-3").append(result);
                     }
                 }
+                $("#searchNickName").val('');
             }
         });
     }
@@ -407,6 +441,7 @@
     //추천 친구 리스트
     function recommendFriedList() {
         const accessToken = localStorage.getItem("accessToken")
+
         $.ajax({
             type: "GET",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
@@ -416,7 +451,9 @@
             success: function (response) {
 
                 let result = null;
+                let sideFriend = null;
                 let tagName = [];
+                $(".friend-list-2").empty();
 
                 if(response.data.length==0){
                     result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
@@ -434,7 +471,7 @@
                             tagName.push("#" + tags[j].name);
                         }
 
-                        sideFriend = `<li>
+                        sideFriend = `<li style="margin-top: 20px">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc; text-align: center">
                             <img className="img" src="${image}"/>
@@ -452,7 +489,8 @@
                     }
                 }
             },
-            error :  function (response, status, error){
+            error : function (response){
+                console.log(response)
             }
         });
     }
@@ -460,14 +498,16 @@
     //내 친구 리스트
     function myFriedList() {
         const accessToken = localStorage.getItem("accessToken")
+
         $.ajax({
             type: "GET",
-            contentType: "application/json",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
             },
             success: function (response) {
+
+                $(".friend-list-1").empty();
 
                 let result = null;
                 let tagName = [];
@@ -513,9 +553,9 @@
     //친구 추가
     function addFriend(targetId) {
         const accessToken = localStorage.getItem("accessToken")
+
         $.ajax({
             type: "POST",
-            contentType: "application/json",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)
@@ -538,12 +578,12 @@
             }
         });
     }
-    //친구 삭제
+
     function deleteFriend(targetId) {
         const accessToken = localStorage.getItem("accessToken")
+
         $.ajax({
             type: "DELETE",
-            contentType: "application/json",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
             beforeSend: function (xlr) {
                 xlr.setRequestHeader("Authorization", accessToken)

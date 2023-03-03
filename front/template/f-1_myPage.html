@@ -241,7 +241,7 @@
 <header class="menu">
   <div class="bg-line"></div>
   <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
+    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
@@ -257,10 +257,12 @@
       <div class="friend-dropbox">
         <div class="search-area">
           <div class="mb-3">
-            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색">
+            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
+                   style="width: 240px; height: 40px">
           </div>
           <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()">검색
+            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
+                    style="height: 40px;">검색
             </button>
           </div>
         </div>
@@ -295,8 +297,11 @@
     <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
        href="./f-1_myPage.html">
     </a>
+    <!--          <div class="img-wrap">-->
+    <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
+    <!--          </div>-->
+    <!--          <p class="text">나와바리나와바님</p>-->
   </div>
-
 </header>
 
 <!-- ############# 작업공간 #############-->
@@ -305,8 +310,6 @@
     <div class="w_1"></div>
     <div class="w_2">
       <div id="myGrade" class="b_1">
-        <!--        <p class="title">이 구역의 등산 매니아, </p>-->
-        <!--        <p class="name">이재원님</p>-->
       </div>
       <div class="b_2">
         <button type="button" class="btn btn-link">등업조건 보기</button>
@@ -383,18 +386,19 @@
     getMyInfo();
     myFriedList();
     recommendFriedList();
-    mainRecommendFriendList();
     selectAlarm();
+    mainRecommendFriendList();
   });
 
   function getMenuProfile() {
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
     var tempProfile = `
-        <div class="img-wrap">
-          <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
-        </div>
-        <p class="text" style="padding-top: 0">${menuProfile.sub}님</p>
-    `
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
+        ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+          </div>
+          <p class="text" style="margin-bottom: 20px">${menuProfile.nickname}님</p>`
+
     $("#my-profile").append(tempProfile);
   }
 
@@ -411,7 +415,7 @@
     //사람버튼 클릭 시 기존 데이터 reload 되도록
     $(".friend-div").empty();
 
-    var result = `<ul class="friend-list-3"></ul>
+    let result = `<ul class="friend-list-3"></ul>
 
 
           <ul class="friend-list-1">
@@ -515,7 +519,7 @@
   }
 
   function searchFriend() {
-    let targetNickname = document.getElementById('searchNickName').value;
+    let targetNickname = $("#searchNickName").val();
     const accessToken = localStorage.getItem("accessToken")
 
     if($("#searchNickName").val()==''){
