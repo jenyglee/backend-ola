@@ -178,7 +178,7 @@
       height: 310px;
       width: 1200px;
       background-color: #FFFBF4;
-      margin-bottom: 50px;
+      margin-bottom: 100px;
     }
 
     .w_8 .b_16 {
@@ -240,8 +240,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
@@ -285,16 +285,9 @@
         <img class="img" src="./../static/img/icon_bell.png"/>
       </div>
       <div class="bell-dropbox">
-        <p>알람</p>
+        <p style="margin-bottom: 10px">알람</p>
         <ul id="alarm">
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
-          <li><a href="#">공지사항 내용이 추가되었습니다 언능 확인해주세요!</a></li>
+
         </ul>
       </div>
     </div>
@@ -379,6 +372,8 @@
 
   var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
   let myNickname = menuProfile.nickname;
+  var board_Id = 0;
+  var alarmId = 0;
 
   $(document).ready(function () {
     $(".bell-dropbox").hide();
@@ -388,7 +383,7 @@
     myFriedList();
     recommendFriedList();
     mainRecommendFriendList();
-    connectWs();
+    selectAlarm();
   });
 
   function getMenuProfile() {
@@ -518,9 +513,9 @@
         let result = null;
 
         if(response.data.length==0){
-            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
+          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
 
-            $(".friend-list-3").append(result);
+          $(".friend-list-3").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
             let image = response.data[i].friendImage;
@@ -569,7 +564,7 @@
         let tagName = [];
 
         if(response.data.length==0){
-            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
+          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
 
           $(".friend-list-2").append(result);
         }else{
@@ -717,12 +712,6 @@
   }
 
 
-
-  function reloadDivArea() {
-    $(".friend-div").load(location.href+' .friend-div');
-  }
-
-
   function mainRecommendFriendList() {
     const accessToken = localStorage.getItem("accessToken")
     console.log("accessToken : ", accessToken)
@@ -779,47 +768,71 @@
       }
     });
   }
+  //알림 조회
+  function selectAlarm(){
+    const accessToken = localStorage.getItem("accessToken")
 
-  function connect(event) {
-    // 연결하고자하는 Socket 의 endPoint
-    var socket = new SockJS('http://localhost:8080/ws-stomp');
-    stompClient = Stomp.over(socket);
+    $.ajax({
+      type: "GET",
+      contentType: "application/json",
+      url: "http://localhost:8080/alarm?page=0&size=10",
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        $("#alarm").empty();
 
-    stompClient.connect({}, onConnected, onError);
+        let result = null;
+        let changeImg = null;
 
-    event.preventDefault();
+        for(var i=0; i<response.data.length; i++){
+
+          board_Id = response.data[i].boardId;
+          alarmId = response.data[i].alarmId;
+          if(response.data[i].readStatus=="N"){
+
+            $(".icon-bell").empty();
+
+            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+
+            $(".icon-bell").append(changeImg);
+
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }else{
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+            $("#alarm").append(result);
+          }
+        }
+      }
+    });
   }
 
-  function onError(error) {
-    connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
-    connectingElement.style.color = 'red';
+  function setCommunityId(board_Id, alarmId){
+    updateAlarmStats(alarmId);
+    localStorage.setItem("communityId", board_Id)
+    location.replace('h-2_communityDetail.html');
   }
 
-  function onConnected() {
+  function updateAlarmStats(alarmId){
+    const accessToken = localStorage.getItem("accessToken")
 
-    // sub 할 url => /sub/alarm/room/roomId 로 구독한다
-    stompClient.subscribe('/sub/alarm/room/' + "1", onAlarmMessageReceived);
-
-    // 서버에 username 을 가진 유저가 들어왔다는 것을 알림
-    // /pub/alarm/enterUser 로 메시지를 보냄
-    stompClient.send("/pub/alarm/enterUser",
-        {},
-        JSON.stringify({
-          roomId: "1",
-          sender: myNickname
-        })
-    )
+    $.ajax({
+      type: "PATCH",
+      url: "http://localhost:8080/alarm?alarmId=" + alarmId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success : function (response){
+        console.log("업데이트 ")
+        selectAlarm();
+      }
+    });
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
   }
 
-  function onAlarmMessageReceived(payload) {
-
-    var alarm = JSON.parse(payload.body);
-
-    console.log(alarm)
-
-
-      // $("#alarm").append(str);
-    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

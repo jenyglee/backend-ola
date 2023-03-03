@@ -72,7 +72,7 @@
 <body>
 <header class="menu">
     <div class="bg-line"></div>
-    <div class="logo-wrap">
+    <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
         <img class="img" src="./../static/img/logo_main.png" alt="로고" />
     </div>
     <div class="item-list">
@@ -193,6 +193,9 @@
         });
 
         // window.location.href = "c-3_singup.html";
+    }
+    function moveMainPage(){
+        window.location = "./../index.html"
     }
 
 </script>

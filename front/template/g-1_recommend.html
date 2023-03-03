@@ -47,19 +47,10 @@
 
     .wrap_2_1_1_1 {
       width: 595px;
-      height: 30px;
+      height: 50px;
       display: inline-block;
     }
 
-    .card-title {
-      font-size: 15px;
-      font-weight: bolder;
-    }
-
-    .wrap_3 {
-      width: 1200px;
-      height: 80px;
-    }
 
     .wrap_4 {
       margin-top: 50px;
@@ -102,8 +93,8 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
+  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+    <img class="img" src="./../static/img/logo_main.png" alt="로고" />
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html" style="font-weight: bold; color: #F46B3F">코스추천</a>
@@ -413,7 +404,7 @@
         <!-- 좋아요 셀렉트박스 -->
         <select class="select-like form-serch-select form-select"
                 aria-label="Default select example" id="likeChoice"
-                style="width: 130px; display: block;" onclick="orderByLikeChoice(value)">
+                style="width: 130px; display: block;" onchange="orderByLikeChoice(value)">
         <option value="0">좋아요순</option>
         <option value="1">날짜 순</option>
         </select>
@@ -421,7 +412,7 @@
       </div>
       <!-- 카드 -->
       <div class="article-wrap" id="cardBody"
-           style="width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
+           style=" margin-top: 15px;width:1200px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px ">
       </div>
     </div>
     <!--   페이지네이션/작성버튼     -->
@@ -464,7 +455,7 @@
 
 
   $(document).ready(function () {
-    getRecommendList(0, 8, searchScore, searchSeason, searchAltitude, searchRegion, searchOrderByLike);
+    getRecommendList(0, 8);
     getMenuProfile();
   });
 
@@ -632,10 +623,13 @@
     console.log(value)
     if (value === "0") {
       searchOrderByLike = "likeDesc"
+      getRecommendList(0,8);
     } else {
       searchOrderByLike = "dateDesc"
+      getRecommendList(0,8);
     }
   }
+
 
   function moveCreatePage(){
 
@@ -644,6 +638,9 @@
 
   function moveNo(){
     alert("산신령 등급만 작성할 수 있습니다.")
+  }
+  function moveMainPage(){
+    window.location = "./../index.html"
   }
 </script>
 </body>
