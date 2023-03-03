@@ -216,75 +216,73 @@
     <!--            </div>-->
     <!--        </div>-->
 
-    <div class="w_8" style="margin-bottom: 100px">
-      <form method="post" enctype="multipart/form-data" style="margin-bottom: 5px">
-        <input
-            type="file"
-            id="chooseFile"
-            class="form-control"
-            name="chooseFile"
-            accept="image/*"
-            multiple
-            onchange="imgUpload()"
-        />
-      </form>
-      <div id="img-wrap" style="display: flex; gap: 5px">
-        <!-- 이미지 들어가는 자리 -->
-      </div>
+                <div class="w_8" style="margin-bottom: 100px">
+                    <form method="post" enctype="multipart/form-data" style="margin-bottom: 5px">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="chooseFile"
+                            accept="image/*"
+                            multiple
+                            onchange="imgPresignedURL()"
+                        />
+                    </form>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
 
-      <!-- <form method="post" enctype="multipart/form-data">
-          <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              multiple
-              onchange="imgUpload()"
-          />
-          <div id="img-wrap" style="display: flex; gap: 5px">
-
-          </div>
-      </form> -->
-    </div>
-    <div class="w_9">
-      <div class="b_1">
-        <button type="button" id="btn_1" onclick="updateRecommend()">
-          게시글 수정
-        </button>
-      </div>
-    </div>
-  </section>
-</main>
-<script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide()
-    $(".bell-dropbox").hide()
-    getRecommend()
-    getMenuProfile()
-    myFriedList();
-    recommendFriedList();
-    selectAlarm();
-  })
-
-  function getMenuProfile() {
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
-    var tempProfile = `
-                <div class="img-wrap">
-                  <img class="img" style="width: 100%; height: auto" src=${
-        menuProfile.profileImage
-            ? menuProfile.profileImage
-            : "./../static/img/icon_profile_default.png"
-    } alt="프로필사진"/>
+                    <!-- <form method="post" enctype="multipart/form-data">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            name="chooseFile"
+                            accept="image/*"
+                            multiple
+                            onchange="imgUpload()"
+                        />
+                        <div id="img-wrap" style="display: flex; gap: 5px">
+                            
+                        </div>
+                    </form> -->
                 </div>
-                <p class="text">${menuProfile.nickname}님</p>
-      `
-    $("#my-profile").append(tempProfile)
-  }
-
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle()
-    $(".friend-dropbox").hide()
-  }
+                <div class="w_9">
+                    <div class="b_1">
+                        <button type="button" id="btn_1" onclick="updateRecommend()">
+                            게시글 수정
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script>
+            $(document).ready(function () {
+                $(".friend-dropbox").hide()
+                $(".bell-dropbox").hide()
+                getRecommend()
+                getMenuProfile()
+                myFriedList();
+                recommendFriedList();
+                selectAlarm();
+            })
+            function getMenuProfile() {
+                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+                var tempProfile = `
+                      <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${
+                            menuProfile.profileImage
+                                ? menuProfile.profileImage
+                                : "./../static/img/icon_profile_default.png"
+                        } alt="프로필사진"/>
+                      </div>
+                      <p class="text">${menuProfile.nickname}님</p>
+            `
+                $("#my-profile").append(tempProfile)
+            }
+            function handleToggleBellDropBox() {
+                $(".bell-dropbox").toggle()
+                $(".friend-dropbox").hide()
+            }
 
   function handleToggleFriendDropBox() {
       $(".friend-dropbox").toggle();
@@ -313,28 +311,28 @@
   }
   //단건조회로 글 내용 파싱해주고
 
-  var imageUrlList = []
+            var imageUrlList = []
 
-  function getRecommend() {
-    const id = localStorage.getItem("recommendId")
-    $.ajax({
-      type: "GET",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-      },
-      success: function (response) {
-        console.log("response : ", response)
-        const score = response.score
-        const title = response.title
-        const createDate = response.createDate.substring(0, 10)
-        const season = response.season
-        const altitude = response.altitude
-        const contents = response.contents
-        const region = response.region
-        const imgList = response.imgList
-        const likeCount = response.likeCount
-        const nickName = response.nickName
+            async function getRecommend() {
+                const id = localStorage.getItem("recommendId")
+                $.ajax({
+                    type: "GET",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    success: async function (response) {
+                        console.log("response : ", response)
+                        const score = response.score
+                        const title = response.title
+                        const createDate = response.createDate.substring(0, 10)
+                        const season = response.season
+                        const altitude = response.altitude
+                        const contents = response.contents
+                        const region = response.region
+                        const imgList = response.imgList
+                        const likeCount = response.likeCount
+                        const nickName = response.nickName
 
         $("#recommend-title").attr("value", title)
         $("#recommend-score").attr("value", score)
@@ -345,62 +343,104 @@
         $("#recommend-likeCount").attr("value", likeCount)
         $("#recommend-nickName").attr("value", nickName)
 
-        //사진넣기
-        imageUrlList = response.imgList
-        for (let i = 0; i < response.imgList.length; i++) {
-          var tempImage = `
-                                <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-                                    <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
-                                    <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                                    onclick="removeImage(${i})" />
-                                    <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-                                    </div>
-                                </div>
-                            `
-          $("#img-wrap").append(tempImage)
-        }
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          getRecommend()
-        }
-      },
-    })
-  }
+                        //사진넣기
+                        for (let i = 0; i < response.imgList.length; i++) {
+                            var imgUrl = ""
+                            if (response.imgList[i]) {
+                                imgUrl = await getImageURL(response.imgList[i])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
+                            var tempImage = `
+                                      <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                                          <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                                          <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                          onclick="removeImage(${i})" />
+                                          <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                                          </div>
+                                      </div>
+                                  `
+                            $("#img-wrap").append(tempImage)
+                            imageUrlList.push(response.imgList[i])
+                        }
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            getRecommend()
+                        }
+                    },
+                })
+            }
 
-  //수정 api연동
-  function updateRecommend() {
-    const id = localStorage.getItem("recommendId")
-    $.ajax({
-      type: "PATCH",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/"
-          + id,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
-      },
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        title: $("#recommend-title").val(),
-        score: $("#recommend-score").val(),
-        season: $("#recommend-season").val(),
-        altitude: $("#recommend-altitude").val(),
-        contents: $("#recommend-contents").val(),
-        region: $("#recommend-region").val(),
-        imgList: imageUrlList,
-      }),
-      success: function (response) {
-        alert("수정 완료")
-        window.location.href = "g-1_recommend.html"
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          updateRecommend()
-        }
-      },
-    })
-  }
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+                console.log("objectKey 이미지 파일이름 찍히는지 보자.")
+                console.log("objectKey : ", objectKey)
+
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        console.log("세번째")
+                        console.log("preSignedURL : ", response)
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
+            }
+
+            //수정 api연동
+            function updateRecommend() {
+                const id = localStorage.getItem("recommendId")
+                $.ajax({
+                    type: "PATCH",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/" +
+                        id,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        title: $("#recommend-title").val(),
+                        score: $("#recommend-score").val(),
+                        season: $("#recommend-season").val(),
+                        altitude: $("#recommend-altitude").val(),
+                        contents: $("#recommend-contents").val(),
+                        region: $("#recommend-region").val(),
+                        imgList: imageUrlList,
+                    }),
+                    success: function (response) {
+                        alert("수정 완료")
+                        window.location.href = "g-1_recommend.html"
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            updateRecommend()
+                        }
+                    },
+                })
+            }
 
   function regenerateToken() {
     var refreshToken = localStorage.getItem("refreshToken")
@@ -422,114 +462,137 @@
     })
   }
 
-  function imgUpload(input) {
-    const accessToken = localStorage.getItem("accessToken")
+            //이미지경로리스트 전역변수 지정.
+            var imageUrlList = []
+            const imageInput = $("#chooseFile")[0]
+            var imgName = ""
 
-    const imageInput = $("#chooseFile")[0]
-    // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-    console.log("$('#chooseFile'): ", $("#chooseFile"))
-    console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
+            function imgPresignedURL(input) {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    // url: `http://localhost:8080/s3/preSignedURL`,
+                    // dataType: "text",
+                    enctype: "multipart/form-data",
+                    // contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    // data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                    data: imageInput.files[0].name,
 
-    var formData = new FormData()
-    for (var i = 0; i < imageInput.files.length; i++) {
-      // formData.append("image", imageInput.files[i]);
-      formData.append("multipartFile", imageInput.files[i])
-      console.log("imageInput.files[i].name : ", imageInput.files[i].name)
-    }
-
-    $.ajax({
-      type: "POST",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/file`,
-      // dataType: "json",
-      // dataType: "multipart",
-      enctype: "multipart/form-data",
-      // contentType: "application/json; charset=utf-8",
-      processData: false,
-      contentType: false,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      data: formData,
-      xhrFields: {
-        withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-      },
-      success: function (response) {
-        console.log("여긴 찍혀? 1")
-        console.log("response", response)
-        for (let i = 0; i < response.length; i++) {
-          // imageUrlList.push(response[i].imgList[i]);
-          imageUrlList.push(response[i])
-        }
-        console.log("imageUrlList : ", imageUrlList)
-        return imageUrlList
-      },
-      error: function (request, status, error) {
-        console.log(error)
-        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
-      },
-    })
-  }
-
-  function removeImage(index) {
-    imageUrlList.splice(index, 1)
-    $("#img-wrap").empty()
-    for (let i = 0; i < imageUrlList.length; i++) {
-      var temp = `
-                        <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-                        <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
-                        <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                            onclick="removeImage(${i})"
-                        >
-                            <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-                        </div>
-                        </div>
-                    `
-      $("#img-wrap").append(temp)
-    }
-  }
-
-  function searchFriend() {
-    let targetNickname = $("#searchNickName").val();
-    const accessToken = localStorage.getItem("accessToken")
-
-    if ($("#searchNickName").val() == '') {
-      alert("닉네임을 입력해주세요.");
-      return;
-    }
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname="
-          + targetNickname,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
-        $(".friend-list-3").empty();
-        $(".line").remove();
-
-        let result = null;
-
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
-
-          $(".friend-list-3").append(result);
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let friendId = response.data[i].friendId;
-            let name = response.data[i].friendName;
-            let tags = response.data[i].hashtagList;
-            let tagName = [];
-
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
+                    // xhrFields: {
+                    //     withCredentials: true, // 클라이언트와 서버가 통4신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    // },
+                    success: function (response) {
+                        console.log("preSignedURL : ", response)
+                        imageUpload(response)
+                        imageUrlList.push(response.imageName)
+                        console.log("imageUrlList : ", imageUrlList)
+                        // put 으로 이미지 넘기는 함수 실행
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
             }
 
-            result = `
+            function imageUpload(presignedURLObject) {
+                const accessToken = localStorage.getItem("accessToken")
+                var file = $("#chooseFile")[0].files[0]
+
+                $.ajax({
+                    type: "PUT",
+                    url: presignedURLObject.preSignedURL,
+                    contentType: "image/png",
+                    processData: false,
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+                    data: file,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: function (response) {
+                        console.log("response : ")
+                        console.log("이미지 수정완료 : ")
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+            }
+
+            async function removeImage(index) {
+                imageUrlList.splice(index, 1)
+                $("#img-wrap").empty()
+                for (let i = 0; i < imageUrlList.length; i++) {
+                    var imgUrl = await getImageURL(imageUrlList[i])
+                    var temp = `
+                              <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                              <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                  onclick="removeImage(${i})"
+                              >
+                                  <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                              </div>
+                              </div>
+                          `
+                    $("#img-wrap").append(temp)
+                }
+            }
+            function moveMainPage() {
+                window.location = "./../index.html"
+            }
+            function searchFriend() {
+                let targetNickname = $("#searchNickName").val();
+                const accessToken = localStorage.getItem("accessToken")
+
+                if ($("#searchNickName").val() == '') {
+                    alert("닉네임을 입력해주세요.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname="
+                        + targetNickname,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+
+                        $(".friend-list-1").empty();
+                        $(".friend-list-2").empty();
+                        $(".friend-list-3").empty();
+                        $(".line").remove();
+
+                        let result = null;
+
+                        if (response.data.length == 0) {
+                            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
+
+                            $(".friend-list-3").append(result);
+                        } else {
+                            for (let i = 0; i < response.data.length; i++) {
+                                let image = response.data[i].friendImage;
+                                let friendId = response.data[i].friendId;
+                                let name = response.data[i].friendName;
+                                let tags = response.data[i].hashtagList;
+                                let tagName = [];
+
+                                for (let j = 0; j < tags.length; j++) {
+                                    tagName.push("#" + tags[j].name);
+                                }
+
+                                result = `
                     <li style="margin-top: 10px;">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
@@ -541,47 +604,47 @@
                          <p style="font-size: 11px; color: #FF422F; margin-left: 20px; width : 300px; display: inline-block; padding: 0px; margin-top: 7px; ">${tagName}</p>
                       </li>`
 
-            $(".friend-list-3").append(result);
-          }
-        }
-        $("#searchNickName").val('');
-      }
-    });
-  }
-
-  function recommendFriedList() {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        let result = null;
-        let sideFriend = null;
-        let tagName = [];
-        $(".friend-list-2").empty();
-
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
-
-          $(".friend-list-2").append(result);
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let name = response.data[i].friendName;
-            let friendId = response.data[i].friendId;
-            let tags = response.data[i].hashtagList;
-
-            tagName = [];
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
+                                $(".friend-list-3").append(result);
+                            }
+                        }
+                        $("#searchNickName").val('');
+                    }
+                });
             }
 
-            sideFriend = `<li style="margin-top: 20px">
+            function recommendFriedList() {
+                const accessToken = localStorage.getItem("accessToken")
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+
+                        let result = null;
+                        let sideFriend = null;
+                        let tagName = [];
+                        $(".friend-list-2").empty();
+
+                        if (response.data.length == 0) {
+                            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
+
+                            $(".friend-list-2").append(result);
+                        } else {
+                            for (let i = 0; i < response.data.length; i++) {
+                                let image = response.data[i].friendImage;
+                                let name = response.data[i].friendName;
+                                let friendId = response.data[i].friendId;
+                                let tags = response.data[i].hashtagList;
+
+                                tagName = [];
+                                for (let j = 0; j < tags.length; j++) {
+                                    tagName.push("#" + tags[j].name);
+                                }
+
+                                sideFriend = `<li style="margin-top: 20px">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc; text-align: center">
                             <img className="img" src="${image}"/>
@@ -595,50 +658,50 @@
                                         width: 70px">친구추가</button>
                       </li>`
 
-            $(".friend-list-2").append(sideFriend);
-          }
-        }
-      },
-      error: function (response) {
-        console.log(response)
-      }
-    });
-  }
-
-  function myFriedList() {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        $(".friend-list-1").empty();
-
-        let result = null;
-        let tagName = [];
-
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추가된 친구가 없습니다.</p>`
-
-          $(".friend-list-1").append(result);
-
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let name = response.data[i].friendName;
-            let friendId = response.data[i].friendId;
-            let tags = response.data[i].hashtagList;
-
-            tagName = [];
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
+                                $(".friend-list-2").append(sideFriend);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                });
             }
 
-            result = `<li>
+            function myFriedList() {
+                const accessToken = localStorage.getItem("accessToken")
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+
+                        $(".friend-list-1").empty();
+
+                        let result = null;
+                        let tagName = [];
+
+                        if (response.data.length == 0) {
+                            result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추가된 친구가 없습니다.</p>`
+
+                            $(".friend-list-1").append(result);
+
+                        } else {
+                            for (let i = 0; i < response.data.length; i++) {
+                                let image = response.data[i].friendImage;
+                                let name = response.data[i].friendName;
+                                let friendId = response.data[i].friendId;
+                                let tags = response.data[i].hashtagList;
+
+                                tagName = [];
+                                for (let j = 0; j < tags.length; j++) {
+                                    tagName.push("#" + tags[j].name);
+                                }
+
+                                result = `<li>
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
                             <img className="img" src="${image}"/>
@@ -652,141 +715,141 @@
                                         width: 70px">친구삭제</button>
                       </li>`
 
-            $(".friend-list-1").append(result);
-          }
-        }
-      }
-    });
-  }
+                                $(".friend-list-1").append(result);
+                            }
+                        }
+                    }
+                });
+            }
 
-  function addFriend(targetId) {
-    const accessToken = localStorage.getItem("accessToken")
+            function addFriend(targetId) {
+                const accessToken = localStorage.getItem("accessToken")
 
-    $.ajax({
-      type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
-          + targetId + "&page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function () {
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
+                $.ajax({
+                    type: "POST",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
+                        + targetId + "&page=0&size=5",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function () {
+                        $(".friend-list-1").empty();
+                        $(".friend-list-2").empty();
 
-        let result = `<p class="recommend-title">내 친구목록</p>`;
-        let result2 = `<div class="line"></div>
+                        let result = `<p class="recommend-title">내 친구목록</p>`;
+                        let result2 = `<div class="line"></div>
             <p class="recommend-title" style="margin-top: 10px">추천 친구</p>`;
 
-        $(".friend-list-1").append(result);
-        $(".friend-list-2").append(result2);
+                        $(".friend-list-1").append(result);
+                        $(".friend-list-2").append(result2);
 
-        myFriedList();
-        recommendFriedList();
-        mainRecommendFriendList()
-      }
-    });
-  }
+                        myFriedList();
+                        recommendFriedList();
+                        mainRecommendFriendList()
+                    }
+                });
+            }
 
-  function deleteFriend(targetId) {
-    const accessToken = localStorage.getItem("accessToken")
+            function deleteFriend(targetId) {
+                const accessToken = localStorage.getItem("accessToken")
 
-    $.ajax({
-      type: "DELETE",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
-          + targetId + "&page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function () {
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
+                        + targetId + "&page=0&size=5",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function () {
+                        $(".friend-list-1").empty();
+                        $(".friend-list-2").empty();
 
-        let result = `<p class="recommend-title">내 친구목록</p>`;
-        let result2 = `<div class="line"></div>
+                        let result = `<p class="recommend-title">내 친구목록</p>`;
+                        let result2 = `<div class="line"></div>
             <p class="recommend-title" style="margin-top: 10px">추천 친구</p>`;
 
-        $(".friend-list-1").append(result);
-        $(".friend-list-2").append(result2);
+                        $(".friend-list-1").append(result);
+                        $(".friend-list-2").append(result2);
 
-        myFriedList();
-        recommendFriedList();
-        mainRecommendFriendList()
-      }
-    });
-  }
+                        myFriedList();
+                        recommendFriedList();
+                        mainRecommendFriendList()
+                    }
+                });
+            }
 
-  //알림 조회
-  function selectAlarm() {
-    const accessToken = localStorage.getItem("accessToken")
+            //알림 조회
+            function selectAlarm() {
+                const accessToken = localStorage.getItem("accessToken")
 
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        $("#alarm").empty();
+                $.ajax({
+                    type: "GET",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        $("#alarm").empty();
 
-        let result = null;
-        let changeImg = null;
+                        let result = null;
+                        let changeImg = null;
 
-        if (response.data.length == 0) {
-          result = `<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
-          $("#alarm").append(result);
-        }
-        for (var i = 0; i < response.data.length; i++) {
+                        if (response.data.length == 0) {
+                            result = `<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
+                            $("#alarm").append(result);
+                        }
+                        for (var i = 0; i < response.data.length; i++) {
 
-          board_Id = response.data[i].boardId;
-          alarmId = response.data[i].alarmId;
-          if (response.data[i].readStatus == "N") {
+                            board_Id = response.data[i].boardId;
+                            alarmId = response.data[i].alarmId;
+                            if (response.data[i].readStatus == "N") {
 
-            $(".icon-bell").empty();
+                                $(".icon-bell").empty();
 
-            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+                                changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
 
-            $(".icon-bell").append(changeImg);
+                                $(".icon-bell").append(changeImg);
 
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
-          } else {
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
-          }
-        }
-      }
-    });
-  }
+                                result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+                                $("#alarm").append(result);
+                            } else {
+                                result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+                                $("#alarm").append(result);
+                            }
+                        }
+                    }
+                });
+            }
 
-  //알람 읽음 상태로 변경
-  function updateAlarmStats(alarmId) {
-    const accessToken = localStorage.getItem("accessToken")
+            //알람 읽음 상태로 변경
+            function updateAlarmStats(alarmId) {
+                const accessToken = localStorage.getItem("accessToken")
 
-    $.ajax({
-      type: "PATCH",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
-          + alarmId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("업데이트 ")
-        selectAlarm();
-      }
-    });
-  }
+                $.ajax({
+                    type: "PATCH",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
+                        + alarmId,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("업데이트 ")
+                        selectAlarm();
+                    }
+                });
+            }
 
-  //로컬 스토리지에 boardId 저장
-  function setCommunityId(board_Id, alarmId) {
-    updateAlarmStats(alarmId);
-    localStorage.setItem("communityId", board_Id)
-    location.replace('h-2_communityDetail.html');
-  }
+            //로컬 스토리지에 boardId 저장
+            function setCommunityId(board_Id, alarmId) {
+                updateAlarmStats(alarmId);
+                localStorage.setItem("communityId", board_Id)
+                location.replace('h-2_communityDetail.html');
+            }
 
-  function moveMainPage() {
-    window.location = "./../index.html"
-  }
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
+            function moveMainPage() {
+                window.location = "./../index.html"
+            }
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async></script>
+    </body>
 </html>

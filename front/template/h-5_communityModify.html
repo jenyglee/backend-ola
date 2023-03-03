@@ -270,42 +270,42 @@
                         rows="3"
                         placeholder="내용을 입력하세요"
                     ></textarea>
-    </div>
-    <div class="w_8" style="margin-top: 30px">
-      <!--      <input-->
-      <!--          class="form-control"-->
-      <!--          type="file"-->
-      <!--          id="formFileMultiple"-->
-      <!--          multiple-->
-      <!--      />-->
-      <form method="post" enctype="multipart/form-data">
-        <input
-            type="file"
-            id="chooseFile"
-            class="form-control"
-            name="chooseFile"
-            accept="image/*"
-            multiple
-            onchange="imgUpload()"
-        />
-      </form>
-      <div id="img-wrap" style="display: flex; gap: 5px">
-        <!-- 이미지 들어가는 자리 -->
-      </div>
-    </div>
-    <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
-      <p class="inputLabel" style="margin-right: 20px">태그</p>
-      <input
-          type="text"
-          class="form-control"
-          id="tag-search-input"
-          style="height: 100%; margin-right: 10px; margin-bottom: 0"
-          placeholder="태그를 입력하세요"
-      />
-      <button id="btn_2" type="button" onclick="searchTags()">검색</button>
-      <div id="tag-select-list" style="display: flex; margin-left: 20px"></div>
-      <p
-          style="
+                </div>
+                <div class="w_8" style="margin-top: 30px">
+                    <!--      <input-->
+                    <!--          class="form-control"-->
+                    <!--          type="file"-->
+                    <!--          id="formFileMultiple"-->
+                    <!--          multiple-->
+                    <!--      />-->
+                    <form method="post" enctype="multipart/form-data">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="chooseFile"
+                            accept="image/*"
+                            multiple
+                            onchange="imgPresignedURL()"
+                        />
+                    </form>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
+                </div>
+                <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
+                    <p class="inputLabel" style="margin-right: 20px">태그</p>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="tag-search-input"
+                        style="height: 100%; margin-right: 10px; margin-bottom: 0"
+                        placeholder="태그를 입력하세요"
+                    />
+                    <button id="btn_2" type="button" onclick="searchTags()">검색</button>
+                    <div id="tag-select-list" style="display: flex; margin-left: 20px"></div>
+                    <p
+                        style="
                             margin: 0;
                             font-size: 12px;
                             font-weight: bold;
@@ -458,49 +458,55 @@
     recommendFriedList();
   }
 
-  function getCommunity() {
-    const accessToken = localStorage.getItem("accessToken")
-    $.ajax({
-      type: "GET",
-      url:
-          "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
-          communityId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("response : ", response)
-        // 제목 넣기
-        $("#title").attr("value", response.title)
+            async function getCommunity() {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
+                        communityId,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: async function (response) {
+                        console.log("response : ", response)
+                        // 제목 넣기
+                        $("#title").attr("value", response.title)
 
-        // 내용 넣기
-        $("#contents").val(response.contents)
+                        // 내용 넣기
+                        $("#contents").val(response.contents)
 
-        // 사진 넣기
-        for (let i = 0; i < response.imgList.length; i++) {
-          var temp = `
-                <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-                  <img src=${response.imgList[i]} alt="커뮤니티 사진" style="width: 100%" />
-                  <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                    onclick="removeImage(${i})" />
-                    <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-                  </div>
-                </div>
-              `
-          $("#img-wrap").append(temp)
-          imageUrlList.push(response.imgList[i]) // [url]
-        }
+                        // 사진 넣기
+                        for (let i = 0; i < response.imgList.length; i++) {
+                            var imgUrl = ""
+                            if (response.imgList[i]) {
+                                imgUrl = await getImageURL(response.imgList[i])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
+                            var temp = `
+                                <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                                <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                                <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                    onclick="removeImage(${i})" />
+                                    <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                                </div>
+                                </div>
+                            `
+                            $("#img-wrap").append(temp)
+                            imageUrlList.push(response.imgList[i]) // [url]
+                        }
 
-        // 태그 넣기
-        for (let i = 0; i < response.tagList.length; i++) {
-          var temp = `
-            <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-              ${response.tagList[i].id}
-            </div>
-          `
-          $("#tag-select-list").append(temp)
-          tags.push(response.tagList[i].id)
-        }
+                        // 태그 넣기
+                        for (let i = 0; i < response.tagList.length; i++) {
+                            var temp = `
+                                <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                                ${response.tagList[i].id}
+                                </div>
+                            `
+                            $("#tag-select-list").append(temp)
+                            tags.push(response.tagList[i].id)
+                        }
 
         if (response.chatStatus == "Y") {
           $("#flexCheckDefault").prop("checked", true)
@@ -519,36 +525,70 @@
     })
   }
 
-  function searchTags() {
-    const accessToken = localStorage.getItem("accessToken")
-    var tagName = $("#tag-search-input").val()
-    $.ajax({
-      type: "GET",
-      url:
-          "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=0&limit=20&name="
-          +
-          tagName,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("response : ", response)
-        $(".tag-select-box").empty()
-        for (let i = 0; i < response.data.length; i++) {
-          var temp = `
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+                console.log("objectKey 이미지 파일이름 찍히는지 보자.")
+                console.log("objectKey : ", objectKey)
+
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        console.log("세번째")
+                        console.log("preSignedURL : ", response)
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
+            }
+
+            function searchTags() {
+                const accessToken = localStorage.getItem("accessToken")
+                var tagName = $("#tag-search-input").val()
+                $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=0&limit=20&name=" +
+                        tagName,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    success: function (response) {
+                        console.log("response : ", response)
+                        $(".tag-select-box").empty()
+                        for (let i = 0; i < response.data.length; i++) {
+                            var temp = `
                 <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
               `
-          $(".tag-select-box").append(temp)
-        }
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          searchTags()
-        }
-      },
-    })
-  }
+                            $(".tag-select-box").append(temp)
+                        }
+                    },
+                    error: function (response, status, error) {
+                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                            regenerateToken()
+                            searchTags()
+                        }
+                    },
+                })
+            }
 
   // 수정하기
   function updateCommunity() {
@@ -586,23 +626,100 @@
     })
   }
 
-  function removeImage(index) {
-    imageUrlList.splice(index, 1)
-    $("#img-wrap").empty()
-    for (let i = 0; i < imageUrlList.length; i++) {
-      var temp = `
-            <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
-              <img src=${imageUrlList[i]} alt="커뮤니티 사진" style="width: 100%" />
-              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
-                onclick="removeImage(${i})"
-              >
-                <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
-              </div>
-            </div>
-          `
-      $("#img-wrap").append(temp)
-    }
-  }
+            //이미지경로리스트 전역변수 지정.
+            var imageUrlList = []
+            const imageInput = $("#chooseFile")[0]
+            var imgName = ""
+
+            function imgPresignedURL(input) {
+                const accessToken = localStorage.getItem("accessToken")
+                // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+                // console.log("input.name 인풋 파일이름 찍히는지 보자.")
+                // console.log("input.name : ", imageInput.files[0].name)
+                // console.log("$('#chooseFile'): ", $("#chooseFile"))
+                // console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
+
+                $.ajax({
+                    type: "POST",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    // url: `http://localhost:8080/s3/preSignedURL`,
+                    // dataType: "text",
+                    enctype: "multipart/form-data",
+                    // contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken);
+                    },
+                    // data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                    data: imageInput.files[0].name,
+
+
+                    // xhrFields: {
+                    //     withCredentials: true, // 클라이언트와 서버가 통4신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    // },
+                    success: function (response) {
+                        console.log("preSignedURL : ", response)
+                        imageUpload(response)
+                        imageUrlList.push(response.imageName)
+                        console.log("imageUrlList : ", imageUrlList)
+                        // put 으로 이미지 넘기는 함수 실행
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+            }
+
+            function imageUpload(presignedURLObject) {
+                const accessToken = localStorage.getItem("accessToken")
+                var file = $("#chooseFile")[0].files[0]
+
+                $.ajax({
+                    type: "PUT",
+                    url: presignedURLObject.preSignedURL,
+                    contentType: 'image/png',
+                    processData: false,
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+                    data: file,
+                    xhrFields: {
+                        withCredentials: false,  // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: function (response) {
+                        console.log("response : ")
+                        console.log("이미지 수정완료 : ")
+
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+            }
+
+            async function removeImage(index) {
+                imageUrlList.splice(index, 1)
+                $("#img-wrap").empty()
+                for (let i = 0; i < imageUrlList.length; i++) {
+                    var imgUrl = await getImageURL(imageUrlList[i]);
+                    var temp = `
+                        <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                        <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                        <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                            onclick="removeImage(${i})"
+                        >
+                            <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                        </div>
+                        </div>
+                    `
+                    $("#img-wrap").append(temp)
+                }
+            }
 
   function addTagList(id) {
     for (let i = 0; i < tags.length; i++) {
