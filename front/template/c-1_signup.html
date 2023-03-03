@@ -236,10 +236,11 @@
           "data": JSON.stringify({
               "email": $('#email').val(),
               "password": $('#password').val(),
-              "nickName": $('#nickname').val()
+              "nickName": $('#nickname').val(),
+              "adminToken" : "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"
           }),
       };
-      if($('#adminPassword').val() == "0206")
+      if($('#adminPassword').val() == "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC")
       {
           $.ajax(admin_settings).done(function (response) {
               alert("관리자를 확인했습니다.")
