@@ -413,7 +413,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/info/me",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -476,7 +476,7 @@
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:8080/auth/token/regenerate",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
       contentType : "application/json; charset=utf-8",
       data: JSON.stringify({
         refreshToken: refreshToken
@@ -499,7 +499,7 @@
       type: "GET",
       contentType: "application/json",
       dataType: "json",
-      url: "http://localhost:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -554,7 +554,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends/recommends?page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -606,7 +606,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -660,7 +660,7 @@
     $.ajax({
       type: "POST",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -689,7 +689,7 @@
     $.ajax({
       type: "DELETE",
       contentType: "application/json",
-      url: "http://localhost:8080/friends?targetId=" + targetId + "&page=0&size=5",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -719,7 +719,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/friends/recommends?page=0&size=12",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=12",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -775,7 +775,7 @@
     $.ajax({
       type: "GET",
       contentType: "application/json",
-      url: "http://localhost:8080/alarm?page=0&size=10",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
@@ -819,7 +819,7 @@
 
     $.ajax({
       type: "PATCH",
-      url: "http://localhost:8080/alarm?alarmId=" + alarmId,
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId=" + alarmId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
