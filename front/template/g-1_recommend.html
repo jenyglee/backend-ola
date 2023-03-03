@@ -611,28 +611,20 @@
 
         for (let i = 0; i < response.data.length; i++) {
             console.log("i : ", i, "response.data[i].imgList[0]", response.data[i].imgList[0])
-            if(response.data[i].imgList[0] != null){
-
-                if (response.data[i].imgList[0].includes("ola")){
-                    response.data[i].imgList[0] = await getImageURL(response.data[i].imgList[0]);
-                }
+            var imgUrl = "";
+            if (response.data[i].imgList[0]){
+                imgUrl = await getImageURL(response.data[i].imgList[0]);
+            }else{
+                imgUrl = "./../static/img/mountain-default.png"
             }
-        //   console.log("response.data[i].imgList[i] : " , response.data[i].imgList[0])
 
-        //   var imgUrl = response.data[i].imgList[0]
-          
-        //   if (imgUrl.includes("ola")){ // 'ola' 가 포함되어 있으면 버킷에 저장된 이름임
-        //     imgUrl = await getImageURL(response.data[i].imgList[0]);
-        //     console.log("ola : ",imgUrl)
-        //   }
-    
-          // 데이터 바인딩
-          const temp =
+            // 데이터 바인딩
+            const temp =
               `
               <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                        <img style="width: 100%" src=${response.data[i].imgList[0]} alt="디폴트 산 이미지"/>
+                        <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
                     </div>
                     <div class="text-wrap" style="font-size: 14px;">
                         <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
@@ -691,13 +683,11 @@
       }
     })
   }
-
-
   
 async function getImageURL(objectKey) {
     var loadData = "";
         const accessToken = localStorage.getItem("accessToken");
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
         console.log("objectKey 이미지 파일이름 찍히는지 보자.");
         console.log("objectKey : ", objectKey);
     
@@ -721,7 +711,6 @@ async function getImageURL(objectKey) {
             xlr.setRequestHeader("Authorization", accessToken);
           },
           data: objectKey,
-
           xhrFields: {
             // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
             withCredentials:false
