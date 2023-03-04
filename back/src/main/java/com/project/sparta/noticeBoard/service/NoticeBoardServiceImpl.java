@@ -92,6 +92,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
         NoticeBoardResponseDto noticeBoardResponseDto = NoticeBoardResponseDto.builder()
+                .id(noticeBoard.getId())
                 .title(noticeBoard.getTitle())
                 .contents(noticeBoard.getContents())
                 .createdAt(noticeBoard.getCreateAt())
