@@ -86,12 +86,13 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 단건 조회
     @Override
-    public NoticeBoardResponseDto getNoticeBoard(Long id, User user) {
+    public NoticeBoardResponseDto getNoticeBoard(Long id) {
 
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
 
         NoticeBoardResponseDto noticeBoardResponseDto = NoticeBoardResponseDto.builder()
+                .id(noticeBoard.getId())
                 .title(noticeBoard.getTitle())
                 .contents(noticeBoard.getContents())
                 .createdAt(noticeBoard.getCreateAt())
@@ -105,8 +106,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 전체조회
     @Override
-    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size,
-                                                                           String category, User user) {
+    public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, String category) {
         long total;
         List<NoticeBoardResponseDto> content = new ArrayList<>();
         if (!category.isEmpty()) {

@@ -425,8 +425,8 @@
       // 단건 코스조회
       async function getRecommend() {
         const id = localStorage.getItem("recommendId");
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-
+        var nickname = localStorage.getItem("nickname")
+        console.log("nickname:  ", nickname)
         $.ajax({
             type: "GET",
             url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
@@ -437,7 +437,6 @@
                 );
             },
           success: async function (response) {
-            var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
             console.log("response : ", response);
             const score = response.score;
             const title = response.title;
@@ -495,7 +494,7 @@
             }else {
                 var tempLike = `
                     <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="likeBoard()">
-                        <img style="width: 100%;" src="./../static/img/unheart.png" alt="좋아요 이미지" />
+                        <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
                     </div>
                     <p style="margin-bottom: 0;">${likeCount}</p>
                 `
@@ -518,9 +517,8 @@
             $("#contents").append(tempContents)
 
             // 버튼 
-            console.log("menuProfile : ", menuProfile)
             $(".btns").empty()
-            if(menuProfile.nickname == response.nickName){
+            if(nickname == response.nickName){
                 var tempBtn = `
                     <button
                         type="button"
@@ -547,7 +545,6 @@
                 `
                 $(".btns").append(tempBtn)
             }else{
-                console.log("asdasd")
                 var tempBtn = `
                     <button
                         type="button"
@@ -579,7 +576,7 @@
             
           }
           ,error: function (response){
-            if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+            if(response.responseJSON.status == 500){
               regenerateToken()
             }
           }
@@ -600,10 +597,10 @@
                 );
             },
             success: function (response) {
-                getRecommend(0);
+                getRecommend();
             },
             error: function (response, status, error) {
-                if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                if (response.responseJSON.status == 500) {
                     regenerateToken()
                     likeBoard();
                 }
@@ -627,7 +624,7 @@
                 getRecommend();
             },
             error: function (response, status, error) {
-                if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                if (response.responseJSON.status == 500) {
                     regenerateToken()
                     unlikeBoard();
                 }
@@ -640,7 +637,7 @@
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:8080/auth/token/regenerate",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
           contentType : "application/json; charset=utf-8",
           data: JSON.stringify({
             refreshToken: refreshToken
@@ -673,10 +670,11 @@
 
             window.location.href = "g-1_recommend.html";
           },
-          error: function (xhr) {
-            console.log(
-              "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-            );
+          error: function (response) {
+            if (response.responseJSON.status == 500) {
+                    regenerateToken()
+                    deleteRecommend();
+                }
           },
         });
       }
@@ -691,23 +689,13 @@
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
-          // dataType: "text",
-          // enctype: "multipart/form-data",
           contentType: "application/json",
           processData: false,
-          // contentType: false,
-          // beforeSend: function (xlr) {
-          //   xlr.setRequestHeader("Authorization", accessToken);
-          // },
-          // data: objectKey,
-
           xhrFields: {
             // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
             withCredentials:false
           },
           success: await function (response) {
-            console.log("세번째") 
-            console.log("preSignedURL : ", response);
             loadData = response       
            
           },

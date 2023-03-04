@@ -499,8 +499,14 @@
     $(".bell-dropbox").hide();
   }
 
-  function setRecommendId(id) {
-    localStorage.setItem("recommendId", id);
+  function moveRecommendDetail(id) {
+        const accessToken = localStorage.getItem("accessToken");
+        if(accessToken != ""){
+            localStorage.setItem("recommendId", id);
+            window.location.href="g-2_recommendDetail.html"
+        }else{
+            alert("로그인 한 이용자만 확인할 수 있습니다.")
+        }
   }
 
   //파라미터 변수가 이상함..ㅠㅠ
@@ -510,6 +516,7 @@
     // 1. 데이터 초기화를 해야됨.
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
+    console.log("aksjkasd")
 
     // 2. 통신해서 불러오기 2
     $.ajax({
@@ -518,10 +525,11 @@
           + searchScore + "&season=" + searchSeason
           + "&altitude=" + searchAltitude + "&region=" + searchRegion + "&sort="
           + searchOrderByLike,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
+    //   beforeSend: function (xlr) {
+    //     xlr.setRequestHeader("Authorization", accessToken)
+    //   },
       success: async function (response) {
+          console.log("response : ", response)
           $('.totalCnt').empty()
           const cnt = `<b style="font-weight: bold">총 <span style="color : #F46B3F" >${response.totalCount}</span> 건&nbsp;</b>`
           $('.totalCnt').append(cnt)
@@ -537,7 +545,7 @@
             // 데이터 바인딩
             const temp =
               `
-              <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setRecommendId(${response.data[i].boardId})">
+              <div class="article" style="cursor: pointer;" onclick="moveRecommendDetail(${response.data[i].boardId})">
                     <div class="img-wrap"
                          style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                         <img style="width: 100%" src=${imgUrl} alt="디폴트 산 이미지"/>
@@ -552,61 +560,72 @@
                             <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
                         </div>
                     </div>
-                </a>
+                </div>
               `
 
           $('#cardBody').append(temp)
         }
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        $("#bottom-btn").empty();
-        if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
-          var createBtnTemp = `
-            <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">게시글 작성</button>
-          `
-        }else if(menuProfile.grade == "MOUNTAIN_GOD"){
-          var createBtnTemp = `
-            <button type="button" id="btn_1" onclick="moveCreatePage()">게시글 작성</button>
-          `
+        console.log("localStorage.getItem('menuProfile') : ", localStorage.getItem("menuProfile"))
+        if(localStorage.getItem("menuProfile") != ""){
+            var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+            $("#bottom-btn").empty();
+            if(menuProfile.grade == "MOUNTAIN_CHILDREN" || menuProfile.grade == "MOUNTAIN_MANIA"){
+            var createBtnTemp = `
+                <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">새 코스추천 작성</button>
+            `
+            }else if(menuProfile.grade == "MOUNTAIN_GOD"){
+            var createBtnTemp = `
+                <button type="button" id="btn_1" onclick="moveCreatePage()">새 코스추천 작성</button>
+            `
+            }
+            $("#bottom-btn").append(createBtnTemp)
+        }else{
+            var createBtnTemp = `
+                <button type="button" id="btn_1" onclick="moveNo()" style="background-color: #f2f2f2; border: 1px solid #E4E4E4; color: #ADADAD">새 코스추천 작성</button>
+            `
+            $("#bottom-btn").append(createBtnTemp)
         }
-        $("#bottom-btn").append(createBtnTemp)
+        
+        
         
         return response.data
       },error: function(response){
-          console.log("response : ", response)
-          if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          console.log("response 가져오기 : ", response)
+          if(response.responseJSON.status == 500){
                 regenerateToken()
           }
       }
     })
   }
 
-  function regenerateToken(){
+  function regenerateToken() {
+      console.log("재발급실행")
     var refreshToken = localStorage.getItem("refreshToken")
-
     $.ajax({
-      type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
-      contentType : "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-        getRecommendList(0, 8);
-      },error: function(response){
-        console.log("에러 : ", response)
-      }
+        type: "POST",
+        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+        // url: "http://localhost:8080/auth/token/regenerate",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            refreshToken: refreshToken,
+        }),
+        success: function (response) {
+            localStorage.setItem("accessToken", response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+            console.log("재발급성공")
+            getRecommendList(0, 8)
+        },
+        error: function (response) {
+            console.log("response : ", response)
+            alert("토큰이 만료되었습니다. 로그인 페이지로 이동합니다.")
+            // window.location.href = "b-1_login.html"
+        },
     })
-  }
+}
   
 async function getImageURL(objectKey) {
     var loadData = "";
         const accessToken = localStorage.getItem("accessToken");
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-        console.log("objectKey 이미지 파일이름 찍히는지 보자.");
-        console.log("objectKey : ", objectKey);
-
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
@@ -620,8 +639,6 @@ async function getImageURL(objectKey) {
             withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: await function (response) {
-            console.log("세번째") 
-            console.log("preSignedURL : ", response);
             loadData = response       
            
           },
@@ -677,6 +694,9 @@ async function getImageURL(objectKey) {
   function moveNo(){
     alert("산신령 등급만 작성할 수 있습니다.")
   }
+  function moveDetailNo() {
+        alert("로그인 한 이용자만 확인할 수 있습니다.")
+    }
 </script>
 </body>
 </html>

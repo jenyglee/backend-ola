@@ -316,7 +316,7 @@
 
             }
             ,error: function (response){
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                if(response.responseJSON.status == 500){
                     regenerateToken()
                 }
             }

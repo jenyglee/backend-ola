@@ -192,6 +192,7 @@
     function handleLogin() {
         var settings = {
             "url": "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/login",
+            // "url": "http://localhost:8080/auth/login",
             "method": "POST",
             "timeout": 0,
             "headers": {
@@ -206,9 +207,13 @@
         console.log( $('#inputPassword').val())
 
         $.ajax(settings).done(function (response,status,xhr) {
+            console.log("response : ", response)
             console.log(xhr.getResponseHeader("Authorization"))
             localStorage.setItem('accessToken',xhr.getResponseHeader('Authorization'))
             localStorage.setItem("refreshToken", response.refreshToken)
+            localStorage.setItem("nickname", response.nickname);
+            var nickname =  localStorage.getItem("nickname")
+            console.log("nickname:  ", nickname)
             // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
             var get_token = xhr.getResponseHeader("Authorization")
             var remove_bearer = get_token.toString().substring(6,get_token.length)

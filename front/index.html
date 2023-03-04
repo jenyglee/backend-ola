@@ -418,6 +418,9 @@
             ]
             $(document).ready(function () {
                 var accessToken = localStorage.getItem("accessToken")
+                var refreshToken = localStorage.getItem("refreshToken")
+                // console.log("accessToken : ", accessToken)
+                // console.log("refreshToken : ", refreshToken)
                 if (accessToken == null) {
                     console.log("accessToken : ", accessToken)
                     window.location.href = "./template/b-1_login.html"
@@ -425,7 +428,7 @@
 
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
-                getMenuProfile()
+                // getMenuProfile()
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
@@ -463,32 +466,29 @@
                 $(".bell-dropbox").hide()
             }
 
-            // $(".post-wrapper").slick({
-            //     slidesToShow: 4,
-            //     slidesToScroll: 1,
-            //     autoplay: true,
-            //     autoplaySpeed: 2000,
-            // })
-
-            // $(".slick-prev").text("<")
-            // $(".slick-next").text(">")
-
-            function getCrewCommunityList() {
+            async function getCrewCommunityList() {
                 const accessToken = localStorage.getItem("accessToken")
+                console.log("qwleklqwe")
                 $.ajax({
                     type: "GET",
-                    // TODO 현재 모집중인 것들이 뜨게 하는 쿼리문 추가 필요
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
-                    success: function (response) {
+                    // url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+                    success: async function (response) {
                         console.log("커뮤니티 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
+                            var imgUrl = ""
+                            if (response.data[i].imgList[0]) {
+                                imgUrl = await getImageURL(response.data[i].imgList[0])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
                             var temp = `
                             <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})">
                                 <div class="post-img-wrap">
-                                    <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                    <img src=${imgUrl} alt="산 이미지" />
                                 </div>
                                 <div class="post-text">
                                     <p class="title">${response.data[i].title}</p>
@@ -501,32 +501,36 @@
                     },
                     error: function (response) {
                         console.log("response : ", response)
-                        // console.log(
-                        //     "response.responseJSON.message.substring(0, 11) : ",
-                        //     response.responseJSON.message.substring(0, 11)
-                        // )
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                         }
                     },
                 })
             }
 
-            function getRecommendLikeList() {
+            async function getRecommendLikeList() {
                 const accessToken = localStorage.getItem("accessToken")
+                console.log("진행중")
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
-                    success: function (response) {
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
+                    // url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+                    success: async function (response) {
                         console.log("코스추천 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
+                            var imgUrl = ""
+                            if (response.data[i].imgList[0]) {
+                                imgUrl = await getImageURL(response.data[i].imgList[0])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
                             var temp = `
                                 <div class="post" onclick="moveRecommendDetail(${response.data[i].boardId})">
                                     <div class="post-img-wrap">
-                                        <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                        <img src=${imgUrl} alt="산 이미지" />
                                     </div>
                                     <div class="post-text">
                                         <p class="title">${response.data[i].title}</p>
@@ -543,11 +547,43 @@
                         }
                     },
                     error: function (error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                         }
                     },
                 })
+            }
+
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        if (response.responseJSON.status == 500) {
+                            regenerateToken()
+                        }
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
             }
 
             function moveCommunityWithHashtag(id) {
@@ -556,19 +592,32 @@
             }
 
             function moveCommunityDetail(id) {
-                localStorage.setItem("communityId", id)
-                window.location = "template/h-2_communityDetail.html"
+                const accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    localStorage.setItem("communityId", id)
+                    window.location = "template/h-2_communityDetail.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
+
             function moveRecommendDetail(id) {
-                localStorage.setItem("recommendId", id)
-                window.location = "template/g-2_recommendDetail.html"
+                const accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    localStorage.setItem("recommendId", id)
+                    window.location = "template/g-2_recommendDetail.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
 
             function regenerateToken() {
                 var refreshToken = localStorage.getItem("refreshToken")
+                console.log("refreshToken : ", refreshToken)
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8080/auth/token/regenerate",
+                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+                    // url: "http://localhost:8080/auth/token/regenerate",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
                         refreshToken: refreshToken,
@@ -576,18 +625,24 @@
                     success: function (response) {
                         localStorage.setItem("accessToken", response.accessToken)
                         localStorage.setItem("refreshToken", response.refreshToken)
-                        getRecommend()
+                        getCrewCommunityList()
+                        getRecommendLikeList()
                     },
                     error: function (response) {
                         console.log("response : ", response)
-                        alert("토큰이 일치하지 않습니다. 로그인 페이지로 이동합니다.")
+                        alert("토큰 만료되었습니다. 로그인 페이지로 이동합니다.")
                         window.location.href = "./template/b-1_login.html"
                     },
                 })
             }
 
             function moveCommunityCreate() {
-                window.location = "./template/h-3_communityCreate.html"
+                var accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    window.location = "./template/h-3_communityCreate.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
         </script>
     </body>

@@ -28,9 +28,8 @@ public class NoticeBoardController {
     //공지글 단건조회
     @ApiOperation(value = "공지글 단건조회",response = Join.class)
     @GetMapping("/notices/{boardId}")
-    public ResponseEntity getNoticeBoard(@PathVariable Long boardId,
-                                         @AuthenticationPrincipal UserDetailsImpl userDetails){
-        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(boardId, userDetails.getUser());
+    public ResponseEntity getNoticeBoard(@PathVariable Long boardId){
+        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(boardId);
         return new ResponseEntity(noticeBoard, HttpStatus.OK);
     }
 
@@ -39,9 +38,8 @@ public class NoticeBoardController {
     @GetMapping("/notices")
     public ResponseEntity getNoticeBoardList(@RequestParam int page,
                                              @RequestParam int size,
-                                             @RequestParam String category,
-                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
-        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, category, userDetails.getUser());
+                                             @RequestParam String category){
+        PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, category);
         return new ResponseEntity(allNoticeBoard, HttpStatus.OK);
     }
 

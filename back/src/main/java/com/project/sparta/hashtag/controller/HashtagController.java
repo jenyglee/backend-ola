@@ -53,10 +53,9 @@ public class HashtagController {
     @ApiOperation(value = "해시태그 전체 조회", response = Join.class)
     @GetMapping("/hashtags")
     public ResponseEntity getHashtagList(@RequestParam int offset, @RequestParam int limit,
-        @RequestParam String name,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        @RequestParam String name) {
         PageResponseDto<List<HashtagResponseDto>> result = hashtagService.getHashtagList(
-            offset, limit, name, userDetail.getUser());
+            offset, limit, name);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

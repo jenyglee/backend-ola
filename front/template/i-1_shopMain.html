@@ -356,7 +356,7 @@
     $(document).ready(function () {
         $(".friend-dropbox").hide();
         $(".bell-dropbox").hide();
-        getMenuProfile();
+        // getMenuProfile();
         firstSearchList();
     });
 
@@ -416,11 +416,11 @@
             dataType	: "json",
             type: 'GET',
             url: 'http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/product/search?query=' + products + '&limit=8&offset='+offset+'&sort='+sort,
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", accessToken)
-            },
+            // beforeSend: function (xlr) {
+            //     xlr.setRequestHeader("Authorization", accessToken)
+            // },
             success: function (response) {
-
+                console.log("response : ",  response)
                 console.log(response["data"]);
                 console.log(response["data"][0]["image"]);           //--> 이 부분 롤크링한 데이터 값
                 console.log(response.data.length);
@@ -430,22 +430,22 @@
                 // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
                 for (let i = 0; i < response.data.length; i++) {
 
-                    let result = `<a href=${response.data[i].link} className="article" style="text-decoration: none; color: #000000">
-                                <div className="img-wrap"
-                                     style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                    <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
-                                </div>
-                                <div className="text-wrap" style="font-size: 14px;">
-                                    <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-                                    <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
-                                </div>
+                    let result = `<a href=${response.data[i].link} class="article" style="text-decoration: none; color: #000000">
+                        <div class="img-wrap"
+                                style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                            <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
+                        </div>
+                        <div class="text-wrap" style="font-size: 14px;">
+                            <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
+                            <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}</p>
+                        </div>
 
-                            </a>`;
+                    </a>`;
                     $('#cardBox').append(result);
                 }
             },
             error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                if(response.responseJSON.status == 500){
                     regenerateToken()
                     searchList(offset)
                 }
@@ -464,9 +464,9 @@
         $.ajax({
             type: 'GET',
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/product/search?query=등산화&limit=8&offset=0&sort=sim",
-            beforeSend: function (xlr) {
-                xlr.setRequestHeader("Authorization", accessToken)
-            },
+            // beforeSend: function (xlr) {
+            //     xlr.setRequestHeader("Authorization", accessToken)
+            // },
             success: function (response) {
                 let totalcont= response.totalCount;
                 $('#amount').html(totalcont);
@@ -475,12 +475,12 @@
                 for (let i = 0; i < response.data.length; i++) {
 
                     let result = `
-                        <a href=${response.data[i].link} className="article" style="text-decoration: none; color: #000000;">
-                            <div className="img-wrap"
+                        <a href=${response.data[i].link} class="article" style="text-decoration: none; color: #000000;">
+                            <div class="img-wrap"
                                  style="width: 100%; height: 214px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                                 <img style="width: 100%" alt="상품 이미지" src="${response.data[i].image}"/>
                             </div>
-                            <div className="text-wrap" style="font-size: 14px; ">
+                            <div class="text-wrap" style="font-size: 14px; ">
                                 <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
                                 <p style="margin-bottom: 10px; width: 90%">${numberWithCommas(response.data[i].lprice)}원</p>
                             </div>
@@ -490,7 +490,7 @@
                 }
             },
             error: function (response, status, error) {
-                if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+                if(response.responseJSON.status == 500){
                     regenerateToken()
                     firstSearchList()
                 }

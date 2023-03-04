@@ -33,7 +33,7 @@ public class JwtUtil {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
     private static final long ACCESS_TOKEN_TIME = 60 * 60 * 1000L;     //Access 토큰 유효(1시간)
-
+    //private static final long ACCESS_TOKEN_TIME = 10 * 1000L;     //Access 토큰 유효(10초)
     public static final long REFRESH_TOKEN_TIME = 24 * 60 * 60 * 1000L;     //Refresh 토큰(1일)
 
     @Value("${jwt.token.access-token-secret}")
@@ -106,19 +106,23 @@ public class JwtUtil {
         return false;
     }
 
-    public boolean validateRefreshToken(String token) {
+    public boolean validateRefreshToken(String token) throws CustomException {
         try {
             String changeToken = token.substring(7);
             Jwts.parserBuilder().setSigningKey(refresh_token_secret_key).build().parseClaimsJws(changeToken);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+            //throw new CustomException(INVALID_TOKEN);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT token, 만료된 JWT token 입니다.");
+            //throw new CustomException(INVALID_TOKEN);
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+            //throw new CustomException(INVALID_TOKEN);
         } catch (IllegalArgumentException e) {
             log.info("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+            //throw new CustomException(INVALID_TOKEN);
         }
         return false;
     }

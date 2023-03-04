@@ -449,7 +449,7 @@
                     // }
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         getCommunity()
                     }
@@ -486,7 +486,7 @@
                     window.location.href = "m-1_manageCommunity.html"
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         updateCommunity()
                     }
@@ -514,7 +514,7 @@
                     window.location.href = "m-1_manageCommunity.html"
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         deleteCommunity()
                     }

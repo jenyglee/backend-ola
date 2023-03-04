@@ -130,25 +130,34 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                     communityComment.contents,
                     communityComment.createAt,
                     // 댓글의 좋아요 수
-                    JPAExpressions
-                        .select(commentLike.count())
-                        .from(commentLike)
-                        .where(commentLike.comment.Id.eq(communityComment.Id)),
+                    //JPAExpressions
+                    //    .select(commentLike.count())
+                    //    .from(commentLike)
+                    //    .where(commentLike.comment.Id.eq(communityComment.Id)),
                     // 내가 이 댓글을 좋아요 했는지
-                    JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
-                            .otherwise(false))
-                        .from(commentLike)
-                        .where(
-                            // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
-                            commentLike.userNickName.eq(username)
-                        ),
+                    //JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
+                    //        .otherwise(false))
+                    //    .from(commentLike)
+                    //    .where(
+                    //        // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
+                    //        communityComment.Id.eq(commentLike.comment.Id),
+                    //        commentLike.userNickName.eq(username)
+                    //    ),
                     user.userImageUrl
                 )
             )
-            .from(communityBoard)
-            .join(commentLike).on(commentLike.comment.Id.eq(communityComment.Id))
-            .join(communityComment).on(communityComment.communityBoardId.eq(communityBoard.id))
-            .join(user).on(user.nickName.eq(communityComment.nickName))
+            .from(communityBoard, communityComment, user, commentLike)
+            //.join(commentLike).on(commentLike.comment.Id.eq(communityComment.Id))
+            //.join(user).on(user.nickName.eq(communityComment.nickName))
+            .where(
+                communityComment.communityBoardId.eq(boardId),
+                commentLike.comment.Id.in(
+                    JPAExpressions.select(communityComment.Id)
+                        .from(communityComment)
+                        .where(communityComment.communityBoardId.eq(boardId))
+                ), // TODO 이걸 넣으면 코멘트가 다 사라짐
+                user.nickName.eq(communityComment.nickName)
+            )
             //.distinct()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
