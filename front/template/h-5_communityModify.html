@@ -592,9 +592,8 @@
                     <input
                         class="form-check-input"
                         type="checkbox"
-                        value="Y"
                         id="flexCheckDefault"
-                        onchange="checkChat()"
+                        value="Y"
                     />
                     <label class="form-check-label" for="flexCheckDefault"> 크루원 구하기 </label>
                     <p style="font-size: 12px; font-weight: bold">
@@ -629,7 +628,6 @@
 
             $(".form-check-input").on("click", function () {
                 var checked = $(".form-check-input").is(":checked")
-
                 if (checked) {
                     $(".chatCnt-input").attr("disabled", false)
                     $(".chatCnt-input").focus()
@@ -644,7 +642,7 @@
             var communityId = localStorage.getItem("communityId")
             var accessToken = localStorage.getItem("accessToken")
             var imageUrlList = []
-            var tags = []
+            var selectTags = []
             var isChat = false
 
             $(document).ready(function () {
@@ -659,15 +657,15 @@
             function getMenuProfile() {
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${
-                menuProfile.profileImage
-                    ? menuProfile.profileImage
-                    : "./../static/img/icon_profile_default.png"
-            } alt="프로필사진"/>
-          </div>
-          <p class="text">${menuProfile.nickname}님</p>
-    `
+                      <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${
+                            menuProfile.profileImage
+                                ? menuProfile.profileImage
+                                : "./../static/img/icon_profile_default.png"
+                        } alt="프로필사진"/>
+                      </div>
+                      <p class="text">${menuProfile.nickname}님</p>
+                `
                 $("#my-profile").append(tempProfile)
             }
 
@@ -724,11 +722,14 @@
                         for (let i = 0; i < response.tagList.length; i++) {
                             var temp = `
                                 <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-                                ${response.tagList[i].id}
+                                  ${response.tagList[i].id}<span> ${response.tagList[i].name}</span>
                                 </div>
                             `
                             $("#tag-select-list").append(temp)
-                            tags.push(response.tagList[i].id)
+                            selectTags.push({
+                              id : response.tagList[i].id,
+                              name : response.tagList[i].name
+                            })
                         }
 
                         if (response.chatStatus == "Y") {
@@ -783,6 +784,7 @@
                 return loadData
             }
 
+            var searchedTags = [];
             function searchTags() {
                 const accessToken = localStorage.getItem("accessToken")
                 var tagName = $("#tag-search-input").val()
@@ -796,11 +798,12 @@
                     },
                     success: function (response) {
                         console.log("response : ", response)
+                        searchedTags = response.data;
                         $(".tag-select-box").empty()
                         for (let i = 0; i < response.data.length; i++) {
                             var temp = `
-                <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
-              `
+                              <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+                            `
                             $(".tag-select-box").append(temp)
                         }
                     },
@@ -815,39 +818,69 @@
 
             // 수정하기
             function updateCommunity() {
-                const accessToken = localStorage.getItem("accessToken")
-                console.log($("#flexCheckDefault").val())
-                console.log($("#chatCnt-input").val())
+              const accessToken = localStorage.getItem("accessToken")
+              console.log("accessToken : ", accessToken)
+              var chatStatus = $(".form-check-input:checked").val()
 
-                $.ajax({
-                    type: "PATCH",
-                    url:
-                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
-                        communityId,
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({
-                        title: $("#title").val(),
-                        contents: $("#contents").val(),
-                        chatStatus: $("#flexCheckDefault").val(),
-                        chatMemCnt: $("#chatCnt-input").val(),
-                        tagList: tags,
-                        imgList: imageUrlList,
-                    }),
-                    success: function (response) {
-                        updateChat(communityId, $("#chatCnt-input").val())
-                        alert("수정완료")
-                        window.location.href = "h-1_communityMain.html"
-                    },
-                    error: function (response, status, error) {
-                        if (response.responseJSON.status == 500) {
-                            regenerateToken()
-                            updateCommunity()
-                        }
-                    },
-                })
+              if (chatStatus == "Y") {
+                if ($(".chatCnt-input").val() == 0) {
+                  alert("크루 참여 인원을 작성해주세요.")
+                  return
+                } else if ($(".chatCnt-input").val() == 1) {
+                  alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
+                  $(".chatCnt-input").val("")
+                  $(".chatCnt-input").focus()
+                  return
+                } else if ($(".chatCnt-input").val() > 10) {
+                  alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
+                  $(".chatCnt-input").val("")
+                  $(".chatCnt-input").focus()
+                  return
+                }
+              } else {
+                chatStatus = "N"
+              }
+
+              var chatMemCnt = $(".chatCnt-input").val()
+
+              var tagIds = []
+              for (let i=0; i<selectTags.length; i++){
+                tagIds.push(selectTags[i].id)
+              }
+              console.log("chatStatus : ", chatStatus)
+              console.log("chatMemCnt : ", chatMemCnt)
+              console.log('$("#title").val() : ', $("#title").val())
+              console.log('$("#contents").val() : ', $("#contents").val())
+              console.log("imageUrlList : ", imageUrlList)
+              console.log("tagIds : ", tagIds)
+              $.ajax({
+                  type: "PATCH",
+                  url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" + communityId,
+                  beforeSend: function (xlr) {
+                      xlr.setRequestHeader("Authorization", accessToken)
+                  },
+                  contentType: "application/json; charset=utf-8",
+                  data: JSON.stringify({
+                      title: $("#title").val(),
+                      contents: $("#contents").val(),
+                      chatStatus: chatStatus,
+                      chatMemCnt: chatMemCnt,
+                      tagList: tagIds,
+                      imgList: imageUrlList,
+                  }),
+                  success: function (response) {
+                      updateChat(communityId, $("#chatCnt-input").val())
+                      alert("수정완료")
+                      window.location.href = "h-1_communityMain.html"
+                  },
+                  error: function (response, status, error) {
+                      console.log("response : ", response)
+                      // if (response.responseJSON.status == 500) {
+                      //     regenerateToken()
+                      //     updateCommunity()
+                      // }
+                  },
+              })
             }
 
             //이미지경로리스트 전역변수 지정.
@@ -946,22 +979,38 @@
             }
 
             function addTagList(id) {
-                for (let i = 0; i < tags.length; i++) {
-                    if (tags[i] == id) {
-                        alert("이미 선택했습니다.")
-                        return
-                    }
+              console.log("tagId : ",id)
+              for (let i = 0; i < selectTags.length; i++) {
+                  if (selectTags[i].id == id) {
+                      alert("이미 선택했습니다.")
+                      return
+                  }
+              }
+              // for(let i=0; i<searchedTags.length; i++){
+              //   for (selectTags)
+              // }
+              // 목표 : 태그를 추가했을 때 id와 이름이 다 뜨게 하기
+              // 주어진 것 : 누른 태그의 id, 검색된 모든태그
+              // 검색된 모든 태그를 반복문을 돌려 누른 태그의 id와 같은 태그를 찾아낸다
+              // 찾은 태그의 id와 name을 가지고 현재 눌러진 태그들에 push한다.
+              for (let i=0; i<searchedTags.length; i++){
+                if(searchedTags[i].id == id){
+                  selectTags.push({
+                    id : searchedTags[i].id,
+                    name : searchedTags[i].name
+                  })
                 }
-                tags.push(id)
-                $("#tag-select-list").empty()
-                for (let i = 0; i < tags.length; i++) {
-                    var temp = `
-        <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-          ${tags[i]}
-        </div>
-      `
-                    $("#tag-select-list").append(temp)
-                }
+              }
+
+              $("#tag-select-list").empty()
+              for (let i = 0; i < selectTags.length; i++) {
+                  var temp = `
+                    <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                      ${selectTags[i].id} ${selectTags[i].name}
+                    </div>
+                  `
+                  $("#tag-select-list").append(temp)
+              }
             }
 
             function addTag() {
@@ -989,12 +1038,9 @@
             }
 
             function removeTag() {
-                tags = []
+                selectTags = []
                 $("#tag-select-list").empty()
             }
-
-            function checkChat() {}
-
             function imgUpload(input) {
                 const accessToken = localStorage.getItem("accessToken")
 
