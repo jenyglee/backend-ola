@@ -49,19 +49,6 @@ public class ChatRoomController {
         log.info("roomId {}", roomId);
 
         ChatRoomDto room = ChatRoomMap.getInstance().getChatRooms().get(roomId);
-
-
-        // TODO CommunityBoardAllResponseDto에 현재 전체 참가자 수(maxUserCnt), 현재 참가자 수(userCount) 필드 추가
-        // 1. 현재 참가자 수 추출
-        int currentUser = room.getUserCount();
-
-        //2. 해당 커뮤니티 추출
-        CommunityBoard communityBoard = boardRepository.findById(Long.parseLong(roomId))
-            .orElseThrow(() -> new CustomException(NOT_FOUND_COMMUNITY_BOARD));
-
-        //3. 해당 커뮤니티에 참가자 수 입력
-        communityBoard.updateCurrentMemCnt(currentUser);
-
         return new ResponseEntity(room, HttpStatus.OK);
     }
 
