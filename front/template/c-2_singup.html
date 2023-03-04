@@ -197,6 +197,7 @@
 
                 var settings = {
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/signup",
+                    // url: "http://localhost:8080/auth/signup",
                     method: "POST",
                     timeout: 0,
                     headers: {
@@ -216,10 +217,7 @@
                         console.log(result3)
                         console.log(settings.data)
                         console.log(response)
-                        alert("회원가입 실패")
                     })
-
-                window.location.href = "c-3_singup.html"
             }
         </script>
     </body>
