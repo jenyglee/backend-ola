@@ -325,7 +325,6 @@
                 selectAlarm();
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
-                getMenuProfile()
                 searchTags()
             })
 
@@ -396,6 +395,8 @@
             function getMenuProfile() {
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 const nickname = localStorage.getItem("nickname")
+
+
                 var tempProfile = `
                   <div class="img-wrap">
                     <img class="img" style="width: 100%; height: auto" src=${
