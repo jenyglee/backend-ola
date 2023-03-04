@@ -277,7 +277,7 @@
                     <button id="btn_3" type="button" onclick="addTag()">추가</button>
                 </div>
                 <div class="form-check" style="margin-top: 40px">
-                    <input class="form-check-input" type="checkbox" value="Y" id="checkChat" />
+                    <input class="form-check-input" type="checkbox" value="Y" id="checkChat" onclick="testCheck()" />
                     <label class="form-check-label" for="checkChat"> 크루원 구하기 </label>
                     <p style="font-size: 12px; font-weight: bold">
                         참여 인원 :
@@ -314,7 +314,7 @@
             var oneGradeChange = 0
             var communityId = localStorage.getItem("communityId")
             var imageUrlList = []
-            var tags = []
+            var selectTags = []
             var gradetemp
             $(document).ready(function () {
                 checkLogin();
@@ -325,6 +325,8 @@
                 selectAlarm();
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
+                getMenuProfile()
+                searchTags()
             })
 
             function checkLogin(){
@@ -395,15 +397,15 @@
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 const nickname = localStorage.getItem("nickname")
                 var tempProfile = `
-                    <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-                    menuProfile.profileImage
-                        ? menuProfile.profileImage
-                        : "./../static/img/icon_profile_default.png"
-                } alt="프로필사진"/>
-                    </div>
-                    <p class="text">${nickname}님</p>
-            `
+                  <div class="img-wrap">
+                    <img class="img" style="width: 100%; height: auto" src=${
+                        menuProfile.profileImage
+                            ? menuProfile.profileImage
+                            : "./../static/img/icon_profile_default.png"
+                    } alt="프로필사진"/>
+                  </div>
+                  <p class="text">${nickname}님</p>
+                `
                 $("#my-profile").append(tempProfile)
             }
 
@@ -478,6 +480,10 @@
 
                 var chatMemCnt = $(".chatCnt-input").val()
 
+                var tagIds = []
+                for (let i=0; i<selectTags.length; i++){
+                    tagIds.push(selectTags[i].id)
+                }
                 $.ajax({
                     type: "POST",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/",
@@ -490,7 +496,7 @@
                         contents: $("#contents").val(),
                         chatStatus: chatStatus,
                         chatMemCnt: chatMemCnt,
-                        tagList: tags,
+                        tagList: tagIds,
                         imgList: imageUrlList,
                         maniaResponse: 0,
                         godResponse: 0,
@@ -538,20 +544,36 @@
             }
 
             function addTagList(id) {
-                for (let i = 0; i < tags.length; i++) {
-                    if (tags[i] == id) {
+                console.log("tagId : ",id)
+                for (let i = 0; i < selectTags.length; i++) {
+                    if (selectTags[i].id == id) {
                         alert("이미 선택했습니다.")
                         return
                     }
                 }
-                tags.push(id)
+                // for(let i=0; i<searchedTags.length; i++){
+                //   for (selectTags)
+                // }
+                // 목표 : 태그를 추가했을 때 id와 이름이 다 뜨게 하기
+                // 주어진 것 : 누른 태그의 id, 검색된 모든태그
+                // 검색된 모든 태그를 반복문을 돌려 누른 태그의 id와 같은 태그를 찾아낸다
+                // 찾은 태그의 id와 name을 가지고 현재 눌러진 태그들에 push한다.
+                for (let i=0; i<searchedTags.length; i++){
+                    if(searchedTags[i].id == id){
+                        selectTags.push({
+                            id : searchedTags[i].id,
+                            name : searchedTags[i].name
+                        })
+                    }
+                }
+
                 $("#tag-select-list").empty()
-                for (let i = 0; i < tags.length; i++) {
+                for (let i = 0; i < selectTags.length; i++) {
                     var temp = `
-        <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-          ${tags[i]}
-        </div>
-      `
+                    <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                      ${selectTags[i].id} ${selectTags[i].name}
+                    </div>
+                  `
                     $("#tag-select-list").append(temp)
                 }
             }
@@ -580,10 +602,10 @@
                 })
             }
 
+            var searchedTags = [];
             function searchTags() {
-                var accessToken = localStorage.getItem("accessToken")
+                const accessToken = localStorage.getItem("accessToken")
                 var tagName = $("#tag-search-input").val()
-                console.log("tagName : ", tagName)
                 $.ajax({
                     type: "GET",
                     url:
@@ -594,10 +616,11 @@
                     },
                     success: function (response) {
                         console.log("response : ", response)
+                        searchedTags = response.data;
                         $(".tag-select-box").empty()
                         for (let i = 0; i < response.data.length; i++) {
                             var temp = `
-                                <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+                              <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
                             `
                             $(".tag-select-box").append(temp)
                         }
@@ -729,7 +752,7 @@
             //   }
 
             function removeTag() {
-                tags = []
+                selectTags = []
                 $("#tag-select-list").empty()
             }
 
