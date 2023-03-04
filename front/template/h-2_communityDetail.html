@@ -292,7 +292,6 @@
           <button type="button" class="btn btn-primary btn-chating-post" id="enterChat"
                   onclick="roomMemberCnt()">채팅방 참여하기
           </button>
-          </a>
         </div>
       </div>
       <!-- 좋아요 레이아웃-->
@@ -578,7 +577,13 @@
       },
       success: async function (response) {
         console.log("response : ", response)
-        roomMemberCnt();
+
+        if(response.chatStatus=="N"){
+          $("#enterChat").attr("disabled", true);
+        }else{
+          roomMemberCnt();
+        }
+
         // 컨텐츠 넣기
         $("#contents-area").empty();
         let tempContentsArea = `
@@ -801,15 +806,15 @@
         withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
         },
         success: await function (response) {
-            loadData = response       
+            loadData = response
         },
         error: function (request, status, error) {
-        
+
         console.log("에러난다..!");
         console.log(request, status, error);
         // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
         },
-        
+
     });
     return loadData
     }
@@ -1068,7 +1073,7 @@
           console.log("에러 : ", response)
       }
     })
-    
+
   }
 
   function enterRoom() {
@@ -1083,13 +1088,14 @@
   }
 
   function roomMemberCnt() {
+    var communityId = localStorage.getItem("communityId")
+
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
       success: function (response) {
-
-        console.log("response : ", response);
+        console.log("하하하", response)
 
         $(".crew").empty();
 
@@ -1417,28 +1423,6 @@
     updateAlarmStats(alarmId);
     localStorage.setItem("communityId", board_Id)
     location.replace('h-2_communityDetail.html');
-  }
-
-  function roomMemberCnt(communityId) {
-    const accessToken = localStorage.getItem("accessToken")
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
-          + communityId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        console.log(response)
-
-        $(".post-text").empty();
-
-        let crew = `<div>크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
-
-        $(".post-text").append(crew);
-      }
-    })
   }
 
   function moveModifyPage() {
