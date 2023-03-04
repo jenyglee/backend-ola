@@ -55,10 +55,8 @@ public class AdminNoticeController {
     //공지글 단건조회
     @ApiOperation(value = "공지사항 단건조회",response = Join.class)
     @GetMapping("/boards/notices/{boardId}")
-    public ResponseEntity getNoticeBoard(@PathVariable Long boardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(boardId,
-            userDetails.getUser());
+    public ResponseEntity getNoticeBoard(@PathVariable Long boardId) {
+        NoticeBoardResponseDto noticeBoard = noticeBoardService.getNoticeBoard(boardId);
         return new ResponseEntity(noticeBoard, HttpStatus.OK);
     }
 
@@ -67,10 +65,9 @@ public class AdminNoticeController {
     @GetMapping("/boards/notices")
     public ResponseEntity getNoticeBoardList(@RequestParam int page,
         @RequestParam int size,
-        @RequestParam String category,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @RequestParam String category) {
         PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(
-            page, size, category, userDetails.getUser());
+            page, size, category);
         return new ResponseEntity(allNoticeBoard, HttpStatus.OK);
     }
 }

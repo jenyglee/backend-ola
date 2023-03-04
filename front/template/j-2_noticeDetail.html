@@ -338,7 +338,7 @@
                         $("#username").val(username)
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             getNotice()
                         }

@@ -740,7 +740,7 @@
                         }
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             getCommunity()
                         }
@@ -805,7 +805,7 @@
                         }
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             searchTags()
                         }
@@ -842,8 +842,9 @@
                         window.location.href = "h-1_communityMain.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
+                            updateCommunity()
                         }
                     },
                 })
@@ -979,7 +980,7 @@
                         searchTags()
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             addTag(commentId)
                         }
@@ -1035,7 +1036,7 @@
                         return imageUrlList
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             imgUpload(input)
                         }

@@ -881,7 +881,7 @@
       },
       error: function (response, status, error) {
           console.log("response : ", response)
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           getCommunity(0);
         }
@@ -936,7 +936,7 @@
 
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           deleteCommunity();
         }
@@ -964,7 +964,7 @@
         createAlarm();
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           commentCreate();
         }
@@ -994,7 +994,7 @@
         console.log("알림 insert 성공")
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           createAlarm();
         }
@@ -1016,7 +1016,7 @@
         getCommunity(0);
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           commentDelete(commentId);
         }
@@ -1046,7 +1046,7 @@
         window.location.href = "h-1_communityMain.html";
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           deleteCommunityComment();
         }
@@ -1069,7 +1069,7 @@
         getCommunity(0);
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           likeCommunity();
         }
@@ -1092,7 +1092,7 @@
         getCommunity(0);
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           unlikeCommunity();
         }
@@ -1116,7 +1116,7 @@
           getCommunity(0);
         },
         error: function (response, status, error) {
-          if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+          if (response.responseJSON.status == 500) {
             regenerateToken()
             likeComment(isLike, commentId);
           }
@@ -1134,7 +1134,7 @@
           getCommunity(0);
         },
         error: function (response, status, error) {
-          if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+          if (response.responseJSON.status == 500) {
             regenerateToken()
             console.log("isLike : ", isLike)
             likeComment(isLike, commentId);
@@ -1157,7 +1157,7 @@
         getCommunity(0);
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           unlikeComment(commentId);
         }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.dto.SecurityExceptionDto;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,8 +40,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (!Objects.isNull(token)) {
                 if (!jwtUtil.validateToken(token)) {
                     response.sendError(401, "토큰이 만료되었습니다.");
+                    throw new CustomException(INVALID_TOKEN);
                 }
-
                 Authentication auth = jwtUtil.getAuthenticationByAccessToken(token);
                 String isLogout = redisTemplate.opsForValue().get(auth.getName());
 

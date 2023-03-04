@@ -50,11 +50,13 @@ public class SecurityConfig {
 //            .requestMatchers(PathRequest.toH2Console()) // h2 콘솔 테이블 사용을 허용
 
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-            .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외 -> api 나오면 수정 요함
-            .antMatchers(HttpMethod.POST,
-                "/auth/signup/admin")       //회원가입 api 필터제외 -> api 나오면 수정 요함
-            .antMatchers(HttpMethod.POST, "/auth/login")      //로그인 api 필터제외 -> api 나오면 수정 요함
-            .antMatchers(HttpMethod.POST, "/auth/logout")
+            .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/signup/admin") //어드민 회원가입 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/login")      //로그인 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/logout")     //로그아웃 api 필터제외
+            .antMatchers(HttpMethod.GET, "/boards/recommends")           //모든 게시물 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/boards/communities")           //모든 게시물 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/boards/notices")           //모든 게시물 조회 필터 제외
             .antMatchers(HttpMethod.POST, "/auth/token/regenerate");
 
     }

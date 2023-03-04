@@ -511,6 +511,7 @@
     $('#cardBody').empty();
     const accessToken = localStorage.getItem("accessToken");
 
+
     // 2. 통신해서 불러오기 2
     $.ajax({
       type: "GET",
@@ -572,41 +573,42 @@
         
         return response.data
       },error: function(response){
-          console.log("response : ", response)
-          if(response.responseJSON.message.substring(0, 11) == "JWT expired"){
+          console.log("response 가져오기 : ", response)
+          if(response.responseJSON.status == 500){
                 regenerateToken()
           }
       }
     })
   }
 
-  function regenerateToken(){
+  function regenerateToken() {
+      console.log("재발급실행")
     var refreshToken = localStorage.getItem("refreshToken")
-
     $.ajax({
-      type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
-      contentType : "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-        getRecommendList(0, 8);
-      },error: function(response){
-        console.log("에러 : ", response)
-      }
+        type: "POST",
+        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+        // url: "http://localhost:8080/auth/token/regenerate",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            refreshToken: refreshToken,
+        }),
+        success: function (response) {
+            localStorage.setItem("accessToken", response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+            console.log("재발급성공")
+            getRecommendList(0, 8)
+        },
+        error: function (response) {
+            console.log("response : ", response)
+            alert("토큰이 만료되었습니다. 로그인 페이지로 이동합니다.")
+            // window.location.href = "b-1_login.html"
+        },
     })
-  }
+}
   
 async function getImageURL(objectKey) {
     var loadData = "";
         const accessToken = localStorage.getItem("accessToken");
-        // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-        console.log("objectKey 이미지 파일이름 찍히는지 보자.");
-        console.log("objectKey : ", objectKey);
-
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
@@ -620,8 +622,6 @@ async function getImageURL(objectKey) {
             withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
           },
           success: await function (response) {
-            console.log("세번째") 
-            console.log("preSignedURL : ", response);
             loadData = response       
            
           },

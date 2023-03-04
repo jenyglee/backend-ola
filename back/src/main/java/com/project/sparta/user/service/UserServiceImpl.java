@@ -129,10 +129,7 @@ public class UserServiceImpl implements UserService {
     public void logout(TokenDto tokenRequestDto) {
 
         String resultToekn = tokenRequestDto.getAccessToken();
-
-        if (!jwtUtil.validateToken(resultToekn)) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        jwtUtil.validateToken(resultToekn);
         Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
         if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
@@ -202,9 +199,10 @@ public class UserServiceImpl implements UserService {
         String changeToken = tokenDto.getRefreshToken();
         System.out.println("changeToken = " + changeToken);
         try {
-            if (!jwtUtil.validateRefreshToken(changeToken)) {
-                throw new CustomException(INVALID_TOKEN);
-            }
+            jwtUtil.validateRefreshToken(changeToken);
+            //if (!jwtUtil.validateRefreshToken(changeToken)) {
+            //    throw new CustomException(INVALID_TOKEN);
+            //}
 
             Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(changeToken);
 

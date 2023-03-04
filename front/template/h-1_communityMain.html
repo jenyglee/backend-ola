@@ -420,11 +420,13 @@
         $.ajax({
           type: "GET",
           // TODO 
-          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
-            + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
-          beforeSend: function (xlr) {
-            xlr.setRequestHeader("Authorization", accessToken)
-          },
+        //   url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
+        //     + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
+        url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
+        + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
+        //   beforeSend: function (xlr) {
+        //     xlr.setRequestHeader("Authorization", accessToken)
+        //   },
           success: async function (response) {
             console.log("response", response);
             $('#post-list').empty();
@@ -477,12 +479,8 @@
 
     async function getImageURL(objectKey) {
         var loadData = "";
-            const accessToken = localStorage.getItem("accessToken");
-            // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
-            console.log("objectKey 이미지 파일이름 찍히는지 보자.");
-            console.log("objectKey : ", objectKey);
-
-            await $.ajax({
+        const accessToken = localStorage.getItem("accessToken");
+        await $.ajax({
             type: "GET",
             url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
             contentType: "application/json",
@@ -506,8 +504,8 @@
                 console.log(request, status, error);
                 // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
             },
-            
-            });
+        
+        });
         return loadData
     }
 

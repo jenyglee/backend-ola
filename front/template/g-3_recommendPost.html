@@ -482,7 +482,7 @@
                     error: function (response, status, error) {
                         // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
                         console.log(status, error)
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                         }
                     },
