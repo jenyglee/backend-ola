@@ -36,9 +36,9 @@ public class AdminCommunityController {
         @RequestParam String nickname,
         @RequestParam Long hashtagId,
         @RequestParam String chatStatus,
-        @RequestParam String orderByLike) {
+        @RequestParam String sort) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
-            page, size, title, contents, nickname, hashtagId, chatStatus, orderByLike);
+            page, size, title, contents, nickname, hashtagId, chatStatus, sort);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }

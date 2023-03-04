@@ -11,6 +11,6 @@ import java.util.List;
 public interface HashtagService {
     Hashtag createHashtag(String name, User user);
     void deleteHashtag(Long id, User user);
-    PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name, User user);
+    PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name);
     List<HashtagResponseDto> getFixedHashtagList();
 }

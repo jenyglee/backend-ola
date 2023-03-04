@@ -56,7 +56,8 @@ public class KakaoServiceImpl implements KakaoService {
         TokenDto tokenDto = new TokenDto(
             jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(),
                 kakaoUser.getGradeEnum(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl()),
-            refreshToken
+            refreshToken,
+            kakaoUser.getNickName()
         );
         redisTemplate.opsForValue().set(
             kakaoUser.getEmail(),

@@ -18,7 +18,6 @@
         <style>
             .container {
                 width: 1900px;
-                height: 1000px;
                 padding: 0;
                 background-color: WHITE;
                 align-items: center;
@@ -296,7 +295,7 @@
                 category = "0"
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 if (menuProfile.role == "ADMIN") {
-                    const temp = `<span>${menuProfile.nickname} 매니저</span>`
+                    const temp = `<span>${localStorage.getItem("nickname")} 매니저</span>`
                     $(manager_name).append(temp)
                 }
             })
@@ -315,7 +314,7 @@
                         window.location.href = "b-1_login.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             gotologout()
                         }
@@ -367,7 +366,7 @@
                         $("#contents").val(contents)
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             getNotice()
                         }
@@ -404,7 +403,7 @@
                         window.location.href = "n-1_manageNotice.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             updateNotice()
                         }
@@ -433,7 +432,7 @@
                         window.location.href = "n-1_manageNotice.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             deleteNotice()
                         }

@@ -201,9 +201,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     public CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname) {
         PageRequest pageRequest = PageRequest.of(commentPage, commentSize);
-
         CommunityBoardOneResponseDto communityBoard = boardRepository.getBoard(boardId, pageRequest, nickname);
-
         return communityBoard;
     }
 

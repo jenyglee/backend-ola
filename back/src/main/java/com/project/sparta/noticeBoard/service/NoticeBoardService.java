@@ -18,9 +18,9 @@ public interface NoticeBoardService {
 
      void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user);  //공지글 수정
 
-     NoticeBoardResponseDto getNoticeBoard(Long id, User user);       //공지글 단건조회
+     NoticeBoardResponseDto getNoticeBoard(Long id);       //공지글 단건조회
 
-     PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, String category, User user);        //공지글 전체조회
+     PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, String category);        //공지글 전체조회
 
 
 }

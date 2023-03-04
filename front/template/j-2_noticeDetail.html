@@ -48,67 +48,16 @@
 <!-- ############# 네비게이션 #############-->
 <header class="menu">
   <div class="bg-line"></div>
-  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+  <div class="logo-wrap" style="cursor: pointer" onclick="moveMainPage()">
     <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
   </div>
   <div class="item-list">
     <a href="./g-1_recommend.html">코스추천</a>
     <a href="h-1_communityMain.html">커뮤니티</a>
     <a href="./i-1_shopMain.html">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
+    <a href="./j-1_noticeMain.html" style="font-weight: bold; color: #f46b3f">공지사항</a>
   </div>
-  <div class="right" style="margin-top: 10px">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png"/>
-      </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
-                   style="width: 240px; height: 40px">
-          </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
-                    style="height: 40px;">검색
-            </button>
-          </div>
-        </div>
-
-        <div class="friend-div">
-          <ul class="friend-list-3"></ul>
-
-
-          <ul class="friend-list-1">
-            <p class="recommend-title">내 친구목록</p>
-          </ul>
-
-          <div class="line"></div>
-
-          <ul class="friend-list-2">
-            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p style="margin-bottom: 10px">알람</p>
-        <ul id="alarm">
-
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
-       href="./f-1_myPage.html">
-    </a>
-    <!--          <div class="img-wrap">-->
-    <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
-    <!--          </div>-->
-    <!--          <p class="text">나와바리나와바님</p>-->
+  <div class="right">
   </div>
 </header>
 
@@ -149,26 +98,95 @@
 
 <script>
   $(document).ready(function () {
-    $(".friend-dropbox").hide()
-    $(".bell-dropbox").hide()
+    checkLogin();
     getMenuProfile()
+    getNotice()
     myFriedList();
     recommendFriedList();
     selectAlarm();
+    $(".friend-dropbox").hide()
+    $(".bell-dropbox").hide()
   })
+
+  function checkLogin() {
+    const nickname = localStorage.getItem("nickname")
+
+    if (nickname != null) {
+      const result = `<div class="friend">
+                                <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                                    <img class="img" src="./../static/img/icon_friends.png"/>
+                                </div>
+                                <div class="friend-dropbox">
+                                    <div class="search-area">
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
+                                                   style="width: 240px; height: 40px">
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
+                                                    style="height: 40px;">검색
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="friend-div">
+                                        <ul class="friend-list-3"></ul>
+
+
+                                        <ul class="friend-list-1">
+                                            <p class="recommend-title">내 친구목록</p>
+                                        </ul>
+
+                                        <div class="line"></div>
+
+                                        <ul class="friend-list-2">
+                                            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bell">
+                                <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                                    <img class="img" src="./../static/img/icon_bell.png"/>
+                                </div>
+                                <div class="bell-dropbox">
+                                    <p style="margin-bottom: 10px">알람</p>
+                                    <ul id="alarm">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
+                               href="./f-1_myPage.html">
+                            </a>`;
+
+      $(".right").append(result);
+    } else {
+      const result = `<div class="my-profile-wrap">
+                                    <div class="img-wrap">
+                                        <img class="img" src="./../static/img/icon_profile_default.png " />
+                                    </div>
+                                    <p class="text">로그인 해주세요</p>
+                                </div>`
+
+      $(".right").append(result);
+    }
+  }
 
   function getMenuProfile() {
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+    const nickname = localStorage.getItem("nickname")
+
     var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${
+                    <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${
         menuProfile.profileImage
             ? menuProfile.profileImage
             : "./../static/img/icon_profile_default.png"
     } alt="프로필사진"/>
-          </div>
-          <p class="text">${menuProfile.nickname}님</p>
-`
+                    </div>
+                    <p class="text">${nickname}님</p>
+            `
     $("#my-profile").append(tempProfile)
   }
 
@@ -185,17 +203,15 @@
     $(".friend-div").empty();
 
     let result = `<ul class="friend-list-3"></ul>
+                              <ul class="friend-list-1">
+                                <p class="recommend-title">내 친구목록</p>
+                              </ul>
 
+                              <div class="line"></div>
 
-          <ul class="friend-list-1">
-            <p class="recommend-title">내 친구목록</p>
-          </ul>
-
-          <div class="line"></div>
-
-          <ul class="friend-list-2">
-            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
-          </ul>`
+                              <ul class="friend-list-2">
+                                <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+                              </ul>`
 
     $(".friend-div").append(result);
     myFriedList();
@@ -238,7 +254,7 @@
         $("#username").val(username)
       },
       error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+        if (response.responseJSON.status == 500) {
           regenerateToken()
           getNotice()
         }
@@ -266,6 +282,17 @@
     })
   }
 
+  window.ga = function () {
+    ga.q.push(arguments)
+  }
+  ga.q = []
+  ga.l = +new Date()
+  ga("create", "UA-XXXXX-Y", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("set", "transport", "beacon")
+  ga("send", "pageview")
+
+  //친구 검색
   function searchFriend() {
     let targetNickname = $("#searchNickName").val();
     const accessToken = localStorage.getItem("accessToken")
@@ -327,6 +354,7 @@
     });
   }
 
+  //추천 친구 리스트
   function recommendFriedList() {
     const accessToken = localStorage.getItem("accessToken")
 
@@ -383,6 +411,7 @@
     });
   }
 
+  //내 친구 리스트
   function myFriedList() {
     const accessToken = localStorage.getItem("accessToken")
 
@@ -437,6 +466,7 @@
     });
   }
 
+  //친구 추가
   function addFriend(targetId) {
     const accessToken = localStorage.getItem("accessToken")
 
@@ -496,9 +526,9 @@
   //알림 조회
   function selectAlarm() {
     const accessToken = localStorage.getItem("accessToken")
-
     $.ajax({
       type: "GET",
+      contentType: "application/json",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
@@ -513,6 +543,7 @@
           result = `<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
           $("#alarm").append(result);
         }
+
         for (var i = 0; i < response.data.length; i++) {
 
           board_Id = response.data[i].boardId;
@@ -539,7 +570,6 @@
   //알람 읽음 상태로 변경
   function updateAlarmStats(alarmId) {
     const accessToken = localStorage.getItem("accessToken")
-
     $.ajax({
       type: "PATCH",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
@@ -561,15 +591,27 @@
     location.replace('h-2_communityDetail.html');
   }
 
-  window.ga = function () {
-    ga.q.push(arguments)
+  function roomMemberCnt(communityId) {
+    const accessToken = localStorage.getItem("accessToken")
+    $.ajax({
+      type: "GET",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+          + communityId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success: function (response) {
+
+        console.log(response)
+
+        $(".post-text").empty();
+
+        let crew = `<div>크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+
+        $(".post-text").append(crew);
+      }
+    })
   }
-  ga.q = []
-  ga.l = +new Date()
-  ga("create", "UA-XXXXX-Y", "auto")
-  ga("set", "anonymizeIp", true)
-  ga("set", "transport", "beacon")
-  ga("send", "pageview")
 
   function moveMainPage() {
     window.location = "./../index.html"

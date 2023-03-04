@@ -262,7 +262,7 @@
                 <div
                     style="
                         width: 300px;
-                        height: 100vh;
+                        height: auto;
                         padding-top: 100px;
                         padding-left: 50px;
                         background-color: #f46b3f;
@@ -310,7 +310,7 @@
                         >
                     </div>
                 </div>
-                <section style="margin-left: 100px; margin-top: 100px">
+                <section style="margin-left: 100px; margin-top: 100px; padding-bottom: 100px">
                     <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">제목</p>
                     <div style="margin-bottom: 30px">
                         <input
@@ -358,7 +358,7 @@
                             placeholder="주소를 입력하세요"
                         />
                     </div>
-                    <div style="margin-bottom: 50px">
+                    <div style="margin-bottom: 30px">
                         <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">내용</p>
                         <textarea
                             class="form-control"
@@ -367,7 +367,21 @@
                             placeholder="내용을 입력하세요"
                         ></textarea>
                     </div>
-                    <div>
+                    <form method="post" enctype="multipart/form-data" style="margin-bottom: 5px">
+                        <input
+                            type="file"
+                            id="chooseFile"
+                            class="form-control"
+                            name="fileName"
+                            accept="image/*"
+                            multiple
+                            onchange="imgPresignedURL()"
+                        />
+                    </form>
+                    <div id="img-wrap" style="display: flex; gap: 5px">
+                        <!-- 이미지 들어가는 자리 -->
+                    </div>
+                    <div style="margin-top: 50px">
                         <button type="button" id="btn_1" onclick="deleteRecommend()">삭제</button>
                         <button type="button" id="btn_2" onclick="updateRecommend()">수정</button>
                         <button type="button" id="btn_3" onclick="listRecommend()">목록</button>
@@ -380,7 +394,7 @@
                 getRecommend(0, "")
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 if (menuProfile.role == "ADMIN") {
-                    const temp = `<span>${menuProfile.nickname} 매니저</span>`
+                    const temp = `<span>${localStorage.getItem("nickname")} 매니저</span>`
                     $(manager_name).append(temp)
                 }
             })
@@ -403,7 +417,7 @@
                         window.location.href = "b-1_login.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             gotologout()
                         }
@@ -411,7 +425,7 @@
                 })
             }
 
-            function getRecommend() {
+            async function getRecommend() {
                 const id = localStorage.getItem("recommendId")
                 $.ajax({
                     type: "GET",
@@ -422,7 +436,7 @@
                     // data: {
                     //   name: "sasas",
                     // },
-                    success: function (response) {
+                    success: async function (response) {
                         console.log("response : ", response)
                         // 카테고리가 영어로 들어와서 한글로 반환
 
@@ -432,9 +446,30 @@
                         $("#contents").val(response.contents)
                         $("#season").val(response.season)
                         $("#address").val(response.region)
+
+                        //사진넣기
+                        for (let i = 0; i < response.imgList.length; i++) {
+                            var imgUrl = ""
+                            if (response.imgList[i]) {
+                                imgUrl = await getImageURL(response.imgList[i])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
+                            var tempImage = `
+                                      <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                                          <img src=${imgUrl} alt="커뮤니티 사진" style="height: 100%" />
+                                          <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                          onclick="removeImage(${i})" />
+                                          <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                                          </div>
+                                      </div>
+                                  `
+                            $("#img-wrap").append(tempImage)
+                            imageUrlList.push(response.imgList[i])
+                        }
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             getRecommend()
                         }
@@ -442,12 +477,132 @@
                 })
             }
 
+
+            //이미지경로리스트 전역변수 지정.
+            var imageUrlList = []
+            const imageInput = $("#chooseFile")[0]
+            var imgName = ""
+
+            function imgPresignedURL(input) {
+                const accessToken = localStorage.getItem("accessToken")
+                $.ajax({
+                    type: "POST",
+                    url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                    // url: `http://localhost:8080/s3/preSignedURL`,
+                    // dataType: "text",
+                    enctype: "multipart/form-data",
+                    // contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    // data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                    data: imageInput.files[0].name,
+
+                    // xhrFields: {
+                    //     withCredentials: true, // 클라이언트와 서버가 통4신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    // },
+                    success: function (response) {
+                        console.log("preSignedURL : ", response)
+                        imageUpload(response)
+                        imageUrlList.push(response.imageName)
+                        console.log("imageUrlList : ", imageUrlList)
+                        // put 으로 이미지 넘기는 함수 실행
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+            }
+
+            function imageUpload(presignedURLObject) {
+                const accessToken = localStorage.getItem("accessToken")
+                var file = $("#chooseFile")[0].files[0]
+
+                $.ajax({
+                    type: "PUT",
+                    url: presignedURLObject.preSignedURL,
+                    contentType: "image/png",
+                    processData: false,
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
+                    data: file,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: function (response) {
+                        console.log("response : ")
+                        console.log("이미지 수정완료 : ")
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+            }
+
+
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
+            }
+
+            async function removeImage(index) {
+                imageUrlList.splice(index, 1)
+                $("#img-wrap").empty()
+                for (let i = 0; i < imageUrlList.length; i++) {
+                    var imgUrl = await getImageURL(imageUrlList[i])
+                    var temp = `
+                              <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                              <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                              <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                  onclick="removeImage(${i})"
+                              >
+                                  <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                              </div>
+                              </div>
+                          `
+                    $("#img-wrap").append(temp)
+                }
+            }
+
+
             function updateRecommend() {
                 const id = localStorage.getItem("recommendId")
                 // console.log("$(\"#title\").val() : ", $("#title").val())
                 // console.log("$(\"#contents\").val() : ", $("#contents").val())
                 // console.log("category : ", category)
                 // console.log("id : ", id)
+                console.log("imageUrlList : ", imageUrlList)
                 $.ajax({
                     type: "PATCH",
                     url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/recommends/${id}`,
@@ -463,18 +618,14 @@
                         contents: $("#contents").val(),
                         season: $("#season").val(),
                         region: $("#address").val(),
-                        imgList: [
-                            "https://t1.daumcdn.net/news/202302/11/daejonilbo/20230211140734415bxqm.jpg",
-                            "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
-                            "https://img1.daumcdn.net/thumb/R300x0/?fname=https://blog.kakaocdn.net/dn/AZY2s/btrLK0upn3G/Wax6UkfTzKXZ6f2wd5AAXk/img.jpg",
-                        ],
+                        imgList: imageUrlList,
                     }),
                     success: function (response) {
                         alert("수정 완료")
                         window.location.href = "l-1_manageRecommend.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             updateRecommend()
                         }
@@ -502,7 +653,7 @@
                         window.location.href = "l-1_manageRecommend.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             deleteRecommend()
                         }

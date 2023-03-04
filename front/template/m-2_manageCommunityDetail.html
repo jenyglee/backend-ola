@@ -215,6 +215,42 @@
                 width: 1500px;
                 height: 80px;
             }
+            .inputLabel {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            #btn_search,
+            #btn_add{
+                width: 100px;
+                height: 100%;
+                border: 1px solid white;
+                color: white;
+                background-color: #f46b3f;
+                border-radius: 5px;
+            }
+
+            #tag-search-input {
+                width: 200px;
+            }
+
+            .tag-select-box .item {
+                width: 100%;
+                margin-bottom: 10px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .tag-select-box {
+                width: 370px;
+                height: 200px;
+                padding: 20px 20px 0;
+                overflow: scroll;
+                background-color: white;
+                border: 1px solid #ced4da;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
 
             #btn_1 {
                 width: 180px;
@@ -256,13 +292,13 @@
                 <div
                     style="
                         width: 300px;
-                        height: 100vh;
+                        height: auto;
                         padding-top: 100px;
                         padding-left: 50px;
                         background-color: #f46b3f;
                     "
                 >
-                    <div style="">
+                    <div>
                         <div style="font-size: 26px; color: white" id="manager_name"></div>
 
                         <button
@@ -283,7 +319,7 @@
                         </button>
                     </div>
 
-                    <div style="margin-top: 100px">
+                    <div style="margin-top: 100px;">
                         <a style="text-decoration: none; color: white" href="./k-1_manageUser.html"
                             >회원관리</a
                         ><br /><br />
@@ -304,7 +340,7 @@
                         >
                     </div>
                 </div>
-                <section style="margin-left: 100px; margin-top: 100px">
+                <section style="margin-left: 100px; margin-top: 100px; padding-bottom: 100px">
                     <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">제목</p>
                     <div style="margin-bottom: 30px">
                         <input
@@ -323,51 +359,91 @@
                             placeholder="내용을 입력하세요"
                         ></textarea>
                     </div>
-                    <div style="margin-bottom: 30px">
-                        <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">
-                            이미지
+                    <div class="w_8" style="margin-top: 30px">
+                        <!--      <input-->
+                        <!--          class="form-control"-->
+                        <!--          type="file"-->
+                        <!--          id="formFileMultiple"-->
+                        <!--          multiple-->
+                        <!--      />-->
+                        <form method="post" enctype="multipart/form-data" style="margin-bottom: 5px;">
+                            <input
+                                type="file"
+                                id="chooseFile"
+                                class="form-control"
+                                name="chooseFile"
+                                accept="image/*"
+                                multiple
+                                onchange="imgPresignedURL()"
+                            />
+                        </form>
+                        <div id="img-wrap" style="display: flex; gap: 5px">
+                            <!-- 이미지 들어가는 자리 -->
+                        </div>
+                    </div>
+                    <div style="display: flex; height: 35px; align-items: center; margin-top: 20px">
+                        <p class="inputLabel" style="margin-right: 20px">태그</p>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tag-search-input"
+                            style="height: 100%; margin-right: 10px; margin-bottom: 0"
+                            placeholder="태그를 입력하세요"
+                        />
+                        <button id="btn_search" type="button" onclick="searchTags()">검색</button>
+                        <div id="tag-select-list" style="display: flex; margin-left: 20px"></div>
+                        <p
+                            style="
+                            margin: 0;
+                            font-size: 12px;
+                            font-weight: bold;
+                            color: #f46b3f;
+                            margin-left: 10px;
+                            cursor: pointer;
+                        "
+                            onclick="removeTag()"
+                        >
+                            전체 지우기
                         </p>
-                        <div id="img_list"></div>
                     </div>
-                    <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px">태그</p>
-                    <div style="margin-bottom: 30px">
+                    <ul class="tag-select-box">
+                        <!--      <li class="item">봄산</li>-->
+                        <!--      <li class="item">봄산</li>-->
+                        <!--      <li class="item">봄산</li>-->
+                    </ul>
+                    <p class="inputLabel" style="margin-right: 20px">태그 직접 추가</p>
+                    <div style="display: flex">
                         <input
                             type="text"
                             class="form-control"
-                            id="tag1"
-                            placeholder="태그명을 입력하세요"
-                            style="margin-bottom: 5px"
+                            id="tag-add"
+                            style="width: 250px; height: 100%; margin-right: 10px; margin-bottom: 0"
+                            placeholder="태그를 입력하세요"
                         />
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="tag2"
-                            placeholder="태그명을 입력하세요"
-                            style="margin-bottom: 5px"
-                        />
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="tag3"
-                            placeholder="태그명을 입력하세요"
-                            style="margin-bottom: 5px"
-                        />
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="tag4"
-                            placeholder="태그명을 입력하세요"
-                            style="margin-bottom: 5px"
-                        />
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="tag5"
-                            placeholder="태그명을 입력하세요"
-                            style="margin-bottom: 5px"
-                        />
+                        <button id="btn_add" type="button" onclick="addTag()">추가</button>
                     </div>
-                    <div>
+                    <div class="form-check" style="margin-top: 40px">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexCheckDefault"
+                            value="Y"
+                        />
+                        <label class="form-check-label" for="flexCheckDefault"> 크루원 구하기 </label>
+                        <p style="font-size: 12px; font-weight: bold">
+                            참여 인원 :
+                            <input
+                                class="chatCnt-input"
+                                type="number"
+                                max="10"
+                                min="0"
+                                id="chatCnt-input"
+                                style="width: 50px"
+                                placeholder="0"
+                            />명 (※최소 인원 2명/최대 인원 10명)
+                        </p>
+                    </div>
+                    <div style="margin-top: 40px">
                         <button type="button" id="btn_1" onclick="deleteCommunity()">삭제</button>
                         <button type="button" id="btn_2" onclick="updateCommunity()">수정</button>
                         <button type="button" id="btn_3" onclick="listCommunity()">목록</button>
@@ -377,43 +453,34 @@
         </main>
     </body>
     <script>
-        let Listtag = []
-        let temp_img = []
+        let selectTags =[]
 
         $(document).ready(function () {
             getCommunity()
             var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
             if (menuProfile.role == "ADMIN") {
-                const temp = `<span>${menuProfile.nickname} 매니저</span>`
+                const temp = `<span>${localStorage.getItem("nickname")} 매니저</span>`
                 $(manager_name).append(temp)
             }
+            searchTags()
         })
-        function gotologout() {
-            const accessToken = localStorage.getItem("accessToken")
-            $.ajax({
-                type: "POST",
-                url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
-                    accessToken: accessToken,
-                }),
-                success: function (response) {
-                    alert("로그아웃 되었습니다.")
-                    window.location.href = "b-1_login.html"
-                },
-                error: function (response, status, error) {
-                    if (response.responseJSON.httpStatus === "BAD_REQUEST") {
-                        regenerateToken()
-                        gotologout()
-                    }
-                },
-            })
-        }
+
+        $(".form-check-input").on("click", function () {
+            var checked = $(".form-check-input").is(":checked")
+            if (checked) {
+                $(".chatCnt-input").attr("disabled", false)
+                $(".chatCnt-input").focus()
+            } else {
+                $(".chatCnt-input").val("0")
+                $(".chatCnt-input").attr("disabled", true)
+                $("#flexCheckDefault").val("N")
+            }
+        })
         function listCommunity() {
             window.location.href = "m-1_manageCommunity.html"
         }
 
-        function getCommunity() {
+        async function getCommunity() {
             const id = localStorage.getItem("communityId")
             $.ajax({
                 type: "GET",
@@ -424,32 +491,56 @@
                 beforeSend: function (xlr) {
                     xlr.setRequestHeader("Authorization", localStorage.getItem("accessToken"))
                 },
-                success: function (response) {
+                success: async function (response) {
                     console.log("response : ", response)
-                    // 카테고리가 영어로 들어와서 한글로 반환
-
                     $("#title").val(response.title)
                     $("#contents").val(response.contents)
-                    for (let i = 0; i < response.tagList.length; i++) {
-                        console.log(response.tagList[i].name)
-                        $("#tag" + (i + 1)).val(response.tagList[i].name)
-                        Listtag.push(response.tagList[i].id)
-                    }
 
+                    // 사진 넣기
                     for (let i = 0; i < response.imgList.length; i++) {
-                        temp_img[i] = response.imgList[i]
-                        const temp = `<img style = "width: 50%" id="img_list${i}" src=${temp_img[i]}>`
-                        $("#img_list").append(temp)
+                        var imgUrl = ""
+                        if (response.imgList[i]) {
+                            imgUrl = await getImageURL(response.imgList[i])
+                        } else {
+                            imgUrl = "./../static/img/mountain-default.png"
+                        }
+                        var temp = `
+                                <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                                <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                                <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                                    onclick="removeImage(${i})" />
+                                    <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                                </div>
+                                </div>
+                            `
+                        $("#img-wrap").append(temp)
+                        imageUrlList.push(response.imgList[i]) // [url]
                     }
 
-                    // for(let i=0;i<response.imgList.length;i++)
-                    // {
-                    //     console.log(response.imgList[i])
-                    //     $('#img'+i+1).src(response.imgList[i])
-                    // }
+                    // 태그 넣기
+                    for (let i = 0; i < response.tagList.length; i++) {
+                        var temp = `
+                                <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                                  ${response.tagList[i].id}<span> ${response.tagList[i].name}</span>
+                                </div>
+                            `
+                        $("#tag-select-list").append(temp)
+                        selectTags.push({
+                            id : response.tagList[i].id,
+                            name : response.tagList[i].name
+                        })
+                    }
+
+                    if (response.chatStatus == "Y") {
+                        $("#flexCheckDefault").prop("checked", true)
+                        $("#chatCnt-input").val(response.chatMemCnt)
+                    } else {
+                        $("#flexCheckDefault").prop("checked", false)
+                        $("#chatCnt-input").val("")
+                    }
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         getCommunity()
                     }
@@ -457,14 +548,255 @@
             })
         }
 
+        //이미지경로리스트 전역변수 지정.
+        var imageUrlList = []
+        const imageInput = $("#chooseFile")[0]
+        var imgName = ""
+
+        function imgPresignedURL(input) {
+            const accessToken = localStorage.getItem("accessToken")
+            // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.]
+            // console.log("input.name 인풋 파일이름 찍히는지 보자.")
+            // console.log("input.name : ", imageInput.files[0].name)
+            // console.log("$('#chooseFile'): ", $("#chooseFile"))
+            // console.log("$('#chooseFile').files: ", $("#chooseFile")[0].files)
+
+            $.ajax({
+                type: "POST",
+                url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/preSignedURL`,
+                // url: `http://localhost:8080/s3/preSignedURL`,
+                // dataType: "text",
+                enctype: "multipart/form-data",
+                // contentType: "application/json; charset=utf-8",
+                processData: false,
+                contentType: false,
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", accessToken);
+                },
+                // data: JSON.stringify({ fileName: imageInput.files[0].name }),
+                data: imageInput.files[0].name,
+
+
+                // xhrFields: {
+                //     withCredentials: true, // 클라이언트와 서버가 통4신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                // },
+                success: function (response) {
+                    console.log("preSignedURL : ", response)
+                    imageUpload(response)
+                    imageUrlList.push(response.imageName)
+                    console.log("imageUrlList : ", imageUrlList)
+                    // put 으로 이미지 넘기는 함수 실행
+                },
+                error: function (request, status, error) {
+                    console.log("에러난다..!")
+                    console.log(request, status, error)
+                    // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                },
+            })
+        }
+
+        function imageUpload(presignedURLObject) {
+            const accessToken = localStorage.getItem("accessToken")
+            var file = $("#chooseFile")[0].files[0]
+
+            $.ajax({
+                type: "PUT",
+                url: presignedURLObject.preSignedURL,
+                contentType: 'image/png',
+                processData: false,
+                // beforeSend: function (xlr) {
+                //     xlr.setRequestHeader("Authorization", accessToken)
+                // },
+                data: file,
+                xhrFields: {
+                    withCredentials: false,  // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                },
+                success: function (response) {
+                    console.log("response : ")
+                    console.log("이미지 수정완료 : ")
+
+                },
+                error: function (request, status, error) {
+                    console.log("에러난다..!")
+                    console.log(request, status, error)
+                    // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                },
+            })
+        }
+
+        async function removeImage(index) {
+            imageUrlList.splice(index, 1)
+            $("#img-wrap").empty()
+            for (let i = 0; i < imageUrlList.length; i++) {
+                var imgUrl = await getImageURL(imageUrlList[i]);
+                var temp = `
+                        <div style="width: 300px; height: 185px; overflow: hidden; position: relative; margin-bottom: 10px">
+                        <img src=${imgUrl} alt="커뮤니티 사진" style="width: 100%" />
+                        <div style="width: 30px; height: 30px; background-color: #222222; border-radius: 50%; position: absolute; top: 15px; right: 15px; color: white; cursor: pointer"
+                            onclick="removeImage(${i})"
+                        >
+                            <span style="width: 100%; margin-left: 10px; line-height: 30px">X</span>
+                        </div>
+                        </div>
+                    `
+                $("#img-wrap").append(temp)
+            }
+        }
+
+        async function getImageURL(objectKey) {
+            var loadData = ""
+            const accessToken = localStorage.getItem("accessToken")
+            // 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
+            console.log("objectKey 이미지 파일이름 찍히는지 보자.")
+            console.log("objectKey : ", objectKey)
+
+            await $.ajax({
+                type: "GET",
+                url:
+                    "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                    objectKey,
+                contentType: "application/json",
+                processData: false,
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", accessToken)
+                },
+                data: objectKey,
+                xhrFields: {
+                    withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                },
+                success: await function (response) {
+                    console.log("세번째")
+                    console.log("preSignedURL : ", response)
+                    loadData = response
+                },
+                error: function (request, status, error) {
+                    console.log("에러난다..!")
+                    console.log(request, status, error)
+                    // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                },
+            })
+            return loadData
+        }
+
+        var searchedTags = [];
+        function searchTags() {
+            const accessToken = localStorage.getItem("accessToken")
+            var tagName = $("#tag-search-input").val()
+            $.ajax({
+                type: "GET",
+                url:
+                    "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?offset=0&limit=20&name=" +
+                    tagName,
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", accessToken)
+                },
+                success: function (response) {
+                    console.log("response : ", response)
+                    searchedTags = response.data;
+                    $(".tag-select-box").empty()
+                    for (let i = 0; i < response.data.length; i++) {
+                        var temp = `
+                              <li class="item" onclick="addTagList(${response.data[i].id})">${response.data[i].id} : ${response.data[i].name}</li>
+                            `
+                        $(".tag-select-box").append(temp)
+                    }
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.status == 500) {
+                        regenerateToken()
+                        searchTags()
+                    }
+                },
+            })
+        }
+
+
+        function addTagList(id) {
+            console.log("tagId : ",id)
+            for (let i = 0; i < selectTags.length; i++) {
+                if (selectTags[i].id == id) {
+                    alert("이미 선택했습니다.")
+                    return
+                }
+            }
+            for (let i=0; i<searchedTags.length; i++){
+                if(searchedTags[i].id == id){
+                    selectTags.push({
+                        id : searchedTags[i].id,
+                        name : searchedTags[i].name
+                    })
+                }
+            }
+
+            $("#tag-select-list").empty()
+            for (let i = 0; i < selectTags.length; i++) {
+                var temp = `
+                    <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                      ${selectTags[i].id} ${selectTags[i].name}
+                    </div>
+                  `
+                $("#tag-select-list").append(temp)
+            }
+        }
+
+        function addTag() {
+            const accessToken = localStorage.getItem("accessToken")
+            $.ajax({
+                type: "POST",
+                url:
+                    "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/hashtags?name=" +
+                    $("#tag-add").val(),
+                beforeSend: function (xlr) {
+                    xlr.setRequestHeader("Authorization", accessToken)
+                },
+                success: function (response) {
+                    alert("추가 완료")
+                    $("#tag-add").empty()
+                    searchTags()
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.status == 500) {
+                        regenerateToken()
+                        addTag(commentId)
+                    }
+                },
+            })
+        }
+        function removeTag() {
+            selectTags = []
+            $("#tag-select-list").empty()
+        }
+
         function updateCommunity() {
             const id = localStorage.getItem("communityId")
-            // console.log("$(\"#title\").val() : ", $("#title").val())
-            // console.log("$(\"#contents\").val() : ", $("#contents").val())
-            // console.log("category : ", category)
-            // console.log("id : ", id)
+            var chatStatus = $(".form-check-input:checked").val()
 
-            console.log(Listtag)
+            if (chatStatus == "Y") {
+                if ($(".chatCnt-input").val() == 0) {
+                    alert("크루 참여 인원을 작성해주세요.")
+                    return
+                } else if ($(".chatCnt-input").val() == 1) {
+                    alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
+                    $(".chatCnt-input").val("")
+                    $(".chatCnt-input").focus()
+                    return
+                } else if ($(".chatCnt-input").val() > 10) {
+                    alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
+                    $(".chatCnt-input").val("")
+                    $(".chatCnt-input").focus()
+                    return
+                }
+            } else {
+                chatStatus = "N"
+            }
+
+            var chatMemCnt = $(".chatCnt-input").val()
+
+            var tagIds = []
+            for (let i=0; i<selectTags.length; i++){
+                tagIds.push(selectTags[i].id)
+            }
+            console.log("imageUrlList : ", imageUrlList)
             $.ajax({
                 type: "PATCH",
                 url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/communities/${id}`,
@@ -476,17 +808,17 @@
                 data: JSON.stringify({
                     title: $("#title").val(),
                     contents: $("#contents").val(),
-                    chatStatus: "N",
-                    chatMemCnt: 0,
-                    tagList: Listtag,
-                    imgList: temp_img,
+                    chatStatus: chatStatus,
+                    chatMemCnt: chatMemCnt,
+                    tagList: tagIds,
+                    imgList: imageUrlList,
                 }),
                 success: function (response) {
                     alert("수정 완료")
                     window.location.href = "m-1_manageCommunity.html"
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         updateCommunity()
                     }
@@ -514,7 +846,7 @@
                     window.location.href = "m-1_manageCommunity.html"
                 },
                 error: function (response, status, error) {
-                    if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                    if (response.responseJSON.status == 500) {
                         regenerateToken()
                         deleteCommunity()
                     }
@@ -538,6 +870,28 @@
                 },
                 error: function (response) {
                     console.log("에러 : ", response)
+                },
+            })
+        }
+
+        function gotologout() {
+            const accessToken = localStorage.getItem("accessToken")
+            $.ajax({
+                type: "POST",
+                url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/logout",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    accessToken: accessToken,
+                }),
+                success: function (response) {
+                    alert("로그아웃 되었습니다.")
+                    window.location.href = "b-1_login.html"
+                },
+                error: function (response, status, error) {
+                    if (response.responseJSON.status == 500) {
+                        regenerateToken()
+                        gotologout()
+                    }
                 },
             })
         }

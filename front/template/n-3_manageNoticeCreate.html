@@ -312,7 +312,7 @@
                         window.location.href = "n-1_manageNotice.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             postNotice()
                         }
@@ -333,7 +333,7 @@
                         window.location.href = "b-1_login.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             gotologout()
                         }

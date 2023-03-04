@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="manifest" href="site.webmanifest"/>
-  <link rel="apple-touch-icon" href="icon.png"/>
-  <!-- Place favicon.ico in the root directory -->
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="../css/normalize.css"/>
-  <link rel="stylesheet" href="../css/main.css"/>
-  <link rel="stylesheet" href="../css/reset.css"/>
-  <link rel="stylesheet" href="../css/menu.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <meta name="theme-color" content="#fafafa"/>
-  <link
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/menu.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="theme-color" content="#fafafa" />
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
-  />
-  <title>올라 코스추천</title>
-  <style>
-    .container {
-      width: 1200px;
-      padding: 0;
-      margin-top: 100px;
-      margin-bottom: 100px;
-    }
+    />
+    <title>올라 코스추천</title>
+    <style>
+      .container {
+        width: 1200px;
+        padding: 0;
+        margin-top: 100px;
+        margin-bottom: 100px;
+      }
 
-    .w_1 {
-      width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 50px;
-    }
+      .w_1 {
+        width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+      }
 
-    .w_1 .score {
-      font-size: 24px;
-    }
+      .w_1 .score {
+          font-size: 24px;
+      }
 
-    .w_1 .title {
-      font-size: 50px;
-      font-weight: bold;
-    }
+      .w_1 .title{
+          font-size: 50px;
+          font-weight: bold;
+      }
 
-    .w_1 .season {
-      font-size: 30px;
-    }
+      .w_1 .season{
+          font-size: 30px;
+      }
 
-    .w_1 .above {
-      font-size: 24px;
-    }
+      .w_1 .above{
+          font-size: 24px;
+      }
 
-    .w_3 {
-      margin-bottom: 100px;
-    }
+      .w_3 {
+        margin-bottom: 100px;
+      }
 
-    .like-title {
+      .like-title {
       /*width: 70px;*/
       margin-right: 20px;
       height: 50px;
@@ -67,273 +67,292 @@
     }
 
 
-    .address {
-      margin-bottom: 50px;
-    }
 
-    .w_1_1 {
-      width: 1200px;
-      height: 33px;
-    }
+      .address{
+          margin-bottom: 50px;
+      }
 
-    .btns {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 100px;
-    }
+      .w_1_1 {
+        width: 1200px;
+        height: 33px;
+      }
 
-    .btns > button {
-      width: 160px;
-      height: 50px;
-      margin-left: 10px;
-      background-color: white;
-      border: 1px solid #f46b3f;
-      color: #f46b3f;
-    }
+      .btns {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 100px;
+      }
+      .btns > button {
+        width: 160px;
+        height: 50px;
+        margin-left: 10px;
+        background-color: white;
+        border: 1px solid #f46b3f;
+        color: #f46b3f;
+      }
 
-    .btns > button:hover {
-      background-color: #f46b3f;
-      border: none;
-      color: white;
-    }
+      .btns > button:hover {
+        background-color: #f46b3f;
+        border: none;
+        color: white;
+      }
 
-    .disable {
-      border: 1px solid #E4E4E4;
-      background-color: #F1F1F1;
-      color: #ADADAD;
-    }
-  </style>
-</head>
-<body>
-<!-- ############# 네비게이션 #############-->
-<header class="menu">
-  <div class="bg-line"></div>
-  <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
-    <img class="img" src="./../static/img/logo_main.png" alt="로고"/>
-  </div>
-  <div class="item-list">
-    <a href="./g-1_recommend.html">코스추천</a>
-    <a href="h-1_communityMain.html">커뮤니티</a>
-    <a href="./i-1_shopMain.html">쇼핑몰</a>
-    <a href="./j-1_noticeMain.html">공지사항</a>
-  </div>
-  <div class="right" style="margin-top: 10px">
-    <div class="friend">
-      <div class="icon-friend" onclick="handleToggleFriendDropBox()">
-        <img class="img" src="./../static/img/icon_friends.png"/>
+      .disable {
+          border: 1px solid #E4E4E4;
+          background-color: #F1F1F1;
+          color: #ADADAD;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ############# 네비게이션 #############-->
+    <header class="menu">
+      <div class="bg-line"></div>
+      <div class="logo-wrap" style="cursor: pointer;" onclick="moveMainPage()">
+        <img class="img" src="./../static/img/logo_main.png" alt="로고" />
       </div>
-      <div class="friend-dropbox">
-        <div class="search-area">
-          <div class="mb-3">
-            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
-                   style="width: 240px; height: 40px">
-          </div>
-          <div class="btn-wrap">
-            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
-                    style="height: 40px;">검색
-            </button>
-          </div>
-        </div>
-
-        <div class="friend-div">
-          <ul class="friend-list-3"></ul>
-
-
-          <ul class="friend-list-1">
-            <p class="recommend-title">내 친구목록</p>
-          </ul>
-
-          <div class="line"></div>
-
-          <ul class="friend-list-2">
-            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
-          </ul>
-        </div>
+      <div class="item-list">
+        <a href="./g-1_recommend.html" style="font-weight: bold; color: #f46b3f">코스추천</a>
+        <a href="h-1_communityMain.html">커뮤니티</a>
+        <a href="./i-1_shopMain.html">쇼핑몰</a>
+        <a href="./j-1_noticeMain.html">공지사항</a>
       </div>
-    </div>
-    <div class="bell">
-      <div class="icon-bell" onclick="handleToggleBellDropBox()">
-        <img class="img" src="./../static/img/icon_bell.png"/>
-      </div>
-      <div class="bell-dropbox">
-        <p style="margin-bottom: 10px">알람</p>
-        <ul id="alarm">
+      <div class="right"></div>
+    </header>
 
-        </ul>
-      </div>
-    </div>
-    <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
-       href="./f-1_myPage.html">
-    </a>
-    <!--          <div class="img-wrap">-->
-    <!--            <img class="img" src="./../static/img/icon_profile_default.png " />-->
-    <!--          </div>-->
-    <!--          <p class="text">나와바리나와바님</p>-->
-  </div>
-</header>
-
-<!-- ############# 작업공간 #############-->
-<main class="container">
-  <section class="detailBoard">
-    <!--   작업공간   -->
-    <div class="wrap" id="boardWrap">
-      <div id="title" class="w_1">
-        <!-- 타이틀 들어갈 자리 -->
-      </div>
-      <div id="image-wrap" class="w_2">
-        <!-- 이미지 들어갈 자리 -->
-
-      </div>
-      <!-- 선 -->
-      <hr style="margin-top: 30px"/>
-
-      <!-- 좋아요 -->
-      <div id="like-wrap" style="display: flex; align-items: center">
-        <span class="like-title">좋아요</span>
-        <div id="like-btn" style="display: flex; align-items: center; ">
-          <!-- 좋아요 버튼 자리 -->
-          <!-- <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;">
-              <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
-          </div>
-          <p style="margin-bottom: 0;">5500</p> -->
-        </div>
-      </div>
-      <!-- <div style="display: flex;">
-            <div class="img-wrap" style="width:18px; height: 18px; margin-left:50px; margin-bottom:20px; margin-right:5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                 <img style="width: 100%" src="/static/img/unHeart.png" alt="좋아요 하트"/>
+    <!-- ############# 작업공간 #############-->
+    <main class="container">
+      <section class="detailBoard">
+        <!--   작업공간   -->
+        <div class="wrap" id="boardWrap">
+            <div id="title" class="w_1">
+                <!-- 타이틀 들어갈 자리 -->
             </div>
-            <p style="margin-bottom: 0px; font-size: 14px; font-weight: bolder">${likeCount}</p>
-      </div> -->
+            <div id="image-wrap" class="w_2">
+                <!-- 이미지 들어갈 자리 -->
+                
+            </div>
+            <!-- 선 -->
+            <hr style="margin-top: 30px"/>
 
-      <!-- 주소와 내용 -->
-      <div id="contents" class="w_3">
-        <!-- <div class="address">
-          <b>주소 : </b>
-          <span>${region}</span>
+            <!-- 좋아요 -->
+            <div id="like-wrap" style="display: flex; align-items: center">
+                <span class="like-title">좋아요</span>
+                <div id="like-btn" style="display: flex; align-items: center; ">
+                  <!-- 좋아요 버튼 자리 -->
+                  <!-- <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;">
+                      <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
+                  </div>
+                  <p style="margin-bottom: 0;">5500</p> -->
+                </div>
+              </div>
+            <!-- <div style="display: flex;">
+                  <div class="img-wrap" style="width:18px; height: 18px; margin-left:50px; margin-bottom:20px; margin-right:5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
+                       <img style="width: 100%" src="/static/img/unHeart.png" alt="좋아요 하트"/>
+                  </div>
+                  <p style="margin-bottom: 0px; font-size: 14px; font-weight: bolder">${likeCount}</p>
+            </div> -->
+
+            <!-- 주소와 내용 -->
+            <div id="contents" class="w_3" >
+                <!-- <div class="address">
+                  <b>주소 : </b>
+                  <span>${region}</span>
+                </div>
+                <div>
+                  <span>
+                    ${contents}
+                  </span>
+                </div> -->
+              </div>
         </div>
-        <div>
-          <span>
-            ${contents}
-          </span>
-        </div> -->
-      </div>
-    </div>
 
 
-    </div>
-    <div class="btns">
-      <!-- 버튼 들어갈 자리 -->
-      <!-- <button
-          type="button"
-          class="modifyBtn btn btn-primary btn-search"
-          onclick="moveModifyPage()"
-      >
-      수정
-      </button>
-      <button
-          type="button"
-          class="deleteBtn btn btn-primary btn-search"
-          style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
-          onclick="deleteBeforeRoomCheck()"
-      >
-      삭제
-      </button>
-      <button
-          type="button"
-          class="btn btn-primary btn-search"
-          style="background-color: #f46b3f; border: none; color: white"
-          onclick="moveMainPage()"
-      >
-      목록
-      </button> -->
-    </div>
-    </div>
-  </section>
-</main>
-
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-  $(document).ready(function () {
-    $(".friend-dropbox").hide();
-    $(".bell-dropbox").hide();
-    getMenuProfile();
-    getRecommend();
-    myFriedList();
-    recommendFriedList();
-    selectAlarm();
-  });
-
-  function getMenuProfile() {
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
-        ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
+        </div>
+          <div class="btns">
+              <!-- 버튼 들어갈 자리 -->
+            <!-- <button
+                type="button"
+                class="modifyBtn btn btn-primary btn-search"
+                onclick="moveModifyPage()"
+            >
+            수정
+            </button>
+            <button
+                type="button"
+                class="deleteBtn btn btn-primary btn-search"
+                style="background-color: #F1F1F1; border: 1px solid #E4E4E4; color: #ADADAD;"
+                onclick="deleteBeforeRoomCheck()"
+            >
+            삭제
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary btn-search"
+                style="background-color: #f46b3f; border: none; color: white"
+                onclick="moveMainPage()"
+            >
+            목록
+            </button> -->
           </div>
-          <p class="text">${menuProfile.nickname}님</p>`;
-    $("#my-profile").append(tempProfile);
-  }
+        </div>
+      </section>
+    </main>
 
-  function handleToggleBellDropBox() {
-    $(".bell-dropbox").toggle();
-    $(".friend-dropbox").hide();
-  }
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+      $(document).ready(function () {
+        checkLogin();
+        getMenuProfile();
+        getRecommend();
+        myFriedList();
+        recommendFriedList();
+        selectAlarm();
+        $(".friend-dropbox").hide();
+        $(".bell-dropbox").hide();
+      });
 
-  function handleToggleFriendDropBox() {
-    $(".friend-dropbox").toggle();
-    $(".bell-dropbox").hide();
+      function getMenuProfile() {
+        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
+        const nickname = localStorage.getItem("nickname")
 
-    //사람버튼 클릭 시 기존 데이터 reload 되도록
-    $(".friend-div").empty();
+        var tempProfile = `
+                    <div class="img-wrap">
+                        <img class="img" style="width: 100%; height: auto" src=${
+            menuProfile.profileImage
+                ? menuProfile.profileImage
+                : "./../static/img/icon_profile_default.png"
+        } alt="프로필사진"/>
+                    </div>
+                    <p class="text">${nickname}님</p>
+            `
+        $("#my-profile").append(tempProfile)
+      }
 
-    let result = `<ul class="friend-list-3"></ul>
+      function handleToggleBellDropBox() {
+        $(".bell-dropbox").toggle();
+        $(".friend-dropbox").hide();
+      }
+
+      function handleToggleFriendDropBox() {
+        $(".friend-dropbox").toggle();
+        $(".bell-dropbox").hide();
+
+        //사람버튼 클릭 시 기존 데이터 reload 되도록
+        $(".friend-div").empty();
+
+        let result = `<ul class="friend-list-3"></ul>
+                              <ul class="friend-list-1">
+                                <p class="recommend-title">내 친구목록</p>
+                              </ul>
+
+                              <div class="line"></div>
+
+                              <ul class="friend-list-2">
+                                <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+                              </ul>`
+
+        $(".friend-div").append(result);
+        myFriedList();
+        recommendFriedList();
+      }
+
+      function checkLogin(){
+        const nickname = localStorage.getItem("nickname")
+
+        if(nickname!=null){
+          const result = `<div class="friend">
+                                <div class="icon-friend" onclick="handleToggleFriendDropBox()">
+                                    <img class="img" src="./../static/img/icon_friends.png"/>
+                                </div>
+                                <div class="friend-dropbox">
+                                    <div class="search-area">
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" id="searchNickName" placeholder="닉네임 검색"
+                                                   style="width: 240px; height: 40px">
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button type="button" class="btn btn-primary search-btn" onclick="searchFriend()"
+                                                    style="height: 40px;">검색
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="friend-div">
+                                        <ul class="friend-list-3"></ul>
 
 
-          <ul class="friend-list-1">
-            <p class="recommend-title">내 친구목록</p>
-          </ul>
+                                        <ul class="friend-list-1">
+                                            <p class="recommend-title">내 친구목록</p>
+                                        </ul>
 
-          <div class="line"></div>
+                                        <div class="line"></div>
 
-          <ul class="friend-list-2">
-            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
-          </ul>`
+                                        <ul class="friend-list-2">
+                                            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bell">
+                                <div class="icon-bell" onclick="handleToggleBellDropBox()">
+                                    <img class="img" src="./../static/img/icon_bell.png"/>
+                                </div>
+                                <div class="bell-dropbox">
+                                    <p style="margin-bottom: 10px">알람</p>
+                                    <ul id="alarm">
 
-    $(".friend-div").append(result);
-    myFriedList();
-    recommendFriedList();
-  }
+                                    </ul>
+                                </div>
+                            </div>
+                            <a id="my-profile" style="display: flex; align-items: center;" class="my-profile-wrap"
+                               href="./f-1_myPage.html">
+                            </a>`;
 
-  // 단건 코스조회
-  function getRecommend() {
-    const id = localStorage.getItem("recommendId");
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    $.ajax({
-      type: "GET",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader(
-            "Authorization",
-            localStorage.getItem("accessToken")
-        );
-      },
-      success: function (response) {
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-        console.log("response : ", response);
-        const score = response.score;
-        const title = response.title;
-        const season = response.season;
-        const altitude = response.altitude;
-        const contents = response.contents;
-        const region = response.region;
-        const likeCount = response.likeCount;
-        const isLike = response.isLike;
+          $(".right").append(result);
+        }else{
+          const result = `<div class="my-profile-wrap">
+                                    <div class="img-wrap">
+                                        <img class="img" src="./../static/img/icon_profile_default.png " />
+                                    </div>
+                                    <p class="text">로그인 해주세요</p>
+                                </div>`
 
-        //상단 타이틀
-        $("#title").empty()
-        $("#image-wrap").empty();
+          $(".right").append(result);
+        }
+      }
 
-        var tempTitle = `
+
+      // 단건 코스조회
+      async function getRecommend() {
+        const id = localStorage.getItem("recommendId");
+        var nickname = localStorage.getItem("nickname")
+        console.log("nickname:  ", nickname)
+        $.ajax({
+            type: "GET",
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
+          success: async function (response) {
+            console.log("response : ", response);
+            const score = response.score;
+            const title = response.title;
+            const season = response.season;
+            const altitude = response.altitude;
+            const contents = response.contents;
+            const region = response.region;
+            const likeCount = response.likeCount;
+            const isLike = response.isLike;
+            
+            //상단 타이틀
+            $("#title").empty()
+            $("#image-wrap").empty();
+
+            var tempTitle = `
                 <div class="title">
                     ${title}
                 </div>
@@ -343,41 +362,49 @@
                 </div>
                 <div style="margin-top:20px">점수 : ${score}.0 / 높이 : ${altitude}m</div>
             `
-        $("#title").append(tempTitle);
+            $("#title").append(tempTitle);
 
-        // 이미지
-        for (let i = 0; i < response.imgList.length; i++) {
-          var tempImage = `
+            // 이미지
+            for (let i = 0; i < response.imgList.length; i++) {
+              var imgUrl = response.imgList[i]
+              console.log("imgUrl : ",imgUrl)
+
+              if(imgUrl.includes("ola")){
+                imgUrl = await getImageURL(imgUrl)
+                console.log("imgUrl2 : ",imgUrl)
+              }
+            
+                var tempImage = `
                     <div  style="height: 500px; overflow: hidden; display: flex; align-items: center; margin-bottom:30px">
-                        <img style="width: 100%;" src=${imgUrl}  alt = "이미지" />
+                        <img style="width: 100%;" src=${imgUrl}  alt = "이미지" />    
                     </div>
                 `
-          $("#image-wrap").append(tempImage);
-        }
+                $("#image-wrap").append(tempImage);
+            }
 
-        // 좋아요
-        $("#like-btn").empty()
-        if (isLike) {
-          var tempLike = `
+            // 좋아요
+            $("#like-btn").empty()
+            if(isLike){
+                var tempLike = `
                     <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="unlikeBoard()">
                         <img style="width: 100%;" src="./../static/img/heart.png" alt="좋아요 이미지" />
                     </div>
                     <p style="margin-bottom: 0;">${likeCount}</p>
                 `
-          $("#like-btn").append(tempLike)
-        } else {
-          var tempLike = `
+                $("#like-btn").append(tempLike)
+            }else {
+                var tempLike = `
                     <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="likeBoard()">
-                        <img style="width: 100%;" src="./../static/img/unheart.png" alt="좋아요 이미지" />
+                        <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
                     </div>
                     <p style="margin-bottom: 0;">${likeCount}</p>
                 `
-          $("#like-btn").append(tempLike)
-        }
+                $("#like-btn").append(tempLike)
+            }
 
-        // 주소/내용
-        $("#contents").empty()
-        var tempContents = `
+            // 주소/내용
+            $("#contents").empty()
+            var tempContents = `
                 <div class="address">
                   <b>주소 : </b>
                   <span>${region}</span>
@@ -388,12 +415,12 @@
                   </span>
                 </div>
             `
-        $("#contents").append(tempContents)
+            $("#contents").append(tempContents)
 
-        // 버튼
-        $(".btns").empty()
-        if (menuProfile.nickname == response.nickName) {
-          var tempBtn = `
+            // 버튼 
+            $(".btns").empty()
+            if(nickname == response.nickName){
+                var tempBtn = `
                     <button
                         type="button"
                         class="modifyBtn btn btn-primary"
@@ -417,10 +444,9 @@
                     목록
                     </button>
                 `
-          $(".btns").append(tempBtn)
-        } else {
-          console.log("asdasd")
-          var tempBtn = `
+                $(".btns").append(tempBtn)
+            }else{
+                var tempBtn = `
                     <button
                         type="button"
                         class="modifyBtn btn btn-primary"
@@ -446,114 +472,115 @@
                     목록
                     </button>
                 `
-          $(".btns").append(tempBtn)
-        }
+                $(".btns").append(tempBtn)
+            }
+            
+          }
+          ,error: function (response){
+            if(response.responseJSON.status == 500){
+              regenerateToken()
+            }
+          }
 
+        });
       }
-      , error: function (response) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-        }
+
+      function likeBoard(){
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+            type: "POST",
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
+            success: function (response) {
+                getRecommend();
+            },
+            error: function (response, status, error) {
+                if (response.responseJSON.status == 500) {
+                    regenerateToken()
+                    likeBoard();
+                }
+            },
+        });
       }
 
-    });
-  }
-
-  function likeBoard() {
-    const id = localStorage.getItem("recommendId");
-    $.ajax({
-      type: "POST",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader(
-            "Authorization",
-            localStorage.getItem("accessToken")
-        );
-      },
-      success: function (response) {
-        getRecommend(0);
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          likeBoard();
-        }
-      },
-    });
-  }
-
-  function unlikeBoard() {
-    const id = localStorage.getItem("recommendId");
-    $.ajax({
-      type: "DELETE",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader(
-            "Authorization",
-            localStorage.getItem("accessToken")
-        );
-      },
-      success: function (response) {
-        getRecommend();
-      },
-      error: function (response, status, error) {
-        if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
-          regenerateToken()
-          unlikeBoard();
-        }
-      },
-    });
-  }
-
-  function regenerateToken() {
-    var refreshToken = localStorage.getItem("refreshToken")
-
-    $.ajax({
-      type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
-      contentType: "application/json; charset=utf-8",
-      data: JSON.stringify({
-        refreshToken: refreshToken
-      }),
-      success: function (response) {
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem("refreshToken", response.refreshToken)
-        getRecommend();
-      }, error: function (response) {
-        console.log("에러 : ", response)
+      function unlikeBoard(){
+        const id = localStorage.getItem("recommendId");
+        $.ajax({
+            type: "DELETE",
+            url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/recommends/${id}`,
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function (xlr) {
+                xlr.setRequestHeader(
+                    "Authorization",
+                    localStorage.getItem("accessToken")
+                );
+            },
+            success: function (response) {
+                getRecommend();
+            },
+            error: function (response, status, error) {
+                if (response.responseJSON.status == 500) {
+                    regenerateToken()
+                    unlikeBoard();
+                }
+            },
+        });
       }
-    })
-  }
 
-  function deleteRecommend() {
-    const id = localStorage.getItem("recommendId");
-    console.log("id : " + id);
-    $.ajax({
-      type: "DELETE",
-      url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
-      contentType: "application/json; charset=utf-8",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader(
-            "Authorization",
-            localStorage.getItem("accessToken")
-        );
-      },
-      success: function (response) {
-        alert("삭제 완료");
+      function regenerateToken(){
+        var refreshToken = localStorage.getItem("refreshToken")
 
-        window.location.href = "g-1_recommend.html";
-      },
-      error: function (xhr) {
-        console.log(
-            "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr)
-        );
-      },
-    });
-  }
+        $.ajax({
+          type: "POST",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
+          contentType : "application/json; charset=utf-8",
+          data: JSON.stringify({
+            refreshToken: refreshToken
+          }),
+          success: function (response) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+            getRecommend();
+          },error: function(response){
+            console.log("에러 : ", response)
+          }
+        })
+      }
 
-  var imageUrlList = [];
+      function deleteRecommend() {
+        const id = localStorage.getItem("recommendId");
+        console.log("id : " + id);
+        $.ajax({
+          type: "DELETE",
+          url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
+          contentType: "application/json; charset=utf-8",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader(
+              "Authorization",
+              localStorage.getItem("accessToken")
+            );
+          },
+          success: function (response) {
+            alert("삭제 완료");
+
+            window.location.href = "g-1_recommend.html";
+          },
+          error: function (response) {
+            if (response.responseJSON.status == 500) {
+                    regenerateToken()
+                    deleteRecommend();
+                }
+          },
+        });
+      }
+
+       var imageUrlList = [];
 
 
        async function getImageURL(objectKey) {
@@ -563,33 +590,23 @@
         await $.ajax({
           type: "GET",
           url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
-          // dataType: "text",
-          // enctype: "multipart/form-data",
           contentType: "application/json",
           processData: false,
-          // contentType: false,
-          // beforeSend: function (xlr) {
-          //   xlr.setRequestHeader("Authorization", accessToken);
-          // },
-          // data: objectKey,
-
           xhrFields: {
             // withCredentials: true, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
             withCredentials:false
           },
           success: await function (response) {
-            console.log("세번째")
-            console.log("preSignedURL : ", response);
-            loadData = response
-
+            loadData = response       
+           
           },
           error: function (request, status, error) {
-
+            
             console.log("에러난다..!");
             console.log(request, status, error);
             // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
           },
-
+          
         });
        return loadData
       }
@@ -643,48 +660,48 @@
       //   });
       // }
 
-  function searchFriend() {
-    let targetNickname = $("#searchNickName").val();
-    const accessToken = localStorage.getItem("accessToken")
+      //친구 검색
+      function searchFriend() {
+        let targetNickname = $("#searchNickName").val();
+        const accessToken = localStorage.getItem("accessToken")
 
-    if ($("#searchNickName").val() == '') {
-      alert("닉네임을 입력해주세요.");
-      return;
-    }
+        if($("#searchNickName").val()==''){
+          alert("닉네임을 입력해주세요.");
+          return;
+        }
 
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname="
-          + targetNickname,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
+        $.ajax({
+          type: "GET",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friend?page=0&size=10&targetNickname=" + targetNickname,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success: function (response) {
 
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
-        $(".friend-list-3").empty();
-        $(".line").remove();
+            $(".friend-list-1").empty();
+            $(".friend-list-2").empty();
+            $(".friend-list-3").empty();
+            $(".line").remove();
 
-        let result = null;
+            let result = null;
 
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
+            if(response.data.length==0){
+              result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-top: 20px">검색 결과가 없습니다.</p>`
 
-          $(".friend-list-3").append(result);
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let friendId = response.data[i].friendId;
-            let name = response.data[i].friendName;
-            let tags = response.data[i].hashtagList;
-            let tagName = [];
+              $(".friend-list-3").append(result);
+            }else{
+              for (let i = 0; i < response.data.length; i++) {
+                let image = response.data[i].friendImage;
+                let friendId = response.data[i].friendId;
+                let name = response.data[i].friendName;
+                let tags = response.data[i].hashtagList;
+                let tagName = [];
 
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
-            }
+                for (let j = 0; j < tags.length; j++) {
+                  tagName.push("#" + tags[j].name);
+                }
 
-            result = `
+                result = `
                     <li style="margin-top: 10px;">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
@@ -696,47 +713,49 @@
                          <p style="font-size: 11px; color: #FF422F; margin-left: 20px; width : 300px; display: inline-block; padding: 0px; margin-top: 7px; ">${tagName}</p>
                       </li>`
 
-            $(".friend-list-3").append(result);
-          }
-        }
-        $("#searchNickName").val('');
-      }
-    });
-  }
 
-  function recommendFriedList() {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        let result = null;
-        let sideFriend = null;
-        let tagName = [];
-        $(".friend-list-2").empty();
-
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
-
-          $(".friend-list-2").append(result);
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let name = response.data[i].friendName;
-            let friendId = response.data[i].friendId;
-            let tags = response.data[i].hashtagList;
-
-            tagName = [];
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
+                $(".friend-list-3").append(result);
+              }
             }
+            $("#searchNickName").val('');
+          }
+        });
+      }
 
-            sideFriend = `<li style="margin-top: 20px">
+      //추천 친구 리스트
+      function recommendFriedList() {
+        const accessToken = localStorage.getItem("accessToken")
+
+        $.ajax({
+          type: "GET",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends/recommends?page=0&size=5",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success: function (response) {
+
+            let result = null;
+            let sideFriend = null;
+            let tagName = [];
+            $(".friend-list-2").empty();
+
+            if(response.data.length==0){
+              result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추천 친구가 없습니다.</p>`
+
+              $(".friend-list-2").append(result);
+            }else{
+              for (let i = 0; i < response.data.length; i++) {
+                let image = response.data[i].friendImage;
+                let name = response.data[i].friendName;
+                let friendId = response.data[i].friendId;
+                let tags = response.data[i].hashtagList;
+
+                tagName = [];
+                for (let j = 0; j < tags.length; j++) {
+                  tagName.push("#" + tags[j].name);
+                }
+
+                sideFriend = `<li style="margin-top: 20px">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc; text-align: center">
                             <img className="img" src="${image}"/>
@@ -750,50 +769,51 @@
                                         width: 70px">친구추가</button>
                       </li>`
 
-            $(".friend-list-2").append(sideFriend);
-          }
-        }
-      },
-      error: function (response) {
-        console.log(response)
-      }
-    });
-  }
-
-  function myFriedList() {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-
-        $(".friend-list-1").empty();
-
-        let result = null;
-        let tagName = [];
-
-        if (response.data.length == 0) {
-          result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추가된 친구가 없습니다.</p>`
-
-          $(".friend-list-1").append(result);
-
-        } else {
-          for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
-            let name = response.data[i].friendName;
-            let friendId = response.data[i].friendId;
-            let tags = response.data[i].hashtagList;
-
-            tagName = [];
-            for (let j = 0; j < tags.length; j++) {
-              tagName.push("#" + tags[j].name);
+                $(".friend-list-2").append(sideFriend);
+              }
             }
+          },
+          error : function (response){
+            console.log(response)
+          }
+        });
+      }
 
-            result = `<li>
+      //내 친구 리스트
+      function myFriedList() {
+        const accessToken = localStorage.getItem("accessToken")
+
+        $.ajax({
+          type: "GET",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?page=0&size=5",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success: function (response) {
+
+            $(".friend-list-1").empty();
+
+            let result = null;
+            let tagName = [];
+
+            if (response.data.length == 0) {
+              result = `<p style="font-size: 12px; color: #FF422F; text-align: center; margin-bottom: 30px">추가된 친구가 없습니다.</p>`
+
+              $(".friend-list-1").append(result);
+
+            } else {
+              for (let i = 0; i < response.data.length; i++) {
+                let image = response.data[i].friendImage;
+                let name = response.data[i].friendName;
+                let friendId = response.data[i].friendId;
+                let tags = response.data[i].hashtagList;
+
+                tagName = [];
+                for (let j = 0; j < tags.length; j++) {
+                  tagName.push("#" + tags[j].name);
+                }
+
+                result = `<li>
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
                             <img className="img" src="${image}"/>
@@ -807,154 +827,147 @@
                                         width: 70px">친구삭제</button>
                       </li>`
 
+                $(".friend-list-1").append(result);
+              }
+            }
+          }
+        });
+      }
+
+      //친구 추가
+      function addFriend(targetId) {
+        const accessToken = localStorage.getItem("accessToken")
+
+        $.ajax({
+          type: "POST",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success : function (){
+            $(".friend-list-1").empty();
+            $(".friend-list-2").empty();
+
+
+            let result = `<p class="recommend-title">내 친구목록</p>`;
+            let result2 = `<div class="line"></div>
+            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>`;
+
             $(".friend-list-1").append(result);
+            $(".friend-list-2").append(result2);
+
+            myFriedList();
+            recommendFriedList();
+            mainRecommendFriendList()
           }
-        }
+        });
       }
-    });
-  }
 
-  function addFriend(targetId) {
-    const accessToken = localStorage.getItem("accessToken")
+      function deleteFriend(targetId) {
+        const accessToken = localStorage.getItem("accessToken")
 
-    $.ajax({
-      type: "POST",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
-          + targetId + "&page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function () {
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
+        $.ajax({
+          type: "DELETE",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId=" + targetId + "&page=0&size=5",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success : function (){
+            $(".friend-list-1").empty();
+            $(".friend-list-2").empty();
 
-        let result = `<p class="recommend-title">내 친구목록</p>`;
-        let result2 = `<div class="line"></div>
+            let result = `<p class="recommend-title">내 친구목록</p>`;
+            let result2 = `<div class="line"></div>
             <p class="recommend-title" style="margin-top: 10px">추천 친구</p>`;
 
-        $(".friend-list-1").append(result);
-        $(".friend-list-2").append(result2);
+            $(".friend-list-1").append(result);
+            $(".friend-list-2").append(result2);
 
-        myFriedList();
-        recommendFriedList();
-        mainRecommendFriendList()
-      }
-    });
-  }
-
-  function deleteFriend(targetId) {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "DELETE",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/friends?targetId="
-          + targetId + "&page=0&size=5",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function () {
-        $(".friend-list-1").empty();
-        $(".friend-list-2").empty();
-
-        let result = `<p class="recommend-title">내 친구목록</p>`;
-        let result2 = `<div class="line"></div>
-            <p class="recommend-title" style="margin-top: 10px">추천 친구</p>`;
-
-        $(".friend-list-1").append(result);
-        $(".friend-list-2").append(result2);
-
-        myFriedList();
-        recommendFriedList();
-        mainRecommendFriendList()
-      }
-    });
-  }
-
-  //알림 조회
-  function selectAlarm() {
-    const accessToken = localStorage.getItem("accessToken")
-
-    $.ajax({
-      type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        $("#alarm").empty();
-
-        let result = null;
-        let changeImg = null;
-
-        if (response.data.length == 0) {
-          result = `<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
-          $("#alarm").append(result);
-        }
-        for (var i = 0; i < response.data.length; i++) {
-
-          board_Id = response.data[i].boardId;
-          alarmId = response.data[i].alarmId;
-          if (response.data[i].readStatus == "N") {
-
-            $(".icon-bell").empty();
-
-            changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
-
-            $(".icon-bell").append(changeImg);
-
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
-          } else {
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
-            $("#alarm").append(result);
+            myFriedList();
+            recommendFriedList();
+            mainRecommendFriendList()
           }
+        });
+      }
+
+      //알림 조회
+      function selectAlarm(){
+        const accessToken = localStorage.getItem("accessToken")
+        $.ajax({
+          type: "GET",
+          contentType: "application/json",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success : function (response){
+            $("#alarm").empty();
+
+            let result = null;
+            let changeImg = null;
+
+            if(response.data.length==0){
+              result =`<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
+              $("#alarm").append(result);
+            }
+
+            for(var i=0; i<response.data.length; i++){
+
+              board_Id = response.data[i].boardId;
+              alarmId = response.data[i].alarmId;
+              if(response.data[i].readStatus=="N"){
+
+                $(".icon-bell").empty();
+
+                changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+
+                $(".icon-bell").append(changeImg);
+
+                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+                $("#alarm").append(result);
+              }else{
+                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+                $("#alarm").append(result);
+              }
+            }
+          }
+        });
+      }
+      //알람 읽음 상태로 변경
+      function updateAlarmStats(alarmId){
+        const accessToken = localStorage.getItem("accessToken")
+        $.ajax({
+          type: "PATCH",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId=" + alarmId,
+          beforeSend: function (xlr) {
+            xlr.setRequestHeader("Authorization", accessToken)
+          },
+          success : function (response){
+            console.log("업데이트 ")
+            selectAlarm();
+          }
+        });
+      }
+      //로컬 스토리지에 boardId 저장
+      function setCommunityId(board_Id, alarmId){
+        updateAlarmStats(alarmId);
+        localStorage.setItem("communityId", board_Id)
+        location.replace('h-2_communityDetail.html');
+      }
+
+        function moveModifyPage() {
+            window.location.href = "g-4_recommendModify.html";
         }
-      }
-    });
-  }
 
-  //알람 읽음 상태로 변경
-  function updateAlarmStats(alarmId) {
-    const accessToken = localStorage.getItem("accessToken")
+        function moveMainPage() {
+            window.location.href = "g-1_recommend.html";
+        }
 
-    $.ajax({
-      type: "PATCH",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
-          + alarmId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("업데이트 ")
-        selectAlarm();
-      }
-    });
-  }
+        function noMove(){
+            alert("내가 쓴 코스추천이 아닙니다.")
+        }
 
-  //로컬 스토리지에 boardId 저장
-  function setCommunityId(board_Id, alarmId) {
-    updateAlarmStats(alarmId);
-    localStorage.setItem("communityId", board_Id)
-    location.replace('h-2_communityDetail.html');
-  }
-
-  function moveModifyPage() {
-         window.location.href = "g-4_recommendModify.html";
- }
-
-  function moveMainPage() {
-    window.location.href = "g-1_recommend.html";
-  }
-
-  function noMove() {
-    alert("내가 쓴 코스추천이 아닙니다.")
-  }
-
-  function moveMainPage() {
-    window.location = "./../index.html"
-  }
-
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async></script>
-</body>
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async></script>
+  </body>
 </html>

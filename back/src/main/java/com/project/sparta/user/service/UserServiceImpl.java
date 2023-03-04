@@ -107,7 +107,8 @@ public class UserServiceImpl implements UserService {
         TokenDto tokenDto = new TokenDto(
             jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
                 user.getNickName(), user.getUserImageUrl()),
-            refresh_token
+            refresh_token,
+            user.getNickName()
         );
 
         redisTemplate.opsForValue().set(
@@ -128,10 +129,7 @@ public class UserServiceImpl implements UserService {
     public void logout(TokenDto tokenRequestDto) {
 
         String resultToekn = tokenRequestDto.getAccessToken();
-
-        if (!jwtUtil.validateToken(resultToekn)) {
-            throw new CustomException(INVALID_TOKEN);
-        }
+        jwtUtil.validateToken(resultToekn);
         Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
         if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
@@ -201,9 +199,10 @@ public class UserServiceImpl implements UserService {
         String changeToken = tokenDto.getRefreshToken();
         System.out.println("changeToken = " + changeToken);
         try {
-            if (!jwtUtil.validateRefreshToken(changeToken)) {
-                throw new CustomException(INVALID_TOKEN);
-            }
+            jwtUtil.validateRefreshToken(changeToken);
+            //if (!jwtUtil.validateRefreshToken(changeToken)) {
+            //    throw new CustomException(INVALID_TOKEN);
+            //}
 
             Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(changeToken);
 
@@ -221,7 +220,8 @@ public class UserServiceImpl implements UserService {
             TokenDto new_tokenDto = new TokenDto(
                 jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
                     user.getNickName(), user.getUserImageUrl()),
-                new_refresh_token
+                new_refresh_token,
+                user.getNickName()
             );
 
             redisTemplate.opsForValue().set(
