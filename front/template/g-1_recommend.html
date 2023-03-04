@@ -111,6 +111,7 @@
     <a href="./i-1_shopMain.html">쇼핑몰</a>
     <a href="./j-1_noticeMain.html">공지사항</a>
   </div>
+  </div>
   <div class="right" style="margin-top: 10px">
     <div class="friend">
       <div class="icon-friend" onclick="handleToggleFriendDropBox()">
@@ -398,12 +399,11 @@
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
     console.log("menuProfile : ", menuProfile)
     var tempProfile = `
-            <div class="img-wrap">
-              <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
+          <div class="img-wrap">
+            <img class="img" style="width: 100%; height: auto" src=${menuProfile.profileImage
         ? menuProfile.profileImage : "./../static/img/icon_profile_default.png"} alt="프로필사진"/>
-            </div>
-            <p class="text">${menuProfile.sub}님</p>
-        `
+          </div>
+          <p class="text">${menuProfile.nickname}님</p>`;
     $("#my-profile").append(tempProfile);
   }
 
