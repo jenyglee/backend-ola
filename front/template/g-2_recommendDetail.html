@@ -426,7 +426,7 @@
       async function getRecommend() {
         const id = localStorage.getItem("recommendId");
         var nickname = localStorage.getItem("nickname")
-
+        console.log("nickname:  ", nickname)
         $.ajax({
             type: "GET",
             url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
@@ -637,7 +637,7 @@
 
         $.ajax({
           type: "POST",
-          url: "http://localhost:8080/auth/token/regenerate",
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/token/regenerate",
           contentType : "application/json; charset=utf-8",
           data: JSON.stringify({
             refreshToken: refreshToken

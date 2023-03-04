@@ -476,22 +476,27 @@
             // $(".slick-prev").text("<")
             // $(".slick-next").text(">")
 
-            function getCrewCommunityList() {
+            async function getCrewCommunityList() {
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
-                    // TODO 현재 모집중인 것들이 뜨게 하는 쿼리문 추가 필요
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
-                    success: function (response) {
+                    success: async function (response) {
                         console.log("커뮤니티 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
+                            var imgUrl = ""
+                            if (response.data[i].imgList[0]) {
+                                imgUrl = await getImageURL(response.data[i].imgList[0])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
                             var temp = `
                             <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})">
                                 <div class="post-img-wrap">
-                                    <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                    <img src=${imgUrl} alt="산 이미지" />
                                 </div>
                                 <div class="post-text">
                                     <p class="title">${response.data[i].title}</p>
@@ -515,7 +520,7 @@
                 })
             }
 
-            function getRecommendLikeList() {
+            async function getRecommendLikeList() {
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
@@ -523,13 +528,19 @@
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
-                    success: function (response) {
+                    success: async function (response) {
                         console.log("코스추천 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
+                            var imgUrl = ""
+                            if (response.data[i].imgList[0]) {
+                                imgUrl = await getImageURL(response.data[i].imgList[0])
+                            } else {
+                                imgUrl = "./../static/img/mountain-default.png"
+                            }
                             var temp = `
                                 <div class="post" onclick="moveRecommendDetail(${response.data[i].boardId})">
                                     <div class="post-img-wrap">
-                                        <img src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                        <img src=${imgUrl} alt="산 이미지" />
                                     </div>
                                     <div class="post-text">
                                         <p class="title">${response.data[i].title}</p>
@@ -551,6 +562,37 @@
                         }
                     },
                 })
+            }
+
+            async function getImageURL(objectKey) {
+                var loadData = ""
+                const accessToken = localStorage.getItem("accessToken")
+                await $.ajax({
+                    type: "GET",
+                    url:
+                        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+                        objectKey,
+                    contentType: "application/json",
+                    processData: false,
+                    beforeSend: function (xlr) {
+                        xlr.setRequestHeader("Authorization", accessToken)
+                    },
+                    data: objectKey,
+                    xhrFields: {
+                        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+                    },
+                    success: await function (response) {
+                        console.log("세번째")
+                        console.log("preSignedURL : ", response)
+                        loadData = response
+                    },
+                    error: function (request, status, error) {
+                        console.log("에러난다..!")
+                        console.log(request, status, error)
+                        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+                    },
+                })
+                return loadData
             }
 
             function moveCommunityWithHashtag(id) {
