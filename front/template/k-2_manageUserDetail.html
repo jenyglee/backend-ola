@@ -164,7 +164,7 @@
             </div>
             <div style="margin-bottom: 50px;">
                 <p class="inputLabel" style="font-weight: bold; margin-bottom: 5px;">프로필이미지</p>
-                <div id ="profile">
+                <div id ="profile" style="width: 300px;">
 
                 </div>
             </div>
@@ -243,7 +243,7 @@
                 for(let i=0;i<1;i++)
                 {
                     const url = response.profileImage
-                    const temp = `<img id="profile${i}" src=${url}>`
+                    const temp = `<img id="profile${i}" style="width:100%" src=${url}>`
                     $('#profile').append(temp)
                 }
 
