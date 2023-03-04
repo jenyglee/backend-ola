@@ -258,7 +258,7 @@
     getCommunityList(0)
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
     if(menuProfile.role=="ADMIN"){
-      const temp = `<span>${menuProfile.nickname} 매니저</span>`
+      const temp = `<span>${localStorage.getItem("nickname")} 매니저</span>`
       $(manager_name).append(temp)
     }
   });
@@ -276,7 +276,7 @@
         window.location.href = "b-1_login.html";
       },
       error: function (response, status, error) {
-        if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+        if(response.responseJSON.status == 500){
           regenerateToken()
           gotologout()
         }
@@ -292,13 +292,12 @@
     // 1. 데이터 초기화를 해야됨.
     $('tbody').empty();
     const accessToken = localStorage.getItem("accessToken");
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+
     // 2. 통신해서 불러오기
-    if(menuProfile.role=="ADMIN") {
-      $.ajax({
+    $.ajax({
         type: "GET",
-        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/communities?page=" + page
-            + "&size=10&title=&contents=&nickname=&hashtagId=12&chatStatus=&sort=",
+        url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/admin/boards/communities?page=" + page + 
+            "&size=10&hashtagId=0&title=&contents&nickname&chatStatus=&sort=dateDesc",
         beforeSend: function (xlr) {
           xlr.setRequestHeader("Authorization", accessToken)
         },
@@ -306,31 +305,28 @@
         //  title: "sasas",
         // },
         success: function (response) {
-          console.log("호출완료");
-          console.log(response)
-          for (let i = 0; i < response.data.length; i++) {
-            // console.log(i+1)
-            // console.log(response.data[i].title)
+        console.log("호출완료");
+        console.log(response)
+        for (let i = 0; i < response.data.length; i++) {
             // 데이터 바인딩
             const temp =
                 `
-                  <tr>
+                <tr>
                     <th scope="row">${i + 1}</th>
                     <td class="td_2"><a href="m-2_manageCommunityDetail.html" onclick="setCommunityId(${response.data[i].boardId})">${response.data[i].title}</a></td>
                     <td class="td_3">${response.data[i].createAt.substring(0, 10)}</td>
-                  </tr>
-              `
+                </tr>
+            `
             $('tbody').append(temp)
-          }
+        }
         },
         error: function (response, status, error) {
-          if(response.responseJSON.status == 500){
+        if(response.responseJSON.status == 500){
             regenerateToken()
             getCommunityList(page)
-          }
+        }
         },
-      })
-    }
+    })
   }
 
   function regenerateToken(){
