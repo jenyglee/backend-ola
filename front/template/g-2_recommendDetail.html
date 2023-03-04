@@ -425,7 +425,7 @@
       // 단건 코스조회
       async function getRecommend() {
         const id = localStorage.getItem("recommendId");
-        var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+        var nickname = localStorage.getItem("nickname")
 
         $.ajax({
             type: "GET",
@@ -437,7 +437,6 @@
                 );
             },
           success: async function (response) {
-            var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
             console.log("response : ", response);
             const score = response.score;
             const title = response.title;
@@ -495,7 +494,7 @@
             }else {
                 var tempLike = `
                     <div style="width: 18px; height: 18px; display: flex; margin-right: 5px; cursor: pointer;" onclick="likeBoard()">
-                        <img style="width: 100%;" src="./../static/img/unheart.png" alt="좋아요 이미지" />
+                        <img style="width: 100%;" src="./../static/img/unHeart.png" alt="좋아요 이미지" />
                     </div>
                     <p style="margin-bottom: 0;">${likeCount}</p>
                 `
@@ -518,9 +517,8 @@
             $("#contents").append(tempContents)
 
             // 버튼 
-            console.log("menuProfile : ", menuProfile)
             $(".btns").empty()
-            if(menuProfile.nickname == response.nickName){
+            if(nickname == response.nickName){
                 var tempBtn = `
                     <button
                         type="button"
@@ -547,7 +545,6 @@
                 `
                 $(".btns").append(tempBtn)
             }else{
-                console.log("asdasd")
                 var tempBtn = `
                     <button
                         type="button"

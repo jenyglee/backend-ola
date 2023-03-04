@@ -418,6 +418,9 @@
             ]
             $(document).ready(function () {
                 var accessToken = localStorage.getItem("accessToken")
+                var refreshToken = localStorage.getItem("refreshToken")
+                console.log("accessToken : ", accessToken)
+                console.log("refreshToken : ", refreshToken)
                 if (accessToken == null) {
                     console.log("accessToken : ", accessToken)
                     window.location.href = "./template/b-1_login.html"

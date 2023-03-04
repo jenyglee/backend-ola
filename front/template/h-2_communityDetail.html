@@ -668,7 +668,8 @@
 
   async function getCommunity(commentPage) {
     var accessToken = localStorage.getItem("accessToken");
-    var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
+    var nickname = localStorage.getItem("nickname")
+
     $.ajax({
       type: "GET",
       url:
@@ -819,7 +820,7 @@
         }
             // 버튼
             $(".btns").empty()
-            if(menuProfile.nickname == response.nickName){
+            if(nickname == response.nickName){
                 var tempBtn = `
                     <button
                         type="button"   
@@ -846,7 +847,6 @@
                 `
                 $(".btns").append(tempBtn)
             }else{
-                console.log("asdasd")
                 var tempBtn = `
                     <button
                         type="button"   
@@ -880,6 +880,7 @@
         //     ==}</button>
       },
       error: function (response, status, error) {
+          console.log("response : ", response)
         if (response.responseJSON.message.substring(0, 11) == "JWT expired") {
           regenerateToken()
           getCommunity(0);

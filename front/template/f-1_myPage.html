@@ -409,7 +409,8 @@
 
   function getMyInfo() {
     const accessToken = localStorage.getItem("accessToken")
-
+    var nickName = localStorage.getItem("nickname")
+    console.log("nickName : ", nickName)
     $.ajax({
       type: "GET",
       contentType: "application/json",
@@ -429,7 +430,7 @@
         }
         var tempMyGrade = `
           <p class="title">${gradeText}</p>
-          <p class="name">${response.nickName}님</p>
+          <p class="name">${nickName}님</p>
         `
         $("#myGrade").append(tempMyGrade);
 
