@@ -182,7 +182,7 @@
         getUser(0,"");
         var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
         if(menuProfile.role=="ADMIN"){
-            const temp = `<span>${menuProfile.nickname} 매니저</span>`
+            const temp = `<span>${localStorage.getItem("nickname")} 매니저</span>`
             $(manager_name).append(temp)
         }
     });
@@ -210,7 +210,7 @@
                 window.location.href = "b-1_login.html";
             },
             error: function (response, status, error) {
-                if(response.responseJSON.httpStatus === "BAD_REQUEST"){
+                if(response.responseJSON.status == 500){
                     regenerateToken()
                     gotologout()
                 }
