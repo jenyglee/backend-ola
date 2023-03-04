@@ -51,7 +51,7 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 전체 조회
     @Override
-    public PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name, User user) {
+    public PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit, String name) {
         // 1. 페이징으로 요청해서 조회
         PageRequest pageRequest = PageRequest.of(offset, limit);
         Page<Hashtag> results = hashtagRepository.findAllByLikeName(name, pageRequest);

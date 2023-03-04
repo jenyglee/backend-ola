@@ -50,13 +50,15 @@ public class SecurityConfig {
 //            .requestMatchers(PathRequest.toH2Console()) // h2 콘솔 테이블 사용을 허용
 
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-            .antMatchers(HttpMethod.POST, "/auth/signup")       //회원가입 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/signup") //회원가입 api 필터제외
             .antMatchers(HttpMethod.POST, "/auth/signup/admin") //어드민 회원가입 api 필터제외
-            .antMatchers(HttpMethod.POST, "/auth/login")      //로그인 api 필터제외
-            .antMatchers(HttpMethod.POST, "/auth/logout")     //로그아웃 api 필터제외
-            .antMatchers(HttpMethod.GET, "/boards/recommends")           //모든 게시물 조회 필터 제외
-            .antMatchers(HttpMethod.GET, "/boards/communities")           //모든 게시물 조회 필터 제외
-            .antMatchers(HttpMethod.GET, "/boards/notices")           //모든 게시물 조회 필터 제외
+            .antMatchers(HttpMethod.POST, "/auth/login") //로그인 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/logout") //로그아웃 api 필터제외
+            .antMatchers(HttpMethod.GET, "/boards/recommends") //코스추천 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/boards/communities") //커뮤니티 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/boards/notices") //공지사항 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/product/search") //상품 조회 필터 제외
+            .antMatchers(HttpMethod.GET, "/hashtag") //해시태그 필터 제외
             .antMatchers(HttpMethod.POST, "/auth/token/regenerate");
 
     }

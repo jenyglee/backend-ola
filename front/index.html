@@ -428,7 +428,7 @@
 
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
-                getMenuProfile()
+                // getMenuProfile()
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
@@ -468,13 +468,14 @@
 
             async function getCrewCommunityList() {
                 const accessToken = localStorage.getItem("accessToken")
+                console.log("qwleklqwe")
                 $.ajax({
                     type: "GET",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
                     // url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
                     success: async function (response) {
                         console.log("커뮤니티 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
@@ -509,13 +510,14 @@
 
             async function getRecommendLikeList() {
                 const accessToken = localStorage.getItem("accessToken")
+                console.log("진행중")
                 $.ajax({
                     type: "GET",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
                     // url: "http://localhost:8080/boards/recommends?page=0&size=4&score=0&season=&altitude=0&region=&sort=likeDesc",
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
+                    // beforeSend: function (xlr) {
+                    //     xlr.setRequestHeader("Authorization", accessToken)
+                    // },
                     success: async function (response) {
                         console.log("코스추천 response : ", response)
                         for (let i = 0; i < response.data.length; i++) {
@@ -590,12 +592,23 @@
             }
 
             function moveCommunityDetail(id) {
-                localStorage.setItem("communityId", id)
-                window.location = "template/h-2_communityDetail.html"
+                const accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    localStorage.setItem("communityId", id)
+                    window.location = "template/h-2_communityDetail.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
+
             function moveRecommendDetail(id) {
-                localStorage.setItem("recommendId", id)
-                window.location = "template/g-2_recommendDetail.html"
+                const accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    localStorage.setItem("recommendId", id)
+                    window.location = "template/g-2_recommendDetail.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
 
             function regenerateToken() {
@@ -624,7 +637,12 @@
             }
 
             function moveCommunityCreate() {
-                window.location = "./template/h-3_communityCreate.html"
+                var accessToken = localStorage.getItem("accessToken")
+                if (accessToken != "") {
+                    window.location = "./template/h-3_communityCreate.html"
+                } else {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                }
             }
         </script>
     </body>

@@ -273,6 +273,8 @@
 
         <script>
             $(document).ready(function () {
+                var noticeId = localStorage.getItem("noticeId")
+                console.log("noticeId : ", noticeId)
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
                 getMenuProfile()
@@ -281,15 +283,15 @@
             function getMenuProfile() {
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 var tempProfile = `
-          <div class="img-wrap">
-            <img class="img" style="width: 100%; height: auto" src=${
-                menuProfile.profileImage
-                    ? menuProfile.profileImage
-                    : "./../static/img/icon_profile_default.png"
-            } alt="프로필사진"/>
-          </div>
-          <p class="text">${menuProfile.nickname}님</p>
-`
+                        <div class="img-wrap">
+                            <img class="img" style="width: 100%; height: auto" src=${
+                                menuProfile.profileImage
+                                    ? menuProfile.profileImage
+                                    : "./../static/img/icon_profile_default.png"
+                            } alt="프로필사진"/>
+                        </div>
+                        <p class="text">${menuProfile.nickname}님</p>
+                `
                 $("#my-profile").append(tempProfile)
             }
             function handleToggleBellDropBox() {

@@ -882,10 +882,11 @@
                         localStorage.setItem("accessToken", "")
                         localStorage.setItem("refreshToken", "")
                         localStorage.setItem("nickname", "")
+                        localStorage.setItem("menuProfile", "")
                         window.location.href = "b-1_login.html"
                     },
                     error: function (response, status, error) {
-                        if (response.responseJSON.httpStatus === "BAD_REQUEST") {
+                        if (response.responseJSON.status == 500) {
                             regenerateToken()
                             logout()
                         }
