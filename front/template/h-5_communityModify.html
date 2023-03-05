@@ -423,36 +423,23 @@
       $(".right").append(result);
     }
   }
-  function getMenuProfile() {
+  async function getMenuProfile() {
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
     const nickname = localStorage.getItem("nickname")
+    var imgUrl = "";
+    if (menuProfile.profileImage){
+      imgUrl = await getImageURL(menuProfile.profileImage);
+    }else{
+      imgUrl = "./../static/img/icon_profile_default.png"
+    }
     var tempProfile = `
-                    <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-        menuProfile.profileImage
-            ? menuProfile.profileImage
-            : "./../static/img/icon_profile_default.png"
-    } alt="프로필사진"/>
+                    <div class="img-wrap" style="width: 40px; height: 40px;">
+                        <img class="img" style="height: 100%; width: auto" src=${imgUrl} alt="프로필사진"/>
                     </div>
-                    <p class="text">${nickname}님</p>
+                    <p class="text" style="margin-bottom: 20px">${nickname}님</p>
             `
     $("#my-profile").append(tempProfile)
   }
-            function getMenuProfile() {
-                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
-                var tempProfile = `
-                      <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-                            menuProfile.profileImage
-                                ? menuProfile.profileImage
-                                : "./../static/img/icon_profile_default.png"
-                        } alt="프로필사진"/>
-                      </div>
-                      <p class="text">${menuProfile.nickname}님</p>
-                `
-                $("#my-profile").append(tempProfile)
-            }
-
   function handleToggleBellDropBox() {
     $(".bell-dropbox").toggle()
     $(".friend-dropbox").hide()
@@ -523,16 +510,16 @@
         // 태그 넣기
         for (let i = 0; i < response.tagList.length; i++) {
           var temp = `
-                                <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-                                ${response.tagList[i].id}
-                                </div>
-                            `
-                            $("#tag-select-list").append(temp)
-                            selectTags.push({
-                              id : response.tagList[i].id,
-                              name : response.tagList[i].name
-                            })
-                        }
+              <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                  ${response.tagList[i].id}<span> ${response.tagList[i].name}</span>
+              </div>
+              `
+              $("#tag-select-list").append(temp)
+              selectTags.push({
+                id : response.tagList[i].id,
+                name : response.tagList[i].name
+              })
+          }
 
         if (response.chatStatus == "Y") {
           $("#flexCheckDefault").prop("checked", true)
@@ -943,7 +930,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         $(".friend-list-1").empty();
         $(".friend-list-2").empty();
@@ -958,11 +945,17 @@
           $(".friend-list-3").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let friendId = response.data[i].friendId;
             let name = response.data[i].friendName;
             let tags = response.data[i].hashtagList;
             let tagName = [];
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             for (let j = 0; j < tags.length; j++) {
               tagName.push("#" + tags[j].name);
@@ -972,7 +965,7 @@
                     <li style="margin-top: 10px;">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input type="hidden" value="${friendId}">
@@ -999,7 +992,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         let result = null;
         let sideFriend = null;
@@ -1012,10 +1005,16 @@
           $(".friend-list-2").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let name = response.data[i].friendName;
             let friendId = response.data[i].friendId;
             let tags = response.data[i].hashtagList;
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             tagName = [];
             for (let j = 0; j < tags.length; j++) {
@@ -1025,7 +1024,7 @@
             sideFriend = `<li style="margin-top: 20px">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc; text-align: center">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input class="targetId1" type="hidden" value="${friendId}" id="targetId">
@@ -1056,7 +1055,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         $(".friend-list-1").empty();
 
@@ -1070,10 +1069,16 @@
 
         } else {
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let name = response.data[i].friendName;
             let friendId = response.data[i].friendId;
             let tags = response.data[i].hashtagList;
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             tagName = [];
             for (let j = 0; j < tags.length; j++) {
@@ -1083,7 +1088,7 @@
             result = `<li>
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input type="hidden" value="${friendId}" id="targetId">
