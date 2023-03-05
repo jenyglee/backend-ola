@@ -94,7 +94,7 @@ public class CommunityBoardController {
         @RequestParam String nickname,
         @RequestParam Long hashtagId,
         @RequestParam String chatStatus,
-        @RequestParam String sort // likeDesc, dateDesc
+        @RequestParam String sort // likeDesc, boardIdDesc
     ) {
         long start = System.currentTimeMillis();
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
