@@ -273,19 +273,20 @@
                 }
             }
 
-            function getMenuProfile() {
+            async function getMenuProfile() {
                 var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
                 const nickname = localStorage.getItem("nickname")
-
+                var imgUrl = "";
+                if (menuProfile.profileImage){
+                    imgUrl = await getImageURL(menuProfile.profileImage);
+                }else{
+                    imgUrl = "./../static/img/icon_profile_default.png"
+                }
                 var tempProfile = `
-                    <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-                    menuProfile.profileImage
-                        ? menuProfile.profileImage
-                        : "./../static/img/icon_profile_default.png"
-                } alt="프로필사진"/>
+                    <div class="img-wrap" style="width: 40px; height: 40px;">
+                        <img class="img" style="height: 100%; width: auto" src=${imgUrl} alt="프로필사진"/>
                     </div>
-                    <p class="text">${nickname}님</p>
+                    <p class="text" style="margin-bottom: 20px">${nickname}님</p>
             `
                 $("#my-profile").append(tempProfile)
             }

@@ -423,36 +423,23 @@
       $(".right").append(result);
     }
   }
-  function getMenuProfile() {
+  async function getMenuProfile() {
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
     const nickname = localStorage.getItem("nickname")
+    var imgUrl = "";
+    if (menuProfile.profileImage){
+      imgUrl = await getImageURL(menuProfile.profileImage);
+    }else{
+      imgUrl = "./../static/img/icon_profile_default.png"
+    }
     var tempProfile = `
-                    <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-        menuProfile.profileImage
-            ? menuProfile.profileImage
-            : "./../static/img/icon_profile_default.png"
-    } alt="프로필사진"/>
+                    <div class="img-wrap" style="width: 40px; height: 40px;">
+                        <img class="img" style="height: 100%; width: auto" src=${imgUrl} alt="프로필사진"/>
                     </div>
-                    <p class="text">${nickname}님</p>
+                    <p class="text" style="margin-bottom: 20px">${nickname}님</p>
             `
     $("#my-profile").append(tempProfile)
   }
-            function getMenuProfile() {
-                var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
-                var tempProfile = `
-                      <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-                            menuProfile.profileImage
-                                ? menuProfile.profileImage
-                                : "./../static/img/icon_profile_default.png"
-                        } alt="프로필사진"/>
-                      </div>
-                      <p class="text">${menuProfile.nickname}님</p>
-                `
-                $("#my-profile").append(tempProfile)
-            }
-
   function handleToggleBellDropBox() {
     $(".bell-dropbox").toggle()
     $(".friend-dropbox").hide()
@@ -523,16 +510,16 @@
         // 태그 넣기
         for (let i = 0; i < response.tagList.length; i++) {
           var temp = `
-                                <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
-                                ${response.tagList[i].id}
-                                </div>
-                            `
-                            $("#tag-select-list").append(temp)
-                            selectTags.push({
-                              id : response.tagList[i].id,
-                              name : response.tagList[i].name
-                            })
-                        }
+              <div style="padding: 5px 10px; border-radius: 50px; border: 1px solid #F46B3F; font-size: 12px; font-weight: bold; margin-right: 5px" >
+                  ${response.tagList[i].id}<span> ${response.tagList[i].name}</span>
+              </div>
+              `
+              $("#tag-select-list").append(temp)
+              selectTags.push({
+                id : response.tagList[i].id,
+                name : response.tagList[i].name
+              })
+          }
 
         if (response.chatStatus == "Y") {
           $("#flexCheckDefault").prop("checked", true)

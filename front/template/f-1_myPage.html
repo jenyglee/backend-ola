@@ -423,17 +423,18 @@
     }
   }
 
-  function getMenuProfile() {
+  async function getMenuProfile() {
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
     const nickname = localStorage.getItem("nickname")
-
+    var imgUrl = "";
+    if (menuProfile.profileImage){
+      imgUrl = await getImageURL(menuProfile.profileImage);
+    }else{
+      imgUrl = "./../static/img/icon_profile_default.png"
+    }
     var tempProfile = `
-                    <div class="img-wrap">
-                        <img class="img" style="width: 100%; height: auto" src=${
-        menuProfile.profileImage
-            ? menuProfile.profileImage
-            : "./../static/img/icon_profile_default.png"
-    } alt="프로필사진"/>
+                    <div class="img-wrap" style="width: 40px; height: 40px;">
+                        <img class="img" style="height: 100%; width: auto" src=${imgUrl} alt="프로필사진"/>
                     </div>
                     <p class="text" style="margin-bottom: 20px">${nickname}님</p>
             `
@@ -619,7 +620,7 @@
 
 
   //마이페이지 추천 친구 리스트(메뉴바 추천친구와 리스트 사이즈, html 붙이는 부분도 달라서 새로 만듬)
-  function mainRecommendFriendList() {
+  async function mainRecommendFriendList() {
     const accessToken = localStorage.getItem("accessToken")
 
     $.ajax({
@@ -628,7 +629,8 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
+        console.log("response : ", response)
         let mainFriend = null
         let tagName = []
 
@@ -640,7 +642,14 @@
           $(".b_17").append(mainFriend)
         } else {
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/mountain-default.png"
+            }
+
+            // let image = response.data[i].friendImage
             let name = response.data[i].friendName
             let friendId = response.data[i].friendId
             let tags = response.data[i].hashtagList
@@ -653,8 +662,8 @@
             mainFriend = `<div class="" style="height: 40px; padding: 0 30px; margin-top: 15px; display: flex; justify-content: space-between">
                               <div class="left" style="display: flex; align-items: center">
                                 <div class="img-wrap"
-                                     style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px">
-                                  <img class="img" style="width: 100%" src="${image}"/>
+                                     style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; margin-right: 10px; display: flex; justify-content: center; align-items: center">
+                                  <img class="img" style="height: 100%" src="${imgUrl}"/>
                                 </div>
                                 <p>${name}</p>
                               </div>
@@ -670,6 +679,37 @@
         }
       },
     })
+  }
+
+  async function getImageURL(objectKey) {
+    var loadData = "";
+    const accessToken = localStorage.getItem("accessToken");
+    await $.ajax({
+      type: "GET",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName="+ objectKey,
+      contentType: "application/json",
+      processData: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
+      data: objectKey,
+      xhrFields: {
+        withCredentials:false // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      },
+      success: await function (response) {
+        loadData = response
+
+      },
+      error: function (response) {
+
+        console.log("에러난다..!");
+        // console.log(request, status, error);
+        console.log("response : ", response)
+        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      },
+
+    });
+    return loadData
   }
 
   //추천 친구 리스트
