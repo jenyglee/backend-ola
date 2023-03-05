@@ -1,16 +1,20 @@
 package com.project.sparta.chat.controller;
 
+import com.project.sparta.chat.dto.ChatRequestDto;
 import com.project.sparta.chat.dto.ChatRoomDto;
 import com.project.sparta.chat.dto.ChatRoomMap;
 import com.project.sparta.chat.service.ChatServiceMain;
 import com.project.sparta.communityBoard.repository.BoardRepository;
+import com.project.sparta.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,7 +26,17 @@ public class ChatRoomController {
     // ChatService Bean 가져오기
     private final ChatServiceMain chatServiceMain;
 
-    private final BoardRepository boardRepository;
+    //채팅룸 생성(수정에서 사용되는 채팅 생성임)
+    @PostMapping("/chat/room")
+    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @AuthenticationPrincipal
+        UserDetailsImpl userDetails) {
+
+        chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
+                chatRequestDto.getChatMemCnt(), userDetails.getUser().getNickName());
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
     //채팅룸 상세 정보
     @GetMapping("/chat/room")

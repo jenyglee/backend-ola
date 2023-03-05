@@ -34,7 +34,7 @@
                 bottom: 0;
             }
             .input-area .input-wrap {
-                width: 570px;
+                width: 550px;
                 margin-right: 10px;
             }
             .input-area {
@@ -144,7 +144,7 @@
                 <button
                     type="button"
                     class="btn btn-primary search-btn"
-                    onclick="exitRoom()"
+                    onclick="self.close()"
                     id="exitMes"
                 >
                     방나가기
@@ -155,10 +155,15 @@
             var stompClient = null
             $(document).ready(function () {
                 $("#sendMes").on("click", (e) => {
+
+                    if($("#messageSend").val()==""){
+                       alert("내용을 입력해주세요.")
+                       return;
+                    }
+
                     sendMessage()
                     $("#messageSend").val("")
                 })
-
                 connect()
             })
 

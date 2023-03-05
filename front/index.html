@@ -250,7 +250,7 @@
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
-                        <label class="btn btn-outline-primary" for="btncheck${i}" onclick="moveCommunityWithHashtag(${list[i].id})">'${list[i].id}' ${list[i].name} </label>
+                        <label class="btn btn-outline-primary" for="btncheck${i}" onclick="moveCommunityWithHashtag(${list[i].id})">${list[i].name} </label>
                     `
                     $(".btn-group").append(temp)
                 }
@@ -377,8 +377,6 @@
             }
 
             async function getCrewCommunityList() {
-                const accessToken = localStorage.getItem("accessToken")
-                console.log("qwleklqwe")
                 $.ajax({
                     type: "GET",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
@@ -388,7 +386,11 @@
                     // },
                     success: async function (response) {
                         console.log("커뮤니티 response : ", response)
+
+
                         for (let i = 0; i < response.data.length; i++) {
+                            roomMemberCnt(response.data[i].boardId);
+
                             var imgUrl = ""
                             if (response.data[i].imgList[0]) {
                                 imgUrl = await getImageURL(response.data[i].imgList[0])
@@ -400,13 +402,15 @@
                                 <div class="post-img-wrap">
                                     <img src=${imgUrl} alt="산 이미지" />
                                 </div>
-                                <div class="post-text">
+                                <div class="post-text-title">
                                     <p class="title">${response.data[i].title}</p>
+                                </div>
+                                <div class="post-text">
                                 </div>
                             </div>
                             `
                             $("#community").append(temp)
-                            roomMemberCnt(response.data[i].boardId);
+
                         }
                     },
                     error: function (response) {
@@ -430,6 +434,9 @@
                     // },
                     success: async function (response) {
                         console.log("코스추천 response : ", response)
+
+                        $("#recommend").empty()
+
                         for (let i = 0; i < response.data.length; i++) {
                             var imgUrl = ""
                             if (response.data[i].imgList[0]) {
@@ -442,7 +449,7 @@
                                     <div class="post-img-wrap">
                                         <img src=${imgUrl} alt="산 이미지" />
                                     </div>
-                                    <div class="post-text">
+                                    <div class="recommend-text">
                                         <p class="title">${response.data[i].title}</p>
                                         <div class="heart-wrap">
                                             <div class="heart-img-wrap">
@@ -833,6 +840,8 @@
 
                         for(var i=0; i<response.data.length; i++){
 
+
+                            console.log(response)
                             board_Id = response.data[i].boardId;
                             alarmId = response.data[i].alarmId;
                             if(response.data[i].readStatus=="N"){
@@ -843,10 +852,10 @@
 
                                 $(".icon-bell").append(changeImg);
 
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }else{
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }
                         }
@@ -876,6 +885,8 @@
             }
 
             function roomMemberCnt(communityId) {
+
+                console.log("커뮤니티 아이디 : ", communityId)
                 const accessToken = localStorage.getItem("accessToken")
                 $.ajax({
                     type: "GET",
@@ -885,8 +896,6 @@
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
                     success: function (response) {
-
-                        console.log(response)
 
                         $(".post-text").empty();
 
