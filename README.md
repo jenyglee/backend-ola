@@ -1,17 +1,13 @@
-# Gulp-Application
+# Ola Community
 React native 프로젝트 어플리케이션 '꿀꺽' 입니다. 영양제 복용알람 서비스 앱으로, CRUD 기능과 '자동검색 API', 'Stack/tab Navigator', 'REST API' 등 다양한 기능들을 추가하였습니다.
 
 ## 팀 구성
-프론트엔드 1명, 백엔드 1명
+백엔드 5명(이재원, 한세인, 김두영, 김주성, 김민선)
 
-[프로젝트 포트폴리오 상세 보기](http://jenyglee93.com/)
+<!-- [프로젝트 포트폴리오 상세 보기](http://jenyglee93.com/) -->
+![리드미 대문 이미지](https://user-images.githubusercontent.com/86715916/222955463-95fad7f8-1959-46d1-b556-e550469bff0e.jpg)
 
-![스크린샷01](https://user-images.githubusercontent.com/86715916/147723480-04a65442-63b0-4366-a6f9-c5d7219aa9cf.jpg)
-![스크린샷02](https://user-images.githubusercontent.com/86715916/147723484-45448d38-15c3-4b2e-a626-6492ff0d6585.jpg)
-![스크린샷03](https://user-images.githubusercontent.com/86715916/147723485-e984a368-3a42-4c5e-8519-38fd69f6c6ea.jpg)
-![스크린샷04](https://user-images.githubusercontent.com/86715916/147723486-de782e6f-3c73-4731-9c2b-c707a678ea1d.jpg)
-![스크린샷05](https://user-images.githubusercontent.com/86715916/147723488-c763b1a7-25b4-4c9c-99b3-3bab16c4ed44.jpg)
-![스크린샷06](https://user-images.githubusercontent.com/86715916/147723489-a98741b8-1085-4fb8-b33c-54f1ee160cd2.jpg)
+
 
 
 ## 주요기능
