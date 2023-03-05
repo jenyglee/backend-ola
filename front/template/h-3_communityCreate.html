@@ -519,6 +519,7 @@
                 $.ajax({
                     type: "POST",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/",
+                    // url: "http://localhost:8080/boards/communities/",
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },

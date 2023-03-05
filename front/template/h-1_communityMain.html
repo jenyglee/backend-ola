@@ -385,10 +385,10 @@
         $.ajax({
           type: "GET",
           // TODO 
-          // url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
-          //   + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
-        url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
-        + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
+          url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
+            + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
+        // url: "http://localhost:8080/boards/communities?page=" + page + "&size=8&title=" + title + "&contents=" + contents
+        // + "&nickname=" + nickname + "&hashtagId=" + hashtagId + "&chatStatus=" + chatStatus + "&sort=" + sort,
           beforeSend: function (xlr) {
             xlr.setRequestHeader("Authorization", accessToken)
           },
