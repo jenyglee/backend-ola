@@ -578,11 +578,7 @@
       success: async function (response) {
         console.log("response : ", response)
 
-        if(response.chatStatus=="N"){
-          $("#enterChat").attr("disabled", true);
-        }else{
-          roomMemberCnt();
-        }
+        roomMemberCnt();
 
         // 컨텐츠 넣기
         $("#contents-area").empty();
@@ -1088,14 +1084,18 @@
   }
 
   function roomMemberCnt() {
-    var communityId = localStorage.getItem("communityId")
+    const communityId = localStorage.getItem("communityId")
+    const accessToken = localStorage.getItem("accessToken");
 
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
       success: function (response) {
-        console.log("하하하", response)
+        console.log(response)
 
         $(".crew").empty();
 

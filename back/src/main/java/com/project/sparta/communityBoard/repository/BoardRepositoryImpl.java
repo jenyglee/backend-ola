@@ -193,12 +193,12 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     public Page<CommunityBoardAllResponseDto> communityAllList(
         CommunitySearchCondition condition, Pageable pageable) { // condition.getHashtagId()
         StringPath likeCount = Expressions.stringPath("likeCount");
-        StringPath date = Expressions.stringPath("date");
-        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getSort(), likeCount, date);
+        StringPath boardId = Expressions.stringPath("boardId");
+        OrderSpecifier[] orderSpecifiers = createOrderSpecifier(condition.getSort(), likeCount, boardId);
 
         QueryResults<Tuple> results = queryFactory
             .select(
-                communityBoard.id,
+                communityBoard.id.as("boardId"),
                 communityBoard.user.nickName,
                 communityBoard.title,
                 ExpressionUtils.as(JPAExpressions.select(boardLike.board.count()).from(boardLike)
@@ -228,7 +228,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         List<CommunityBoardAllResponseDto> contents = new ArrayList<>();
         for (Tuple tuple : boards) {
-            Long id = tuple.get(communityBoard.id);
+            Long id = tuple.get(communityBoard.id.as("boardId"));
             String nickName = tuple.get(communityBoard.user.nickName);
             String title = tuple.get(communityBoard.title);
             Long likeSize = tuple.get(
@@ -369,12 +369,12 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     // 동적 정렬
-    private OrderSpecifier[] createOrderSpecifier(String sort, StringPath likeCount, StringPath date){
+    private OrderSpecifier[] createOrderSpecifier(String sort, StringPath likeCount, StringPath boardId){
         List<OrderSpecifier> orders = new ArrayList<>();
         if(sort.equals("likeDesc")){
             orders.add(new OrderSpecifier(Order.DESC, likeCount));
-        }else if(sort.equals("dateDesc")){
-            orders.add(new OrderSpecifier(Order.DESC, date));
+        }else if(sort.equals("boardIdDesc")){
+            orders.add(new OrderSpecifier(Order.DESC, boardId));
         }
         return orders.toArray(new OrderSpecifier[orders.size()]);
     }
