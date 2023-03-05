@@ -2,11 +2,12 @@
 React native 프로젝트 어플리케이션 '꿀꺽' 입니다. 영양제 복용알람 서비스 앱으로, CRUD 기능과 '자동검색 API', 'Stack/tab Navigator', 'REST API' 등 다양한 기능들을 추가하였습니다.
 
 ## 팀 구성
-백엔드 5명
+백엔드 5명(이재원, 한세인, 김두영, 김주성, 김민선)
 
-[프로젝트 포트폴리오 상세 보기](http://jenyglee93.com/)
+<!-- [프로젝트 포트폴리오 상세 보기](http://jenyglee93.com/) -->
+![리드미 대문 이미지](https://user-images.githubusercontent.com/86715916/222955463-95fad7f8-1959-46d1-b556-e550469bff0e.jpg)
 
-![리드미 대문 이미지](https://user-images.githubusercontent.com/86715916/222955306-35c848be-661c-44a5-84d3-056a5690d322.jpg)
+
 
 
 ## 주요기능
