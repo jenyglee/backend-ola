@@ -833,6 +833,8 @@
 
                         for(var i=0; i<response.data.length; i++){
 
+
+                            console.log(response)
                             board_Id = response.data[i].boardId;
                             alarmId = response.data[i].alarmId;
                             if(response.data[i].readStatus=="N"){
@@ -843,10 +845,10 @@
 
                                 $(".icon-bell").append(changeImg);
 
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }else{
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }
                         }

@@ -513,9 +513,16 @@
                 var chatMemCnt = $(".chatCnt-input").val()
 
                 var tagIds = []
-                for (let i=0; i<selectTags.length; i++){
-                    tagIds.push(selectTags[i].id)
+
+                if(selectTags.length==0){
+                    alert("태그는 1개이상 필수 선택입니다.")
+                    return;
+                }else{
+                    for (let i=0; i<selectTags.length; i++){
+                        tagIds.push(selectTags[i].id)
+                    }
                 }
+
                 $.ajax({
                     type: "POST",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/",
@@ -1080,6 +1087,8 @@
 
                         for(var i=0; i<response.data.length; i++){
 
+
+                            console.log(response)
                             board_Id = response.data[i].boardId;
                             alarmId = response.data[i].alarmId;
                             if(response.data[i].readStatus=="N"){
@@ -1090,10 +1099,10 @@
 
                                 $(".icon-bell").append(changeImg);
 
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }else{
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
                                 $("#alarm").append(result);
                             }
                         }

@@ -574,7 +574,8 @@
   }
 
   //알림 조회
-  function selectAlarm() {
+  //알림 조회
+  function selectAlarm(){
     const accessToken = localStorage.getItem("accessToken")
     $.ajax({
       type: "GET",
@@ -583,22 +584,24 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success : function (response){
         $("#alarm").empty();
 
         let result = null;
         let changeImg = null;
 
-        if (response.data.length == 0) {
-          result = `<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
+        if(response.data.length==0){
+          result =`<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
           $("#alarm").append(result);
         }
 
-        for (var i = 0; i < response.data.length; i++) {
+        for(var i=0; i<response.data.length; i++){
 
+
+          console.log(response)
           board_Id = response.data[i].boardId;
           alarmId = response.data[i].alarmId;
-          if (response.data[i].readStatus == "N") {
+          if(response.data[i].readStatus=="N"){
 
             $(".icon-bell").empty();
 
@@ -606,10 +609,10 @@
 
             $(".icon-bell").append(changeImg);
 
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
             $("#alarm").append(result);
-          } else {
-            result = `<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+          }else{
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
             $("#alarm").append(result);
           }
         }

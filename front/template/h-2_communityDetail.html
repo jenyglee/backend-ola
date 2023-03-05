@@ -874,7 +874,7 @@
   function createAlarm(){
     var accessToken = localStorage.getItem("accessToken");
     var menuProfile = JSON.parse(localStorage.getItem("menuProfile"));
-    let myNickname = menuProfile.nickname;
+    let myNickname = localStorage.getItem("nickname");;
 
     $.ajax({
       type: "POST",
@@ -1104,10 +1104,14 @@
   }
 
   function enterRoom() {
+    const accessToken = localStorage.getItem("accessToken");
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId=" + communityId,
       async: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken);
+      },
       success: function () {
         window.open('./h-4_chat.html?roomId='+ communityId, 'name', "left=100,top=100,width=740,height=700")
       }
@@ -1432,6 +1436,8 @@
 
         for(var i=0; i<response.data.length; i++){
 
+
+          console.log(response)
           board_Id = response.data[i].boardId;
           alarmId = response.data[i].alarmId;
           if(response.data[i].readStatus=="N"){
@@ -1442,10 +1448,10 @@
 
             $(".icon-bell").append(changeImg);
 
-            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
             $("#alarm").append(result);
           }else{
-            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
+            result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
             $("#alarm").append(result);
           }
         }

@@ -720,46 +720,48 @@
 
             //알림 조회
             function selectAlarm(){
-                const accessToken = localStorage.getItem("accessToken")
-                $.ajax({
-                    type: "GET",
-                    contentType: "application/json",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
-                    beforeSend: function (xlr) {
-                        xlr.setRequestHeader("Authorization", accessToken)
-                    },
-                    success : function (response){
-                        $("#alarm").empty();
+              const accessToken = localStorage.getItem("accessToken")
+              $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?page=0&size=10",
+                beforeSend: function (xlr) {
+                  xlr.setRequestHeader("Authorization", accessToken)
+                },
+                success : function (response){
+                  $("#alarm").empty();
 
-                        let result = null;
-                        let changeImg = null;
+                  let result = null;
+                  let changeImg = null;
 
-                        if(response.data.length==0){
-                            result =`<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
-                            $("#alarm").append(result);
-                        }
+                  if(response.data.length==0){
+                    result =`<li style="color: #f46b3f; margin-left: 50px">※ 현재 알림이 없습니다</li>`;
+                    $("#alarm").append(result);
+                  }
 
-                        for(var i=0; i<response.data.length; i++){
+                  for(var i=0; i<response.data.length; i++){
 
-                            board_Id = response.data[i].boardId;
-                            alarmId = response.data[i].alarmId;
-                            if(response.data[i].readStatus=="N"){
 
-                                $(".icon-bell").empty();
+                    console.log(response)
+                    board_Id = response.data[i].boardId;
+                    alarmId = response.data[i].alarmId;
+                    if(response.data[i].readStatus=="N"){
 
-                                changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
+                      $(".icon-bell").empty();
 
-                                $(".icon-bell").append(changeImg);
+                      changeImg = `<img className="img" style="width: 32px; height : 32px" src="./../static/img/icon_bell_2.png"/>`;
 
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f">${response.data[i].message}</a></li>`;
-                                $("#alarm").append(result);
-                            }else{
-                                result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: black">${response.data[i].message}</a></li>`;
-                                $("#alarm").append(result);
-                            }
-                        }
+                      $(".icon-bell").append(changeImg);
+
+                      result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #f46b3f; cursor: pointer">${response.data[i].message}</a></li>`;
+                      $("#alarm").append(result);
+                    }else{
+                      result =`<li><a onclick="setCommunityId(${board_Id}, ${alarmId})" style="color: #D2D2D2; cursor: pointer">${response.data[i].message}</a></li>`;
+                      $("#alarm").append(result);
                     }
-                });
+                  }
+                }
+              });
             }
             //알람 읽음 상태로 변경
             function updateAlarmStats(alarmId){
