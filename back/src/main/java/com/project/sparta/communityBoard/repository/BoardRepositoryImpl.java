@@ -122,46 +122,45 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .fetch();
 
-        // 관련 댓글/좋아요 조회
+        // 관련 댓글
         List<CommentResponseDto> commentCol = queryFactory.select(
                 Projections.constructor(CommentResponseDto.class,
                     communityComment.Id,
                     communityComment.nickName,
                     communityComment.contents,
                     communityComment.createAt,
-                    // 댓글의 좋아요 수
-                    //JPAExpressions
-                    //    .select(commentLike.count())
-                    //    .from(commentLike)
-                    //    .where(commentLike.comment.Id.eq(communityComment.Id)),
-                    // 내가 이 댓글을 좋아요 했는지
-                    //JPAExpressions.select(commentLike.userNickName.count().when(1L).then(true)
-                    //        .otherwise(false))
-                    //    .from(commentLike)
-                    //    .where(
-                    //        // TODO isLike select문때문에 모든 Like가 사라졌을 때 댓글이 하나도 조회가 안되는 이슈 발생
-                    //        communityComment.Id.eq(commentLike.comment.Id),
-                    //        commentLike.userNickName.eq(username)
-                    //    ),
                     user.userImageUrl
                 )
             )
-            .from(communityBoard, communityComment, user, commentLike)
-            //.join(commentLike).on(commentLike.comment.Id.eq(communityComment.Id))
-            //.join(user).on(user.nickName.eq(communityComment.nickName))
-            .where(
-                communityComment.communityBoardId.eq(boardId),
-                commentLike.comment.Id.in(
-                    JPAExpressions.select(communityComment.Id)
-                        .from(communityComment)
-                        .where(communityComment.communityBoardId.eq(boardId))
-                ), // TODO 이걸 넣으면 코멘트가 다 사라짐
-                user.nickName.eq(communityComment.nickName)
-            )
-            //.distinct()
+            .from(communityComment)
+            .join(communityBoard).on(communityComment.communityBoardId.eq(communityBoard.id))
+            .join(user).on(user.nickName.eq(communityComment.nickName))
+            .where(communityComment.communityBoardId.eq(boardId))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
+
+        for (CommentResponseDto dto : commentCol){
+
+            //코멘트의 좋아요 갯수
+            Long count = queryFactory.select(commentLike.count())
+                        .from(communityComment)
+                        .join(commentLike).on(communityComment.Id.eq(commentLike.comment.Id))
+                        .where(communityComment.communityBoardId.eq(dto.getId()))
+                        .fetchOne();
+
+            //코멘트 좋아요 갯수
+            dto.addLikeCount(count);
+
+            //내가 해당 코멘트를 좋아요 눌렀는지
+            Boolean isLikeCheck = queryFactory.select(commentLike.userNickName.count().when(1L).then(true).otherwise(false))
+                .from(commentLike)
+                .join(commentLike).on(communityComment.Id.eq(commentLike.comment.Id))
+                .where(commentLike.userNickName.eq(dto.getNickName()))
+                .fetchOne();
+
+            dto.addIsLike(isLikeCheck);
+        }
 
         CommunityBoardOneResponseDto build = CommunityBoardOneResponseDto.builder()
             .title(title)

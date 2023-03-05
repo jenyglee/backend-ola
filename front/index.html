@@ -385,11 +385,8 @@
                     //     xlr.setRequestHeader("Authorization", accessToken)
                     // },
                     success: async function (response) {
-                        console.log("커뮤니티 response : ", response)
-
 
                         for (let i = 0; i < response.data.length; i++) {
-                            roomMemberCnt(response.data[i].boardId);
 
                             var imgUrl = ""
                             if (response.data[i].imgList[0]) {
@@ -397,6 +394,7 @@
                             } else {
                                 imgUrl = "./../static/img/mountain-default.png"
                             }
+
                             var temp = `
                             <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})">
                                 <div class="post-img-wrap">
@@ -409,8 +407,9 @@
                                 </div>
                             </div>
                             `
-                            $("#community").append(temp)
 
+                            $("#community").append(temp)
+                            roomMemberCnt(response.data[i].boardId);
                         }
                     },
                     error: function (response) {
@@ -886,8 +885,8 @@
 
             function roomMemberCnt(communityId) {
 
-                console.log("커뮤니티 아이디 : ", communityId)
                 const accessToken = localStorage.getItem("accessToken")
+                let crew = "";
                 $.ajax({
                     type: "GET",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
@@ -899,7 +898,7 @@
 
                         $(".post-text").empty();
 
-                        let crew = `<div>크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+                        crew = `<div>크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
                         $(".post-text").append(crew);
                     }
