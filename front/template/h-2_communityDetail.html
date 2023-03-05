@@ -1142,7 +1142,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         $(".friend-list-1").empty();
         $(".friend-list-2").empty();
@@ -1157,11 +1157,17 @@
           $(".friend-list-3").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let friendId = response.data[i].friendId;
             let name = response.data[i].friendName;
             let tags = response.data[i].hashtagList;
             let tagName = [];
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             for (let j = 0; j < tags.length; j++) {
               tagName.push("#" + tags[j].name);
@@ -1171,7 +1177,7 @@
                     <li style="margin-top: 10px;">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input type="hidden" value="${friendId}">
@@ -1198,7 +1204,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         let result = null;
         let sideFriend = null;
@@ -1211,10 +1217,16 @@
           $(".friend-list-2").append(result);
         }else{
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let name = response.data[i].friendName;
             let friendId = response.data[i].friendId;
             let tags = response.data[i].hashtagList;
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             tagName = [];
             for (let j = 0; j < tags.length; j++) {
@@ -1224,7 +1236,7 @@
             sideFriend = `<li style="margin-top: 20px">
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc; text-align: center">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input class="targetId1" type="hidden" value="${friendId}" id="targetId">
@@ -1255,7 +1267,7 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
 
         $(".friend-list-1").empty();
 
@@ -1269,10 +1281,16 @@
 
         } else {
           for (let i = 0; i < response.data.length; i++) {
-            let image = response.data[i].friendImage;
             let name = response.data[i].friendName;
             let friendId = response.data[i].friendId;
             let tags = response.data[i].hashtagList;
+
+            var imgUrl = "";
+            if (response.data[i].friendImage){
+              imgUrl = await getImageURL(response.data[i].friendImage);
+            }else{
+              imgUrl = "./../static/img/icon_profile_default.png"
+            }
 
             tagName = [];
             for (let j = 0; j < tags.length; j++) {
@@ -1282,7 +1300,7 @@
             result = `<li>
                         <div className="left">
                           <div className="img-wrap" style="width: 32px;height: 32px;overflow: hidden; border-radius: 100%; display: flex; justify-content: center; border: 1px solid #cccccc;">
-                            <img className="img" src="${image}"/>
+                            <img className="img" src="${imgUrl}"/>
                           </div>
                         </div>
                         <input type="hidden" value="${friendId}" id="targetId">
