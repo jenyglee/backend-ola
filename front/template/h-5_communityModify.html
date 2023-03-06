@@ -613,8 +613,9 @@
   // 수정하기
   function updateCommunity() {
     const accessToken = localStorage.getItem("accessToken")
-    console.log("accessToken : ", accessToken)
     var chatStatus = $(".form-check-input:checked").val()
+
+
 
     if (chatStatus == "Y") {
       if ($(".chatCnt-input").val() == 0) {
@@ -635,6 +636,8 @@
       chatStatus = "N"
     }
 
+    createChat(communityId, $("#chatCnt-input").val())
+
     var chatMemCnt = $(".chatCnt-input").val()
     var tagIds = []
 
@@ -646,6 +649,7 @@
         tagIds.push(selectTags[i].id)
       }
     }
+
 
     $.ajax({
       type: "PATCH",
@@ -664,7 +668,7 @@
         imgList: imageUrlList,
       }),
       success: function (response) {
-        createChat(communityId, $("#chatCnt-input").val())
+
         alert("수정완료")
         window.location.href = "h-1_communityMain.html"
       },

@@ -60,6 +60,19 @@
                 width: 140%;
             }
 
+            .post .post-img-wrap1 {
+                width: 285px;
+                height: 218px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+            .post .post-img-wrap1 img {
+                width: 140%;
+                vertical-align: middle;
+            }
+
             /* #recommend .post .post-text
             #recommend .post .post-text .title
             #recommend .post .post-text .heart-wrap
@@ -182,8 +195,10 @@
                         </button>
                     </div>
                 </div>
-                <div id="community">
+                <div id="community" style="display: inline-block">
                     <!-- 커뮤니티 리스트 들어갈 자리 -->
+                    <div id="communityList"></div>
+                    <div id="roomMemberCnt"></div>
                 </div>
             </div>
             <div class="post-slider" style="margin-top: 50px">
@@ -396,20 +411,17 @@
                             }
 
                             var temp = `
-                            <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})">
-                                <div class="post-img-wrap">
-                                    <img src=${imgUrl} alt="산 이미지" />
+                            <div class="post" onclick="moveCommunityDetail(${response.data[i].boardId})" style="display: inline-block; width: 230px; margin-right: 66px">
+                                <div class="post-img-wrap1">
+                                    <img src=${imgUrl} alt="산 이미지">
                                 </div>
                                 <div class="post-text-title">
                                     <p class="title">${response.data[i].title}</p>
                                 </div>
-                                <div class="post-text">
-                                </div>
                             </div>
                             `
-
-                            $("#community").append(temp)
                             roomMemberCnt(response.data[i].boardId);
+                            $("#communityList").append(temp)
                         }
                     },
                     error: function (response) {
@@ -889,18 +901,17 @@
                 let crew = "";
                 $.ajax({
                     type: "GET",
-                    url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+                    //url: "http://localhost:8080/chat/room?roomId="
                         + communityId,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
                     success: function (response) {
 
-                        $(".post-text").empty();
+                        crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
-                        crew = `<div>크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
-
-                        $(".post-text").append(crew);
+                        $("#roomMemberCnt").append(crew);
                     }
                 })
             }
