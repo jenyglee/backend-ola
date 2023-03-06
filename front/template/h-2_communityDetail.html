@@ -833,7 +833,6 @@
       success: function (response) {
         alert("삭제 완료");
         window.location.href = "h-1_communityMain.html";
-
       },
       error: function (response, status, error) {
         if (response.responseJSON.status == 500) {
@@ -850,6 +849,7 @@
     $.ajax({
       type: "POST",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/comments/communities/"
+      //url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/comments/communities/"
           + communityId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken);
@@ -1093,6 +1093,7 @@
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+      //url: "http://localhost:8080/chat/room?roomId="
           + communityId,
       async: false,
       beforeSend: function (xlr) {
@@ -1103,8 +1104,9 @@
           alert("현재 채팅방에 접속된 유저가 있어 삭제가 불가능합니다.")
           return;
         } else {
+          console.log(response);
           deleteChatRoom();
-          deleteAlarm();
+          //getAlaramCnt();
           deleteCommunity();
         }
       },
@@ -1481,6 +1483,27 @@
     });
   }
 
+  function getAlaramCnt(){
+    const accessToken = localStorage.getItem("accessToken")
+
+    $.ajax({
+      type: "GET",
+       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarms?boardId=" + communityId,
+      //url: "http://localhost:8080/alarms?boardId=" + communityId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success: function (response) {
+
+        console.log("우하하", response)
+
+      },
+      error : function (error, response){
+        console.log(error, response)
+      }
+    });
+  }
+
   //알람 읽음 상태로 변경
   function updateAlarmStats(alarmId) {
     const accessToken = localStorage.getItem("accessToken")
@@ -1499,12 +1522,13 @@
   }
 
   //알림 삭제
-  function deleteAlarm(alarmId){
+  function deleteAlarm(boardId){
     const accessToken = localStorage.getItem("accessToken")
     $.ajax({
       type: "DELETE",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
-          + alarmId,
+      //url: "http://localhost:8080/alarm?boardId="
+          + boardId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },

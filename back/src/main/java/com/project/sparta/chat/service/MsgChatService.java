@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MsgChatService {
 
+    private final ChatRoomMap chatRoomMap;
+
     public ChatRoomDto createChatRoom(Long chatId,String roomName, int maxUserCnt, String hostName) {
         // roomName 와 roomPwd 로 chatRoom 빌드 후 return
         ChatRoomDto room = ChatRoomDto.builder()
@@ -32,7 +34,7 @@ public class MsgChatService {
         room.setChatType(ChatRoomDto.ChatType.MSG);
 
         // map 에 채팅룸 아이디와 만들어진 채팅룸을 저장
-        ChatRoomMap.getInstance().getChatRooms().put(room.getRoomId(), room);
+        chatRoomMap.getChatRooms().put(room.getRoomId(), room);
 
         return room;
     }
