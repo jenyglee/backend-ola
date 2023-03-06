@@ -19,7 +19,7 @@ public interface RecommendCourseBoardService {
 
     //코스 등록
 
-    void creatRecommendCourseBoard( RecommendRequestDto requestPostDto, Long userId);
+    Long creatRecommendCourseBoard( RecommendRequestDto requestPostDto, Long userId);
 
     //코스 수정
     void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestPostDto, Long userId);
