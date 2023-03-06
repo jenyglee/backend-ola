@@ -36,18 +36,22 @@ public class ChatRoomController {
     public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @AuthenticationPrincipal
         UserDetailsImpl userDetails) {
 
+        ChatRoomDto room;
+
         //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
         //2. 채팅방 Y -> N으로 변경할 때는 채팅방 수정해야함
         CommunityBoard board = boardRepository.findById(chatRequestDto.getRoomId()).orElseThrow(()-> new CustomException(
             Status.NOT_FOUND_POST));
 
-        if(chatRequestDto.getChatStatus().equals("Y") && board.getChatStatus().equals("N")){
-            chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
+        //아예 채팅방 만든 기록이 없을 경우
+        if(board.getChatStatus().equals("L")){
+            room = chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
                 chatRequestDto.getChatMemCnt(), userDetails.getUser().getNickName());
-        }else{
+            System.out.println(room.getRoomName() + "아이아어이ㅏㅇ");
+        }
+        else{
             updateChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getChatMemCnt());
         }
-
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -88,6 +92,8 @@ public class ChatRoomController {
             .userCount(beforeRoom.getUserCount())
             .maxUserCnt(roomMaxCnt)
             .build();
+
+        System.out.println("채팅방 수정 되나요?");
 
         ChatRoomMap.getInstance().getChatRooms().put(String.valueOf(roomId), room);
     }
