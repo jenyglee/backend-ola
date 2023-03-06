@@ -53,7 +53,6 @@ public class initDb {
         //initService.communityLike();
         //initService.recommendLike();
         //initService.noticeInit();
-        // 테스트용
     }
 
     @Component
