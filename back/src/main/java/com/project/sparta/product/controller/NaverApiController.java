@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-@Api(tags = {"네이버 API"})
+@Api(tags = {"상품"})
 @RestController
 @RequiredArgsConstructor
 public class NaverApiController {

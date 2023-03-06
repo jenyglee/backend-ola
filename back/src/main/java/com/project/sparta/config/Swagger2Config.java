@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -19,10 +21,12 @@ import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.spi.service.contexts.SecurityContext;
+
+//http://localhost:8080/swagger-ui.html
 @EnableSwagger2
 @Configuration
-public class Swagger2Config {
-  // 스웨거 url : http://localhost:8080/swagger-ui.html
+public class Swagger2Config extends WebMvcConfigurerAdapter {
+
 
   @Bean
   public Docket boardApi() {
@@ -92,8 +96,28 @@ public class Swagger2Config {
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.project.sparta"))
         .paths(predicate)
-        .apis(RequestHandlerSelectors.any())
+        .build()
+        .securityContexts(Arrays.asList(securityContext()))
+        .securitySchemes(Arrays.asList(apiKey()));
+  }
+
+  // 인증하는 방식
+  private SecurityContext securityContext() {
+    return SecurityContext.builder()
+        .securityReferences(defaultAuth())
         .build();
+  }
+
+  private List<SecurityReference> defaultAuth() {
+    AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+    authorizationScopes[0] = authorizationScope;
+    return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+  }
+
+  // Authorization 버튼을 클릭했을 때 입력하는 값
+  private ApiKey apiKey() {
+    return new ApiKey("Authorization", "Authorization", "header");
   }
 
   //swagger ui 설정.

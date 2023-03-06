@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"알람 API"})
+@Api(tags = {"알람"})
 @RestController
 @RequiredArgsConstructor
 public class AlarmController {

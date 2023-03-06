@@ -231,6 +231,25 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Transactional(readOnly = true)
     public PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page,
         int size, String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort) {
+        if(titleCond == null){
+            titleCond = "";
+        }
+        if(contentsCond == null){
+            contentsCond = "";
+        }
+        if(nicknameCond == null){
+            nicknameCond = "";
+        }
+        if(hashtagId == null){
+            hashtagId = 0L;
+        }
+        if(chatStatus == null){
+            chatStatus = "";
+        }
+        if(sort == null){
+            sort = "";
+        }
+
         // 1. 검색 조건을 객체로 저장
         CommunitySearchCondition searchCondition = new CommunitySearchCondition(titleCond,
             contentsCond, nicknameCond, hashtagId, chatStatus, sort);

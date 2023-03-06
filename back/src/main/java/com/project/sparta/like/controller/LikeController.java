@@ -13,7 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"라이크 API"})
+@Api(tags = {"좋아요"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/like")
@@ -23,7 +23,7 @@ public class LikeController {
     private final RecommendCourseLikeService recommendCourseLikeService;
 
     //커뮤니티 좋아요
-    @ApiOperation(value = "보드 라이크",response = Join.class)
+    @ApiOperation(value = "커뮤니티 좋아요",response = Join.class)
     @PostMapping("/communities/{boardId}")
     @ResponseStatus(HttpStatus.OK)
     public void likeBoard(@PathVariable Long boardId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -32,7 +32,7 @@ public class LikeController {
     }
 
     //커뮤니티 좋아요 해제
-    @ApiOperation(value = "보드 언라이크",response = Join.class)
+    @ApiOperation(value = "커뮤니티 좋아요 해제",response = Join.class)
     @DeleteMapping("/communities/{boardId}")
     public void unLikeBoard(@PathVariable Long boardId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
@@ -40,6 +40,7 @@ public class LikeController {
     }
 
     //댓글 좋아요
+    @ApiOperation(value = "커뮤니티 댓글 좋아요",response = Join.class)
     @PostMapping("/comments/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     public void likeComment(@PathVariable Long commentId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -48,6 +49,7 @@ public class LikeController {
     }
 
     //댓글 좋아요 해제
+    @ApiOperation(value = "커뮤니티 댓글 좋아요 해제",response = Join.class)
     @DeleteMapping("/comments/{commentId}")
     public void unLikeComment(@PathVariable Long commentId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
@@ -55,6 +57,7 @@ public class LikeController {
     }
 
     //코스추천 좋아요
+    @ApiOperation(value = "코스추천 좋아요",response = Join.class)
     @PostMapping("/recommends/{recommendId}")
     @ResponseStatus(HttpStatus.OK)
     public void likeRecommendCourse(@PathVariable Long recommendId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
@@ -63,6 +66,7 @@ public class LikeController {
     }
 
     //코스추천 좋아요 해제
+    @ApiOperation(value = "코스추천 좋아요 해제",response = Join.class)
     @DeleteMapping("/recommends/{recommendId}")
     public void unlikeRecommendCourse(@PathVariable Long recommendId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();

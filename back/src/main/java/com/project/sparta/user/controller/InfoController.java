@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"정보조회 API"})
+@Api(tags = {"정보조회"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/info")

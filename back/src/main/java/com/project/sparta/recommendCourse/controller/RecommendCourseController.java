@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"코스추천 API"})
+@Api(tags = {"코스추천"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/boards")

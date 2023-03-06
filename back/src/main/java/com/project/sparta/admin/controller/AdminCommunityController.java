@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"어드민 커뮤니티 API"})
+@Api(tags = {"어드민 커뮤니티"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
