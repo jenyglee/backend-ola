@@ -15,4 +15,6 @@ public interface AlarmService {
     PageResponseDto<List<AlarmResponseDto>> getMyAlarmList(User user, int page, int size);
 
     void updateAlarmStatus(Long userId,Long alarmId);
+
+    void deleteAlarm(Long userId, Long alarmId);
 }

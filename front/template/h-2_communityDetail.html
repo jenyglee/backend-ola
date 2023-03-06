@@ -571,8 +571,8 @@
     $.ajax({
       type: "GET",
       url:
-      "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
-      //     "http://localhost:8080/boards/communities/" +
+       "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
+      //    "http://localhost:8080/boards/communities/" +
           communityId +
           "?commentPage=" +
           commentPage +
@@ -1088,17 +1088,23 @@
   }
 
   function deleteBeforeRoomCheck() {
+    var accessToken = localStorage.getItem("accessToken");
+
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
           + communityId,
       async: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
       success: function (response) {
         if (response.userCount > 0) {
           alert("현재 채팅방에 접속된 유저가 있어 삭제가 불가능합니다.")
           return;
         } else {
           deleteChatRoom();
+          deleteAlarm();
           deleteCommunity();
         }
       },
@@ -1164,16 +1170,22 @@
   }
 
   function deleteChatRoom() {
+    const accessToken = localStorage.getItem("accessToken");
+
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/delRoom?roomId="
           + communityId,
       async: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
       success: function (response) {
         console.log("채팅방 삭제 성공");
       }
     })
   }
+
 
   //친구 검색
   function searchFriend() {
@@ -1486,6 +1498,22 @@
     });
   }
 
+  //알림 삭제
+  function deleteAlarm(alarmId){
+    const accessToken = localStorage.getItem("accessToken")
+    $.ajax({
+      type: "DELETE",
+      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
+          + alarmId,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      success: function (response) {
+        console.log("삭제완료 ")
+        selectAlarm();
+      }
+    });
+  }
   //로컬 스토리지에 boardId 저장
   function setCommunityId(board_Id, alarmId) {
     updateAlarmStats(alarmId);

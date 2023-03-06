@@ -326,17 +326,15 @@
 
       // 단건 코스조회
       async function getRecommend() {
+        const accessToken = localStorage.getItem("accessToken");
         const id = localStorage.getItem("recommendId");
         var nickname = localStorage.getItem("nickname")
-        console.log("nickname:  ", nickname)
+
         $.ajax({
             type: "GET",
             url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/recommends/${id}`,
             beforeSend: function (xlr) {
-                xlr.setRequestHeader(
-                    "Authorization",
-                    localStorage.getItem("accessToken")
-                );
+              xlr.setRequestHeader("Authorization", accessToken);
             },
           success: async function (response) {
             console.log("response : ", response);
