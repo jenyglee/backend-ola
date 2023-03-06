@@ -882,19 +882,17 @@
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
-                    success : function (response){
+                    success : function (){
                         console.log("업데이트 ")
                         selectAlarm();
                     }
                 });
             }
-            //로컬 스토리지에 boardId 저장
             function setCommunityId(board_Id, alarmId){
                 updateAlarmStats(alarmId);
                 localStorage.setItem("communityId", board_Id)
-                location.replace('h-2_communityDetail.html');
+                location.replace('./template/h-2_communityDetail.html');
             }
-
             function roomMemberCnt(communityId) {
 
                 const accessToken = localStorage.getItem("accessToken")

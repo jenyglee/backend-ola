@@ -10,10 +10,8 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,11 +34,14 @@ public class ChatRoomController {
 
     private final BoardRepository boardRepository;
 
+    private final ChatRoomMap chatRoomMap;
+
     //채팅룸 생성(수정에서 사용되는 채팅 생성임)
     @ApiOperation(value = "채팅방 생성",response = Join.class)
     @PostMapping("/chat/room")
-    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto,
-        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @ApiIgnore @AuthenticationPrincipal
+        UserDetailsImpl userDetails) {
+
         ChatRoomDto room;
 
         //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
@@ -48,11 +49,11 @@ public class ChatRoomController {
         CommunityBoard board = boardRepository.findById(chatRequestDto.getRoomId()).orElseThrow(()-> new CustomException(
             Status.NOT_FOUND_POST));
 
-        //아예 채팅방 만든 기록이 없을 경우
+        //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
         if(board.getChatStatus().equals("L")){
-            room = chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
+           chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
                 chatRequestDto.getChatMemCnt(), userDetails.getUser().getNickName());
-        }
+        } //2. 채팅방 Y -> N으로 변경할 때는 채팅방 수정해야함
         else{
             updateChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getChatMemCnt());
         }
@@ -90,7 +91,7 @@ public class ChatRoomController {
     //채팅룸 수정
     public void updateChatRoom(Long roomId, int roomMaxCnt) {
 
-        ChatRoomDto beforeRoom = ChatRoomMap.getInstance().getChatRooms().get(roomId);
+        ChatRoomDto beforeRoom = chatRoomMap.getChatRooms().get(roomId);
 
         ChatRoomDto room = ChatRoomDto.builder()
             .roomId(beforeRoom.getRoomId())
@@ -102,6 +103,6 @@ public class ChatRoomController {
 
         System.out.println("채팅방 수정 되나요?");
 
-        ChatRoomMap.getInstance().getChatRooms().put(String.valueOf(roomId), room);
+        chatRoomMap.getChatRooms().put(String.valueOf(roomId), room);
     }
 }
