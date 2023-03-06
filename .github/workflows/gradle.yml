@@ -33,6 +33,17 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
+        
+    # (3-1) yml 세팅
+    - name: Set yaml file
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: ${{ secrets.APPLiCATION }}
+      env:
+        cloud.aws.credentials.accessKey: ${{ secrets.IMAGE_S3_ACCESS_KEY_ID }}
+        cloud.aws.credentials.secretKey: ${{ secrets.IMAGE_S3_SECRET_ACCESS_KEY}}
+        #jwt.secret.key: $ {{ secrets.JWT_SECRET_KEY }}
+        spring.datasource.password: ${{ secrets.MYSQL_PASSWORD }}
 
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
