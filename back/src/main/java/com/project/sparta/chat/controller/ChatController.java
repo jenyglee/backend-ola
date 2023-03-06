@@ -4,8 +4,11 @@ import com.project.sparta.chat.dto.ChatDto;
 import com.project.sparta.chat.dto.ChatRoomMap;
 import com.project.sparta.chat.service.ChatServiceMain;
 import com.project.sparta.chat.service.MsgChatService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+@Api(tags = {"채팅"})
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -46,6 +50,7 @@ public class ChatController {
         chat.setMessage(chat.getSender() + "님이 입장하셨습니다.");
         template.convertAndSend("/sub/chat/room/" + chat.getRoomId(), chat);
     }
+
     // 해당 유저
     @MessageMapping("/chat/sendMessage")
     public void sendMessage(@Payload ChatDto chat) {
@@ -88,6 +93,7 @@ public class ChatController {
         }
     }
     // 채팅에 참여한 유저 닉네임 중복 확인
+    @ApiOperation(value = "채팅 참여유저 닉네임 중복 확인",response = Join.class)
     @GetMapping("/chat/duplicateName")
     @ResponseBody
     public String isDuplicateName(@RequestParam("roomId") String roomId, @RequestParam("username") String username) {

@@ -7,6 +7,8 @@ import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
@@ -21,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"해쉬태그 API"})
+//@Api(tags = {"해쉬태그 API"})
+@Api(tags = {"해시태그"})
 @Controller
 @RequiredArgsConstructor
 public class HashtagController {
@@ -31,9 +35,13 @@ public class HashtagController {
 
     // 해시태그 추가
     @ApiOperation(value = "해시태그 추가", response = Join.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "name", value = "해시태그명", required = true, dataType = "string", paramType = "query")
+    })
     @PostMapping("/hashtags")
-    public ResponseEntity createHashtag(@RequestParam String name,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    public ResponseEntity createHashtag(
+        @RequestParam String name,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         Hashtag hashtag = hashtagService.createHashtag(name, userDetail.getUser());
         HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtag.getId(),
             hashtag.getName());
@@ -43,8 +51,9 @@ public class HashtagController {
     //해시태그 삭제
     @ApiOperation(value = "해시태그 삭제", response = Join.class)
     @DeleteMapping("/hashtags/{hashtagId}")
-    public ResponseEntity deleteHashtag(@RequestBody Long hashtagId,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    public ResponseEntity deleteHashtag(
+        @RequestBody Long hashtagId,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         hashtagService.deleteHashtag(hashtagId, userDetail.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -52,7 +61,9 @@ public class HashtagController {
     //해시태그 전체 조회
     @ApiOperation(value = "해시태그 전체 조회", response = Join.class)
     @GetMapping("/hashtags")
-    public ResponseEntity getHashtagList(@RequestParam int offset, @RequestParam int limit,
+    public ResponseEntity getHashtagList(
+        @RequestParam(defaultValue = "0") int offset,
+        @RequestParam(defaultValue = "23") int limit,
         @RequestParam String name) {
         PageResponseDto<List<HashtagResponseDto>> result = hashtagService.getHashtagList(
             offset, limit, name);

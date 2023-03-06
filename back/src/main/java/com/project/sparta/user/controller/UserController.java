@@ -68,6 +68,7 @@ public class UserController {
     }
 
     // 이메일 중복확인
+    @ApiOperation(value = "이메일 중복확인",response = Join.class)
     @PostMapping("/verify/email")
     public ResponseEntity validateEmail(@RequestBody ValidateEmailDto emailDto){
         userService.validateEmail(emailDto);
@@ -75,6 +76,7 @@ public class UserController {
     }
 
     // 닉네임 중복확인
+    @ApiOperation(value = "닉네임 중복확인",response = Join.class)
     @PostMapping("/verify/nickname")
     public ResponseEntity validateNickName(@RequestBody ValidateNickNameDto nickNameDto){
         userService.validateNickName(nickNameDto);
@@ -82,14 +84,15 @@ public class UserController {
     }
 
     //토큰 재발급(클라이언트에서 Access Token이 만료되었을 때 작동)
+    @ApiOperation(value = "토큰 재발급",response = Join.class)
     @PostMapping("/token/regenerate")
     public ResponseEntity<TokenDto> regenerateToken(@RequestBody @Validated RegenerateTokenDto tokenDto) {
         return userService.regenerateToken(tokenDto);
     }
 
     // TODO 새로운 비밀번호 이메일로 발송 API 제작
-    // 새로운 비밀번호 이메일로 발송
-    @PostMapping("/change-password")
-    public void changePassword(){
-    }
+    //// 새로운 비밀번호 이메일로 발송
+    //@PostMapping("/change-password")
+    //public void changePassword(){
+    //}
 }
