@@ -35,8 +35,6 @@ jobs:
         java-version: '17'
 
     # (3) Gradle build (Test 제외)
-    - name: move to back
-      run: cd back
     - name: Build with Gradle
       run: cd back && ./gradlew clean build -x test
 #     - run: ./gradlew clean build -x test
@@ -55,7 +53,8 @@ jobs:
     # (5) 빌드 결과물을 S3 버킷에 업로드
     - name: Upload to AWS S3
       run: |
-        aws deploy push \
+        cd back \
+          --aws deploy push \
           --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
           --ignore-hidden-files \
           --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
