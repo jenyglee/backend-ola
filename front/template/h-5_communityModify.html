@@ -613,8 +613,7 @@
   // 수정하기
   function updateCommunity() {
     const accessToken = localStorage.getItem("accessToken")
-    console.log("accessToken : ", accessToken)
-    var chatStatus = $(".form-check-input:checked").val()
+    var chatStatus = $(".form-check-input").val()
 
     if (chatStatus == "Y") {
       if ($(".chatCnt-input").val() == 0) {
@@ -950,9 +949,6 @@
           console.log("수정 성공")
         },
       })
-    }else {
-      alert("채팅방 개설에 체크해주세요.");
-      return;
     }
   }
 

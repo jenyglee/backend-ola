@@ -171,7 +171,7 @@
             const url = new URL(location.href).searchParams
             const roomId = url.get("roomId")
             var menuProfile = JSON.parse(localStorage.getItem("menuProfile"))
-            let myNickname = menuProfile.nickname
+            let myNickname = localStorage.getItem("nickname")
 
             function connect(event) {
                 // username 중복 확인
