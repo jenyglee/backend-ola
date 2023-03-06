@@ -9,8 +9,11 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
+@Api(tags = {"채팅방"})
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -32,10 +37,10 @@ public class ChatRoomController {
     private final BoardRepository boardRepository;
 
     //채팅룸 생성(수정에서 사용되는 채팅 생성임)
+    @ApiOperation(value = "채팅방 생성",response = Join.class)
     @PostMapping("/chat/room")
-    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @AuthenticationPrincipal
-        UserDetailsImpl userDetails) {
-
+    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         ChatRoomDto room;
 
         //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
@@ -47,7 +52,6 @@ public class ChatRoomController {
         if(board.getChatStatus().equals("L")){
             room = chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
                 chatRequestDto.getChatMemCnt(), userDetails.getUser().getNickName());
-            System.out.println(room.getRoomName() + "아이아어이ㅏㅇ");
         }
         else{
             updateChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getChatMemCnt());
@@ -57,6 +61,7 @@ public class ChatRoomController {
 
 
     //채팅룸 상세 정보
+    @ApiOperation(value = "채팅방 상세 정보",response = Join.class)
     @GetMapping("/chat/room")
     public ResponseEntity roomDetail(@RequestParam String roomId) {
 
@@ -67,6 +72,7 @@ public class ChatRoomController {
     }
 
     //유저 카운트
+    @ApiOperation(value = "채팅방 유저 입장 수",response = Join.class)
     @GetMapping("/chat/chkUserCnt}")
     @ResponseBody
     public boolean chUserCnt(@RequestParam String roomId) {
@@ -74,6 +80,7 @@ public class ChatRoomController {
     }
 
     //채팅룸 삭제
+    @ApiOperation(value = "채팅방 삭제",response = Join.class)
     @GetMapping("/chat/delRoom")
     public ResponseEntity delChatRoom(@RequestParam String roomId) {
         chatServiceMain.delChatRoom(roomId);

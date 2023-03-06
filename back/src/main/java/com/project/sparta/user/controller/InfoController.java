@@ -24,8 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"정보조회 API"})
+@Api(tags = {"정보조회"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/info")
@@ -38,7 +39,7 @@ public class InfoController {
     // 내 정보 조회
     @ApiOperation(value = "내 정보 조회", response = Join.class)
     @GetMapping("/me")
-    public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity getMyInfo(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         InfoResponseDto result = userService.getMyInfo(userDetails.getUser());
         return new ResponseEntity(result, HttpStatus.OK);
     }
@@ -48,7 +49,7 @@ public class InfoController {
 //    @ApiOperation(value = "자동 등업", response = Join.class)
 //    @PostMapping("/upgrade")
 //    public ResponseEntity autoUpgrade(UpgradeRequestDto requestDto,
-//        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
 //        userService.upgrade(requestDto, userDetails.getUser().getId());
 //        return new ResponseEntity(HttpStatus.OK);
 //    }
@@ -60,7 +61,7 @@ public class InfoController {
     public ResponseEntity getMyBoardAll(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<RecommendResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
         return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
     }
@@ -71,7 +72,7 @@ public class InfoController {
     public ResponseEntity getMyCommunityList(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getMyCommunityBoard(
             page, size, userDetails.getUser());
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -83,7 +84,7 @@ public class InfoController {
     public ResponseEntity getMyChatBoardList(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getMyChatBoardList(page, size, userDetails.getUser().getId());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

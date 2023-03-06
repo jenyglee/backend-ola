@@ -207,7 +207,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .from(communityBoard)
             .join(communityTag).on(communityTag.communityBoard.id.eq(communityBoard.id))
             .where(
-                tileEq(condition.getTitle()),
+                tileEq(condition.getTitle()), // ""
                 contentsEq(condition.getContents()),
                 nicknameEq(condition.getNickname()),
                 // 게시물에 있는 태그가 검색할 태그와 같은 것을 판별하는 과정
