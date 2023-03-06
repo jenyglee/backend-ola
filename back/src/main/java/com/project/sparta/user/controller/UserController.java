@@ -47,7 +47,6 @@ public class UserController {
     @ApiOperation(value = "로그인",response = Join.class)
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto requestDto){
-        System.out.println("로그인 실행!");
         return userService.login(requestDto);
     }
 

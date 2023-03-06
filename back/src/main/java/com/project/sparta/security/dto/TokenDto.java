@@ -11,6 +11,7 @@ public class TokenDto {
     private String accessToken;
     private String refreshToken;
     private String nickname;
+    private String test= "로그인 실행 test";
 
     @Builder
     public TokenDto(String accessToken, String refreshToken, String nickname) {
