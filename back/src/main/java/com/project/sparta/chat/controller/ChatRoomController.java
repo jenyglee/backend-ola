@@ -1,5 +1,6 @@
 package com.project.sparta.chat.controller;
 
+import com.amazonaws.services.glue.model.Join;
 import com.project.sparta.chat.dto.ChatRequestDto;
 import com.project.sparta.chat.dto.ChatRoomDto;
 import com.project.sparta.chat.dto.ChatRoomMap;
@@ -10,6 +11,7 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
