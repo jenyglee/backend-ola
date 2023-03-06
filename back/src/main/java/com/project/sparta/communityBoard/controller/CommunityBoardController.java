@@ -116,13 +116,13 @@ public class CommunityBoardController {
         @RequestParam(required = false) String chatStatus,
         @RequestParam(required = false) String sort
     ) {
-        long start = System.currentTimeMillis();
+        //long start = System.currentTimeMillis();
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getAllCommunityBoard(
             page, size, title, contents, nickname, hashtagId, chatStatus, sort);
-        long end = System.currentTimeMillis();
-        System.out.println("No 쿼리 수행 시간 : ");
-        System.out.print(end-start);
-        System.out.print("ms");
+        //long end = System.currentTimeMillis();
+        //System.out.println("No 쿼리 수행 시간 : ");
+        //System.out.print(end-start);
+        //System.out.print("ms");
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -133,10 +133,11 @@ public class CommunityBoardController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "boardId", value = "커뮤니티 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
     })
-    public ResponseEntity updateCommunityBoard(@PathVariable Long boardId,
-        @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
-        communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto,
+    public ResponseEntity updateCommunityBoard(
+        @PathVariable Long boardId,
+        @RequestBody @ApiParam(value = "커뮤니티 수정 값", required = true) CommunityBoardRequestDto requestDto,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
+        communityBoardService.updateCommunityBoard(boardId, requestDto,
             userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
