@@ -38,7 +38,8 @@ jobs:
     - name: Build with Gradle
 #       run: cd back && ./gradlew clean build -x test
 #     - run: ./gradlew clean build -x test
-      uses: cd back && gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+      working-directory: ./back
 #       with:
 #         arguments: clean build -x test
 
