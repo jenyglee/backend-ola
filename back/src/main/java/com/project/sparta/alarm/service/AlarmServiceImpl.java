@@ -18,9 +18,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AlarmServiceImpl implements AlarmService{
 
     private final AlarmRespository alarmRespository;
@@ -82,5 +84,11 @@ public class AlarmServiceImpl implements AlarmService{
         alarm.update(alarm.getId(), alarm.getMessage(), alarm.getUserId(), alarm.getUserNickName(), alarm.getBoardId(), "Y", alarm.getWriterNickName());
 
         alarmRespository.saveAndFlush(alarm);
+    }
+
+    @Override
+    public void deleteAlarm(Long userId, Long alarmId) {
+        Alarm alarm = alarmRespository.findByIdAndUserId(alarmId, userId).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
+        alarmRespository.deleteById(alarm.getId());
     }
 }

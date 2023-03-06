@@ -13,6 +13,7 @@ import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +50,12 @@ public class AlarmController {
     @PatchMapping("/alarm")
     public void updateAlarmStatus(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
         alarmService.updateAlarmStatus(userDetails.getUser().getId(),alarmId);
+    }
+
+    //알람 삭제
+    @ApiOperation(value = "나의 알림 삭제", response = Join.class)
+    @DeleteMapping("/alarm")
+    public void deleteAlarm(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
+        alarmService.deleteAlarm(userDetails.getUser().getId(), alarmId);
     }
 }

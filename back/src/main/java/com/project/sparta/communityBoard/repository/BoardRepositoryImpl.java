@@ -144,9 +144,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
             //코멘트의 좋아요 갯수
             Long count = queryFactory.select(commentLike.count())
-                        .from(communityComment)
-                        .join(commentLike).on(communityComment.Id.eq(commentLike.comment.Id))
-                        .where(communityComment.communityBoardId.eq(dto.getId()))
+                        .from(commentLike)
+                        .where(commentLike.comment.Id.eq(dto.getId()))
                         .fetchOne();
 
             //코멘트 좋아요 갯수
@@ -156,7 +155,8 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             Boolean isLikeCheck = queryFactory.select(commentLike.userNickName.count().when(1L).then(true).otherwise(false))
                 .from(commentLike)
                 .join(commentLike).on(communityComment.Id.eq(commentLike.comment.Id))
-                .where(commentLike.userNickName.eq(dto.getNickName()))
+                .where(commentLike.userNickName.eq(dto.getNickName()),
+                        commentLike.comment.Id.eq(dto.getId()))
                 .fetchOne();
 
             dto.addIsLike(isLikeCheck);
