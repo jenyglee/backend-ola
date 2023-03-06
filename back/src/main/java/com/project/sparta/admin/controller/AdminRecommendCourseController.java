@@ -1,4 +1,5 @@
 package com.project.sparta.admin.controller;
+
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
@@ -14,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = {"어드민 Recommend API"})
 @RestController
@@ -21,7 +23,6 @@ import java.util.List;
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminRecommendCourseController {
-    //todo 어드민 권한만 들어올 수 있도록 설정추가(완료)
     private final RecommendCourseBoardService recommendCourseBoardService;
 
     // 코스추천 전체 조회
@@ -33,30 +34,33 @@ public class AdminRecommendCourseController {
         @RequestParam String season,
         @RequestParam int altitude,
         @RequestParam String region,
-        @RequestParam String orderByLike
-    ){
-        PageResponseDto<List<RecommendResponseDto>> result = recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, orderByLike);
+        @RequestParam String orderByLike) {
+        PageResponseDto<List<RecommendResponseDto>> result = recommendCourseBoardService.allRecommendCourseBoard(
+            page, size, score, season, altitude, region, orderByLike);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     // 코스추천 단건 조회
     @GetMapping("/boards/recommends/{boardId}")
-    public ResponseEntity getRecommend(@PathVariable Long boardId, @AuthenticationPrincipal
-        UserDetailsImpl userDetails){
-        RecommendDetailResponseDto result = recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId, userDetails.getUser().getNickName());
+    public ResponseEntity getRecommend(@PathVariable Long boardId,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        RecommendDetailResponseDto result = recommendCourseBoardService.oneSelectRecommendCourseBoard(
+            boardId, userDetails.getUser().getNickName());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-//
+
+    //
     // 코스추천 수정
     @PatchMapping("/boards/recommends/{boardId}")
-    public ResponseEntity updateRecommend(@PathVariable Long boardId, @RequestBody RecommendRequestDto requestDto){
+    public ResponseEntity updateRecommend(@PathVariable Long boardId,
+        @RequestBody RecommendRequestDto requestDto) {
         recommendCourseBoardService.adminRecommendBoardUpdate(boardId, requestDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     // 코스추천 삭제
     @DeleteMapping("/boards/recommends/{boardId}")
-    public void deleteRecommend(@PathVariable Long boardId){
+    public void deleteRecommend(@PathVariable Long boardId) {
         recommendCourseBoardService.adminRecommendBoardDelete(boardId);
     }
 }

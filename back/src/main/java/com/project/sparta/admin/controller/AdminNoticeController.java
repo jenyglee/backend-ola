@@ -16,6 +16,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import springfox.documentation.annotations.ApiIgnore;
+
 @Api(tags = {"어드민 공지사항 API"})
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class AdminNoticeController {
     @ApiOperation(value = "공지사항 작성",response = Join.class)
     @PostMapping("/boards/notices")
     public ResponseEntity createNotice(@RequestBody NoticeBoardRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         noticeBoardService.createNoticeBoard(requestDto, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -37,7 +39,7 @@ public class AdminNoticeController {
     @ApiOperation(value = "공지사항 삭제",response = Join.class)
     @DeleteMapping("/boards/notices/{boardId}")
     public ResponseEntity deleteNotice(@PathVariable Long boardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         noticeBoardService.deleteNoticeBoard(boardId, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -47,7 +49,7 @@ public class AdminNoticeController {
     @PatchMapping("/boards/notices/{boardId}")
     public ResponseEntity updateNotice(@PathVariable Long boardId,
         @RequestBody NoticeBoardRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         noticeBoardService.updateNoticeBoard(boardId, requestDto, userDetails.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }

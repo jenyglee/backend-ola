@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = {"코스추천 API"})
 @RestController
@@ -67,7 +68,7 @@ public class RecommendCourseController {
 
     @ApiOperation(value = "코스 추천 단건 조회", response = Join.class)
     @GetMapping("/recommends/{boardId}")
-    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public RecommendDetailResponseDto oneRecommendCourse(@PathVariable Long boardId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return recommendCourseBoardService.oneSelectRecommendCourseBoard(boardId, userDetails.getUser().getNickName());
     }
 

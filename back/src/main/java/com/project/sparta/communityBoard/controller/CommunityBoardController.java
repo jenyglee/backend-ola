@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = {"커뮤니티 보드 API"})
 @RestController
@@ -45,7 +46,7 @@ public class CommunityBoardController {
     @PostMapping("/communities")
     public ResponseEntity createCommunityBoard(
         @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail,
+        , @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail,
         RedirectAttributes rttr) {
 
         CommunityBoard board = communityBoardService.createCommunityBoard(communityBoardRequestDto, userDetail.getUser());
@@ -72,7 +73,7 @@ public class CommunityBoardController {
     public ResponseEntity getCommunityBoard(@PathVariable Long boardId,
         @RequestParam(defaultValue = "0") int commentPage,
         @RequestParam(defaultValue = "8") int commentSize,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         //long start = System.currentTimeMillis();
         CommunityBoardOneResponseDto result = communityBoardService.getCommunityBoard(
             boardId, commentPage, commentSize, userDetails.getUser().getNickName());
@@ -112,7 +113,7 @@ public class CommunityBoardController {
     @PatchMapping("/communities/{boardId}")
     public ResponseEntity updateCommunityBoard(@PathVariable Long boardId,
         @RequestBody CommunityBoardRequestDto communityBoardRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
+        , @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) { // TODO 작성자를 체크!!!
         communityBoardService.updateCommunityBoard(boardId, communityBoardRequestDto,
             userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -122,7 +123,7 @@ public class CommunityBoardController {
     @ApiOperation(value = "커뮤니티 삭제", response = Join.class)
     @DeleteMapping("/communities/{boardId}")
     public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         communityBoardService.deleteCommunityBoard(boardId, userDetail.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }

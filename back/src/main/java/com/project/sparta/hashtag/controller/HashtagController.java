@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 //@Api(tags = {"해쉬태그 API"})
 @Api(tags = {"해시태그"})
@@ -33,14 +34,14 @@ public class HashtagController {
     private final HashtagService hashtagService;
 
     // 해시태그 추가
-    //@ApiOperation(value = "메인 페이지")
     @ApiOperation(value = "해시태그 추가", response = Join.class)
-    //@ApiImplicitParams({
-    //    @ApiImplicitParam(name = "name", value = "해시태그명", required = true, dataType = "string", paramType = "query")
-    //})
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "name", value = "해시태그명", required = true, dataType = "string", paramType = "query")
+    })
     @PostMapping("/hashtags")
-    public ResponseEntity createHashtag(@RequestParam String name,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    public ResponseEntity createHashtag(
+        @RequestParam String name,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         Hashtag hashtag = hashtagService.createHashtag(name, userDetail.getUser());
         HashtagResponseDto hashtagResponseDto = new HashtagResponseDto(hashtag.getId(),
             hashtag.getName());
@@ -50,8 +51,9 @@ public class HashtagController {
     //해시태그 삭제
     @ApiOperation(value = "해시태그 삭제", response = Join.class)
     @DeleteMapping("/hashtags/{hashtagId}")
-    public ResponseEntity deleteHashtag(@RequestBody Long hashtagId,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+    public ResponseEntity deleteHashtag(
+        @RequestBody Long hashtagId,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         hashtagService.deleteHashtag(hashtagId, userDetail.getUser());
         return new ResponseEntity(HttpStatus.OK);
     }

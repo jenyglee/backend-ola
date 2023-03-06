@@ -11,6 +11,8 @@ import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
 @Api(tags = {"라이크 API"})
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class LikeController {
     @ApiOperation(value = "보드 라이크",response = Join.class)
     @PostMapping("/communities/{boardId}")
     @ResponseStatus(HttpStatus.OK)
-    public void likeBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void likeBoard(@PathVariable Long boardId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         boardLikeService.likeBoard(boardId, user);
     }
@@ -32,7 +34,7 @@ public class LikeController {
     //커뮤니티 좋아요 해제
     @ApiOperation(value = "보드 언라이크",response = Join.class)
     @DeleteMapping("/communities/{boardId}")
-    public void unLikeBoard(@PathVariable Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void unLikeBoard(@PathVariable Long boardId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         boardLikeService.unLikeBoard(boardId, user);
     }
@@ -40,14 +42,14 @@ public class LikeController {
     //댓글 좋아요
     @PostMapping("/comments/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public void likeComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void likeComment(@PathVariable Long commentId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         commentLikeService.likeComment(commentId, user);
     }
 
     //댓글 좋아요 해제
     @DeleteMapping("/comments/{commentId}")
-    public void unLikeComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void unLikeComment(@PathVariable Long commentId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         commentLikeService.unLikeComment(commentId, user);
     }
@@ -55,14 +57,14 @@ public class LikeController {
     //코스추천 좋아요
     @PostMapping("/recommends/{recommendId}")
     @ResponseStatus(HttpStatus.OK)
-    public void likeRecommendCourse(@PathVariable Long recommendId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void likeRecommendCourse(@PathVariable Long recommendId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         recommendCourseLikeService.likeRecommendCourse(recommendId, user);
     }
 
     //코스추천 좋아요 해제
     @DeleteMapping("/recommends/{recommendId}")
-    public void unlikeRecommendCourse(@PathVariable Long recommendId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void unlikeRecommendCourse(@PathVariable Long recommendId, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         recommendCourseLikeService.unLikeRecommendCourse(recommendId, user);
     }

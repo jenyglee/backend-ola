@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,9 +34,8 @@ public class ChatRoomController {
 
     //채팅룸 생성(수정에서 사용되는 채팅 생성임)
     @PostMapping("/chat/room")
-    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @AuthenticationPrincipal
-        UserDetailsImpl userDetails) {
-
+    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto,
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         ChatRoomDto room;
 
         //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
