@@ -53,12 +53,22 @@ jobs:
     # (5) 빌드 결과물을 S3 버킷에 업로드
     - name: Upload to AWS S3
     
-      run: cd back && aws deploy push \
-        --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-        --ignore-hidden-files \
-        --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
-        --source .
+      run: |
+        aws deploy push \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --ignore-hidden-files \
+          --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
+          --source .
+      working-directory: ./back
         
+#     초기 상태
+#     run: |
+#       aws deploy push \
+#         --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+#         --ignore-hidden-files \
+#         --s3-location s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip \
+#         --source .
+
         
 #       run: cd back && aws deploy push
 #         --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
