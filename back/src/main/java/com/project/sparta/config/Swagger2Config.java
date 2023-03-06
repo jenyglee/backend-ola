@@ -18,35 +18,36 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 @EnableSwagger2
 @Configuration
 public class Swagger2Config {
+  // 스웨거 url : http://localhost:8080/swagger-ui.html
 
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
-        .apiInfo(apiInfo())
+        //.apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.project.sparta"))
+        .apis(RequestHandlerSelectors.basePackage("com.project.sparta.hashtag.controller"))
         .paths(PathSelectors.any())
         .build();
   }
-  private ApiKey apiKey() {
-    return new ApiKey("JWT", "jwt", "header");
-  }
-
-  private SecurityContext securityContext() {
-    return springfox
-        .documentation
-        .spi.service
-        .contexts
-        .SecurityContext
-        .builder()
-        .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
-  }
-  List<SecurityReference> defaultAuth() {
-    AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-    authorizationScopes[0] = authorizationScope;
-    return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-  }
+  //private ApiKey apiKey() {
+  //  return new ApiKey("JWT", "jwt", "header");
+  //}
+  //
+  //private SecurityContext securityContext() {
+  //  return springfox
+  //      .documentation
+  //      .spi.service
+  //      .contexts
+  //      .SecurityContext
+  //      .builder()
+  //      .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+  //}
+  //List<SecurityReference> defaultAuth() {
+  //  AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+  //  AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+  //  authorizationScopes[0] = authorizationScope;
+  //  return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+  //}
   private ApiInfo apiInfo() {
     return new ApiInfoBuilder()
         .title("잠은 죽어서 자자")
