@@ -9,10 +9,7 @@ import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
-import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,53 +21,42 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AlarmServiceImpl implements AlarmService{
+public class AlarmServiceImpl implements AlarmService {
 
     private final AlarmRespository alarmRespository;
     private final BoardRepository boardRepository;
-    private final RecommendCourseBoardRepository recommendCourseBoardRepository;
-    private final UserRepository userRepository;
 
     @Override
     public void createAlarm(AlarmRequetDto alarmRequetDto, String nickName) {
 
-        if(alarmRequetDto.getBoardType().equals("community")){
-           CommunityBoard board = boardRepository.findById(alarmRequetDto.getBoardId()).orElseThrow(()-> new CustomException(
-               Status.NOT_FOUND_POST));
+        CommunityBoard board = boardRepository.findById(alarmRequetDto.getBoardId())
+            .orElseThrow(() -> new CustomException(
+                Status.NOT_FOUND_POST));
 
-            Alarm alarm = Alarm.builder()
-                .message(board.getTitle() + alarmRequetDto.getMessage())
-                .boardId(board.getId())
-                .userId(board.getUser().getId())
-                .userNickName(board.getUser().getNickName())
-                .readStatus("N")
-                .writerNickName(nickName)
-                .build();
-            alarmRespository.saveAndFlush(alarm);
+        Alarm alarm = Alarm.builder()
+            .message(board.getTitle() + alarmRequetDto.getMessage())
+            .boardId(board.getId())
+            .userId(board.getUser().getId())
+            .userNickName(board.getUser().getNickName())
+            .readStatus("N")
+            .writerNickName(nickName)
+            .build();
 
-        }else if (alarmRequetDto.getBoardType().equals("recommend")){
-            RecommendCourseBoard board = recommendCourseBoardRepository.findById(alarmRequetDto.getBoardId()).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
+        alarmRespository.saveAndFlush(alarm);
 
-            User user = userRepository.findById(board.getUserId()).orElseThrow(()-> new CustomException(Status.NOT_FOUND_USER));
-
-            Alarm alarm = Alarm.builder()
-                .message(alarmRequetDto.getMessage())
-                .boardId(board.getId())
-                .userId(board.getUserId())
-                .userNickName(user.getNickName())
-                .readStatus("N")
-                .build();
-            alarmRespository.saveAndFlush(alarm);
-        }
     }
+
     @Override
     public PageResponseDto<List<AlarmResponseDto>> getMyAlarmList(User user, int page, int size) {
 
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        Page<Alarm> alarms = alarmRespository.findMyAlarmList(user.getId(), pageRequest, user.getNickName());
+        Page<Alarm> alarms = alarmRespository.findMyAlarmList(user.getId(), pageRequest,
+            user.getNickName());
 
-        Page<AlarmResponseDto> alarmList = alarms.map(alarm -> new AlarmResponseDto(alarm.getId(), alarm.getMessage(), alarm.getUserNickName(), alarm.getReadStatus(), alarm.getBoardId()));
+        Page<AlarmResponseDto> alarmList = alarms.map(
+            alarm -> new AlarmResponseDto(alarm.getId(), alarm.getMessage(),
+                alarm.getUserNickName(), alarm.getReadStatus(), alarm.getBoardId()));
         List<AlarmResponseDto> content = alarmList.getContent();
 
         long totalCount = alarmList.getTotalElements();
@@ -80,16 +66,19 @@ public class AlarmServiceImpl implements AlarmService{
     @Override
     public void updateAlarmStatus(Long userId, Long alarmId) {
 
-        Alarm alarm = alarmRespository.findByIdAndUserId(alarmId, userId).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
+        Alarm alarm = alarmRespository.findByIdAndUserId(alarmId, userId)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
-        alarm.update(alarm.getId(), alarm.getMessage(), alarm.getUserId(), alarm.getUserNickName(), alarm.getBoardId(), "Y", alarm.getWriterNickName());
+        alarm.update(alarm.getId(), alarm.getMessage(), alarm.getUserId(), alarm.getUserNickName(),
+            alarm.getBoardId(), "Y", alarm.getWriterNickName());
 
         alarmRespository.saveAndFlush(alarm);
     }
 
     @Override
     public void deleteAlarm(Long boardId) {
-        Alarm alarm = alarmRespository.findByBoardId(boardId).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
+        Alarm alarm = alarmRespository.findByBoardId(boardId)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
         alarmRespository.deleteByBoardId(alarm.getId());
     }
 
@@ -99,8 +88,7 @@ public class AlarmServiceImpl implements AlarmService{
         List<Alarm> alarmList = alarmRespository.selectAlaram(boardId);
         List<AlarmResponseDto> resultList = new ArrayList<>();
 
-
-        for(Alarm a : alarmList){
+        for (Alarm a : alarmList) {
             AlarmResponseDto alarmResponseDto = AlarmResponseDto.builder()
                 .alarmId(a.getId())
                 .message(a.getMessage())
@@ -111,7 +99,6 @@ public class AlarmServiceImpl implements AlarmService{
 
             resultList.add(alarmResponseDto);
         }
-
         return resultList;
     }
 }

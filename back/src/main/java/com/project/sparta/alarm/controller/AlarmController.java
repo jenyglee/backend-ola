@@ -52,19 +52,4 @@ public class AlarmController {
     public void updateAlarmStatus(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
         alarmService.updateAlarmStatus(userDetails.getUser().getId(),alarmId);
     }
-
-    //알람 삭제
-    @ApiOperation(value = "나의 알림 삭제", response = Join.class)
-    @DeleteMapping("/alarm")
-    public void deleteAlarm(@ApiIgnore @RequestParam Long boardId){
-        alarmService.deleteAlarm(boardId);
-    }
-
-    //알람 삭제 전 boardId에 딸린 알림 내용 조회
-    @ApiOperation(value = "알림 조회", response = Join.class)
-    @GetMapping("/alarms")
-    public ResponseEntity getAlarmList(@ApiIgnore @RequestParam Long boardId){
-        List<AlarmResponseDto> alarmList = alarmService.getAlarmList(boardId);
-        return new ResponseEntity(alarmList, HttpStatus.OK);
-    }
 }

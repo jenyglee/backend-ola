@@ -4,12 +4,7 @@ import static com.project.sparta.exception.api.Status.*;
 
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.service.AdminService;
-import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
-import com.project.sparta.exception.api.Status;
-import com.project.sparta.like.repository.LikeBoardRepository;
-import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
-import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import java.util.Optional;
