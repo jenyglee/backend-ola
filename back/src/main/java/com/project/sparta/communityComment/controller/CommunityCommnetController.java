@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"커뮤니티 보드 댓글 API"})
+@Api(tags = {"댓글"})
 @RestController
 @RequiredArgsConstructor
 public class CommunityCommnetController {
@@ -26,11 +27,11 @@ public class CommunityCommnetController {
 
 
     //커뮤니티 댓글 작성
-    @ApiOperation(value = "커뮤니티 댓글 작성", response = Join.class)
+    @ApiOperation(value = "댓글 작성", response = Join.class)
     @PostMapping("/comments/communities/{boardId}")
     public ResponseEntity createCommunityComment(@PathVariable Long boardId
         , @RequestBody CommunityRequestDto communityRequestDto
-        , @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        , @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
 
         commentService.createCommunityComments(boardId, communityRequestDto, userDetail.getUser());
 
@@ -39,11 +40,11 @@ public class CommunityCommnetController {
 
     //커뮤니티 댓글 수정
     @ApiOperation(value = "커뮤니티 댓글 수정", response = Join.class)
-    @PatchMapping("/communities/comments/{commentId}")
+    @PatchMapping("/comments/{commentId}")
     public ResponseEntity updateCommunityComment(
         @PathVariable Long commentId,
         @RequestBody CommunityRequestDto communityRequestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         commentService.updateCommunityComments(commentId, communityRequestDto,
             userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -51,12 +52,10 @@ public class CommunityCommnetController {
 
     //커뮤니티 댓글 삭제
     @ApiOperation(value = "커뮤니티 댓글 삭제", response = Join.class)
-    @DeleteMapping("/communities/comments/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     public ResponseEntity deleteCommunityComment(@PathVariable Long commentId,
-        @AuthenticationPrincipal UserDetailsImpl userDetail) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
         commentService.deleteCommunityComments(commentId, userDetail.getUser());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

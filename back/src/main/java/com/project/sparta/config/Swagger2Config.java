@@ -35,6 +35,12 @@ public class Swagger2Config extends WebMvcConfigurerAdapter {
   }
 
   @Bean
+  public Docket commentApi() {
+    return getDocket("댓글", Predicates.or(
+        PathSelectors.regex("/comments.*")));
+  }
+
+  @Bean
   public Docket hashtagApi() {
     return getDocket("해시태그", Predicates.or(
         PathSelectors.regex("/hashtags.*")));
