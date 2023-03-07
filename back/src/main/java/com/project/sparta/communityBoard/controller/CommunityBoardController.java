@@ -140,10 +140,10 @@ public class CommunityBoardController {
     }
 
     //커뮤니티 삭제
+    @ApiOperation(value = "커뮤니티 삭제", response = Join.class)
     @ApiImplicitParams({
         @ApiImplicitParam(name = "boardId", value = "커뮤니티 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
     })
-    @ApiOperation(value = "커뮤니티 삭제", response = Join.class)
     @DeleteMapping("/communities/{boardId}")
     public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId,
         @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {

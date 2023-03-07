@@ -6,7 +6,6 @@ import com.project.sparta.alarm.service.AlarmService;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -24,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
-
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 @Api(tags = {"알람"})
 @RestController
 @RequiredArgsConstructor

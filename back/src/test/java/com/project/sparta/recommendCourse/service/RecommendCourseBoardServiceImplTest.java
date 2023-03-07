@@ -1,6 +1,7 @@
 package com.project.sparta.recommendCourse.service;
 
 
+import com.project.sparta.admin.dto.UserGradeDto;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.like.repository.LikeRecommendRepository;
@@ -12,6 +13,7 @@ import com.project.sparta.recommendCourse.repository.RecommendCourseBoardImgRepo
 import com.project.sparta.recommendCourse.repository.RecommendCourseBoardRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
+import com.project.sparta.user.service.UserService;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -43,10 +45,11 @@ class RecommendCourseBoardServiceImplTest {
     @Autowired
     private RecommendCourseBoardServiceImpl recommendCourseBoardService;
 
+    @Autowired
+    private UserService userService;
+
     @PersistenceContext
     private EntityManager em;
-    @Autowired
-    private RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
 
     @Test
     @DisplayName("추천코스 게시글 작성")
@@ -60,8 +63,19 @@ class RecommendCourseBoardServiceImplTest {
                 .build();
         em.persist(admin1);
 
+        User user = User.userBuilder()
+                .email("user1@user.com")
+                .nickName("유저닉네임")
+                .password("dhffk12!@")
+                .age(29)
+                .phoneNumber("01064538453")
+                .userImageUrl("https://mblogthumb-phinf.pstatic.net/20160625_240/bjy0524_146683775176259uj4_JPEG/attachImage_312025754.jpeg?type=w800")
+                .build();
+        em.persist(user);
+
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
+
         //게시글 Dto 생성
         RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
                 .score(5)
@@ -73,14 +87,22 @@ class RecommendCourseBoardServiceImplTest {
                 .imgList(imageList)
                 .build();
 
+        //회원 등급변경 Dto생성
+        UserGradeDto userGradeDto = new UserGradeDto(2);
+
         //when
+        //회원 등급변경
+        userService.changeGrade(userGradeDto,user.getId());
+
         //서비스코드 실행
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
+        Long userBoardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
+        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
 
         //then
         Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(boardId);
         assertThat(recommendCourseBoard.get().getId()).isEqualTo(boardId);
         assertThat(recommendCourseBoard.get().getAltitude()).isEqualTo(800);
+        assertThat(recommendCourseBoard.get().getUserId()).isEqualTo(user.getId());
     }
 
     @Test
@@ -100,6 +122,20 @@ class RecommendCourseBoardServiceImplTest {
                 .build();
         em.persist(admin1);
         em.persist(admin2);
+
+        //유저 작성자 생성
+        User user = User.userBuilder()
+                .email("user1@user.com")
+                .nickName("유저닉네임")
+                .password("dhffk12!@")
+                .age(29)
+                .phoneNumber("01064538453")
+                .userImageUrl("https://mblogthumb-phinf.pstatic.net/20160625_240/bjy0524_146683775176259uj4_JPEG/attachImage_312025754.jpeg?type=w800")
+                .build();
+        em.persist(user);
+
+        //회원 등급변경 Dto생성
+        UserGradeDto userGradeDto = new UserGradeDto(2);
 
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
@@ -124,10 +160,15 @@ class RecommendCourseBoardServiceImplTest {
                 .imgList(imageList)
                 .build();
         //when
+        //회원 등급변경
+        userService.changeGrade(userGradeDto,user.getId());
+
         //글작성
         Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
+        Long boardId2 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
         //글 수정
         recommendCourseBoardService.modifyRecommendCourseBoard(boardId,recommendRequestDto2,admin1.getId());
+        recommendCourseBoardService.modifyRecommendCourseBoard(boardId,recommendRequestDto2,user.getId());
 
         //본인이 쓴 글 아니면 수정되면 안됨.
         Assertions.assertThrows(CustomException.class,()->
@@ -135,10 +176,14 @@ class RecommendCourseBoardServiceImplTest {
 
         //then
         Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(boardId);
+        Optional<RecommendCourseBoard> recommendCourseBoard2 = recommendCourseBoardRepository.findById(boardId2);
 
         assertThat(recommendCourseBoard.get().getId()).isEqualTo(boardId);
         assertThat(recommendCourseBoard.get().getTitle()).isEqualTo("테스트코드 제목2");
         assertThat(recommendCourseBoard.get().getSeason()).isEqualTo("겨울");
+        assertThat(recommendCourseBoard2.get().getTitle()).isEqualTo("테스트코드 제목2");
+        assertThat(recommendCourseBoard2.get().getSeason()).isEqualTo("겨울");
+        assertThat(recommendCourseBoard2.get().getUserId()).isEqualTo(user.getId());
     }
 
     @Test
