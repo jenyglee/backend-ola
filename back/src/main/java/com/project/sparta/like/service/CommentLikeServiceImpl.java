@@ -39,7 +39,7 @@ public class CommentLikeServiceImpl implements CommentLikeService{
         CommentLike commentLike = CommentLike.builder()
                 .userNickName(user.getNickName())
                 .userEmail(user.getEmail())
-                .isLike(true)
+                .isLike(0)  //좋아요 누른 상태
                 .comment(comment).build();
 
         //레파지토리에 저장

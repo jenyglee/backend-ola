@@ -1005,9 +1005,10 @@
 
   function likeComment(isLike, commentId) {
     var accessToken = localStorage.getItem("accessToken");
-    console.log("commentId : ", commentId)
-    console.log("likeComment");
-    if (isLike) {
+
+    console.log("댓글 확인", isLike)
+
+    if (isLike==2) {
       $.ajax({
         type: "DELETE",
         url: `http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/like/comments/${commentId}`,
