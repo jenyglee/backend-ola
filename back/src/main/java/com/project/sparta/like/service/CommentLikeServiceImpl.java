@@ -36,14 +36,13 @@ public class CommentLikeServiceImpl implements CommentLikeService{
 
         if(findByUserEmail.isPresent()) throw new CustomException(Status.CONFLICT_LIKE);
 
-        //보드라이크 생성
         CommentLike commentLike = CommentLike.builder()
                 .userNickName(user.getNickName())
                 .userEmail(user.getEmail())
+                .isLike(true)
                 .comment(comment).build();
 
         //레파지토리에 저장
-
         likeCommentRepository.save(commentLike);
 
     }
