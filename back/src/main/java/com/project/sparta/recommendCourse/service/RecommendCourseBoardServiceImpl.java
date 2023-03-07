@@ -42,7 +42,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
      * @throws IOException
      */
     @Override
-    public void creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
+    public Long creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
 
         RecommendCourseBoard board = RecommendCourseBoard.builder()
                                             .score(requestPostDto.getScore())
@@ -61,6 +61,9 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
             recommendCourseBoardImgRepository.save(courseImg);
         }
+
+        return board.getId();
+
     }
 
 
