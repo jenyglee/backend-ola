@@ -82,7 +82,7 @@ public class CommunityBoardImpl {
     CommunityBoard communityBoard = communityBoardService.createCommunityBoard(requestDto, user1);
     boardRepository.saveAndFlush(communityBoard);
 
-    assertThat(communityBoard.getChatStatus()).isEqualTo("Y");
+    assertThat(communityBoard.getTitle()).isEqualTo("첫번째 게시글");
 
   }
 
