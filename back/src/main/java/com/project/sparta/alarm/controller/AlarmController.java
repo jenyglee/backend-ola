@@ -5,10 +5,9 @@ import com.project.sparta.alarm.dto.AlarmResponseDto;
 import com.project.sparta.alarm.service.AlarmService;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.security.UserDetailsImpl;
-import io.swagger.annotations.*;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
