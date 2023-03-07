@@ -1006,8 +1006,6 @@
   function likeComment(isLike, commentId) {
     var accessToken = localStorage.getItem("accessToken");
 
-    console.log("좋아요 확인", isLike)
-
     if (isLike==2) {
       $.ajax({
         type: "DELETE",
