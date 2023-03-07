@@ -10,8 +10,10 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -66,9 +68,7 @@ public class ChatRoomController {
     @GetMapping("/chat/room")
     public ResponseEntity roomDetail(@RequestParam String roomId) {
 
-        log.info("roomId {}", roomId);
-
-        ChatRoomDto room = ChatRoomMap.getInstance().getChatRooms().get(roomId);
+        ChatRoomDto room = chatRoomMap.getChatRooms().get(roomId);
         return new ResponseEntity(room, HttpStatus.OK);
     }
 
@@ -100,8 +100,6 @@ public class ChatRoomController {
             .userCount(beforeRoom.getUserCount())
             .maxUserCnt(roomMaxCnt)
             .build();
-
-        System.out.println("채팅방 수정 되나요?");
 
         chatRoomMap.getChatRooms().put(String.valueOf(roomId), room);
     }
