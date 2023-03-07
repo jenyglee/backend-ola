@@ -18,7 +18,6 @@ import java.util.List;
 public interface RecommendCourseBoardService {
 
     //코스 등록
-
     Long creatRecommendCourseBoard( RecommendRequestDto requestPostDto, Long userId);
 
     //코스 수정
@@ -35,7 +34,6 @@ public interface RecommendCourseBoardService {
 
     //내가 쓴 코스추천 전체 조회
     PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user);
-
 
     //어드민 코스 수정
     void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto);
