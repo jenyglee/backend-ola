@@ -1005,8 +1005,7 @@
 
   function likeComment(isLike, commentId) {
     var accessToken = localStorage.getItem("accessToken");
-    console.log("commentId : ", commentId)
-    console.log("likeComment");
+
     if (isLike) {
       $.ajax({
         type: "DELETE",

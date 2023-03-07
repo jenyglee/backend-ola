@@ -36,23 +36,23 @@ public class CommentLikeServiceImpl implements CommentLikeService{
 
         if(findByUserEmail.isPresent()) throw new CustomException(Status.CONFLICT_LIKE);
 
-        //보드라이크 생성
         CommentLike commentLike = CommentLike.builder()
                 .userNickName(user.getNickName())
                 .userEmail(user.getEmail())
                 .comment(comment).build();
 
         //레파지토리에 저장
-
         likeCommentRepository.save(commentLike);
 
     }
     @Override
     public void unLikeComment(Long id, User user){
+
         //아이디값으로 보드 찾고
         CommunityComment comment = commentRepository.findById(id).orElseThrow(()->new CustomException(Status.NOT_FOUND_POST));
         //라이크 레파지토리에서 이메일로 찾고이미 누른 좋아요라면
         CommentLike findByUserEmail = likeCommentRepository.findByUserEmailAndComment(user.getEmail(),comment).orElseThrow(()->new CustomException(Status.CONFLICT_LIKE));
+
         //레파지토리에서 좋아요를 삭제한다.
         likeCommentRepository.delete(findByUserEmail);
     }
