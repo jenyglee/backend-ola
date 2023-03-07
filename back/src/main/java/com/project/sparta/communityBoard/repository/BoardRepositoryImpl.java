@@ -269,7 +269,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .from(communityBoard)
             .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
-            .where(communityBoard.user.Id.eq(userId), communityBoard.chatStatus.in("N", "L") )
+            .where(
+                communityBoard.user.Id.eq(userId)
+                //communityBoard.chatStatus.in("N", "L")
+            )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
