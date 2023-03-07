@@ -308,14 +308,15 @@
         xlr.setRequestHeader("Authorization", accessToken)
       },
       success: async function (response) {
-        console.log("채팅방 response : ", response);
-        var imgUrl = ""
-        if (response.data[i].imgList[0]) {
-          imgUrl = await getImageURL(response.data[i].imgList[0])
-        } else {
-          imgUrl = "./../static/img/mountain-default.png"
-        }
+        console.log("채팅방2 response : ", response);
+
         for (let i = 0; i < response.data.length; i++) {
+          var imgUrl = ""
+          if (response.data[i].imgList[0]) {
+            imgUrl = await getImageURL(response.data[i].imgList[0])
+          } else {
+            imgUrl = "./../static/img/mountain-default.png"
+          }
           console.log("response.data[i] : ", response.data[i])
           var temp = `
                         <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
@@ -377,51 +378,6 @@
     return loadData
   }
 
-  function getMyRecommendList(page) {
-    $("#postList").empty();
-    $.ajax({
-      type: "GET",
-      contentType: "application/json",
-      dataType: "json",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/info/me/boards/recommends?page="
-          + page + "&size=8",
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        for (let i = 0; i < response.data.length; i++) {
-          var temp = `
-                        <a href="g-2_recommendDetail.html" class="article" style="text-decoration: none; color: #000000">
-                            <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                <img style="width: 100%" src=${response.data[i].imgList[0]} alt="산 이미지" />
-                            </div>
-                            <div class="text-wrap" style="font-size: 14px;">
-                                <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
-                                <div style="display: flex;">
-                                    <div class="img-wrap" style="width:18px; height: 18px; margin-right: 5px; display: flex; justify-content: center; align-items: center; overflow: hidden">
-                                        <img style="width: 100%" src="/static/img/heart.png" alt="좋아요 하트" />
-                                    </div>
-                                    <p style="margin-bottom: 0; font-size: 14px;">${response.data[i].likeCount}</p>
-                                </div>
-                            </div>
-                        </a>
-                    `
-          $("#postList").append(temp);
-        }
-        $("#totalCount").empty();
-        var tempTotalCount = `
-                  <b>총 <span style="color: #F46B3F">${response.totalCount}</span> 건</b>
-                `
-        $("#totalCount").append(tempTotalCount)
-
-      }
-      , error: function (response) {
-        if (response.responseJSON.status == 500) {
-          regenerateToken()
-        }
-      }
-    });
-  }
 
   function regenerateToken() {
     var refreshToken = localStorage.getItem("refreshToken")
