@@ -44,7 +44,6 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class CommunityBoardImpl {
 
   @Autowired
