@@ -35,6 +35,7 @@ public class RecommendCourseController {
     @PostMapping("/recommends")
     public ResponseEntity createRecommendCourse(@RequestBody @ApiParam(value = "코스추천 작성 값", required = true) RecommendRequestDto requestDto,
                                                 @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
+
         Long userId = userDetail.getUser().getId();
         recommendCourseBoardService.creatRecommendCourseBoard(requestDto, userId);
 
@@ -83,22 +84,22 @@ public class RecommendCourseController {
     @ApiOperation(value = "코스 추천 전체 조회", response = Join.class)
     @GetMapping("/recommends")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "글 페이지", required = true, dataType = "int", paramType = "query", defaultValue = "0"),
+            @ApiImplicitParam(name = "page", value = "글 페이지", required = true, dataType = "int", paramType = "query", defaultValue = "0" , example = "0"),
             @ApiImplicitParam(name = "size", value = "글 보여질 개수", required = true, dataType = "int", paramType = "query", defaultValue = "10", example = "10"),
-            @ApiImplicitParam(name = "score", value = "별점", required = true, dataType = "int", paramType = "query", defaultValue = "0"),
-            @ApiImplicitParam(name = "season", value = "추천 계절", required = true, dataType = "String", paramType = "path", defaultValue = "0"),
-            @ApiImplicitParam(name = "altitude", value = "산 높이", required = true, dataType = "int", paramType = "query", defaultValue = "0"),
-            @ApiImplicitParam(name = "region", value = "산 있는 지역", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "sort", value = "정렬 기준(likeDesc/boardIdDesc)", required = true, dataType = "String", paramType = "query", example = "boardIdDesc"),
+            @ApiImplicitParam(name = "score", value = "별점", required = false, dataType = "int", paramType = "query", defaultValue = "0" , example = "0"),
+            @ApiImplicitParam(name = "season", value = "추천 계절", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "altitude", value = "산 높이", required = false, dataType = "int", paramType = "query", defaultValue = "0" , example = "0"),
+            @ApiImplicitParam(name = "region", value = "산 있는 지역", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "정렬 기준(likeDesc/boardIdDesc)", required = false, dataType = "String", paramType = "query", example = "boardIdDesc"),
     })
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourse(
         @RequestParam(name = "page", defaultValue = "0") int page,
         @RequestParam(name = "size", defaultValue = "10") int size,
-        @RequestParam(name = "score") int score,
-        @RequestParam(name = "season") String season,
-        @RequestParam(name = "altitude") int altitude,
-        @RequestParam(name = "region") String region,
-        @RequestParam(name = "sort") String sort) {
+        @RequestParam(required = false, name = "score") int score,
+        @RequestParam(required = false, name = "season") String season,
+        @RequestParam(required = false, name = "altitude") int altitude,
+        @RequestParam(required = false, name = "region") String region,
+        @RequestParam(required = false, name = "sort") String sort) {
         return recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season,
             altitude, region, sort);
     }
