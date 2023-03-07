@@ -111,9 +111,9 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         if(boardCount ==2){
             // 등산매니아 업그레이드
             communityBoard.set_maniaResponse(1);
-            System.out.println("등산 매니아 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//            System.out.println("등산 매니아 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
             user.changeGrade(UserGradeEnum.MOUNTAIN_MANIA);
-            System.out.println("등급 : " + user.getGradeEnum());
+//            System.out.println("등급 : " + user.getGradeEnum());
             userRepository.saveAndFlush(user);
         }
         if(boardCount>=2&& chatCount<=2){
@@ -125,10 +125,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
         }
         if(chatCount ==2){
             //산신령 업그레이드
-            System.out.println("산신령 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//            System.out.println("산신령 업그레이드!!!!!!!!!!!!!!!!!!!!!!!!!!");
             communityBoard.set_godResponse(1);
             user.changeGrade(UserGradeEnum.MOUNTAIN_GOD);
-            System.out.println("등급 : " + user.getGradeEnum());
+//            System.out.println("등급 : " + user.getGradeEnum());
             userRepository.saveAndFlush(user);
         }
     }
@@ -370,44 +370,4 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
                                                                     .build();
         return commBoardResponse;
     }
-
 }
-
-//주성님의 고민의 흔적들..
-//  @Override
-//  @Transactional
-//  public PageResponseDto<List<CommunityBoardOneResponseDto>> getMyCommunityBoard(int page, int size,
-//      User user) {
-//    Sort sort = Sort.by(Direction.ASC, "id");
-//    Pageable pageable = PageRequest.of(page, size, sort);
-//    Page<CommunityBoard> boards = boardRepository.findById(pageable,user.getId());
-//    List<CommunityBoardOneResponseDto> CommunityBoardOneResponseDtoList = boards.getContent()
-//        .stream()
-//        .map(CommunityBoardOneResponseDto::new)
-//        .collect(Collectors.toList());
-//    return new PageResponseDto<>(page, boards.getTotalElements(), CommunityBoardOneResponseDtoList);
-//  }
-
-//    @Override
-//    @Transactional
-//    public PageResponseDto<List<GetMyBoardResponseDto>> getMyCommunityBoard(int page, int size,
-//        User user) {
-//        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-//        Pageable pageable = PageRequest.of(page, size, sort);
-//        Page<CommunityBoard> boards = boardRepository.findAllByNickName(pageable,
-//            user.getNickName());
-//
-//        List<GetMyBoardResponseDto> getMyBoardResponseDtos = new ArrayList<>();
-//        for (CommunityBoard communityBoard : boards) {
-//            Long likeCount = likeBoardRepository.countByBoard_Id(communityBoard.getId());
-//            GetMyBoardResponseDto getMyBoardResponseDto = GetMyBoardResponseDto.builder()
-//                .localDateTime(communityBoard.getCreateAt())
-//                .title(communityBoard.getTitle())
-//                .likeCount(likeCount)
-//                .nickName(communityBoard.getUser().getNickName())
-//                .build();
-//            getMyBoardResponseDtos.add(getMyBoardResponseDto);
-//        }
-//        return new PageResponseDto<>(page, boards.getTotalElements(), getMyBoardResponseDtos);
-//        return null;
-//    }

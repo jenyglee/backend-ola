@@ -141,6 +141,16 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
         int score, String season, int altitude, String region, String sort) {
 
+        if(season == null){
+            season = "all";
+        }
+        if(region == null){
+            region = "all";
+        }
+        if(sort==null){
+            sort = "boardIdDesc";
+        }
+
         RecommendCondition condition = new RecommendCondition(score, season, altitude, region, sort);
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
