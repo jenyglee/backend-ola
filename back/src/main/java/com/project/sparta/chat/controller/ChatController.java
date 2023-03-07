@@ -5,6 +5,8 @@ import com.project.sparta.chat.dto.ChatRoomMap;
 import com.project.sparta.chat.service.ChatServiceMain;
 import com.project.sparta.chat.service.MsgChatService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,6 +100,10 @@ public class ChatController {
     @ApiOperation(value = "채팅 참여유저 닉네임 중복 확인",response = Join.class)
     @GetMapping("/chat/duplicateName")
     @ResponseBody
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roomId", value = "채팅 참여유저 닉네임 중복 확인", required = true, dataType = "Long", paramType = "query", example = "4"),
+            @ApiImplicitParam(name = "username", value = "유저 ID", required = true, dataType = "String", paramType = "query")
+    })
     public String isDuplicateName(@RequestParam("roomId") String roomId, @RequestParam("username") String username) {
 
         // 유저 이름 확인

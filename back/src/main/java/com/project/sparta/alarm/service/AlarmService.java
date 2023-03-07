@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface AlarmService {
 
-
     void createAlarm(AlarmRequetDto alarmRequetDto, String nickName);
 
     PageResponseDto<List<AlarmResponseDto>> getMyAlarmList(User user, int page, int size);

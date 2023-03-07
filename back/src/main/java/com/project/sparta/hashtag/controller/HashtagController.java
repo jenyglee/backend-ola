@@ -35,10 +35,10 @@ public class HashtagController {
 
     // 해시태그 추가
     @ApiOperation(value = "해시태그 추가", response = Join.class)
+    @PostMapping("/hashtags")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "name", value = "해시태그명", required = true, dataType = "string", paramType = "query")
     })
-    @PostMapping("/hashtags")
     public ResponseEntity createHashtag(
         @RequestParam String name,
         @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -51,6 +51,9 @@ public class HashtagController {
     //해시태그 삭제
     @ApiOperation(value = "해시태그 삭제", response = Join.class)
     @DeleteMapping("/hashtags/{hashtagId}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "hashtagId", value = "해시태그 ID", required = true, dataType = "Long", paramType = "path", example = "1"),
+    })
     public ResponseEntity deleteHashtag(
         @RequestBody Long hashtagId,
         @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {
@@ -61,6 +64,11 @@ public class HashtagController {
     //해시태그 전체 조회
     @ApiOperation(value = "해시태그 전체 조회", response = Join.class)
     @GetMapping("/hashtags")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "offset", value = "페이지", required = true, dataType = "int", paramType = "query", example = "0"),
+        @ApiImplicitParam(name = "limit", value = "보여줄 개수", required = true, dataType = "int", paramType = "query", example = "23"),
+        @ApiImplicitParam(name = "name", value = "해시태그명", required = false, dataType = "String", paramType = "query", example = "산"),
+    })
     public ResponseEntity getHashtagList(
         @RequestParam(defaultValue = "0") int offset,
         @RequestParam(defaultValue = "23") int limit,

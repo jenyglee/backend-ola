@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class Alarm extends Timestamped {
 
     @Id
@@ -27,22 +30,10 @@ public class Alarm extends Timestamped {
     private String userNickName;
     @Column
     private Long boardId;
-
     @Column
     private String writerNickName;
     @Column
     private String readStatus;
-
-    @Builder
-    public Alarm(String message, Long userId, String userNickName, Long boardId,
-        String readStatus, String writerNickName) {
-        this.message = message;
-        this.userId = userId;
-        this.userNickName = userNickName;
-        this.boardId = boardId;
-        this.readStatus = readStatus;
-        this.writerNickName = writerNickName;
-    }
 
     public void update(Long id,String message, Long userId, String userNickName, Long boardId,
         String readStatus, String writerNickName){
