@@ -25,41 +25,39 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.project.sparta.exception.api.Status.NOT_FOUND_POST;
+import static com.project.sparta.exception.api.Status.NOT_FOUND_USER;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
-//@SpringBootTest
-//@Transactional
-//class NoticeBoardServiceImplTest {
+@SpringBootTest
+class NoticeBoardServiceImplTest {
 
-//    @Autowired
-//    NoticeBoardRepository noticeBoardRepository;
-//    @Autowired
-//    NoticeBoardService noticeBoardService;
-//    @Autowired
-//    UserRepository userRepository;
-//    @Autowired
-//    EntityManager em;
-//
-//
-//
-//
-//
-//    @Test
-//    void createNoticeBoard() {
-//        //given
-//        NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("제목","내용", NoticeCategoryEnum.SERVICE);
-//        User admin = new User("user1@naver.com","1234", "관리자");
-//        em.persist(admin);
-//        //when
-//        noticeBoardService.createNoticeBoard(requestDto,admin);
-//        NoticeBoard noticeBoard = noticeBoardRepository.findByTitle("제목");
-//        noticeBoardRepository.saveAndFlush(noticeBoard);
-//
-//        //then
-//        assertThat(noticeBoard.getTitle()).isEqualTo("제목");
-//    }
-//
+    @Autowired
+    NoticeBoardRepository noticeBoardRepository;
+    @Autowired
+    NoticeBoardService noticeBoardService;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    EntityManager em;
+
+
+    @Test
+    void createNoticeBoard() {
+        //given
+        NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하ㅏ", "내용",
+            NoticeCategoryEnum.SERVICE);
+        User admin = new User("user5566@naver.com", "1234", "관리자");
+
+        //when
+        noticeBoardService.createNoticeBoard(requestDto, userRepository.save(admin));
+        NoticeBoard noticeBoard = noticeBoardRepository.findByTitle("우하하하ㅏ");
+
+        //then
+        assertThat(noticeBoard.getTitle()).isEqualTo("우하하하ㅏ");
+    }
+}
+
 //
 //
 //
