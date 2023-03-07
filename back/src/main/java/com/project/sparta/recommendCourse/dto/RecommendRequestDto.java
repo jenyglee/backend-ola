@@ -1,5 +1,6 @@
 package com.project.sparta.recommendCourse.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,12 +11,19 @@ import java.util.List;
 @NoArgsConstructor
 public class RecommendRequestDto {
 
+
     private int score;
+    @ApiModelProperty(example = "스웨거로 전달할 제목")
     private String title;
+    @ApiModelProperty(example = "스웨거로 전달할 계절")
     private String season;
+    @ApiModelProperty(example = "스웨거로 전달할 산높이")
     private int altitude;
+    @ApiModelProperty(example = "스웨거로 전달할 내용")
     private String contents;
+    @ApiModelProperty(example = "스웨거로 전달할 산지역")
     private String region;
+    @ApiModelProperty(example = "[]")
     private List<String> imgList;
 
     @Builder
