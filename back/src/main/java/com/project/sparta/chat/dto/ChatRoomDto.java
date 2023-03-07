@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
 // 따라서 따로 세션 관리를 하는 코드를 작성할 필도 없고,
 // 메시지를 다른 세션의 클라이언트에게 발송하는 것도 구현 필요가 없다!
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class ChatRoomDto {
     @NotNull
@@ -32,4 +30,17 @@ public class ChatRoomDto {
     private ChatType chatType; //  채팅 타입 여부
     // ChatRoomDto 클래스는 하나로 가되 서비스를 나누었음
     public ConcurrentMap<String, String> userList = new ConcurrentHashMap<>();
+
+    @Builder
+    public ChatRoomDto(String roomId, String hostName, String roomName, int userCount,
+        int maxUserCnt,
+        ChatType chatType, ConcurrentMap<String, String> userList) {
+        this.roomId = roomId;
+        this.hostName = hostName;
+        this.roomName = roomName;
+        this.userCount = userCount;
+        this.maxUserCnt = maxUserCnt;
+        this.chatType = chatType;
+        this.userList = userList;
+    }
 }
