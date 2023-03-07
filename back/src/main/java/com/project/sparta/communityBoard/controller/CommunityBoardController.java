@@ -49,8 +49,7 @@ public class CommunityBoardController {
     @PostMapping("/communities")
     public ResponseEntity createCommunityBoard(
         @RequestBody @ApiParam(value = "커뮤니티 작성 값", required = true) CommunityBoardRequestDto requestDto,
-        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail,
-        RedirectAttributes rttr) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail,RedirectAttributes rttr) {
 
         CommunityBoard board = communityBoardService.createCommunityBoard(requestDto, userDetail.getUser());
         CommunityBoardGradeResponseDto communityBoardGradeResponseDto = new CommunityBoardGradeResponseDto(board.getManiaResponse(),
