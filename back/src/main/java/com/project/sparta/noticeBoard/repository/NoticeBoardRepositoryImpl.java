@@ -22,18 +22,19 @@ public class NoticeBoardRepositoryImpl implements NoticeBoardRepositoryCustom {
     public QueryResults<NoticeBoardResponseDto> findAllByCategory(NoticeCategoryEnum categoryEnum, int page, int size) {
         QueryResults<NoticeBoardResponseDto> results = queryFactory
             .select(
-                new QNoticeBoardResponseDto(
-                    noticeBoard.id,
-                    noticeBoard.user.nickName,
-                    noticeBoard.title,
-                    noticeBoard.contents,
-                    noticeBoard.category,
-                    noticeBoard.createAt,
-                    noticeBoard.modifiedAt
-                ))
+        new QNoticeBoardResponseDto(
+            noticeBoard.id,
+            noticeBoard.user.nickName,
+            noticeBoard.title,
+            noticeBoard.contents,
+            noticeBoard.category,
+            noticeBoard.createAt,
+            noticeBoard.modifiedAt
+        ))
             .from(noticeBoard)
             .join(noticeBoard.user, user)
             .where(noticeBoard.category.eq(categoryEnum)) // 1:SERVICE, 2:EVENT, 3:UPDATE
+            .orderBy(noticeBoard.modifiedAt.desc())
             .offset(page)
             .limit(size)
             .fetchResults();
