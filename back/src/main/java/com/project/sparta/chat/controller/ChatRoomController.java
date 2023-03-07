@@ -10,8 +10,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.security.UserDetailsImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -41,7 +40,9 @@ public class ChatRoomController {
     //채팅룸 생성(수정에서 사용되는 채팅 생성임)
     @ApiOperation(value = "채팅방 생성",response = Join.class)
     @PostMapping("/chat/room")
-    public ResponseEntity roomDetail(@RequestBody ChatRequestDto chatRequestDto, @ApiIgnore @AuthenticationPrincipal
+    public ResponseEntity roomDetail(
+            @RequestBody @ApiParam(value = "채팅방 생성",required = true) ChatRequestDto chatRequestDto,
+            @ApiIgnore @AuthenticationPrincipal
         UserDetailsImpl userDetails) {
 
         ChatRoomDto room;
@@ -66,6 +67,9 @@ public class ChatRoomController {
     //채팅룸 상세 정보
     @ApiOperation(value = "채팅방 상세 정보",response = Join.class)
     @GetMapping("/chat/room")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roomId", value = "채팅방 상세 정보", required = true, dataType = "Long", paramType = "query", example = "1")
+    })
     public ResponseEntity roomDetail(@RequestParam String roomId) {
 
         ChatRoomDto room = chatRoomMap.getChatRooms().get(roomId);
@@ -76,6 +80,9 @@ public class ChatRoomController {
     @ApiOperation(value = "채팅방 유저 입장 수",response = Join.class)
     @GetMapping("/chat/chkUserCnt}")
     @ResponseBody
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roomId", value = "채팅방 유저 입장 수", required = true, dataType = "Long", paramType = "query", example = "5")
+    })
     public boolean chUserCnt(@RequestParam String roomId) {
         return chatServiceMain.chkRoomUserCnt(roomId);
     }
@@ -83,6 +90,10 @@ public class ChatRoomController {
     //채팅룸 삭제
     @ApiOperation(value = "채팅방 삭제",response = Join.class)
     @GetMapping("/chat/delRoom")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roomId", value = "채팅방 삭제", required = true, dataType = "Long", paramType = "query", example = "4"),
+
+    })
     public ResponseEntity delChatRoom(@RequestParam String roomId) {
         chatServiceMain.delChatRoom(roomId);
         return new ResponseEntity(HttpStatus.OK);
