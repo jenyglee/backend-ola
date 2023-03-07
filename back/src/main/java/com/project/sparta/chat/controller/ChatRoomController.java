@@ -1,5 +1,6 @@
 package com.project.sparta.chat.controller;
 
+import com.amazonaws.services.glue.model.Join;
 import com.project.sparta.chat.dto.ChatRequestDto;
 import com.project.sparta.chat.dto.ChatRoomDto;
 import com.project.sparta.chat.dto.ChatRoomMap;

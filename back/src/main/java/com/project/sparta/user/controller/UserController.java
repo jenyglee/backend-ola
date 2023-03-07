@@ -47,7 +47,6 @@ public class UserController {
     @ApiOperation(value = "로그인",response = Join.class)
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto requestDto){
-        // 어드민인지 확인하는 로직
         return userService.login(requestDto);
     }
 

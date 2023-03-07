@@ -34,6 +34,26 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    #1
+    # 해당 부분은 상당히 중요함 (글에서 부가설명)
+    # application.properties는 외부에 노출되면 안되므로 Actions가 빌드될때마다 해당 Repository의 Secret 설정을
+    # 이용하여서 설정 파일을 생성해줌 (github에 commit 되는게 아님!)
+    - run : touch ./back/src/main/resources/application.yml
+    - run : echo "${{ secrets.APPLICATION }}" > ./back/src/main/resources/application.yml
+    - run : cat ./back/src/main/resources/application.yml    
+        
+        
+#     # (3-1) yml 세팅
+#     - name: Set yaml file
+#       uses: microsoft/variable-substitution@v1
+#       with:
+#         files: ${{ secrets.APPLiCATION }}
+#       env:
+#         cloud.aws.credentials.accessKey: ${{ secrets.IMAGE_S3_ACCESS_KEY_ID }}
+#         cloud.aws.credentials.secretKey: ${{ secrets.IMAGE_S3_SECRET_ACCESS_KEY}}
+#         #jwt.secret.key: $ {{ secrets.JWT_SECRET_KEY }}
+#         spring.datasource.password: ${{ secrets.MYSQL_PASSWORD }}
+
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
       run: cd back && ./gradlew clean build -x test
