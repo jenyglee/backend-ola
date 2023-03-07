@@ -422,8 +422,9 @@
                                 </div>
                             </div>
                             `
-                            roomMemberCnt(response.data[i].boardId);
+
                             $("#communityList").append(temp)
+                            roomMemberCnt(response.data[i].boardId);
                         }
                     },
                     error: function (response) {
@@ -898,7 +899,6 @@
             function roomMemberCnt(communityId) {
 
                 const accessToken = localStorage.getItem("accessToken")
-                let crew = "";
                 $.ajax({
                     type: "GET",
                      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
@@ -909,9 +909,7 @@
                     },
                     success: function (response) {
 
-                        console.log(response)
-
-                        crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+                        let crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
                         $("#roomMemberCnt").append(crew);
                     }
