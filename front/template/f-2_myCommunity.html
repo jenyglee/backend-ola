@@ -296,6 +296,7 @@
             },
             success: async function (response) {
                 console.log("커뮤니티 response : ", response);
+
                 for (let i=0; i<response.data.length; i++){
                     var imgUrl = ""
                     if (response.data[i].imgList[0]) {

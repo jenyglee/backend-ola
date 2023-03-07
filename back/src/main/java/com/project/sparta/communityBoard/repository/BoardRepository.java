@@ -17,7 +17,7 @@ public interface BoardRepository extends JpaRepository<CommunityBoard, Long>, Bo
   Optional<CommunityBoard> findByIdAndUser_NickName(Long id, String nickName);
 
 
-  @Query("select count(cboard) from CommunityBoard cboard where cboard.user.Id=:userId and cboard.chatStatus='N' or cboard.createAt='L'")
+  @Query("select count(cboard) from CommunityBoard cboard where cboard.user.Id=:userId and cboard.chatStatus='N' or cboard.chatStatus='L'")
   Long countMyCommunity(@Param("userId") Long userId);
 
   @Query("select count(cboard) from CommunityBoard cboard where cboard.user.Id=:userId and cboard.chatStatus='Y'")
