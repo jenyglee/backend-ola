@@ -572,7 +572,7 @@
       type: "GET",
       url:
        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
-      //    "http://localhost:8080/boards/communities/" +
+          //"http://localhost:8080/boards/communities/" +
           communityId +
           "?commentPage=" +
           commentPage +
@@ -1140,7 +1140,8 @@
 
     $.ajax({
       type: "GET",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+      //url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+      url: "http://localhost:8080/chat/room?roomId="
           + communityId,
       async: false,
       beforeSend: function (xlr) {

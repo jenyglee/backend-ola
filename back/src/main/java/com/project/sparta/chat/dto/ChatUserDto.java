@@ -17,7 +17,7 @@ public class ChatUserDto {
     private String provider; // 소셜 제공자 -> ex) 네이버, 카카오 ----
 
 //    // Member 엔티티를 ChatUserDto 로 변환 근데 mapper 를 사용하는 순간 필요없다
-//    public static ChatUserDto of(ChatUser chatUserEntity) {
+//    public static ChatUserDto of(Chat chatUserEntity) {
 //        ChatUserDto chatUserDto = ChatUserDto.builder()
 //                .id(chatUserEntity.getId())
 //                .nickName(chatUserEntity.getNickName())
