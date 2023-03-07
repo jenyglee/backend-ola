@@ -307,14 +307,20 @@
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
       },
-      success: function (response) {
+      success: async function (response) {
         console.log("채팅방 response : ", response);
+        var imgUrl = ""
+        if (response.data[i].imgList[0]) {
+          imgUrl = await getImageURL(response.data[i].imgList[0])
+        } else {
+          imgUrl = "./../static/img/mountain-default.png"
+        }
         for (let i = 0; i < response.data.length; i++) {
           console.log("response.data[i] : ", response.data[i])
           var temp = `
                         <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000">
                             <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                <img style="width: 100%" src=${response.data[i].imgList[0]} alt="산 이미지" />
+                                <img style="width: 100%" src=${imgUrl} alt="산 이미지" />
                             </div>
                             <div class="text-wrap" style="font-size: 14px;">
                                 <p style="margin-bottom: 10px; width: 90%">${response.data[i].title}</p>
@@ -337,6 +343,38 @@
 
       }
     });
+  }
+
+  async function getImageURL(objectKey) {
+    var loadData = ""
+    const accessToken = localStorage.getItem("accessToken")
+    await $.ajax({
+      type: "GET",
+      url:
+          "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/s3/getPreSignedURL?fileName=" +
+          objectKey,
+      contentType: "application/json",
+      processData: false,
+      beforeSend: function (xlr) {
+        xlr.setRequestHeader("Authorization", accessToken)
+      },
+      data: objectKey,
+      xhrFields: {
+        withCredentials: false, // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+      },
+      success: await function (response) {
+        loadData = response
+      },
+      error: function (request, status, error) {
+        console.log("에러난다..!")
+        console.log(request, status, error)
+        if (response.responseJSON.status == 500) {
+          regenerateToken()
+        }
+        // "[requestPostBodyJson] : [error] : " + JSON.stringify(xhr);
+      },
+    })
+    return loadData
   }
 
   function getMyRecommendList(page) {
