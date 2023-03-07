@@ -7,4 +7,10 @@ import lombok.Getter;
 public class UserGradeDto {
     @ApiModelProperty(example = "0") // Mountatin Children
     private int grade;
+
+    public UserGradeDto(int grade) {
+        this.grade = grade;
+    }
 }
+
+
