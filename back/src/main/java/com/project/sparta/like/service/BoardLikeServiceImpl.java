@@ -48,7 +48,6 @@ public class BoardLikeServiceImpl implements BoardLikeService {
         BoardLike findByUserEmail = likeBoardRepository.findByUserEmailAndBoard(user.getEmail(),board).orElseThrow(()->new CustomException(Status.CONFLICT_LIKE));
         //레파지토리에서 좋아요를 삭제한다.
         likeBoardRepository.delete(findByUserEmail);
-
     }
 
 
