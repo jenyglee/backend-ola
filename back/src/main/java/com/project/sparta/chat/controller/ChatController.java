@@ -33,6 +33,8 @@ public class ChatController {
 
     private final MsgChatService msgChatService;
 
+    private final ChatRoomMap chatRoomMap;
+
 
     @MessageMapping("/chat/enterUser")
     public void enterUser(@Payload ChatDto chat, SimpMessageHeaderAccessor headerAccessor){
@@ -41,7 +43,7 @@ public class ChatController {
         chatServiceMain.plusUserCnt(chat.getRoomId());
 
         //채팅방에 유저 추가 및 UserUUID 반환
-        String userUUID = msgChatService.addUser(ChatRoomMap.getInstance().getChatRooms(), chat.getRoomId(), chat.getSender());
+        String userUUID = msgChatService.addUser(chatRoomMap.getChatRooms(), chat.getRoomId(), chat.getSender());
 
         //반환 결과를 socket session에 userUUID로 저장
         headerAccessor.getSessionAttributes().put("userUUID", userUUID);
@@ -76,8 +78,8 @@ public class ChatController {
         chatServiceMain.minusUserCnt(roomId);
 
         // 채팅방 유저 리스트에서 UUID 유저 닉네임 조회 및 리스트에서 유저 삭제
-        String username = msgChatService.findUserNameByRoomIdAndUserUUID(ChatRoomMap.getInstance().getChatRooms(), roomId, userUUID);
-        msgChatService.delUser(ChatRoomMap.getInstance().getChatRooms(), roomId, userUUID);
+        String username = msgChatService.findUserNameByRoomIdAndUserUUID(chatRoomMap.getChatRooms(), roomId, userUUID);
+        msgChatService.delUser(chatRoomMap.getChatRooms(), roomId, userUUID);
 
         if (username != null) {
             log.info("User Disconnected : " + username);
@@ -99,7 +101,7 @@ public class ChatController {
     public String isDuplicateName(@RequestParam("roomId") String roomId, @RequestParam("username") String username) {
 
         // 유저 이름 확인
-        String userName = msgChatService.isDuplicateName(ChatRoomMap.getInstance().getChatRooms(), roomId, username);
+        String userName = msgChatService.isDuplicateName(chatRoomMap.getChatRooms(), roomId, username);
         log.info("동작확인 {}", userName);
 
         return userName;
