@@ -53,7 +53,7 @@ public class User extends Timestamped {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTag> tags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private final List<CommunityBoard> communityBoards = new ArrayList<>();
 
     public void updateUserTags(List<UserTag> userTagList){

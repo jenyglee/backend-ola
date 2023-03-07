@@ -1,25 +1,29 @@
 package com.project.sparta.hashtag.service;
-
+import com.project.sparta.hashtag.entity.Hashtag;
+import com.project.sparta.hashtag.repository.HashtagRepository;
+import com.project.sparta.user.entity.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
+import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 class HashtagServiceImplTest {
 
-    // @Autowired
-    // HashtagService hashtagService;
-    // @Autowired
-    // HashtagRepository hashtagRepository;
-    // @Test
-    // public void createHashtag() {
-    //     User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
-    //
-    //     Hashtag saved = hashtagService.createHashtag("등린이", user1);
-    //
-    //     assertThat(saved.getName()).isEqualTo("등린이");
-    // }
-    //
+     @Autowired
+     HashtagService hashtagService;
+     @Autowired
+     HashtagRepository hashtagRepository;
+     @Test
+     public void createHashtag() {
+         User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
+
+         Hashtag saved = hashtagService.createHashtag("등린이", user1);
+
+         assertThat(saved.getName()).isEqualTo("등린이");
+     }
+
     // @Test
     // public void deleteHashtag() {
     //     User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
