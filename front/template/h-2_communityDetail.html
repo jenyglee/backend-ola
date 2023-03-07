@@ -572,7 +572,7 @@
       type: "GET",
       url:
        "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
-      //    "http://localhost:8080/boards/communities/" +
+          //"http://localhost:8080/boards/communities/" +
           communityId +
           "?commentPage=" +
           commentPage +
@@ -1005,8 +1005,7 @@
 
   function likeComment(isLike, commentId) {
     var accessToken = localStorage.getItem("accessToken");
-    console.log("commentId : ", commentId)
-    console.log("likeComment");
+
     if (isLike) {
       $.ajax({
         type: "DELETE",
@@ -1141,6 +1140,7 @@
     $.ajax({
       type: "GET",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+      //url: "http://localhost:8080/chat/room?roomId="
           + communityId,
       async: false,
       beforeSend: function (xlr) {
@@ -1505,21 +1505,21 @@
   }
 
   //알람 읽음 상태로 변경
-  function updateAlarmStats(alarmId) {
-    const accessToken = localStorage.getItem("accessToken")
-    $.ajax({
-      type: "PATCH",
-      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
-          + alarmId,
-      beforeSend: function (xlr) {
-        xlr.setRequestHeader("Authorization", accessToken)
-      },
-      success: function (response) {
-        console.log("업데이트 ")
-        selectAlarm();
-      }
-    });
-  }
+  // function updateAlarmStats(alarmId) {
+  //   const accessToken = localStorage.getItem("accessToken")
+  //   $.ajax({
+  //     type: "PATCH",
+  //     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/alarm?alarmId="
+  //         + alarmId,
+  //     beforeSend: function (xlr) {
+  //       xlr.setRequestHeader("Authorization", accessToken)
+  //     },
+  //     success: function (response) {
+  //       console.log("업데이트 ")
+  //       selectAlarm();
+  //     }
+  //   });
+  // }
 
   //알림 삭제
   function deleteAlarm(boardId){

@@ -155,7 +155,10 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             Boolean isLikeCheck = queryFactory.select(commentLike.userNickName.count().when(1L).then(true).otherwise(false))
                 .from(commentLike)
                 .join(commentLike).on(communityComment.Id.eq(commentLike.comment.Id))
-                .where(commentLike.userNickName.eq(dto.getNickName()),
+                // commentLike.userNickName : 좋아요한 사람,
+                // username : 본인
+                // dto.getNickName() : 댓글 작성자,
+                .where(commentLike.userNickName.eq(username), // 좋아요한 사람 = 본인
                         commentLike.comment.Id.eq(dto.getId()))
                 .fetchOne();
 
@@ -269,7 +272,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             )
             .from(communityBoard)
             .leftJoin(communityBoardImg).on(communityBoardImg.communityBoard.id.eq(communityBoard.id))
-            .where(communityBoard.user.Id.eq(userId), communityBoard.chatStatus.eq("N"))
+            .where(
+                communityBoard.user.Id.eq(userId)
+            )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();

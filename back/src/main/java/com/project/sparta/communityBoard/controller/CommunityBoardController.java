@@ -49,8 +49,7 @@ public class CommunityBoardController {
     @PostMapping("/communities")
     public ResponseEntity createCommunityBoard(
         @RequestBody @ApiParam(value = "커뮤니티 작성 값", required = true) CommunityBoardRequestDto requestDto,
-        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail,
-        RedirectAttributes rttr) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail,RedirectAttributes rttr) {
 
         CommunityBoard board = communityBoardService.createCommunityBoard(requestDto, userDetail.getUser());
         CommunityBoardGradeResponseDto communityBoardGradeResponseDto = new CommunityBoardGradeResponseDto(board.getManiaResponse(),
@@ -61,8 +60,6 @@ public class CommunityBoardController {
 
             room = chatServiceMain.createChatRoom(board.getId(), requestDto.getTitle(),
                 requestDto.getChatMemCnt(), userDetail.getUser().getNickName());
-
-            log.info("create chat room : " + requestDto.getTitle());
 
             rttr.addFlashAttribute("roomName", room);
         }
@@ -143,10 +140,10 @@ public class CommunityBoardController {
     }
 
     //커뮤니티 삭제
+    @ApiOperation(value = "커뮤니티 삭제", response = Join.class)
     @ApiImplicitParams({
         @ApiImplicitParam(name = "boardId", value = "커뮤니티 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
     })
-    @ApiOperation(value = "커뮤니티 삭제", response = Join.class)
     @DeleteMapping("/communities/{boardId}")
     public ResponseEntity deleteCommunityBoard(@PathVariable Long boardId,
         @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetail) {

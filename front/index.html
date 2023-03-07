@@ -219,6 +219,7 @@
                 class="btn-group"
                 role="group"
                 aria-label="Basic checkbox toggle button group"
+                style="margin-top: 50px"
             ></div>
         </div>
         <!--  <p>Hello world! This is HTML5 Boilerplate.</p>-->
@@ -395,7 +396,7 @@
                 $.ajax({
                     type: "GET",
                     url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
-                    // url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
+                    //url: "http://localhost:8080/boards/communities?page=0&size=4&title=&contents&nickname&hashtagId=0&chatStatus=Y&sort=likeDesc",
                     // beforeSend: function (xlr) {
                     //     xlr.setRequestHeader("Authorization", accessToken)
                     // },
@@ -422,8 +423,9 @@
                                 </div>
                             </div>
                             `
+
+                            $("#communityList").append(temp);
                             roomMemberCnt(response.data[i].boardId);
-                            $("#communityList").append(temp)
                         }
                     },
                     error: function (response) {
@@ -898,20 +900,17 @@
             function roomMemberCnt(communityId) {
 
                 const accessToken = localStorage.getItem("accessToken")
-                let crew = "";
                 $.ajax({
                     type: "GET",
                      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
-                    //: "http://localhost:8080/chat/room?roomId="
+                     //url : "http://localhost:8080/chat/room?roomId="
                         + communityId,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
                     success: function (response) {
 
-                        console.log(response)
-
-                        crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
+                        let crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 
                         $("#roomMemberCnt").append(crew);
                     }

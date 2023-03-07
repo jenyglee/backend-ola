@@ -277,7 +277,7 @@
             <button id="btn_3" type="button" onclick="addTag()">추가</button>
         </div>
         <div class="form-check" style="margin-top: 40px">
-            <input class="form-check-input" type="checkbox" value="Y" id="checkChat" onclick="testCheck()" />
+            <input class="form-check-input" type="checkbox" value="Y" id="checkChat"/>
             <label class="form-check-label" for="checkChat"> 크루원 구하기 </label>
             <p style="font-size: 12px; font-weight: bold">
                 참여 인원 :
@@ -507,7 +507,7 @@
                 return
             }
         } else {
-            chatStatus = "L"
+            chatStatus = "N"
         }
 
         var chatMemCnt = $(".chatCnt-input").val()
