@@ -306,7 +306,7 @@
                     }
                     console.log("response.data[i] : ", response.data[i])
                     var temp = `
-                        <a href="h-2_communityDetail.html" class="article" style="text-decoration: none; color: #000000" onclick="setlocalStorage(${response.boardId})">
+                        <a class="article" style="text-decoration: none; color: #000000" onclick="setlocalStorage(${response.data[i].boardId})">
                             <div class="img-wrap" style="width: 100%; height: 176px; margin-bottom: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                                 <img style="width: 100%" src=${imgUrl} alt="산 이미지" />
                             </div>
@@ -333,7 +333,8 @@
     }
 
     function setlocalStorage(boardId){
-        localStorage.setItem("communityId", board_Id)
+        localStorage.setItem("communityId", boardId)
+        location.replace('h-2_communityDetail.html');
     }
     //
     // function getMyRecommendList(page){
