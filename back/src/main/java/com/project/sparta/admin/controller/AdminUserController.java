@@ -7,6 +7,8 @@ import com.project.sparta.user.dto.UserListResponseDto;
 import com.project.sparta.user.dto.UserOneResponseDto;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
@@ -28,6 +30,10 @@ public class AdminUserController {
     // 회원 전체 조회
     @ApiOperation(value = "유저 리스트 조회",response = Join.class)
     @GetMapping("/users")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "페이지", required = true, dataType = "int", paramType = "path", defaultValue = "0", example = "0"),
+        @ApiImplicitParam(name = "size", value = "보여줄 개수", required = true, dataType = "String", paramType = "query", defaultValue = "10", example = "10"),
+    })
     public ResponseEntity getUserList(int page, int size){
         PageResponseDto<List<UserListResponseDto>> userList = userService.getUserList(page, size);
         return new ResponseEntity<>(userList, HttpStatus.OK);
@@ -35,6 +41,9 @@ public class AdminUserController {
 
     // 회원 단건 조회
     @ApiOperation(value = "유저 조회",response = Join.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+    })
     @GetMapping("/users/{userId}")
     public ResponseEntity getUser(@PathVariable Long userId){
         UserOneResponseDto user = userService.getUser(userId);
@@ -43,6 +52,9 @@ public class AdminUserController {
 
     // 회원 등급 변경
     @ApiOperation(value = "유저 등급 변경",response = Join.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+    })
     @PatchMapping("/users/{userId}/grade")
     public ResponseEntity changeGradeUser(@PathVariable Long userId, @RequestBody UserGradeDto gradeDto){
         userService.changeGrade(gradeDto, userId);
@@ -51,6 +63,9 @@ public class AdminUserController {
 
     //회원 탈퇴/복구 처리
     @ApiOperation(value = "유저 활성 변경",response = Join.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+    })
     @PatchMapping("/users/{userId}/status")
     public ResponseEntity changeEnableUser(@PathVariable Long userId, @RequestBody UserStatusDto statusDto){
         userService.changeStatus(statusDto, userId);
