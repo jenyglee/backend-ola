@@ -231,7 +231,7 @@ public class RecommendCourseBoardRepositoryImpl implements RecommendCourseBoardC
         return season != "all" ? reBoard.season.contains(season) : null;
     }
     private Predicate altitudeEq(int altitude) {
-        return altitude != 0 ? reBoard.altitude.between(altitude, altitude+100): null;
+        return altitude != 0 ? reBoard.altitude.goe(altitude): null;
     }
 }
 

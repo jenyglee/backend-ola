@@ -55,8 +55,6 @@ public class CommentLikeServiceImpl implements CommentLikeService{
         CommentLike findByUserEmail = likeCommentRepository.findByUserEmailAndComment(user.getEmail(),comment).orElseThrow(()->new CustomException(Status.CONFLICT_LIKE));
         //레파지토리에서 좋아요를 삭제한다.
         likeCommentRepository.delete(findByUserEmail);
-
-
     }
 
 }
