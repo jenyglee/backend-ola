@@ -27,14 +27,10 @@ public class CommentLike {
     @JoinColumn(name = "comment_id")
     private CommunityComment comment;
 
-    @Column
-    private int isLike;
-
     @Builder
-    public CommentLike(String userEmail, String userNickName, CommunityComment comment, int isLike) {
+    public CommentLike(String userEmail, String userNickName, CommunityComment comment) {
         this.userEmail = userEmail;
         this.userNickName = userNickName;
         this.comment = comment;
-        this.isLike = isLike;
     }
 }
