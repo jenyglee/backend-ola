@@ -401,6 +401,8 @@
                     // },
                     success: async function (response) {
 
+                        console.log("크루 :", response)
+
                         for (let i = 0; i < response.data.length; i++) {
 
                             var imgUrl = ""
@@ -882,19 +884,17 @@
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
-                    success : function (response){
+                    success : function (){
                         console.log("업데이트 ")
                         selectAlarm();
                     }
                 });
             }
-            //로컬 스토리지에 boardId 저장
             function setCommunityId(board_Id, alarmId){
                 updateAlarmStats(alarmId);
                 localStorage.setItem("communityId", board_Id)
-                location.replace('h-2_communityDetail.html');
+                location.replace('./template/h-2_communityDetail.html');
             }
-
             function roomMemberCnt(communityId) {
 
                 const accessToken = localStorage.getItem("accessToken")
@@ -902,12 +902,14 @@
                 $.ajax({
                     type: "GET",
                      url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
-                    //url: "http://localhost:8080/chat/room?roomId="
+                    //: "http://localhost:8080/chat/room?roomId="
                         + communityId,
                     beforeSend: function (xlr) {
                         xlr.setRequestHeader("Authorization", accessToken)
                     },
                     success: function (response) {
+
+                        console.log(response)
 
                         crew = `<div style="width: 300px; display: inline-block">크루 참여 인원 수 : <sapn style="color : #f46b3f"> ${response.userCount} </sapn> / <sapn>${response.maxUserCnt}</sapn></div>`;
 

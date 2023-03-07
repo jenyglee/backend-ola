@@ -12,6 +12,8 @@ import com.project.sparta.user.dto.InfoResponseDto;
 import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +26,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"정보조회 API"})
+@Api(tags = {"정보조회"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/info")
@@ -38,29 +41,22 @@ public class InfoController {
     // 내 정보 조회
     @ApiOperation(value = "내 정보 조회", response = Join.class)
     @GetMapping("/me")
-    public ResponseEntity getMyInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity getMyInfo(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         InfoResponseDto result = userService.getMyInfo(userDetails.getUser());
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-//    //TODO 자동 등업 API 제작
-//    //자동 등업(명세서 수정)
-//    @ApiOperation(value = "자동 등업", response = Join.class)
-//    @PostMapping("/upgrade")
-//    public ResponseEntity autoUpgrade(UpgradeRequestDto requestDto,
-//        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        userService.upgrade(requestDto, userDetails.getUser().getId());
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
-
-    // TODO 내가 쓴 코스추천 전체 조회 API 제작
     //내가 쓴 코스추천 전체 조회
     @ApiOperation(value = "내가 쓴 코스추천 전체 조회", response = Join.class)
     @GetMapping("/me/boards/recommends")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "페이지", required = true, dataType = "int", paramType = "query", defaultValue = "0", example = "0"),
+        @ApiImplicitParam(name = "size", value = "보여줄 개수", required = true, dataType = "int", paramType = "query", defaultValue = "8", example = "8"),
+    })
     public ResponseEntity getMyBoardAll(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<RecommendResponseDto>>  getMyRecommendCourseBoard= recommendCourseBoardService.getMyRecommendCourseBoard(page, size, userDetails.getUser());
         return new ResponseEntity<>(getMyRecommendCourseBoard,HttpStatus.OK);
     }
@@ -68,10 +64,14 @@ public class InfoController {
     //내가 쓴 커뮤니티 전체 조회
     @ApiOperation(value = "내가 쓴 커뮤니티 전체 조회", response = Join.class)
     @GetMapping("/me/boards/communities")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "페이지", required = true, dataType = "int", paramType = "query", defaultValue = "0", example = "0"),
+        @ApiImplicitParam(name = "size", value = "보여줄 개수", required = true, dataType = "int", paramType = "query", defaultValue = "8", example = "8"),
+    })
     public ResponseEntity getMyCommunityList(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getMyCommunityBoard(
             page, size, userDetails.getUser());
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -80,19 +80,16 @@ public class InfoController {
     //내가 만든 크루 전체 조회
     @ApiOperation(value = "내가 만든 크루 전체 조회", response = Join.class)
     @GetMapping("/me/boards/chat")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "페이지", required = true, dataType = "int", paramType = "query", defaultValue = "0", example = "0"),
+        @ApiImplicitParam(name = "size", value = "보여줄 개수", required = true, dataType = "int", paramType = "query", defaultValue = "8", example = "8"),
+    })
     public ResponseEntity getMyChatBoardList(
         @RequestParam("page") int page,
         @RequestParam("size") int size,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails) {
         PageResponseDto<List<CommunityBoardAllResponseDto>> result = communityBoardService.getMyChatBoardList(page, size, userDetails.getUser().getId());
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    //TODO 내 알람 전체 조회 API 제작
-    //내 알람 전체 조회
-    @ApiOperation(value = "내 알람 전체 조회", response = Join.class)
-    @GetMapping("/alarms")
-    public void getAlarmList() {
     }
 
     // TODO 친구가 쓴 게시글도 조회할수 있다면?

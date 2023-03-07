@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Api(tags = {"어드민 유저 API"})
+@Api(tags = {"어드민 유저"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
