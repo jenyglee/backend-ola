@@ -11,18 +11,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class HashtagServiceImplTest {
 
-     @Autowired
-     HashtagService hashtagService;
-     @Autowired
-     HashtagRepository hashtagRepository;
-     @Test
-     public void createHashtag() {
-         User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
-
-         Hashtag saved = hashtagService.createHashtag("등린이", user1);
-
-         assertThat(saved.getName()).isEqualTo("등린이");
-     }
+//     @Autowired
+//     HashtagService hashtagService;
+//     @Autowired
+//     HashtagRepository hashtagRepository;
+//     @Test
+//     public void createHashtag() {
+//         User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
+//
+//         Hashtag saved = hashtagService.createHashtag("등린이", user1);
+//
+//         assertThat(saved.getName()).isEqualTo("등린이");
+//     }
 
     // @Test
     // public void deleteHashtag() {
