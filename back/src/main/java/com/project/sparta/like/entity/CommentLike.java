@@ -37,4 +37,8 @@ public class CommentLike {
         this.comment = comment;
         this.isLike = isLike;
     }
+
+    public void updateIsLike(){
+        this.isLike = false;
+    }
 }
