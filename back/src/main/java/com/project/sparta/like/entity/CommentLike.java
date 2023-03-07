@@ -28,17 +28,13 @@ public class CommentLike {
     private CommunityComment comment;
 
     @Column
-    private Boolean isLike;
+    private int isLike;
 
     @Builder
-    public CommentLike(String userEmail, String userNickName, CommunityComment comment, Boolean isLike) {
+    public CommentLike(String userEmail, String userNickName, CommunityComment comment, int isLike) {
         this.userEmail = userEmail;
         this.userNickName = userNickName;
         this.comment = comment;
         this.isLike = isLike;
-    }
-
-    public void updateIsLike(){
-        this.isLike = false;
     }
 }
