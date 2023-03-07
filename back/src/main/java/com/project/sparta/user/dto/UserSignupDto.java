@@ -1,6 +1,7 @@
 
 package com.project.sparta.user.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,19 +15,21 @@ import javax.validation.constraints.Pattern;
 @Getter
 @NoArgsConstructor
 public class UserSignupDto {
-    //@NotBlank(message = "이메일은 필수 입력값입니다.")
-    //@Email
+    @ApiModelProperty(example = "user0@naver.com")
     private String email;
-    //@NotBlank(message = "비밀번호는 필수 입력값입니다.")
-    //@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$", message = "비밀번호는 8~16자리수여야 합니다. 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.")
+    @ApiModelProperty(example = "스웨거로 전달할 패스워드")
     private String password;
-
-    //@NotBlank(message = "닉네임은 필수 입력값입니다.")
-    //@Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,10}$" , message = "닉네임은 특수문자를 포함하지 않은 2~10자리여야 합니다.")
+    @ApiModelProperty(example = "초보등산꾼")
     private String nickName;
+    @ApiModelProperty(example = "20")
     private int age;
+    @ApiModelProperty(example = "010-1234-1234")
     private String phoneNumber;
+
+    @ApiModelProperty(example = "스웨거로 전달할 이미지url")
     private String imageUrl;
+
+    @ApiModelProperty(example = "스웨거로 전달할 태그 리스트")
     private List<Long> tagList;
 
     private boolean admin = false;

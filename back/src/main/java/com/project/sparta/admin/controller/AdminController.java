@@ -3,6 +3,7 @@ package com.project.sparta.admin.controller;
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.admin.service.AdminService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ public class AdminController {
 
     // 어드민 회원가입
     @PostMapping("/auth/signup/admin")
-    public ResponseEntity signup(@RequestBody AdminSignupDto signupDto){
+    public ResponseEntity signup(@RequestBody
+        @ApiParam(value = "어드민 회원가입 작성 값", required = true) AdminSignupDto signupDto){
         adminService.signup(signupDto);
         return new ResponseEntity(HttpStatus.OK);
     }
