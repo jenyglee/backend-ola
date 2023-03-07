@@ -62,8 +62,6 @@ public class CommunityBoardController {
             room = chatServiceMain.createChatRoom(board.getId(), requestDto.getTitle(),
                 requestDto.getChatMemCnt(), userDetail.getUser().getNickName());
 
-            log.info("create chat room : " + requestDto.getTitle());
-
             rttr.addFlashAttribute("roomName", room);
         }
 
