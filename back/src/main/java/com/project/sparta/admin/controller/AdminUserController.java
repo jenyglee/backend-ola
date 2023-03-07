@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class AdminUserController {
     // 회원 단건 조회
     @ApiOperation(value = "유저 조회",response = Join.class)
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "1"),
     })
     @GetMapping("/users/{userId}")
     public ResponseEntity getUser(@PathVariable Long userId){
@@ -53,10 +54,11 @@ public class AdminUserController {
     // 회원 등급 변경
     @ApiOperation(value = "유저 등급 변경",response = Join.class)
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "1"),
     })
     @PatchMapping("/users/{userId}/grade")
-    public ResponseEntity changeGradeUser(@PathVariable Long userId, @RequestBody UserGradeDto gradeDto){
+    public ResponseEntity changeGradeUser(@PathVariable Long userId,
+        @RequestBody @ApiParam(value = "유저등급 변경값(0 : 탈퇴, 1 : 등록)", required = true) UserGradeDto gradeDto){
         userService.changeGrade(gradeDto, userId);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -64,10 +66,11 @@ public class AdminUserController {
     //회원 탈퇴/복구 처리
     @ApiOperation(value = "유저 활성 변경",response = Join.class)
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "123"),
+        @ApiImplicitParam(name = "userId", value = "유저 ID", required = true, dataType = "Long", paramType = "path", example = "1"),
     })
     @PatchMapping("/users/{userId}/status")
-    public ResponseEntity changeEnableUser(@PathVariable Long userId, @RequestBody UserStatusDto statusDto){
+    public ResponseEntity changeEnableUser(@PathVariable Long userId,
+        @RequestBody @ApiParam(value = "회원 탈퇴/복구 처리값(0 : 등린이, 1 : 매니아, 2 : 산신령)", required = true) UserStatusDto statusDto){
         userService.changeStatus(statusDto, userId);
         return new ResponseEntity(HttpStatus.OK);
     }
