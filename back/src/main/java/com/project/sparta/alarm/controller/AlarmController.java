@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(tags = {"알람 API"})
+@Api(tags = {"알람"})
 @RestController
 @RequiredArgsConstructor
 public class AlarmController {
@@ -31,14 +32,14 @@ public class AlarmController {
     //알람 내용 저장
     @ApiOperation(value = "알림 생성", response = Join.class)
     @PostMapping("/alarm")
-    public void createAlarm(@RequestBody AlarmRequetDto alarmRequetDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public void createAlarm(@RequestBody AlarmRequetDto alarmRequetDto, @ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails){
         alarmService.createAlarm(alarmRequetDto, userDetails.getUser().getNickName());
     }
 
     //알람 내용 조회
     @ApiOperation(value = "나의 알림 전체 조회", response = Join.class)
     @GetMapping("/alarm")
-    public ResponseEntity getMyAlarmList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public ResponseEntity getMyAlarmList(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails,
         @RequestParam(name = "page", defaultValue = "0") int page,
         @RequestParam(name = "size", defaultValue = "10") int size){
         PageResponseDto<List<AlarmResponseDto>> alarmResponseDto = alarmService.getMyAlarmList(userDetails.getUser(), page, size);
@@ -48,14 +49,22 @@ public class AlarmController {
     //알람 읽으면 AlarmStatus가 수정됨
     @ApiOperation(value = "나의 알림 상태값 수정", response = Join.class)
     @PatchMapping("/alarm")
-    public void updateAlarmStatus(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
+    public void updateAlarmStatus(@ApiIgnore @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
         alarmService.updateAlarmStatus(userDetails.getUser().getId(),alarmId);
     }
 
     //알람 삭제
     @ApiOperation(value = "나의 알림 삭제", response = Join.class)
     @DeleteMapping("/alarm")
-    public void deleteAlarm(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam Long alarmId){
-        alarmService.deleteAlarm(userDetails.getUser().getId(), alarmId);
+    public void deleteAlarm(@ApiIgnore @RequestParam Long boardId){
+        alarmService.deleteAlarm(boardId);
+    }
+
+    //알람 삭제 전 boardId에 딸린 알림 내용 조회
+    @ApiOperation(value = "알림 조회", response = Join.class)
+    @GetMapping("/alarms")
+    public ResponseEntity getAlarmList(@ApiIgnore @RequestParam Long boardId){
+        List<AlarmResponseDto> alarmList = alarmService.getAlarmList(boardId);
+        return new ResponseEntity(alarmList, HttpStatus.OK);
     }
 }

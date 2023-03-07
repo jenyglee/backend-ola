@@ -296,6 +296,7 @@
           type="checkbox"
           id="flexCheckDefault"
           value="Y"
+          disabled
       />
       <label class="form-check-label" for="flexCheckDefault"> 크루원 구하기 </label>
       <p style="font-size: 12px; font-weight: bold">
@@ -308,6 +309,7 @@
             id="chatCnt-input"
             style="width: 50px"
             placeholder="0"
+            disabled
         />명 (※최소 인원 2명/최대 인원 10명)
       </p>
     </div>
@@ -476,6 +478,7 @@
       type: "GET",
       url:
           "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/" +
+          //"http://localhost:8080/boards/communities/" +
           communityId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
@@ -615,28 +618,26 @@
     const accessToken = localStorage.getItem("accessToken")
     var chatStatus = $(".form-check-input:checked").val()
 
+    // if (chatStatus == "Y") {
+    //   if ($(".chatCnt-input").val() == 0) {
+    //     alert("크루 참여 인원을 작성해주세요.")
+    //     return
+    //   } else if ($(".chatCnt-input").val() == 1) {
+    //     alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
+    //     $(".chatCnt-input").val("")
+    //     $(".chatCnt-input").focus()
+    //     return
+    //   } else if ($(".chatCnt-input").val() > 10) {
+    //     alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
+    //     $(".chatCnt-input").val("")
+    //     $(".chatCnt-input").focus()
+    //     return
+    //   }
+    // } else {
+    //   chatStatus = "N"
+    // }
 
-
-    if (chatStatus == "Y") {
-      if ($(".chatCnt-input").val() == 0) {
-        alert("크루 참여 인원을 작성해주세요.")
-        return
-      } else if ($(".chatCnt-input").val() == 1) {
-        alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
-        $(".chatCnt-input").val("")
-        $(".chatCnt-input").focus()
-        return
-      } else if ($(".chatCnt-input").val() > 10) {
-        alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
-        $(".chatCnt-input").val("")
-        $(".chatCnt-input").focus()
-        return
-      }
-    } else {
-      chatStatus = "N"
-    }
-
-    createChat(communityId, $("#chatCnt-input").val())
+    //createChat(communityId, $("#chatCnt-input").val())
 
     var chatMemCnt = $(".chatCnt-input").val()
     var tagIds = []
@@ -654,6 +655,7 @@
     $.ajax({
       type: "PATCH",
       url: "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/boards/communities/"
+      //url: "http://localhost:8080/boards/communities/"
           + communityId,
       beforeSend: function (xlr) {
         xlr.setRequestHeader("Authorization", accessToken)
@@ -916,26 +918,11 @@
     var chatMemCnt = $(".chatCnt-input").val()
     var chatStatus = $(".form-check-input").val()
 
-    if (chatStatus == "Y") {
-      if ($(".chatCnt-input").val() == 0) {
-        alert("크루 참여 인원을 작성해주세요.")
-        return
-      } else if ($(".chatCnt-input").val() == 1) {
-        alert("채팅방 최소 인원은 2명입니다. 다시 입력해주세요")
-        $(".chatCnt-input").val("")
-        $(".chatCnt-input").focus()
-        return
-      } else if ($(".chatCnt-input").val() > 10) {
-        alert("채팅방 최대 인원은 10명입니다. 다시 입력해주세요")
-        $(".chatCnt-input").val("")
-        $(".chatCnt-input").focus()
-        return
-      }
-
       $.ajax({
         type: "POST",
         url:
             "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/chat/room?roomId="
+            //"http://localhost:8080/chat/room?roomId="
             +
             communityId +
             "&roomMaxCnt=" +
@@ -953,11 +940,7 @@
         success: function () {
           console.log("수정 성공")
         },
-      })
-    }else {
-      alert("채팅방 개설에 체크해주세요.");
-      return;
-    }
+      });
   }
 
   //친구 검색

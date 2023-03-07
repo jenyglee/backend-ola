@@ -16,5 +16,7 @@ public interface AlarmService {
 
     void updateAlarmStatus(Long userId,Long alarmId);
 
-    void deleteAlarm(Long userId, Long alarmId);
+    void deleteAlarm(Long boardId);
+
+    List<AlarmResponseDto> getAlarmList(Long boardId);
 }
