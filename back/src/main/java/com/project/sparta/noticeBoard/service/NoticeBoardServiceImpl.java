@@ -47,11 +47,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
                 .build();
         NoticeBoard board = noticeBoardRepository.saveAndFlush(noticeBoard);
 
-//        if(user.getRole()== UserRoleEnum.ADMIN) {
-//            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
-//                requestDto.getContents(), requestDto.getCategory());
-//            noticeBoardRepository.saveAndFlush(noticeBoard);
-//        }
+        return board.getId();
     }
 
     //공지글 삭제
