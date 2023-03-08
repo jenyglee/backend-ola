@@ -20,6 +20,7 @@ import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,9 +28,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +56,11 @@ public class UserServiceImpl implements UserService {
     private final RecommendCourseBoardRepository recommendRepository;
     private final RedisTemplate<String, String> redisTemplate;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder encoder;
+    private final JavaMailSender javaMailSender;
+    private final EntityManager em;
+    private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
+
 
     //회원가입
     @Override
@@ -174,7 +183,6 @@ public class UserServiceImpl implements UserService {
 
         // 내가 만든 크루 수
         int makeCount = boardRepository.countMyChat(user.getId());
-
 
         // 나의 해시태그
         List<UserTag> userTags = userTagRepository.findAllByUser(user);
@@ -326,6 +334,96 @@ public class UserServiceImpl implements UserService {
         } else if (statusDto.getStatus() == 1) {
             user.changeStatus(StatusEnum.USER_REGISTERED);
         }
+    }
+
+    @Override
+    public void sendMail(MailDto mailDto) {
+        System.out.println("이멜 전송 완료!");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailDto.getAddress()); // 받는사람 주소
+        //message.setFrom(UserServiceImpl.FROM_ADDRESS); // 보내는 사람 주소
+        message.setFrom("jenyglee30@gmail.com"); // 보내는 사람 주소
+        message.setSubject(mailDto.getTitle()); // 메일 제목
+        message.setText(mailDto.getMessage()); // 메일 내용
+
+        javaMailSender.send(message);
+
+        //SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        //// 1. 메일 수신자 설정
+        //String[] receiveList = {"jenyglee_30@naver.com", "wodnjs3062@gmail.com"};
+        //
+        //// ArrayLis의 경우 배열로 변환이 필요함
+        ///*
+        //ArrayList<String> receiveList = new ArrayList<>();
+        //receiveList.add("test@naver.com");
+        //receiveList.add("test@gmail.com");
+        //
+        //String[] receiveList = (String[]) receiveList.toArray(new String[receiveList.size()]);
+        //*/
+        //
+        //simpleMailMessage.setTo(receiveList);
+        //
+        //
+        //// 2. 메일 제목 설정
+        //simpleMailMessage.setSubject("test_title");
+        //
+        //// 3. 메일 내용 설정
+        //simpleMailMessage.setText("test_content");
+        //
+        //// 4. 메일 전송
+        //javaMailSender.send(simpleMailMessage);
+
+    }
+
+
+    @Override
+    public boolean userEmailCheck(String userEmail, String userName) {
+        User user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        if (user != null && user.getNickName().equals(userName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public MailDto createMailAndChangePassword(String userEmail, String userName) {
+        String str = getTempPassword();
+        MailDto dto = new MailDto();
+        dto.setAddress(userEmail);
+        dto.setTitle(userName + "님의 올라 임시비밀번호 안내 이메일 입니다.");
+        dto.setMessage(
+            "안녕하세요. 올라 임시비밀번호 안내 관련 이메일 입니다." + "[" + userName + "]" + "님의 임시 비밀번호는 "
+                + str + " 입니다.");
+        updatePassword(str, userEmail);
+        return dto;
+    }
+
+    public void updatePassword(String str, String userEmail) {
+        String pw = encoder.encode(str);
+        User user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        System.out.println("user.getEmail() = " + user.getEmail());
+        user.updateUserPassword(pw);
+        userRepository.save(user);
+        //em.flush();
+    }
+
+    public String getTempPassword() {
+        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+            'D', 'E', 'F',
+            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+            'X', 'Y', 'Z'};
+
+        String str = "";
+
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            str += charSet[idx];
+        }
+        return str;
     }
 
 
