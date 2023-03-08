@@ -13,7 +13,37 @@
 6. 등산 검색 쇼핑(네이버 쇼핑)
 7. Admin 기능(회원, 커뮤니티, 코스추천, 공지사항 관리)
 
+## 📚 구현 기술 스택
+- Redis 캐싱을 이용한 로그아웃
+- QueryDSL
+- PresignedURL 이미지 업로드
+- JWT Access/Refresh Token
+- Websocket, Socket js, Stomp 
+- OAuth2 카카오 로그인
+- RDS Database(MySQL)
+- Github Action CI/CD
+
+
 * * *
+
+## 🪄프로젝트 시연!
+
+|코스추천 페이지|코스추천 상세 페이지|
+|------|---|
+|![01_코스추천](https://user-images.githubusercontent.com/86715916/223703985-2de089a6-9f56-4e58-8939-d0030af101f8.gif)|![02_코스추천 상세](https://user-images.githubusercontent.com/86715916/223704287-301d4d3b-86d9-4ccf-af22-f7ca462da5ed.gif)|
+
+|커뮤니티 페이지|커뮤니티 상세 페이지|
+|------|---|
+|![03_커뮤니티](https://user-images.githubusercontent.com/86715916/223704302-26ff7fee-d7ed-4d85-8b70-53013f6702a4.gif)|![04_커뮤니티 상세](https://user-images.githubusercontent.com/86715916/223704316-c736e7b5-1ca2-44cc-a14c-8252089dbfcc.gif)|
+
+|쇼핑몰-공지사항|친구-알람|
+|------|---|
+|![05_쇼핑몰-공지사항](https://user-images.githubusercontent.com/86715916/223704336-a33b3be0-21b1-47d2-9cf3-e542861333f6.gif)|![06_친구-알람](https://user-images.githubusercontent.com/86715916/223704350-34147713-d5d1-4810-bfb4-7b26a66901cc.gif)|
+
+|마이페이지|어드민 페이지|
+|------|---|
+|![07_마이페이지](https://user-images.githubusercontent.com/86715916/223704372-038ad154-816d-4213-8eb0-ea9f176013e5.gif)|![08_어드민](https://user-images.githubusercontent.com/86715916/223704382-95c9ad86-c34d-48b1-9286-10144351df58.gif)|
+
 
 ## 🎯 구현 이슈 정리
 
@@ -49,22 +79,32 @@ Batch size는 100번 일어날 n+1문제를 1번 이상으로 줄일 수는 있�
 N+1의 문제는 정말 다양한 경우의 수가 있기 때문에 향후에도 이러한 문제들을 많이 접해보고 다양한 문제해결을 적용해보는 연습을 해야겠다고 생각했습니다.
 
 
-## 📚 구현 기술 스택
-- Redis 캐싱을 이용한 로그아웃
-- QueryDSL
-- PresignedURL 이미지 업로드
-- JWT Access/Refresh Token
-- Websocket, Socket js, Stomp 
-- OAuth2 카카오 로그인
-- RDS Database(MySQL)
-- Github Action CI/CD
-
 ## 👥 팀 구성
 백엔드 5명(이재원, 한세인, 김두영, 김주성, 김민선)
 
 ## 🗓 프로젝트 기간
 - 2023년 02월 06일 ~ 2023년 03월 10일
 - 배포일 : 2023년 03월 8일
+
+## 💿 기술스택
+<div style="display:flex;">
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
+  <img src="https://img.shields.io/badge/SPRINGDATAJPA-529327?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/QUERYDSL-0E70C7?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens">
+  <img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white">
+  <img src="https://img.shields.io/badge/WEBSOCKET-FF6600?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+  <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+  <img src="https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white">
+  <img src="https://img.shields.io/badge/CODEDEPLOY-82A450?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
+  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+</div>
+
 
 ## 🛠 서비스 아키텍쳐
 <img width="793" alt="아키텍쳐" src="https://user-images.githubusercontent.com/86715916/223677821-ce7c2d72-6b17-410f-b0fd-c5b8b76270ac.png">
@@ -75,3 +115,4 @@ N+1의 문제는 정말 다양한 경우의 수가 있기 때문에 향후에도
 
 ## ✏️ 피그마 시안
 <img width="793" alt="스크린샷 2023-03-07 오후 1 43 06" src="https://user-images.githubusercontent.com/86715916/223626203-d7098c7c-846f-413e-bcd8-af908cee1f44.png">
+
