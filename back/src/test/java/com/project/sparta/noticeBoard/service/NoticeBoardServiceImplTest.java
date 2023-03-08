@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @SpringBootTest
+@Transactional
 class NoticeBoardServiceImplTest {
 
     @Autowired
