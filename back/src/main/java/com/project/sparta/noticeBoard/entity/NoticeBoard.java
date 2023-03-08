@@ -33,6 +33,7 @@ public class NoticeBoard extends Timestamped {
 
     @Builder
     public NoticeBoard(User user, String title, String contents, NoticeCategoryEnum category) {
+        //영속성 컨텍스트에 있는 user 여야 함
         this.user = user;
         this.title = title;
         this.contents = contents;

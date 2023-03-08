@@ -11,4 +11,6 @@ public interface NoticeBoardRepository extends JpaRepository<NoticeBoard,Long>, 
      Optional<NoticeBoard> findById(Long id);
 
     NoticeBoard findByTitle(String title);
+
+
 }

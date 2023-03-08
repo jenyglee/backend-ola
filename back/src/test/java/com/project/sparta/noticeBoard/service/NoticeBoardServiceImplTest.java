@@ -11,6 +11,8 @@ import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.service.UserServiceImpl;
+import java.util.ArrayList;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,41 +27,44 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.project.sparta.exception.api.Status.NOT_FOUND_POST;
+import static com.project.sparta.exception.api.Status.NOT_FOUND_USER;
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
-//@SpringBootTest
-//@Transactional
-//class NoticeBoardServiceImplTest {
+@SpringBootTest
+@Transactional
+class NoticeBoardServiceImplTest {
 
-//    @Autowired
-//    NoticeBoardRepository noticeBoardRepository;
-//    @Autowired
-//    NoticeBoardService noticeBoardService;
-//    @Autowired
-//    UserRepository userRepository;
-//    @Autowired
-//    EntityManager em;
-//
-//
-//
-//
-//
-//    @Test
-//    void createNoticeBoard() {
-//        //given
-//        NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("제목","내용", NoticeCategoryEnum.SERVICE);
-//        User admin = new User("user1@naver.com","1234", "관리자");
-//        em.persist(admin);
-//        //when
-//        noticeBoardService.createNoticeBoard(requestDto,admin);
-//        NoticeBoard noticeBoard = noticeBoardRepository.findByTitle("제목");
-//        noticeBoardRepository.saveAndFlush(noticeBoard);
-//
-//        //then
-//        assertThat(noticeBoard.getTitle()).isEqualTo("제목");
-//    }
-//
+    @Autowired
+    NoticeBoardRepository noticeBoardRepository;
+    @Autowired
+    NoticeBoardService noticeBoardService;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    EntityManager em;
+
+
+    @Test
+    @Transactional
+    void createNoticeBoard() {
+        //given
+        NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하ㅏ", "내용",
+            NoticeCategoryEnum.SERVICE);
+
+        String randomUser = "user"+ UUID.randomUUID();
+        User admin = new User(randomUser, "1234", "관리자");
+
+        //when
+        Long boardId = noticeBoardService.createNoticeBoard(requestDto, userRepository.save(admin));
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(boardId).orElseThrow(()-> new CustomException(NOT_FOUND_POST));
+
+        //then
+        assertThat(noticeBoard.getId()).isEqualTo(boardId);
+        assertThat(noticeBoard.getCategory()).isEqualTo(0);
+    }
+}
+
 //
 //
 //

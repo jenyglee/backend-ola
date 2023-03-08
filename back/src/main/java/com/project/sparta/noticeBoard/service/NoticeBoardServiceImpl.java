@@ -35,7 +35,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 작성
     @Override
-    public void createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
+    public Long createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // 0: SERVICE, 1: UPDATE, 2: EVENT
         //TODO 인가는 JWT 필터와 컨트롤러에서 끝나기 때문에 넣을 필요가 없다.(수정완료)
 
@@ -45,7 +45,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
                 .title(requestDto.getTitle())
                 .user(user)
                 .build();
-        noticeBoardRepository.saveAndFlush(noticeBoard);
+        NoticeBoard board = noticeBoardRepository.saveAndFlush(noticeBoard);
 
 //        if(user.getRole()== UserRoleEnum.ADMIN) {
 //            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),

@@ -12,7 +12,7 @@ import java.util.List;
 public interface NoticeBoardService {
 
 
-     void createNoticeBoard(NoticeBoardRequestDto requestDto, User user);   //공지글 작성
+     Long createNoticeBoard(NoticeBoardRequestDto requestDto, User user);   //공지글 작성
 
      void deleteNoticeBoard(Long id, User user);   //공지글 삭제
 
