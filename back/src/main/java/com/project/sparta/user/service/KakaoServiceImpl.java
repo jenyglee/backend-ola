@@ -83,7 +83,7 @@ public class KakaoServiceImpl implements KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "d47fdedf288092701f880cf868e90d47");
-        body.add("redirect_uri", "http://localhost:5500/template/b-1_login.html");
+        body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/");
         body.add("code", code);
 
         // HTTP 요청 보내기
