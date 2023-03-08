@@ -54,6 +54,8 @@ public class SecurityConfig {
             .antMatchers(HttpMethod.POST, "/auth/signup/admin") //어드민 회원가입 api 필터제외
             .antMatchers(HttpMethod.POST, "/auth/login") //로그인 api 필터제외
             .antMatchers(HttpMethod.POST, "/auth/logout") //로그아웃 api 필터제외
+            .antMatchers(HttpMethod.GET, "/auth/check/findPw") //비밀번호찾기 api 필터제외
+            .antMatchers(HttpMethod.POST, "/auth/check/findPw/sendEmail") //비밀번호찾기 api 필터제외
             .antMatchers(HttpMethod.GET, "/boards/recommends") //코스추천 조회 필터 제외
             .antMatchers(HttpMethod.GET, "/boards/communities") //커뮤니티 조회 필터 제외
             .antMatchers(HttpMethod.GET, "/boards/notices") //공지사항 조회 필터 제외
