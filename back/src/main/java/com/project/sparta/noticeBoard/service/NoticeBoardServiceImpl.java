@@ -52,6 +52,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 //                requestDto.getContents(), requestDto.getCategory());
 //            noticeBoardRepository.saveAndFlush(noticeBoard);
 //        }
+        return board.getId();
     }
 
     //공지글 삭제

@@ -1,6 +1,7 @@
 package com.project.sparta.recommendCourse.service;
 
 
+import static com.project.sparta.exception.api.Status.*;
 import static com.project.sparta.recommendCourse.entity.PostStatusEnum.VAILABLE;
 
 import com.project.sparta.common.dto.PageResponseDto;
@@ -43,6 +44,15 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
      */
     @Override
     public Long creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
+
+        // 에러1: 타이틀이 ""인 경우
+        if(requestPostDto.getTitle().isBlank()||requestPostDto.getSeason().isBlank()||requestPostDto.getContents().isBlank()||requestPostDto.getRegion().isBlank()){
+            throw new CustomException(INVALID_CONTENT);
+        }
+        // 숫자가 null인 경우
+        if(requestPostDto.getScore() == 0 || requestPostDto.getAltitude() == 0){
+            throw  new CustomException(INVALID_CONTENT);
+        }
 
         RecommendCourseBoard board = RecommendCourseBoard.builder()
                                             .score(requestPostDto.getScore())
