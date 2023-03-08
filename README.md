@@ -43,7 +43,6 @@
 > N:N 관계에서 매칭시스템 내용
 
 
-
 ## 📚 구현 기술 스택
 - Redis 캐싱을 이용한 로그아웃
 - QueryDSL
@@ -61,8 +60,12 @@
 - 2023년 02월 06일 ~ 2023년 03월 10일
 - 배포일 : 2023년 03월 8일
 
-## ✏️ 피그마 시안
-<img width="793" alt="스크린샷 2023-03-07 오후 1 43 06" src="https://user-images.githubusercontent.com/86715916/223626203-d7098c7c-846f-413e-bcd8-af908cee1f44.png">
+## 🛠 서비스 아키텍쳐
+<img width="793" alt="아키텍쳐" src="https://user-images.githubusercontent.com/86715916/223677821-ce7c2d72-6b17-410f-b0fd-c5b8b76270ac.png">
+
 
 ## 🧩 ERD
 <img width="793" alt="스크린샷 2023-03-07 오후 3 24 49" src="https://user-images.githubusercontent.com/86715916/223626267-a2f9762e-c314-43d4-9474-8b0f6336231c.png">
+
+## ✏️ 피그마 시안
+<img width="793" alt="스크린샷 2023-03-07 오후 1 43 06" src="https://user-images.githubusercontent.com/86715916/223626203-d7098c7c-846f-413e-bcd8-af908cee1f44.png">
