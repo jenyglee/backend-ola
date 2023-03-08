@@ -10,5 +10,9 @@ import java.util.Optional;
 public interface NoticeBoardRepository extends JpaRepository<NoticeBoard,Long>, NoticeBoardRepositoryCustom{
      Optional<NoticeBoard> findById(Long id);
 
+     void findAllById
+
     NoticeBoard findByTitle(String title);
+
+
 }

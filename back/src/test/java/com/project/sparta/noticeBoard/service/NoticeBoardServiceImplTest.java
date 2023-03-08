@@ -11,6 +11,8 @@ import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.service.UserServiceImpl;
+import java.util.ArrayList;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,18 +45,22 @@ class NoticeBoardServiceImplTest {
 
 
     @Test
+    @Transactional
     void createNoticeBoard() {
         //given
         NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하ㅏ", "내용",
             NoticeCategoryEnum.SERVICE);
-        User admin = new User("user5566@naver.com", "1234", "관리자");
+
+        String randomUser = "user"+ UUID.randomUUID();
+        User admin = new User(randomUser, "1234", "관리자");
 
         //when
-        noticeBoardService.createNoticeBoard(requestDto, userRepository.save(admin));
-        NoticeBoard noticeBoard = noticeBoardRepository.findByTitle("우하하하ㅏ");
+        Long boardId = noticeBoardService.createNoticeBoard(requestDto, userRepository.save(admin));
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(boardId).orElseThrow(()-> new CustomException(NOT_FOUND_POST));
 
         //then
-        assertThat(noticeBoard.getTitle()).isEqualTo("우하하하ㅏ");
+        assertThat(noticeBoard.getId()).isEqualTo(boardId);
+        assertThat(noticeBoard.getCategory()).isEqualTo(0);
     }
 }
 
