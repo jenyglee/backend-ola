@@ -61,7 +61,7 @@ class NoticeBoardServiceImplTest {
 
         //then
         assertThat(noticeBoard.getId()).isEqualTo(boardId);
-        assertThat(noticeBoard.getCategory()).isEqualTo(0);
+        assertThat(noticeBoard.getCategory()).isEqualTo(NoticeCategoryEnum.SERVICE);
     }
 }
 
