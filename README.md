@@ -1,28 +1,10 @@
 # 등산 크루 모집 커뮤니티 ‘올라!’
 스프링 프로젝트 ‘올라’ 입니다. 생활 커뮤니티 서비스로, 등산과 관련된 관심사를 해시태그로 만들어 다양하게 공유할 수 있는 방법을 구현했습니다.
 
-## 팀 구성
-백엔드 5명(이재원, 한세인, 김두영, 김주성, 김민선)
-
 <!-- [프로젝트 포트폴리오 상세 보기](http://jenyglee93.com/) -->
 ![리드미 대문 이미지](https://user-images.githubusercontent.com/86715916/222955463-95fad7f8-1959-46d1-b556-e550469bff0e.jpg)
 
-구현 기술 스택
-- Redis 캐싱을 이용한 로그아웃
-- QueryDSL
-- PresignedURL 이미지 업로드
-- JWT Access/Refresh Token
-- Websocket, Socket js, Stomp 
-- OAuth2 카카오 로그인
-- RDS Database(MySQL)
-- Github Action CI/CD
-
-<img width="793" alt="스크린샷 2023-03-07 오후 1 43 06" src="https://user-images.githubusercontent.com/86715916/223626203-d7098c7c-846f-413e-bcd8-af908cee1f44.png">
-
-<img width="1355" alt="스크린샷 2023-03-07 오후 3 24 49" src="https://user-images.githubusercontent.com/86715916/223626267-a2f9762e-c314-43d4-9474-8b0f6336231c.png">
-
-
-## 주요기능
+## ✨ 주요기능
 1. 관심사가 비슷한 친구를 랜덤으로 추천
 2. 검색조건과 해시태그를 이용한 필터링 조회
 3. 실시간 채팅을 통한 크루원 모집
@@ -33,7 +15,7 @@
 
 * * *
 
-## 구현 이슈 정리
+## 🎯 구현 이슈 정리
 
 ### 이미지
 #### Presigned URL 연결하기
@@ -59,3 +41,28 @@
 ### 친구
 #### N:N 관계에서 매칭시스템 
 > N:N 관계에서 매칭시스템 내용
+
+
+
+## 📚 구현 기술 스택
+- Redis 캐싱을 이용한 로그아웃
+- QueryDSL
+- PresignedURL 이미지 업로드
+- JWT Access/Refresh Token
+- Websocket, Socket js, Stomp 
+- OAuth2 카카오 로그인
+- RDS Database(MySQL)
+- Github Action CI/CD
+
+## 👥 팀 구성
+백엔드 5명(이재원, 한세인, 김두영, 김주성, 김민선)
+
+## 🗓 프로젝트 기간
+- 2023년 02월 06일 ~ 2023년 03월 10일
+- 배포일 : 2023년 03월 8일
+
+## ✏️ 피그마 시안
+<img width="793" alt="스크린샷 2023-03-07 오후 1 43 06" src="https://user-images.githubusercontent.com/86715916/223626203-d7098c7c-846f-413e-bcd8-af908cee1f44.png">
+
+## 🧩 ERD
+<img width="793" alt="스크린샷 2023-03-07 오후 3 24 49" src="https://user-images.githubusercontent.com/86715916/223626267-a2f9762e-c314-43d4-9474-8b0f6336231c.png">
