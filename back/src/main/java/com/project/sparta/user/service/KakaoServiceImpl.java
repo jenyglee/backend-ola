@@ -39,7 +39,7 @@ public class KakaoServiceImpl implements KakaoService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public ResponseEntity<TokenDto> kakaoLogin(String code, HttpServletResponse response)
+    public ResponseEntity<TokenDto> kakaoLogin(String code)
         throws JsonProcessingException {
         //1. '인가 코드'로 Access Token 요청
         String accessToken = getToken(code);
