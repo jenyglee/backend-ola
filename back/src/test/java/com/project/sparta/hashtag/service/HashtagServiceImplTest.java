@@ -4,6 +4,7 @@ import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,22 +13,22 @@ import java.util.List;
 import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
-
 class HashtagServiceImplTest {
 
      @Autowired
      HashtagService hashtagService;
      @Autowired
      HashtagRepository hashtagRepository;
+
+     private String randomUser = "user"+ UUID.randomUUID();
      @Test
      @Transactional
+     @DisplayName(value = "해시태그 추가")
      public void createHashtag() {
          //given
-
-         String randomUser = "user"+ UUID.randomUUID();
          User user1 = User
                  .userBuilder()
-                 .email(randomUser+"@naver.com")
+                 .email(randomUser)
                  .password("1234")
                  .nickName("99번째 사용자")
                  .age(99)
@@ -35,24 +36,24 @@ class HashtagServiceImplTest {
                  .userImageUrl("sdf.jpg")
                  .build();
          //when
-         Hashtag hashtag = hashtagService.createHashtag("등린이44",user1);
+         Hashtag hashtag = hashtagService.createHashtag("등린이44", user1);
 
          //then
-
          assertThat(hashtag.getName()).isEqualTo("등린이44");
 
      }
 
      @Test
+     @Transactional
+     @DisplayName(value = "해시태그 삭제")
      public void deleteHashtag() {
-         String randomUser = "user"+ UUID.randomUUID();
          User user1 = User
                  .userBuilder()
-                 .email(randomUser+"@naver.com")
+                 .email(randomUser)
                  .password("1234")
                  .nickName("99번째 사용자")
                  .age(99)
-                 .phoneNumber("010-1111-2222")
+                 .phoneNumber("010-1111-2223")
                  .userImageUrl("sdf.jpg")
                  .build();
 
@@ -72,16 +73,18 @@ class HashtagServiceImplTest {
 
 
      @Test
+     @Transactional
+     @DisplayName(value = "해시태그 단건조회")
      public void getHashtagList(){
          //given
          String randomUser = "user"+ UUID.randomUUID();
          User user1 = User
                  .userBuilder()
-                 .email(randomUser+"@naver.com")
+                 .email(randomUser)
                  .password("1234")
                  .nickName("99번째 사용자")
                  .age(99)
-                 .phoneNumber("010-1111-2222")
+                 .phoneNumber("010-1111-2224")
                  .userImageUrl("sdf.jpg")
                  .build();
          //when
@@ -96,6 +99,7 @@ class HashtagServiceImplTest {
 
      @Test
      @Transactional
+     @DisplayName(value = "해시태그 전체조회")
      public void getFixedHashtagList(){
          hashtagRepository.save(new Hashtag("주변맛집"));
          hashtagRepository.save(new Hashtag("등산용품"));
