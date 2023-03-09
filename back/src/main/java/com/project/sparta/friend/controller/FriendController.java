@@ -56,7 +56,7 @@ public class FriendController {
         @RequestParam(name = "size") int size,
         @ApiIgnore @AuthenticationPrincipal UserDetailsImpl user) {
 
-        PageResponseDto<List<FriendInfoReponseDto>> friendList = friendService.AllRecomentFriendList(
+        PageResponseDto<List<FriendInfoReponseDto>> friendList = friendService.AllRecommendFriendList(
             page, size, user.getUser().getId());
 
         return new ResponseEntity(friendList, HttpStatus.OK);

@@ -46,6 +46,12 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
                 .user(user)
                 .build();
         NoticeBoard board = noticeBoardRepository.saveAndFlush(noticeBoard);
+        
+//        if(user.getRole()== UserRoleEnum.ADMIN) {
+//            NoticeBoard noticeBoard = new NoticeBoard(user, requestDto.getTitle(),
+//                requestDto.getContents(), requestDto.getCategory());
+//            noticeBoardRepository.saveAndFlush(noticeBoard);
+//        }
 
         return board.getId();
     }
@@ -73,8 +79,11 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
+<<<<<<< HEAD
         noticeBoardRepository.saveAndFlush(noticeBoard);
 
+=======
+>>>>>>> b53c5c9add1937e6246b42463f8c3c32f79a7936
 //        if(user.getRole()== UserRoleEnum.ADMIN)
 //        {
 //            NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));

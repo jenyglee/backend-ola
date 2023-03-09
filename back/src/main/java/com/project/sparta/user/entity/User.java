@@ -119,4 +119,8 @@ public class User extends Timestamped {
     public void isUserId(Long userId) {
         // TODO ID 체크를 객체지향적으로 쓰기
     }
+
+    public void updateUserPassword(String password) {
+        this.password = password;
+    }
 }

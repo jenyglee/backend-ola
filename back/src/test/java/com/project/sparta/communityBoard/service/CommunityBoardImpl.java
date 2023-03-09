@@ -43,20 +43,16 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
-@Transactional
 public class CommunityBoardImpl {
 
   @Autowired
   BoardRepository boardRepository;
   @Autowired
   CommunityBoardService communityBoardService;
-
   @Autowired
   CommunityTagRepository communityTagRepository;
-
   @Autowired
   CommunityBoardImgRepository communityBoardImgRepository;
-
   @Autowired
   HashtagRepository hashtagRepository;
   @Autowired
@@ -65,17 +61,15 @@ public class CommunityBoardImpl {
   LikeCommentRepository likeCommentRepository;
   @Autowired
   LikeBoardRepository likeBoardRepository;
-
-  @Autowired
-  BoardRepositoryImpl boardRepositoryImpl;
   @Autowired
   EntityManager em;
 
   @Test
+  @Transactional
   @DisplayName("커뮤니티 보드 생성")
   public void communityBoardCreate() {
-    User user1 =
-    User.userBuilder()
+    User user1 = User
+        .userBuilder()
         .email("user99@naver.com")
         .password("1234")
         .nickName("99번째 사용자")
@@ -84,10 +78,12 @@ public class CommunityBoardImpl {
         .userImageUrl("sdf.jpg")
         .build();
     em.persist(user1);
+
     List taglist = Arrays.asList(1L, 2L, 3L, 4L);
     List imgList = Arrays.asList("1,2,3,4");
 
-    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto.builder()
+    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
+        .builder()
         .title("첫번째 게시글")
         .chatMemCnt(0)
         .contents("첫번쨰 컨텐츠")
@@ -97,15 +93,16 @@ public class CommunityBoardImpl {
         .build();
 
     CommunityBoard communityBoard = communityBoardService.createCommunityBoard(requestDto, user1);
-
     assertThat(communityBoard.getTitle()).isEqualTo("첫번째 게시글");
 
   }
 
   @Test
+  @Transactional
   @DisplayName("커뮤니티 보드 수정")
   public void updateCommunityBoard(){
-    User user1 = User.userBuilder()
+    User user1 = User
+        .userBuilder()
         .email("user99@naver.com")
         .password("1234")
         .nickName("99번째 사용자")
@@ -117,7 +114,8 @@ public class CommunityBoardImpl {
     List taglist = Arrays.asList(1L, 2L, 3L, 4L);
     List imgList = Arrays.asList("1,2,3,4");
 
-    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto.builder()
+    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
+        .builder()
         .title("첫번째 게시글")
         .chatMemCnt(0)
         .contents("첫번쨰 컨텐츠")
@@ -127,7 +125,8 @@ public class CommunityBoardImpl {
         .build();
     CommunityBoard communityBoard = communityBoardService.createCommunityBoard(requestDto, user1);
 
-    CommunityBoardRequestDto afterRequestDto = CommunityBoardRequestDto.builder()
+    CommunityBoardRequestDto afterRequestDto = CommunityBoardRequestDto
+        .builder()
         .title("에프터 첫번쨰 게시글")
         .chatMemCnt(0)
         .contents("에프터 첫번쨰 컨텐츠")
@@ -172,10 +171,12 @@ public class CommunityBoardImpl {
     assertThat(community.getContents()).isEqualTo("에프터 첫번쨰 컨텐츠");
   }
   @Test
+  @Transactional
   @DisplayName("커뮤니티 보드 조회")
   public void getCommunityBoard() {
     PageRequest pageRequest = PageRequest.of(0, 10);
-    User user1 = User.userBuilder()
+    User user1 = User
+        .userBuilder()
         .email("user99@naver.com")
         .password("1234")
         .nickName("99번째 사용자")
@@ -204,11 +205,57 @@ public class CommunityBoardImpl {
   }
 
   @Test
+  @Transactional
   @DisplayName("커뮤니티 보드 전체 조회")
   public void getAllCommunityBoard() {
+
+    User user1 =
+        User.userBuilder()
+            .email("user99@naver.com")
+            .password("1234")
+            .nickName("99번째 사용자")
+            .age(99)
+            .phoneNumber("010-1111-2222")
+            .userImageUrl("sdf.jpg")
+            .build();
+    em.persist(user1);
+    List taglist = Arrays.asList(27L,1L);
+    List imgList = Arrays.asList("1,2,3,4");
+
+    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
+        .builder()
+        .title("첫번째 게시글1")
+        .chatMemCnt(0)
+        .contents("첫번쨰 컨텐츠1")
+        .tagList(taglist)
+        .imgList(imgList)
+        .chatStatus("Y")
+        .build();
+
+    CommunityBoardRequestDto requestDto2 = CommunityBoardRequestDto
+        .builder()
+        .title("첫번째 게시글2")
+        .chatMemCnt(0)
+        .contents("첫번쨰 컨텐츠2")
+        .tagList(taglist)
+        .imgList(imgList)
+        .chatStatus("Y")
+        .build();
+    communityBoardService.createCommunityBoard(requestDto, user1);
+    communityBoardService.createCommunityBoard(requestDto2, user1);
+
     // 1. 검색 조건을 객체로 저장
-    CommunitySearchCondition searchCondition = new CommunitySearchCondition("",
-        "", "", 13L, "Y", "likeDesc");
+    // 1. 검색 조건을 객체로 저장
+
+    CommunitySearchCondition searchCondition = CommunitySearchCondition
+        .builder()
+        .title("")
+        .nickname("")
+        .contents("")
+        .hashtagId(27L)
+        .chatStatus("Y")
+        .sort("likeDesc")
+        .build();
 
     // 2. 검색조건을 포함하여 전체조회
     PageRequest pageRequest = PageRequest.of(0, 10);
@@ -217,16 +264,51 @@ public class CommunityBoardImpl {
     //3. 결과를 반환
     List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
     long totalCount = allCommunityBoardList.getTotalElements();
-    assertThat(allCommunityBoardList.getTotalElements()).isEqualTo(totalCount);
+    assertThat(totalCount).isEqualTo(2);
 
   }
   @Test
+  @Transactional
   @DisplayName("커뮤니티 나의 보드 조회")
   public void getMyCommunityBoard() {
 
-  }
+    User user1 =
+        User.userBuilder()
+            .email("user99@naver.com")
+            .password("1234")
+            .nickName("99번째 사용자")
+            .age(99)
+            .phoneNumber("010-1111-2222")
+            .userImageUrl("sdf.jpg")
+            .build();
+    em.persist(user1);
+    List taglist = Arrays.asList(1L, 2L, 3L, 4L);
+    List imgList = Arrays.asList("1,2,3,4");
+
+    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto.builder()
+        .title("첫번째 게시글")
+        .chatMemCnt(0)
+        .contents("첫번쨰 컨텐츠")
+        .tagList(taglist)
+        .imgList(imgList)
+        .chatStatus("Y")
+        .build();
+
+    CommunityBoard communityBoard = communityBoardService.createCommunityBoard(requestDto, user1);
+
+    PageRequest pageRequest = PageRequest.of(0, 10);
+    Page<CommunityBoardAllResponseDto> allCommunityBoardList = boardRepository.communityMyList(pageRequest, user1.getId());
+
+    //3. 결과를 반환
+    List<CommunityBoardAllResponseDto> content = allCommunityBoardList.getContent();
+    long totalCount = allCommunityBoardList.getTotalElements();
+
+    assertThat(totalCount).isEqualTo(1);
+
+    }
 
   @Test
+  @Transactional
   @DisplayName("커뮤니티 삭제")
   public void deleteCommunityBoard() {
     User user1 =

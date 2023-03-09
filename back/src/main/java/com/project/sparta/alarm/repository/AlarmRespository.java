@@ -1,6 +1,8 @@
 package com.project.sparta.alarm.repository;
 
 import com.project.sparta.alarm.entity.Alarm;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -16,10 +18,8 @@ public interface AlarmRespository extends JpaRepository<Alarm, Long>{
 
     Optional<Alarm> findByIdAndUserId(Long alarmId, Long userId);
 
-    Optional<Alarm> findByBoardId(Long boardId);
-
-    void deleteByBoardId(Long boardId);
-
     @Query("select a from Alarm  a where a.boardId=:boardId")
-    List<Alarm> selectAlaram(@Param("boardId") Long boardId);
+    ArrayList<Alarm> selectAlaram(@Param("boardId") Long boardId);
+
+    ArrayList<Alarm> findByBoardId(Long boardId);
 }
