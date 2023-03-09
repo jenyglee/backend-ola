@@ -23,13 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class AlarmServiceImpl implements AlarmService {
     private final AlarmRespository alarmRespository;
     private final BoardRepository boardRepository;
 
     // 알람 생성
     @Override
+    @Transactional
     public void createAlarm(AlarmRequetDto alarmRequetDto, String nickName) {
         CommunityBoard board = boardRepository.findById(alarmRequetDto.getBoardId())
             .orElseThrow(() -> new CustomException(NOT_FOUND_COMMUNITY_BOARD));
@@ -48,6 +48,7 @@ public class AlarmServiceImpl implements AlarmService {
 
     // 내 알람 전체 조회
     @Override
+    @Transactional(readOnly = true)
     public PageResponseDto<List<AlarmResponseDto>> getMyAlarmList(User user, int page, int size) {
         // 1. nickName을 포함하여 전체 조회
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -72,6 +73,7 @@ public class AlarmServiceImpl implements AlarmService {
 
     // 알람 읽음표시 변경
     @Override
+    @Transactional
     public void updateAlarmStatus(Long userId, Long alarmId) {
         Alarm alarm = alarmRespository.findByIdAndUserId(alarmId, userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_POST));

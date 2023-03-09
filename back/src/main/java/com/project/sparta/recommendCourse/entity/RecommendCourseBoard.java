@@ -1,6 +1,9 @@
 package com.project.sparta.recommendCourse.entity;
 
+import static com.project.sparta.exception.api.Status.NO_PERMISSIONS_POST;
+
 import com.project.sparta.common.entity.Timestamped;
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.user.entity.User;
 import java.time.LocalDateTime;
@@ -76,10 +79,8 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-    public void update(Long id, int score, String title, String season, int altitude,
-        String contents, String region, Long userId
-    ) {
-        this.id = id;
+    public void update(int score, String title, String season, int altitude,
+        String contents, String region) {
         this.score = score;
         this.title = title;
         this.season = season;
@@ -87,7 +88,6 @@ public class RecommendCourseBoard extends Timestamped {
         this.contents = contents;
         this.region = region;
         this.postStatus = PostStatusEnum.VAILABLE;
-        this.userId = userId;
     }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {
@@ -95,5 +95,8 @@ public class RecommendCourseBoard extends Timestamped {
     }
 
     public void validateOwner(Long userId) {
+        if(!this.userId.equals(userId)){
+            throw new CustomException(NO_PERMISSIONS_POST);
+        }
     }
 }

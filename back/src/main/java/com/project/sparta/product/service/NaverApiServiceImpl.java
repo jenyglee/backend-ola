@@ -24,13 +24,10 @@ public class NaverApiServiceImpl implements NaverApiService {
         headers.add("X-Naver-Client-Secret", "_DVfDr_c2g");
         String body = "";
 
-        // 현재 페이지(offset)에 따라 몇번째 상품부터 보여줄지(start) 로직
+        // 현재 페이지(offset)에 따라 몇번째 상품부터 보여줄지(start)
         int start = 1;
         if(offset > 1){
             start = (offset - 1) * limit + 1;
-            // offset=2 -> (2-1) * 30 + 1 = 31번째부터 노출
-            // offset=3 -> (3-1) * 30 + 1 = 61번째부터 노출
-            // offset=4 -> (4-1) * 30 + 1 = 91번째부터 노출
         }
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
@@ -49,18 +46,6 @@ public class NaverApiServiceImpl implements NaverApiService {
         log.info("NAVER API Status Code : " + status);
 
         String response = responseEntity.getBody();
-
-
-        //offset : 현재 페이지
-
-        //limit : 몇개 보여줄 건지
-        // display(limit) 30
-        // start 1
-        // 다음 페이지를 누르면?
-        // display 30
-        // start 31
-
-
         return fromJSONtoItems(response, offset);
     }
 
@@ -79,7 +64,6 @@ public class NaverApiServiceImpl implements NaverApiService {
             productResponseDtoList.add(productResponseDto);
         }
 
-        // return productResponseDtoList;
         return new PageResponseDto<>(offset, total, productResponseDtoList);
     }
 }

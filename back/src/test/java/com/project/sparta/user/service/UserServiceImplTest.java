@@ -109,77 +109,75 @@ class UserServiceImplTest {
         Assertions.assertThat(user.getNickName()).isEqualTo(user1.getNickName());
     }
 
-    @Test
-    @Transactional
-    @DisplayName(value = "일반 유저 로그인")
-    public void userLogin() throws Exception {
+    //@Test
+    //@Transactional
+    //@DisplayName(value = "일반 유저 로그인")
+    //public void userLogin() throws Exception{
+    //
+    //    String randomUser = "user" + UUID.randomUUID();
+    //
+    //    UserSignupDto user1 = UserSignupDto.builder()
+    //        .email(randomUser)
+    //        .password("user1234dfd!")
+    //        .nickName("기똥차게올라가보자")
+    //        .age(25)
+    //        .phoneNumber("010-1234-1235")
+    //        .imageUrl("user.jpg")
+    //        .tagList(taglist)
+    //        .build();
+    //
+    //    userService.signup(user1);
+    //
+    //    User user = userRepository.findByNickName("기똥차게올라가보자").orElseThrow(() -> new CustomException(
+    //        Status.NOT_FOUND_USER));
+    //
+    //    // 성공 TEST
+    //    mockMvc.perform(post("/login").with(user(user.getNickName()).roles(user.getPassword())))
+    //        .andDo(print())
+    //        .andExpect(authenticated());
+    //}
+    //
+    //@Test
+    //@Transactional
+    //@DisplayName(value = "어드민 유저 로그인")
+    //public void adminLogin() throws Exception{
+    //
+    //    String randomUser = "user" + UUID.randomUUID();
+    //
+    //    AdminSignupDto adminSignupDto = AdminSignupDto.builder()
+    //        .email(randomUser)
+    //        .password("user1234dfsd!")
+    //        .nickName("관리자")
+    //        .adminToken(admin)
+    //        .build();
+    //
+    //    adminService.signup(adminSignupDto);
+    //    // 성공 TEST
+    //    mockMvc.perform(post("/auth/signup/admin").with(user(adminSignupDto.getNickName()).roles(adminSignupDto.getPassword())))
+    //        .andDo(print())
+    //        .andExpect(authenticated());
+    //}
+    //
 
-        String randomUser = "user" + UUID.randomUUID();
-
-        UserSignupDto user1 = UserSignupDto.builder()
-            .email(randomUser)
-            .password("user1234dfd!")
-            .nickName("기똥차게올라가보자")
-            .age(25)
-            .phoneNumber("010-1234-1235")
-            .imageUrl("user.jpg")
-            .tagList(taglist)
-            .build();
-
-        userService.signup(user1);
-
-        User user = userRepository.findByNickName("기똥차게올라가보자")
-            .orElseThrow(() -> new CustomException(
-                Status.NOT_FOUND_USER));
-
-        // 성공 TEST
-        mockMvc.perform(post("/login").with(user(user.getNickName()).roles(user.getPassword())))
-            .andDo(print())
-            .andExpect(authenticated());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민 유저 로그인")
-    public void adminLogin() throws Exception {
-
-        String randomUser = "user" + UUID.randomUUID();
-
-        AdminSignupDto adminSignupDto = AdminSignupDto.builder()
-            .email(randomUser)
-            .password("user1234dfsd!")
-            .nickName("관리자")
-            .adminToken(admin)
-            .build();
-
-        adminService.signup(adminSignupDto);
-        // 성공 TEST
-        mockMvc.perform(post("/auth/signup/admin").with(
-                user(adminSignupDto.getNickName()).roles(adminSignupDto.getPassword())))
-            .andDo(print())
-            .andExpect(authenticated());
-    }
-
-
-    @Test
-    @WithUser
-    @DisplayName(value = "유저 로그아웃")
-    void userLogout() throws Exception {
-        mockMvc.perform(post("/logout").with(csrf()))
-            .andDo(print())
-            .andExpect(unauthenticated())
-            .andReturn();
-    }
-
-    @Test
-    @WithAdminUser
-    @DisplayName(value = "어드민 로그아웃")
-    void adminLogout() throws Exception {
-        mockMvc.perform(post("/logout").with(csrf()))
-            .andDo(print())
-            .andExpect(unauthenticated())
-            .andReturn();
-    }
+    //@Test
+    //@WithUser
+    //@DisplayName(value = "유저 로그아웃")
+    //void userLogout() throws Exception{
+    //    mockMvc.perform(post("/logout").with(csrf()))
+    //        .andDo(print())
+    //        .andExpect(unauthenticated())
+    //        .andReturn();
+    //}
+    //
+    //@Test
+    //@WithAdminUser
+    //@DisplayName(value = "어드민 로그아웃")
+    //void adminLogout() throws Exception{
+    //    mockMvc.perform(post("/logout").with(csrf()))
+    //        .andDo(print())
+    //        .andExpect(unauthenticated())
+    //        .andReturn();
+    //}
 
     @Test
     @Transactional

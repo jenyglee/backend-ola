@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class NoticeBoardRepositoryTest {
+     // TODO 테스트코드 추가 : 게시글 작성시/수정시 Title, Contents 중 ""인 경우
      @Autowired
      NoticeBoardService noticeBoardService;
      @Autowired
