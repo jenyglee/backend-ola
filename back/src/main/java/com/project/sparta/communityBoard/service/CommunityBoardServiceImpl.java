@@ -43,7 +43,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommunityBoardServiceImpl implements CommunityBoardService {
-
     private final BoardRepository boardRepository;
     private final HashtagRepository hashtagRepository;
     private final CommunityTagRepository communityTagRepository;
