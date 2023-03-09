@@ -34,7 +34,6 @@ public class FriendServiceImpl implements FriendService {
     private final UserTagRepository userTagRepository;
 
     //내 친구목록 전체조회
-    @Transactional(readOnly = true)
     @Override
     public PageResponseDto<List<FriendInfoReponseDto>> AllMyFriendList(int page, int size,
         Long userId) {
@@ -61,7 +60,6 @@ public class FriendServiceImpl implements FriendService {
 
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
-    @Transactional(readOnly = true)
     public PageResponseDto<List<FriendInfoReponseDto>> AllRecommendFriendList(int page, int size,
         Long userId) {
 
@@ -123,7 +121,6 @@ public class FriendServiceImpl implements FriendService {
 
     //친구 검색(내친구 포함 모든친구)
     @Override
-    @Transactional(readOnly = true)
     public PageResponseDto<List<FriendInfoReponseDto>> searchFriend(int page, int size,
         String targetUserName) {
 

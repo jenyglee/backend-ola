@@ -25,14 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 public class AlarmRepositoryTest {
 
-    @Autowired
-    EntityManager em;
-    JPAQueryFactory queryFactory;
 
-    @BeforeEach
-    public void before() {
-        queryFactory = new JPAQueryFactory(em);
-    }
     @Autowired
     private AlarmService alarmService;
     @Autowired
