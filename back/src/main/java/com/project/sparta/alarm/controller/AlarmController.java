@@ -66,24 +66,24 @@ public class AlarmController {
         alarmService.updateAlarmStatus(userDetails.getUser().getId(),alarmId);
     }
 
-    //알람 삭제
-    @ApiOperation(value = "나의 알림 삭제", response = Join.class)
-    @DeleteMapping("/alarm")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "alarmId", value = "나의 알림 삭제", required = true, dataType = "Long", paramType = "query", example = "2"),
-    })
-    public void deleteAlarm(@ApiIgnore @RequestParam Long boardId){
-        alarmService.deleteAlarm(boardId);
-    }
-
-    //알람 삭제 전 boardId에 딸린 알림 내용 조회
-    @ApiOperation(value = "알림 조회", response = Join.class)
-    @GetMapping("/alarms")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "alarmId", value = "알림 조회",required = true,dataType = "Long",paramType = "query",example = "1")
-    })
-    public ResponseEntity getAlarmList(@ApiIgnore @RequestParam Long boardId){
-        List<AlarmResponseDto> alarmList = alarmService.getAlarmList(boardId);
-        return new ResponseEntity(alarmList, HttpStatus.OK);
-    }
+//    //알람 삭제
+//    @ApiOperation(value = "나의 알림 삭제", response = Join.class)
+//    @DeleteMapping("/alarm")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "alarmId", value = "나의 알림 삭제", required = true, dataType = "Long", paramType = "query", example = "2"),
+//    })
+//    public void deleteAlarm(@ApiIgnore @RequestParam Long boardId){
+//        alarmService.deleteAlarm(boardId);
+//    }
+//
+//    //알람 삭제 전 boardId에 딸린 알림 내용 조회
+//    @ApiOperation(value = "알림 조회", response = Join.class)
+//    @GetMapping("/alarms")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "alarmId", value = "알림 조회",required = true,dataType = "Long",paramType = "query",example = "1")
+//    })
+//    public ResponseEntity getAlarmList(@ApiIgnore @RequestParam Long boardId){
+//        List<AlarmResponseDto> alarmList = alarmService.getAlarmList(boardId);
+//        return new ResponseEntity(alarmList, HttpStatus.OK);
+//    }
 }

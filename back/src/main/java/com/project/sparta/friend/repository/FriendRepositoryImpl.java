@@ -48,15 +48,13 @@ public class FriendRepositoryImpl implements FriendCustomRepository {
             }
         }
 
-        // 현재 회원을 뺀 가입 상태인 사용자의 태그 리스트 추출
-        // 현재 회원의 태그와 맞는 회원 추출
         List<User> userList = queryFactory.select(user)
             .from(userTag)
             .leftJoin(userTag.user, user)
-            .where(user.status.eq(statusEnum),           // 활동중인 유저
-                user.Id.ne(userInfo.getId()),           //현재 로그인한 유저 정보 아닌거
-                builder,                                //현재 나랑 하나라도 맞는 태그를 가진 유저
-                fbuilder)                               //내 친구가 아닌 유저
+            .where(user.status.eq(statusEnum),
+                user.Id.ne(userInfo.getId()),
+                builder,
+                fbuilder)
             .distinct()
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())

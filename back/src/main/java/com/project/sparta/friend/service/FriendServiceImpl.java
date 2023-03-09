@@ -6,9 +6,7 @@ import com.project.sparta.friend.dto.FriendInfoReponseDto;
 import com.project.sparta.friend.entity.Friend;
 import com.project.sparta.friend.repository.FriendRepository;
 import com.project.sparta.hashtag.entity.Hashtag;
-import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
 import static com.project.sparta.exception.api.Status.NOT_FOUND_USER;
 import static com.project.sparta.user.entity.StatusEnum.USER_REGISTERED;
 import static com.project.sparta.exception.api.Status.CONFLICT_FRIEND;
@@ -65,10 +62,10 @@ public class FriendServiceImpl implements FriendService {
     //회원의 태그 선택 기준으로 추천 친구목록 조회
     @Override
     @Transactional(readOnly = true)
-    public PageResponseDto<List<FriendInfoReponseDto>> AllRecomentFriendList(int page, int size,
+    public PageResponseDto<List<FriendInfoReponseDto>> AllRecommendFriendList(int page, int size,
         Long userId) {
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
+            PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id"));
         List<FriendInfoReponseDto> content = new ArrayList<>();
 
         //해당 유저의 회원가입 태그 정보 긁어오기
