@@ -105,7 +105,7 @@ class RecommendCourseBoardServiceImplTest {
 
         //회원 등급변경
         userService.changeGrade(userGradeDto,user.getId());
-        
+
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
 
@@ -151,32 +151,19 @@ class RecommendCourseBoardServiceImplTest {
     void deleteRecommendCourseBoard() {
         //given
         //작성자 생성
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민1")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
+        User admin1 = createAdmin();
 
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
-        //게시글 Dto 생성
-        RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
-                .score(5)
-                .title("테스트코드 제목1")
-                .season("가을")
-                .region("경상북도")
-                .altitude(800)
-                .contents("테스트코드 컨텐츠입니다.")
-                .imgList(imageList)
-                .build();
-        //when
         //글작성
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        recommendCourseBoardService.deleteRecommendCourseBoard(boardId,admin1.getId());
+        RecommendCourseBoard board = createBoard(admin1);
+
+
+        //when
+        recommendCourseBoardService.deleteRecommendCourseBoard(board.getId(),admin1.getId());
         //then
         // 삭제된 글을 어떻게 테스트코드로 확인하지...?
-        Optional<RecommendCourseBoard> board2 = recommendCourseBoardRepository.findById(boardId);
+        Optional<RecommendCourseBoard> board2 = recommendCourseBoardRepository.findById(board.getId());
         assertThat(board2).isEmpty();
     }
 
