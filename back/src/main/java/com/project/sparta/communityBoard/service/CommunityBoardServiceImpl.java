@@ -61,6 +61,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public CommunityBoard createCommunityBoard(CommunityBoardRequestDto requestDto, User user) {
+        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
+
         // 1. 커뮤니티 보드를 생성하고 DB에 저장
         CommunityBoard communityBoard = new CommunityBoard().builder()
             .title(requestDto.getTitle())
@@ -93,6 +95,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void updateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto, User user) {
+        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
+
         CommunityBoard communityBoard = boardRepository.findByIdAndUser_NickName(boardId,
                 user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
@@ -215,6 +219,8 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto) {
+        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
+
         CommunityBoard communityBoard = boardRepository.findById(boardId)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
