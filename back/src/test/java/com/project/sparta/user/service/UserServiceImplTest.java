@@ -5,6 +5,7 @@ import com.project.sparta.admin.dto.UserGradeDto;
 import com.project.sparta.admin.dto.UserStatusDto;
 import com.project.sparta.admin.service.AdminService;
 import com.project.sparta.common.dto.PageResponseDto;
+import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
 import com.project.sparta.user.dto.InfoResponseDto;
@@ -67,6 +68,8 @@ class UserServiceImplTest {
 
     @Value("${jwt.admin}")
     private String admin;
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Test
     @Transactional
@@ -91,27 +94,6 @@ class UserServiceImplTest {
             Status.NOT_FOUND_USER));
 
         Assertions.assertThat(user.getNickName()).isEqualTo(user1.getNickName());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민 유저 로그인")
-    public void adminLogin() throws Exception{
-
-        String randomUser = "user" + UUID.randomUUID();
-
-        AdminSignupDto adminSignupDto = AdminSignupDto.builder()
-            .email(randomUser)
-            .password("user1234dfsd!")
-            .nickName("관리자")
-            .adminToken(admin)
-            .build();
-
-        adminService.signup(adminSignupDto);
-        // 성공 TEST
-        mockMvc.perform(post("/auth/signup/admin").with(user(adminSignupDto.getNickName()).roles(adminSignupDto.getPassword())))
-            .andDo(print())
-            .andExpect(authenticated());
     }
 
     @Test
@@ -141,6 +123,28 @@ class UserServiceImplTest {
             .andDo(print())
             .andExpect(authenticated());
     }
+
+    @Test
+    @Transactional
+    @DisplayName(value = "어드민 유저 로그인")
+    public void adminLogin() throws Exception{
+
+        String randomUser = "user" + UUID.randomUUID();
+
+        AdminSignupDto adminSignupDto = AdminSignupDto.builder()
+            .email(randomUser)
+            .password("user1234dfsd!")
+            .nickName("관리자")
+            .adminToken(admin)
+            .build();
+
+        adminService.signup(adminSignupDto);
+        // 성공 TEST
+        mockMvc.perform(post("/auth/signup/admin").with(user(adminSignupDto.getNickName()).roles(adminSignupDto.getPassword())))
+            .andDo(print())
+            .andExpect(authenticated());
+    }
+
 
     @Test
     @WithUser
@@ -227,7 +231,7 @@ class UserServiceImplTest {
 
     @Test
     @Transactional
-    @DisplayName(value = "회원 탈퇴/복구 처리")
+    @DisplayName(value = "어드민 회원 탈퇴/복구 처리")
     void changeStatus() {
         ArrayList<User> userList = createUser();
         UserStatusDto statusDto = new UserStatusDto(0);
