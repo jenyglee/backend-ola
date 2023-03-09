@@ -24,7 +24,7 @@ public class AdminServiceImpl implements AdminService {
     private final PasswordEncoder encoder;
     // 어드민 회원가입
     @Override
-    public void signup(AdminSignupDto adminRequestSignupDto) {
+    public Long signup(AdminSignupDto adminRequestSignupDto) {
         // 관리자 비밀번호 잘못 입력
         if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
             throw new CustomException(INVALID_ADMIN_TOKEN);
@@ -47,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
             .nickName(adminRequestSignupDto.getNickName())
             .build();
         userRepository.save(admin);
+        return admin.getId();
     }
 }
 
