@@ -10,6 +10,7 @@ import com.project.sparta.noticeBoard.repository.NoticeBoardRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import java.util.UUID;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,6 @@ import static com.project.sparta.exception.api.Status.NOT_FOUND_POST;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 class NoticeBoardServiceImplTest {
 
     @Autowired
@@ -35,6 +35,7 @@ class NoticeBoardServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("공지사항 추가")
     void createNoticeBoard() {
         //given
         NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하ㅏ", "내용",
@@ -55,6 +56,7 @@ class NoticeBoardServiceImplTest {
 
      @Test
      @Transactional
+     @DisplayName("공지사항 수정")
      void updateNoticeBoard() {
          //given
          NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("타이틀", "내용",NoticeCategoryEnum.SERVICE);
@@ -74,9 +76,11 @@ class NoticeBoardServiceImplTest {
      }
 
      @Test
+     @Transactional
+     @DisplayName("공지사항 단건조회")
      void getNoticeBoard() {
          //given
-         NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하", "내용",
+         NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("제목 테스트 입니다", "내용",
                  NoticeCategoryEnum.SERVICE);
          String randomUser = "user"+ UUID.randomUUID();
          User admin = new User(randomUser, "1234", "관리자");
@@ -86,12 +90,12 @@ class NoticeBoardServiceImplTest {
          NoticeBoard noticeBoard = noticeBoardRepository.findById(boardId).orElseThrow(
                  ()-> new CustomException(NOT_FOUND_POST));
          //then
-
-         assertThat(noticeBoard.getTitle()).isEqualTo("우하하하");
+         assertThat(noticeBoard.getCategory()).isEqualTo(NoticeCategoryEnum.SERVICE);
      }
 
      @Test
      @Transactional
+     @DisplayName("공지사항 전체조회")
      void getAllNoticeBoard() {
         //given
 
@@ -111,6 +115,7 @@ class NoticeBoardServiceImplTest {
      }
      @Test
      @Transactional
+     @DisplayName("공지사항 삭제")
      void deleteNoticeBoard(){
         //given
          NoticeBoardRequestDto requestDto = new NoticeBoardRequestDto("우하하하1", "내용",

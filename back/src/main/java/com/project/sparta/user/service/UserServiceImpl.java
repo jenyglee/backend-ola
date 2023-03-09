@@ -248,6 +248,7 @@ public class UserServiceImpl implements UserService {
 
     //자동 등업
     @Override
+    @Transactional
     public void upgrade(UpgradeRequestDto requestDto, Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
