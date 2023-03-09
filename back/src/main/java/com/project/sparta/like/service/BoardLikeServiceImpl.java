@@ -21,7 +21,7 @@ public class BoardLikeServiceImpl implements BoardLikeService {
     private final BoardRepository boardRepository;
     private final LikeBoardRepository likeBoardRepository;
     @Override
-    public void likeBoard(Long id, User user){
+    public Long likeBoard(Long id, User user){
         //아이디값으로 보드 찾고
         CommunityBoard board = boardRepository.findById(id).orElseThrow(()->new CustomException(Status.NOT_FOUND_POST));
 
@@ -37,7 +37,8 @@ public class BoardLikeServiceImpl implements BoardLikeService {
                 .build();
 
             //레파지토리에 저장
-            likeBoardRepository.save(boardLike);
+       likeBoardRepository.save(boardLike);
+        return boardLike.getId();
     }
 
     @Override

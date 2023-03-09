@@ -92,6 +92,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 }
 
 tasks.named('test') {
