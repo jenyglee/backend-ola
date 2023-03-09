@@ -22,6 +22,8 @@ public enum Status {
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰이 유효하지 않습니다."),
     DISCORD_TOKEN(HttpStatus.BAD_REQUEST, "토큰이 일치하지 않습니다."),
    
+    // 500 -> Null pointer Exception
+    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"서버가 응답이 없습니다."),
 
     //403 -> Forbidden : 권한에러
     NO_PERMISSIONS_RECOMMENDCOURSE(HttpStatus.FORBIDDEN,"게시글작성 등급권한이 없습니다."),
