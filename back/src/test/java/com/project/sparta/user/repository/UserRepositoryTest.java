@@ -21,14 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 public class UserRepositoryTest {
 
-
     @Autowired
     private UserServiceImpl userService;
 
     private String randomUser = "user" + UUID.randomUUID();
     @Autowired
     private UserRepository userRepository;
-
 
     @Test
     @DisplayName("이메일 or 닉네임 중복확인")
