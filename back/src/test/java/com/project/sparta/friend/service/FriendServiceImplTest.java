@@ -29,23 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 class FriendServiceImplTest {
 
     @Autowired
-    EntityManager em;
-    JPAQueryFactory queryFactory;
-
-    @BeforeEach
-    public void before() {
-        queryFactory = new JPAQueryFactory(em);
-    }
-
-    @Autowired
-    private FriendService friendService;
-
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private FriendRepository friendRepository;
     @Autowired
     private HashtagRepository hashtagRepository;
+    @Autowired
+    private FriendService friendService;
 
     @Test
     @Transactional

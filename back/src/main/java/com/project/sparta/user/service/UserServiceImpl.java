@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder encoder;
     private final JavaMailSender javaMailSender;
-
+    
     //회원가입
     @Override
     public void signup(UserSignupDto signupDto) {
