@@ -17,47 +17,53 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CommunityCommentServiceImpl implements CommunityCommentService {
-  private final CommentRepository commentRepository;
-  private final BoardRepository boardRepository;
-  private final LikeCommentRepository likeCommentRepository;
 
-  // 댓글 생성
-  @Override
-  @Transactional
-  public CommentResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,
-      User user) {
-    CommunityBoard communityBoard = boardRepository.findById(boardId)
-        .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
+    private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
+    private final LikeCommentRepository likeCommentRepository;
 
-    CommunityComment communityComment = new CommunityComment(communityBoard.getId(), communityRequestDto,
-       user);
-    commentRepository.saveAndFlush(communityComment);
+    // 댓글 생성
+    @Override
+    @Transactional
+    public CommentResponseDto createCommunityComments(Long boardId,
+        CommunityRequestDto communityRequestDto, User user) {
+        CommunityBoard communityBoard = boardRepository.findById(boardId)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
-    return CommentResponseDto.builder()
-        .id(communityComment.getId())
-        .nickName(communityComment.getNickName())
-        .contents(communityComment.getContents())
-        .createAt(communityComment.getCreateAt())
-        .build();
-  }
+        // 코멘트 객체 저장
+        CommunityComment communityComment = new CommunityComment(communityBoard.getId(),
+            communityRequestDto, user);
+        commentRepository.saveAndFlush(communityComment);
 
-  @Override
-  @Transactional
-  public void updateCommunityComments(Long commentId, CommunityRequestDto requestDto,
-      User user) {
-    CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
-            user.getNickName()).orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
-    communityComment.updateComment(requestDto.getContents());
-    commentRepository.saveAndFlush(communityComment);
-  }
+        return CommentResponseDto.builder()
+            .id(communityComment.getId())
+            .nickName(communityComment.getNickName())
+            .contents(communityComment.getContents())
+            .createAt(communityComment.getCreateAt())
+            .build();
+    }
 
-  @Override
-  @Transactional
-  public void deleteCommunityComments(Long commentId, User user) {
-    CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
-        user.getNickName()).orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
-    likeCommentRepository.deleteLikeAllByInCommentId(commentId);
-    commentRepository.delete(communityComment);
-  }
+    // 댓글 수정
+    @Override
+    @Transactional
+    public void updateCommunityComments(Long commentId, CommunityRequestDto requestDto,
+        User user) {
+        CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
+                user.getNickName())
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+        communityComment.updateComment(requestDto.getContents());
+        commentRepository.saveAndFlush(communityComment);
+    }
+
+    // 댓글 삭제
+    @Override
+    @Transactional
+    public void deleteCommunityComments(Long commentId, User user) {
+        CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
+                user.getNickName())
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
+        likeCommentRepository.deleteLikeAllByInCommentId(commentId);
+        commentRepository.delete(communityComment);
+    }
 
 }
