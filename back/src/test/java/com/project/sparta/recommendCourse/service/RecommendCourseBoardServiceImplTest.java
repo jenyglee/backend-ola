@@ -3,7 +3,6 @@ package com.project.sparta.recommendCourse.service;
 
 import com.project.sparta.admin.dto.UserGradeDto;
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.exception.CustomException;
 import com.project.sparta.recommendCourse.dto.RecommendDetailResponseDto;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.recommendCourse.dto.RecommendResponseDto;
@@ -12,21 +11,18 @@ import com.project.sparta.recommendCourse.repository.RecommendCourseBoardReposit
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -54,22 +50,8 @@ class RecommendCourseBoardServiceImplTest {
     void creatRecommendCourseBoard() {
         //given
         //작성자 생성
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
-
-        User user = User.userBuilder()
-                .email("user1@user.com")
-                .nickName("유저닉네임")
-                .password("dhffk12!@")
-                .age(29)
-                .phoneNumber("01064538453")
-                .userImageUrl("https://mblogthumb-phinf.pstatic.net/20160625_240/bjy0524_146683775176259uj4_JPEG/attachImage_312025754.jpeg?type=w800")
-                .build();
-        em.persist(user);
+        User admin1 = createAdmin();
+        User user = createUser();
 
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
@@ -93,14 +75,18 @@ class RecommendCourseBoardServiceImplTest {
         userService.changeGrade(userGradeDto,user.getId());
 
         //서비스코드 실행
-        Long userBoardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
         Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
+        Long BoardId2 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
 
         //then
         Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(boardId);
+        Optional<RecommendCourseBoard> recommendCourseBoard2 = recommendCourseBoardRepository.findById(BoardId2);
         assertThat(recommendCourseBoard.get().getId()).isEqualTo(boardId);
         assertThat(recommendCourseBoard.get().getAltitude()).isEqualTo(800);
         assertThat(recommendCourseBoard.get().getUserId()).isEqualTo(user.getId());
+        assertThat(recommendCourseBoard2.get().getId()).isEqualTo(BoardId2);
+        assertThat(recommendCourseBoard2.get().getAltitude()).isEqualTo(800);
+        assertThat(recommendCourseBoard2.get().getUserId()).isEqualTo(admin1.getId());
     }
 
     @Test
@@ -109,45 +95,20 @@ class RecommendCourseBoardServiceImplTest {
     void modifyRecommendCourseBoard() {
         //given
         //작성자 생성
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민1")
-                .password("asdf12!@")
-                .build();
-        User admin2 = User.adminBuilder()
-                .email("admin12@naver.com")
-                .nickName("테스트어드민2")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
-        em.persist(admin2);
+        User admin1 = createAdmin();
 
         //유저 작성자 생성
-        User user = User.userBuilder()
-                .email("user1@user.com")
-                .nickName("유저닉네임")
-                .password("dhffk12!@")
-                .age(29)
-                .phoneNumber("01064538453")
-                .userImageUrl("https://mblogthumb-phinf.pstatic.net/20160625_240/bjy0524_146683775176259uj4_JPEG/attachImage_312025754.jpeg?type=w800")
-                .build();
-        em.persist(user);
+        User user = createUser();
 
         //회원 등급변경 Dto생성
         UserGradeDto userGradeDto = new UserGradeDto(2);
 
+        //회원 등급변경
+        userService.changeGrade(userGradeDto,user.getId());
+        
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
-        //게시글 Dto 생성
-        RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
-                .score(5)
-                .title("테스트코드 제목1")
-                .season("가을")
-                .region("경상북도")
-                .altitude(800)
-                .contents("테스트코드 컨텐츠입니다.")
-                .imgList(imageList)
-                .build();
+
         //수정된 게시글 Dto 생성
         RecommendRequestDto recommendRequestDto2 = RecommendRequestDto.builder()
                 .score(5)
@@ -158,33 +119,30 @@ class RecommendCourseBoardServiceImplTest {
                 .contents("테스트코드 컨텐츠입니다.")
                 .imgList(imageList)
                 .build();
-        //when
-        //회원 등급변경
-        userService.changeGrade(userGradeDto,user.getId());
+
 
         //글작성
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        Long boardId2 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
-        //글 수정
-        recommendCourseBoardService.modifyRecommendCourseBoard(boardId,recommendRequestDto2,admin1.getId());
-        recommendCourseBoardService.modifyRecommendCourseBoard(boardId2,recommendRequestDto2,user.getId());
+        RecommendCourseBoard board1 = createBoard(user);
+        RecommendCourseBoard board2 = createBoard(admin1);
+        //when
 
-        Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(boardId);
-        Optional<RecommendCourseBoard> recommendCourseBoard2 = recommendCourseBoardRepository.findById(boardId2);
+        //글 수정
+        recommendCourseBoardService.modifyRecommendCourseBoard(board2.getId(),recommendRequestDto2,admin1.getId());
+        recommendCourseBoardService.modifyRecommendCourseBoard(board1.getId(),recommendRequestDto2,user.getId());
+
+        Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(board2.getId());
+        Optional<RecommendCourseBoard> recommendCourseBoard2 = recommendCourseBoardRepository.findById(board1.getId());
 
 
         //then
 
-//        //본인이 쓴 글 아니면 수정되면 안됨.
-//        Assertions.assertThrows(CustomException.class,()->
-//                recommendCourseBoardService.modifyRecommendCourseBoard(boardId,recommendRequestDto,admin2.getId()));
-
-        assertThat(recommendCourseBoard.get().getId()).isEqualTo(boardId);
+        assertThat(recommendCourseBoard.get().getId()).isEqualTo(board2.getId());
         assertThat(recommendCourseBoard.get().getTitle()).isEqualTo("테스트코드 제목2");
         assertThat(recommendCourseBoard.get().getSeason()).isEqualTo("겨울");
         assertThat(recommendCourseBoard2.get().getTitle()).isEqualTo("테스트코드 제목2");
         assertThat(recommendCourseBoard2.get().getSeason()).isEqualTo("겨울");
         assertThat(recommendCourseBoard2.get().getUserId()).isEqualTo(user.getId());
+
     }
 
     @Test
@@ -388,4 +346,61 @@ class RecommendCourseBoardServiceImplTest {
         Optional<RecommendCourseBoard> board2 = recommendCourseBoardRepository.findById(boardId);
         assertThat(board2).isEmpty();
     }
+
+    //유저생성 메서드
+    public User createUser(){
+        String randomUser = "user"+ UUID.randomUUID().toString().substring(0,5);
+        User user1 = User
+                .userBuilder()
+                .email(randomUser +"@olaUser.com")
+                .password("1234")
+                .nickName("사용자"+randomUser)
+                .age(99)
+                .phoneNumber("010-1111-2222")
+                .userImageUrl("sdf.jpg")
+                .build();
+        em.persist(user1);
+        return userRepository.findById(user1.getId()).get();
+    }
+
+    //어드민생성 메서드
+    public User createAdmin(){
+        String randomUser = "admin"+ UUID.randomUUID().toString().substring(0,5);
+        User admin1 = User.adminBuilder()
+                .email("admin11@naver.com")
+                .nickName("테스트어드민1")
+                .password("asdf12!@")
+                .build();
+        em.persist(admin1);
+        return userRepository.findById(admin1.getId()).get();
+    }
+
+    //코스추천게시글 생성 메서드
+    public RecommendCourseBoard createBoard(User user){
+
+        //회원 등급변경 Dto생성
+        UserGradeDto userGradeDto = new UserGradeDto(2);
+        //회원 등급변경
+        userService.changeGrade(userGradeDto,user.getId());
+        //게시글 생성
+        List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
+        RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
+                .score(5)
+                .title("테스트코드 제목1")
+                .season("가을")
+                .region("경상북도")
+                .altitude(800)
+                .contents("테스트코드 컨텐츠입니다.")
+                .imgList(imageList)
+                .build();
+
+        //글작성
+        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, user.getId());
+
+        return recommendCourseBoardRepository.findById(boardId).orElseThrow();
+
+    }
+
+
+
 }
