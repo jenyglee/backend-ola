@@ -1,25 +1,15 @@
 package com.project.sparta.communityBoard.repository;
 
-import static com.project.sparta.exception.api.Status.NOT_FOUND_COMMUNITY_BOARD;
-import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.entity.CommunityBoard;
-import com.project.sparta.communityBoard.entity.CommunityBoardImg;
-import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
-import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class CommunityBoardRepositoryTest {
-
   @Autowired
   BoardRepository boardRepository;
   @Autowired
@@ -65,7 +54,7 @@ public class CommunityBoardRepositoryTest {
   @BeforeEach
   @Transactional
   public void userCreate(){
-    User user1 = User
+    User user = User
         .userBuilder()
         .email(randomUser)
         .password("1234")
@@ -74,8 +63,8 @@ public class CommunityBoardRepositoryTest {
         .phoneNumber("010-1111-2222")
         .userImageUrl("sdf.jpg")
         .build();
-    userRepository.save(user1);
-    globalUserId = user1.getId();
+    userRepository.save(user);
+    globalUserId = user.getId();
   }
   CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
       .builder()
@@ -90,12 +79,23 @@ public class CommunityBoardRepositoryTest {
 
   @Test
   @Transactional
-  @DisplayName("커뮤니티 보드 생성")
+  @DisplayName("커뮤니티 보드 생성 (notFound, nullPointer)")
   public void communityBoardCreate() {
     //given
     User user1 = userRepository.findById(globalUserId).orElseThrow();
 
-    CommunityBoardRequestDto requestDto2 = CommunityBoardRequestDto
+    List notFoundTaglist = Arrays.asList(199L, 299L, 399L, 499L);
+    CommunityBoardRequestDto notFoundException = CommunityBoardRequestDto
+        .builder()
+        .chatMemCnt(0)
+        .title("첫번째 컨텐츠")
+        .contents("첫번쨰 컨텐츠")
+        .imgList(imgList)
+        .tagList(notFoundTaglist)
+        .chatStatus("Y")
+        .build();
+
+    CommunityBoardRequestDto noTagList = CommunityBoardRequestDto
         .builder()
         .chatMemCnt(0)
         .title("첫번째 컨텐츠")
@@ -104,37 +104,20 @@ public class CommunityBoardRepositoryTest {
         .chatStatus("Y")
         .build();
 
-    assertThrows(CustomException.class, ()-> communityBoardService.createCommunityBoard(requestDto, user1));
-    assertThrows(NullPointerException.class, ()-> communityBoardService.createCommunityBoard(requestDto2, user1));
+    //when, then
+    assertThrows(CustomException.class, ()-> communityBoardService.createCommunityBoard(notFoundException, user1));
+    assertThrows(NullPointerException.class, ()-> communityBoardService.createCommunityBoard(noTagList, user1));
   }
 
   @Test
   @Transactional
-  @DisplayName("커뮤니티 보드 수정")
+  @DisplayName("커뮤니티 보드 수정(notFoundID, notFoundTag)")
   public void updateCommunityBoard(){
-    User user1 = User
-        .userBuilder()
-        .email(randomUser)
-        .password("1234")
-        .nickName("99번째 사용자")
-        .age(99)
-        .phoneNumber("010-1111-2222")
-        .userImageUrl("sdf.jpg")
-        .build();
+    //given
+    User user1 = userRepository.findById(globalUserId).orElseThrow();
 
-    em.persist(user1);
-
-    List taglistOne = Arrays.asList(1L, 2L, 3L, 4L);
+    List taglistOne = Arrays.asList(199L, 299L, 399L, 499L);
     List imgListOne = Arrays.asList("1,2,3,4");
-    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
-        .builder()
-        .title("첫번째 게시글")
-        .chatMemCnt(0)
-        .contents("첫번쨰 컨텐츠")
-        .tagList(taglistOne)
-        .imgList(imgListOne)
-        .chatStatus("Y")
-        .build();
 
     communityBoardService.createCommunityBoard(requestDto, user1);
 
@@ -143,8 +126,8 @@ public class CommunityBoardRepositoryTest {
         .title("에프터 첫번쨰 게시글")
         .chatMemCnt(0)
         .contents("에프터 첫번쨰 컨텐츠")
-        .tagList(taglistOne)
-        .imgList(imgListOne)
+        .tagList(taglist)
+        .imgList(imgList)
         .chatStatus("Y")
         .build();
 
@@ -153,49 +136,50 @@ public class CommunityBoardRepositoryTest {
         .title("에프터 첫번쨰 게시글")
         .chatMemCnt(0)
         .contents("에프터 첫번쨰 컨텐츠")
-        .tagList(taglist)
-        .imgList(imgList)
+        .tagList(taglistOne)
+        .imgList(imgListOne)
         .chatStatus("Y")
-        .build();
-
-    CommunityBoardRequestDto afterRequestDto3 = CommunityBoardRequestDto
-        .builder()
         .build();
 
     Long boardIda = 19999L;
     Long boardId =1L;
 
+    //when, then
     assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardIda, afterRequestDto, user1));
     assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardId, afterRequestDto2, user1));
   }
 
   @Test
   @Transactional
-  @DisplayName("커뮤니티 보드 삭제")
+  @DisplayName("커뮤니티 보드 삭제(notFoundId)")
   public void deleteCommunityBoard() {
-    User user1 =
-        User.userBuilder()
-            .email(randomUser)
-            .password("1234")
-            .nickName("99번째 사용자")
-            .age(99)
-            .phoneNumber("010-1111-2222")
-            .userImageUrl("sdf.jpg")
-            .build();
-    em.persist(user1);
-    List taglist = Arrays.asList(1L, 2L, 3L, 4L);
-    List imgList = Arrays.asList("1,2,3,4");
+    //given
+    Long boardIda = 19999L;
+    User user1 = userRepository.findById(globalUserId).orElseThrow();
 
-    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto.builder()
-        .title("첫번째 게시글")
-        .chatMemCnt(0)
-        .contents("첫번쨰 컨텐츠")
-        .tagList(taglist)
-        .imgList(imgList)
-        .chatStatus("Y")
-        .build();
+    //when, then
+    assertThrows(CustomException.class, ()-> communityBoardService.deleteCommunityBoard(boardIda, user1));
+  }
+  @Test
+  @Transactional
+  @DisplayName("커뮤니티 보드 단건조회(NullPointer)")
+  public void getCommunityBoard() {
+    //given
+    Long boardIda = 19999L;
+    User user1 = userRepository.findById(globalUserId).orElseThrow();
 
-    assertThrows(CustomException.class, ()-> communityBoardService.deleteCommunityBoard(199L, user1));
+    //when, then
+    assertThrows(NullPointerException.class, ()-> communityBoardService.getCommunityBoard(boardIda, page, size, user1.getNickName()));
   }
 
+  @Test
+  @Transactional
+  @DisplayName("나의 커뮤니티 보드 조회(NullPointer)")
+  public void getMyCommunityBoard() {
+    //given
+    User nullUser = null;
+
+    //when, then
+    assertThrows(NullPointerException.class, ()->communityBoardService.getMyCommunityBoard(page, size, nullUser));
+  }
 }
