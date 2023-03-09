@@ -17,6 +17,7 @@ public enum Status {
     // 400 ->  BAD_REQUEST : 잘못된 요청 (ex. 파라미터 값을 확인해주세요 )
     NOT_MATCH_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호를 확인해주세요."),
     INVALID_HASHTAG_NAME(HttpStatus.BAD_REQUEST, "해시태그 이름을 입력해주세요."),
+    INVALID_CONTENT(HttpStatus.BAD_REQUEST, "내용을 입력해주세요."),
     INVALID_USER(HttpStatus.BAD_REQUEST, "회원정보를 찾을 수 없습니다."),
 
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰이 유효하지 않습니다."),
