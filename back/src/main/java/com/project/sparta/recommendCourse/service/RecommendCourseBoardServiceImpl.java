@@ -45,11 +45,11 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     @Override
     public Long creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
 
-        // 에러1: 타이틀이 ""인 경우
+        // 에러1: Title, Season, Contents, Region 중 ""가 포함된 경우
         if(requestPostDto.getTitle().isBlank()||requestPostDto.getSeason().isBlank()||requestPostDto.getContents().isBlank()||requestPostDto.getRegion().isBlank()){
             throw new CustomException(INVALID_CONTENT);
         }
-        // 숫자가 null인 경우
+        // 에러2: 숫자가 null인 경우
         if(requestPostDto.getScore() == 0 || requestPostDto.getAltitude() == 0){
             throw  new CustomException(INVALID_CONTENT);
         }

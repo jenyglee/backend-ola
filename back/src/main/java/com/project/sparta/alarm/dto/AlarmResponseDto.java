@@ -17,7 +17,6 @@ public class AlarmResponseDto {
 
     private Long boardId;
 
-    @Builder
     public AlarmResponseDto(Long alarmId, String message, String userNickName, String readStatus, Long boardId) {
         this.alarmId = alarmId;
         this.message = message;
