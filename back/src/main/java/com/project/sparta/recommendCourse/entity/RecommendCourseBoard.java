@@ -76,10 +76,8 @@ public class RecommendCourseBoard extends Timestamped {
         this.userId = userId;
     }
 
-    public void update(Long id, int score, String title, String season, int altitude,
-        String contents, String region, Long userId
-    ) {
-        this.id = id;
+    public void update(int score, String title, String season, int altitude,
+        String contents, String region) {
         this.score = score;
         this.title = title;
         this.season = season;
@@ -87,7 +85,6 @@ public class RecommendCourseBoard extends Timestamped {
         this.contents = contents;
         this.region = region;
         this.postStatus = PostStatusEnum.VAILABLE;
-        this.userId = userId;
     }
 
     public void statusModifyRecommendCourse(PostStatusEnum postStatus) {

@@ -28,13 +28,13 @@ import static com.project.sparta.exception.api.Status.NOT_FOUND_POST;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     private final NoticeBoardRepository noticeBoardRepository;
 
     //공지글 작성
     @Override
+    @Transactional
     public Long createNoticeBoard(NoticeBoardRequestDto requestDto, User user) {
         // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
 
@@ -52,6 +52,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 삭제
     @Override
+    @Transactional
     public void deleteNoticeBoard(Long id, User user) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
@@ -60,6 +61,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 수정
     @Override
+    @Transactional
     public void updateNoticeBoard(Long id, NoticeBoardRequestDto requestDto, User user) {
         // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
 
@@ -71,6 +73,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 단건 조회
     @Override
+    @Transactional(readOnly = true)
     public NoticeBoardResponseDto getNoticeBoard(Long id) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_POST));
@@ -90,6 +93,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
     //공지글 전체조회
     @Override
+    @Transactional(readOnly = true)
     public PageResponseDto<List<NoticeBoardResponseDto>> getAllNoticeBoard(int page, int size, String category) {
         long total;
         List<NoticeBoardResponseDto> content = new ArrayList<>();

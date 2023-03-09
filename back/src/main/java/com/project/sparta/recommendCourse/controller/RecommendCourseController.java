@@ -3,7 +3,6 @@ package com.project.sparta.recommendCourse.controller;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.recommendCourse.dto.*;
 import com.project.sparta.recommendCourse.service.RecommendCourseBoardService;
-import com.project.sparta.recommendCourse.service.RecommendCourseImgService;
 import com.project.sparta.security.UserDetailsImpl;
 import com.project.sparta.user.entity.User;
 import io.swagger.annotations.*;
@@ -11,13 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import springfox.documentation.annotations.ApiIgnore;
 
