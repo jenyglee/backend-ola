@@ -21,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class RecommendCourseBoardCustomRepositoryTest {
+    // TODO 테스트코드 추가 : 코스추천 수정시/삭제시 게시글을 찾을 수 없는 경우
 
     //이셉션 에러를 확인하기위한 테스트는 레파지토리 테스트가 아니라 서비스테스트 아닌가..? 왜 레파지토리 테스트로 짜야하는지 다시 물어봐야지
     @Autowired

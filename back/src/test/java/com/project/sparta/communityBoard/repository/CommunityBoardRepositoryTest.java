@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class CommunityBoardRepositoryTest {
+  // TODO 테스트코드 추가 : 게시글 작성시/수정시 Title, Contents 중 ""인 경우
   @Autowired
   BoardRepository boardRepository;
   @Autowired

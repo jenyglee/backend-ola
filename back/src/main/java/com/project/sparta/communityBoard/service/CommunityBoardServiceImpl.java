@@ -60,7 +60,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public CommunityBoard createCommunityBoard(CommunityBoardRequestDto requestDto, User user) {
-        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
+        // TODO 에러 추가 : Title, Contents 중 ""인 경우
 
         // 1. 커뮤니티 보드를 생성하고 DB에 저장
         CommunityBoard communityBoard = new CommunityBoard().builder()

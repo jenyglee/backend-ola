@@ -11,6 +11,7 @@ import com.project.sparta.user.dto.ValidateEmailDto;
 import com.project.sparta.user.dto.ValidateNickNameDto;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.service.UserServiceImpl;
+import com.sun.xml.bind.v2.TODO;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class UserRepositoryTest {
-
+    //TODO 테스트코드 추가 : 회원가입 시 이미 존재하는 email/nickName인 경우
+    //TODO 테스트코드 추가 : 로그인 시 email, password 중 ""인 경우
+    //TODO 테스트코드 추가 : 로그인 시 password가 틀린 경우
 
     @Autowired
     private UserServiceImpl userService;

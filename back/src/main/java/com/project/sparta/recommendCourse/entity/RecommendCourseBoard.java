@@ -1,6 +1,9 @@
 package com.project.sparta.recommendCourse.entity;
 
+import static com.project.sparta.exception.api.Status.NO_PERMISSIONS_POST;
+
 import com.project.sparta.common.entity.Timestamped;
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.recommendCourse.dto.RecommendRequestDto;
 import com.project.sparta.user.entity.User;
 import java.time.LocalDateTime;
@@ -92,5 +95,8 @@ public class RecommendCourseBoard extends Timestamped {
     }
 
     public void validateOwner(Long userId) {
+        if(!this.userId.equals(userId)){
+            throw new CustomException(NO_PERMISSIONS_POST);
+        }
     }
 }

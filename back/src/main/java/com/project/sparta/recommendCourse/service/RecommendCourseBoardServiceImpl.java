@@ -85,11 +85,7 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
         // 에러3: 내가 작성한 글이 아닌 경우
-        if (!recommendBoard.getUserId().equals(userId)) {
-            //TODO if문 validateOwner() 사용(예시 -> recommendBoard.validateOwner(userId))
-            //TODO .get() 하는 부분은 찾아서 엔티티에 객체지향적으로 수정
-            throw new CustomException(Status.NO_PERMISSIONS_POST);
-        }
+        recommendBoard.validateOwner(userId);
 
         // 1. 기존 이미지 삭제 후 새로운 이미지 리스트를 저장
         recommendCourseBoardImgRepository.deleteBoard(id);
