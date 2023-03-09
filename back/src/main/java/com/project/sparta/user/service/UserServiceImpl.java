@@ -16,7 +16,6 @@ import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
