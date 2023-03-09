@@ -48,7 +48,7 @@ public class NoticeBoardController {
     })
     public ResponseEntity getNoticeBoardList(@RequestParam int page,
                                              @RequestParam int size,
-                                             @RequestParam String category){
+                                             @RequestParam(required = false) String category){
         PageResponseDto<List<NoticeBoardResponseDto>> allNoticeBoard = noticeBoardService.getAllNoticeBoard(page, size, category);
         return new ResponseEntity(allNoticeBoard, HttpStatus.OK);
     }

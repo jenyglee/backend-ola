@@ -87,14 +87,11 @@ public class CommunityBoard extends Timestamped {
         this.chatMemCnt = chatMemCnt;
     }
 
-    public void updateCurrentMemCnt(int currentMemCnt){
-        this.currentMemCnt = currentMemCnt;
-    }
-    public void set_maniaResponse(int maniaResponse){
+    public void updateMania(int maniaResponse){
         this.maniaResponse = maniaResponse;
     }
 
-    public void set_godResponse(int godResponse) {
+    public void updateGod(int godResponse) {
         this.godResponse = godResponse;
     }
 
