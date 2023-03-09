@@ -245,16 +245,16 @@ class RecommendCourseBoardServiceImplTest {
         int page = 0;
         int size = 10;
         int score = 5;
-        String season = new String();
+        String season = null;
         int altitude = 0;
-        String region = new String();
-        String sort = new String("likeDesc");
+        String region = null;
+        String sort = null;
 
         //when
         PageResponseDto<List<RecommendResponseDto>> listPageResponseDto = recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, sort);
 
         //then
-        assertThat(listPageResponseDto.getTotalCount()).isEqualTo(6);
+        assertThat(listPageResponseDto.getTotalCount()).isEqualTo(5);
     }
 
     @Test

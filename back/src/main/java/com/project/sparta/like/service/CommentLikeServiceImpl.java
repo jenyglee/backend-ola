@@ -28,7 +28,7 @@ public class CommentLikeServiceImpl implements CommentLikeService{
     private final LikeCommentRepository likeCommentRepository;
 
     @Override
-    public void likeComment(Long id, User user){
+    public Long likeComment(Long id, User user){
         CommunityComment comment = commentRepository.findById(id).orElseThrow(()->new CustomException(Status.NOT_FOUND_POST));
 
         //레파지토리에서 이메일로 좋아요 있는지 없는지 찾아서 없으면
@@ -43,6 +43,7 @@ public class CommentLikeServiceImpl implements CommentLikeService{
 
         //레파지토리에 저장
         likeCommentRepository.save(commentLike);
+        return commentLike.getCommentLikeId();
 
     }
     @Override

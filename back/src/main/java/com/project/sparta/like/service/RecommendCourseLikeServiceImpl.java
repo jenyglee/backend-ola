@@ -22,7 +22,7 @@ public class RecommendCourseLikeServiceImpl implements RecommendCourseLikeServic
     private final LikeRecommendRepository likeRecommendRepository;
 
 
-    public void likeRecommendCourse(Long id, User user){
+    public Long likeRecommendCourse(Long id, User user){
         RecommendCourseBoard recommendCourseBoard  = courseRepository.findById(id).orElseThrow(()->new CustomException(Status.NOT_FOUND_POST));
         //레파지토리에서 이메일로 좋아요 있는지 없는지 찾아서 없으면
         Optional<CourseLike> findByUserEmail = likeRecommendRepository.findByUserEmailAndCourseBoard(user.getEmail(),recommendCourseBoard);
@@ -39,6 +39,8 @@ public class RecommendCourseLikeServiceImpl implements RecommendCourseLikeServic
         //레파지토리에 저장
 
         likeRecommendRepository.save(courseLike);
+
+        return courseLike.getLikesId();
 
 
     }
