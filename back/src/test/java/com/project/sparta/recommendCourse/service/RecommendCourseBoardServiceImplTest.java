@@ -207,37 +207,30 @@ class RecommendCourseBoardServiceImplTest {
     @Transactional
     void getMyRecommendCourseBoard() {
         //given
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민1")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
+        //유저 작성자 생성
+        User user = createUser();
 
-        //이미지 리스트 생성
-        List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
-        //게시글 Dto 생성
-        RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
-                .score(5)
-                .title("테스트코드 제목1")
-                .season("가을")
-                .region("경상북도")
-                .altitude(800)
-                .contents("테스트코드 컨텐츠입니다.")
-                .imgList(imageList)
-                .build();
+        //회원 등급변경 Dto생성
+        UserGradeDto userGradeDto = new UserGradeDto(2);
 
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        Long boardId2 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        Long boardId3 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        Long boardId4 = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
+        //회원 등급변경
+        userService.changeGrade(userGradeDto,user.getId());
+
+        //글작성
+        RecommendCourseBoard board1 = createBoard(user);
+        RecommendCourseBoard board2 = createBoard(user);
+        RecommendCourseBoard board3 = createBoard(user);
+        RecommendCourseBoard board4 = createBoard(user);
+        RecommendCourseBoard board5 = createBoard(user);
+
         PageRequest pageRequest = PageRequest.of(0,8);
 
         //when
-        PageResponseDto<List<RecommendResponseDto>> myRecommendCourseBoard = recommendCourseBoardService.getMyRecommendCourseBoard(pageRequest.getPageNumber(), pageRequest.getPageSize(), admin1);
+        PageResponseDto<List<RecommendResponseDto>> myRecommendCourseBoard =
+                recommendCourseBoardService.getMyRecommendCourseBoard(pageRequest.getPageNumber(), pageRequest.getPageSize(), user);
 
         //then
-        assertThat(myRecommendCourseBoard.getTotalCount()).isEqualTo(4);
+        assertThat(myRecommendCourseBoard.getTotalCount()).isEqualTo(5);
     }
 
     @Test
@@ -246,31 +239,13 @@ class RecommendCourseBoardServiceImplTest {
     void adminRecommendBoardUpdate() {
         //given
         //작성자 생성
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민1")
-                .password("asdf12!@")
-                .build();
-        User admin2 = User.adminBuilder()
-                .email("admin12@naver.com")
-                .nickName("테스트어드민2")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
-        em.persist(admin2);
+        User admin1 = createAdmin();
 
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
-        //게시글 Dto 생성
-        RecommendRequestDto recommendRequestDto = RecommendRequestDto.builder()
-                .score(5)
-                .title("테스트코드 제목1")
-                .season("가을")
-                .region("경상북도")
-                .altitude(800)
-                .contents("테스트코드 컨텐츠입니다.")
-                .imgList(imageList)
-                .build();
+        //글작성
+        RecommendCourseBoard board = createBoard(admin1);
+
         //수정된 게시글 Dto 생성
         RecommendRequestDto recommendRequestDto2 = RecommendRequestDto.builder()
                 .score(5)
@@ -282,16 +257,13 @@ class RecommendCourseBoardServiceImplTest {
                 .imgList(imageList)
                 .build();
         //when
-        //글작성
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-
         //글 수정
-        recommendCourseBoardService.adminRecommendBoardUpdate(boardId,recommendRequestDto2);
+        recommendCourseBoardService.adminRecommendBoardUpdate(board.getId(),recommendRequestDto2);
 
         //then
-        Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(boardId);
+        Optional<RecommendCourseBoard> recommendCourseBoard = recommendCourseBoardRepository.findById(board.getId());
 
-        assertThat(recommendCourseBoard.get().getId()).isEqualTo(boardId);
+        assertThat(recommendCourseBoard.get().getId()).isEqualTo(board.getId());
         assertThat(recommendCourseBoard.get().getTitle()).isEqualTo("테스트코드 제목2");
         assertThat(recommendCourseBoard.get().getSeason()).isEqualTo("겨울");
     }
@@ -302,12 +274,7 @@ class RecommendCourseBoardServiceImplTest {
     void adminRecommendBoardDelete() {
         //given
         //작성자 생성
-        User admin1 = User.adminBuilder()
-                .email("admin11@naver.com")
-                .nickName("테스트어드민1")
-                .password("asdf12!@")
-                .build();
-        em.persist(admin1);
+        User admin1 = createAdmin();
 
         //이미지 리스트 생성
         List imageList = List.of("https://cdn.mhns.co.kr/news/photo/201910/313897_420232_1924.jpg");
@@ -321,16 +288,15 @@ class RecommendCourseBoardServiceImplTest {
                 .contents("테스트코드 컨텐츠입니다.")
                 .imgList(imageList)
                 .build();
-        //when
+
         //글작성
-        Long boardId = recommendCourseBoardService.creatRecommendCourseBoard(recommendRequestDto, admin1.getId());
-        Optional<RecommendCourseBoard> board = recommendCourseBoardRepository.findById(boardId);
-        recommendCourseBoardService.adminRecommendBoardDelete(boardId);
+        RecommendCourseBoard board = createBoard(admin1);
+
+        //when
+        recommendCourseBoardService.adminRecommendBoardDelete(board.getId());
+
         //then
-        // 삭제된 글을 어떻게 테스트코드로 확인하지...?
-//        assertThat(board).isEmpty();
-//        assertThat(recommendCourseBoardRepository.findById(boardId).equals(null)).isTrue();
-        Optional<RecommendCourseBoard> board2 = recommendCourseBoardRepository.findById(boardId);
+        Optional<RecommendCourseBoard> board2 = recommendCourseBoardRepository.findById(board.getId());
         assertThat(board2).isEmpty();
     }
 
