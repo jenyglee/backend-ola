@@ -11,13 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 public class RecommendRequestDto {
 
-
+    @ApiModelProperty(example = "0")
     private int score;
     @ApiModelProperty(example = "스웨거로 전달할 제목")
     private String title;
     @ApiModelProperty(example = "스웨거로 전달할 계절")
     private String season;
-    @ApiModelProperty(example = "스웨거로 전달할 산높이")
+    @ApiModelProperty(example = "100")
     private int altitude;
     @ApiModelProperty(example = "스웨거로 전달할 내용")
     private String contents;
