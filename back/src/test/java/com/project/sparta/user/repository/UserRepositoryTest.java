@@ -32,7 +32,6 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-
     @Test
     @DisplayName("이메일 or 닉네임 중복확인")
     void duplicationCheck(){
