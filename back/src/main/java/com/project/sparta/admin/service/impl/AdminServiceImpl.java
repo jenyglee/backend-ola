@@ -23,6 +23,7 @@ public class AdminServiceImpl implements AdminService {
     // 어드민 회원가입
     private final PasswordEncoder encoder;
     // 어드민 회원가입
+
     @Override
     public Long signup(AdminSignupDto adminRequestSignupDto) {
         // 관리자 비밀번호 잘못 입력

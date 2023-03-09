@@ -224,6 +224,7 @@ public class UserServiceImpl implements UserService {
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(),
                 user.getRole());
+
             TokenDto new_tokenDto = new TokenDto(
                 jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
                     user.getNickName(), user.getUserImageUrl()),

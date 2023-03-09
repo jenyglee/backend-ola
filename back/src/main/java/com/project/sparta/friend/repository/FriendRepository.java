@@ -1,6 +1,7 @@
 package com.project.sparta.friend.repository;
 
 import com.project.sparta.friend.entity.Friend;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,9 +13,9 @@ public interface FriendRepository extends JpaRepository<Friend, Long>, FriendCus
 
     Page<Friend> findAllByUserId(Long userId, Pageable pageable);
 
-    Friend findByUserIdAndTargetId(Long userId, Long targetId);
+    Optional<Friend> findByUserIdAndTargetId(Long userId, Long targetId);
 
-    Friend findByTargetIdAndUserId(Long targetId ,Long userId);
+    Optional<Friend> findByTargetIdAndUserId(Long targetId ,Long userId);
 
     List<Friend> findByUserId(Long userId);     //테스트용
 
