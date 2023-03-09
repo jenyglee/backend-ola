@@ -79,7 +79,6 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));
         noticeBoard.update(requestDto.getTitle(), requestDto.getContents(), requestDto.getCategory());
-
 //        if(user.getRole()== UserRoleEnum.ADMIN)
 //        {
 //            NoticeBoard noticeBoard = noticeBoardRepository.findById(id).orElseThrow(() -> new CustomException(NOT_FOUND_POST));

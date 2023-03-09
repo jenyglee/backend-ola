@@ -1,5 +1,6 @@
 package com.project.sparta.communityBoard.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ public class CommunitySearchCondition {
     private String chatStatus;
     private String sort;
 
+    @Builder
     public CommunitySearchCondition(String title, String contents, String nickname, Long hashtagId, String chatStatus, String sort) {
         this.title = title;
         this.contents = contents;

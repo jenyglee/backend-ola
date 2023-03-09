@@ -75,30 +75,30 @@ public class AlarmServiceImpl implements AlarmService {
         alarmRespository.saveAndFlush(alarm);
     }
 
-    @Override
-    public void deleteAlarm(Long boardId) {
-        Alarm alarm = alarmRespository.findByBoardId(boardId)
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
-        alarmRespository.deleteByBoardId(alarm.getId());
-    }
-
-    @Override
-    public List<AlarmResponseDto> getAlarmList(Long boardId) {
-
-        List<Alarm> alarmList = alarmRespository.selectAlaram(boardId);
-        List<AlarmResponseDto> resultList = new ArrayList<>();
-
-        for (Alarm a : alarmList) {
-            AlarmResponseDto alarmResponseDto = AlarmResponseDto.builder()
-                .alarmId(a.getId())
-                .message(a.getMessage())
-                .userNickName(a.getUserNickName())
-                .readStatus(a.getReadStatus())
-                .boardId(a.getBoardId())
-                .build();
-
-            resultList.add(alarmResponseDto);
-        }
-        return resultList;
-    }
+//    @Override
+//    public void deleteAlarm(Long boardId) {
+//        Alarm alarm = alarmRespository.findByBoardId(boardId)
+//            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+//        alarmRespository.deleteByBoardId(alarm.getId());
+//    }
+//
+//    @Override
+//    public List<AlarmResponseDto> getAlarmList(Long boardId) {
+//
+//        List<Alarm> alarmList = alarmRespository.selectAlaram(boardId);
+//        List<AlarmResponseDto> resultList = new ArrayList<>();
+//
+//        for (Alarm a : alarmList) {
+//            AlarmResponseDto alarmResponseDto = AlarmResponseDto.builder()
+//                .alarmId(a.getId())
+//                .message(a.getMessage())
+//                .userNickName(a.getUserNickName())
+//                .readStatus(a.getReadStatus())
+//                .boardId(a.getBoardId())
+//                .build();
+//
+//            resultList.add(alarmResponseDto);
+//        }
+//        return resultList;
+//    }
 }

@@ -1,11 +1,15 @@
 package com.project.sparta.alarm.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AlarmRequetDto {
 
     @ApiModelProperty(example = "스웨거로 메세지")
