@@ -69,7 +69,6 @@ public class CommunityBoardImpl {
   @Autowired
   EntityManager em;
 
-
   String randomUser = "user"+ UUID.randomUUID() +"@naver.com";
   List taglist = Arrays.asList(1L, 2L, 3L, 4L);
   List imgList = Arrays.asList("1,2,3,4");
