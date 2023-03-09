@@ -18,11 +18,13 @@ import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
+import com.project.sparta.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,37 +51,49 @@ public class CommunityBoardRepositoryTest {
   @Autowired
   LikeBoardRepository likeBoardRepository;
   @Autowired
+  UserRepository userRepository;
+  @Autowired
   EntityManager em;
 
-  String randomUser = "user"+ UUID.randomUUID();
-  List taglist = Arrays.asList(299L, 278L, 365L, 474L);
+  String randomUser = "user"+ UUID.randomUUID() +"@naver.com";
+  List taglist = Arrays.asList(1L, 2L, 3L, 4L);
   List imgList = Arrays.asList("1,2,3,4");
-  @Test
+  int page=0;
+  int size=10;
+  Long globalUserId;
+
+  @BeforeEach
   @Transactional
-  @DisplayName("커뮤니티 보드 생성")
-  public void communityBoardCreate() {
+  public void userCreate(){
     User user1 = User
         .userBuilder()
-        .email(randomUser +"@naver.com")
+        .email(randomUser)
         .password("1234")
         .nickName("99번째 사용자")
         .age(99)
         .phoneNumber("010-1111-2222")
         .userImageUrl("sdf.jpg")
         .build();
-    em.persist(user1);
+    userRepository.save(user1);
+    globalUserId = user1.getId();
+  }
+  CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
+      .builder()
+      .title("첫번째 게시글")
+      .chatMemCnt(0)
+      .contents("첫번쨰 컨텐츠")
+      .tagList(taglist)
+      .imgList(imgList)
+      .chatStatus("Y")
+      .build();
 
 
-
-    CommunityBoardRequestDto requestDto = CommunityBoardRequestDto
-        .builder()
-        .chatMemCnt(0)
-        .title("첫번째 컨텐츠")
-        .contents("첫번쨰 컨텐츠")
-        .tagList(taglist)
-        .imgList(imgList)
-        .chatStatus("Y")
-        .build();
+  @Test
+  @Transactional
+  @DisplayName("커뮤니티 보드 생성")
+  public void communityBoardCreate() {
+    //given
+    User user1 = userRepository.findById(globalUserId).orElseThrow();
 
     CommunityBoardRequestDto requestDto2 = CommunityBoardRequestDto
         .builder()
@@ -100,7 +114,7 @@ public class CommunityBoardRepositoryTest {
   public void updateCommunityBoard(){
     User user1 = User
         .userBuilder()
-        .email(randomUser +"@naver.com")
+        .email(randomUser)
         .password("1234")
         .nickName("99번째 사용자")
         .age(99)
@@ -161,7 +175,7 @@ public class CommunityBoardRepositoryTest {
   public void deleteCommunityBoard() {
     User user1 =
         User.userBuilder()
-            .email("user99@naver.com")
+            .email(randomUser)
             .password("1234")
             .nickName("99번째 사용자")
             .age(99)
