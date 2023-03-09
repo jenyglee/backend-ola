@@ -46,7 +46,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
                 .user(user)
                 .build();
         NoticeBoard board = noticeBoardRepository.saveAndFlush(noticeBoard);
-        
+
         return board.getId();
     }
 
