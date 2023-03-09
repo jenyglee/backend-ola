@@ -32,4 +32,10 @@ public interface UserService {
     UserOneResponseDto getUser(Long userId);
     void changeGrade(UserGradeDto grade, Long userId);
     void changeStatus(UserStatusDto statusDto, Long userId);
+
+    void sendMail(MailDto mailDto);
+
+    MailDto createMailAndChangePassword(String email, String nickName);
+
+    boolean userEmailCheck(String userEmail, String userName);
 }

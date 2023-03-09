@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.sparta.security.dto.RegenerateTokenDto;
 import com.project.sparta.security.dto.TokenDto;
 import com.project.sparta.user.dto.LoginRequestDto;
+import com.project.sparta.user.dto.MailDto;
+import com.project.sparta.user.dto.SendMailRequestDto;
 import com.project.sparta.user.dto.UserSignupDto;
 import com.project.sparta.user.dto.ValidateEmailDto;
 import com.project.sparta.user.dto.ValidateNickNameDto;
@@ -12,6 +14,8 @@ import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.mapping.Join;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -57,8 +62,8 @@ public class UserController {
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인", response = Join.class)
     @GetMapping("/login/kakao")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-        return kakaoService.kakaoLogin(code, response);
+    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        return kakaoService.kakaoLogin(code);
     }
 
     //로그아웃
@@ -103,9 +108,21 @@ public class UserController {
         return userService.regenerateToken(tokenDto);
     }
 
-    // TODO 새로운 비밀번호 이메일로 발송 API 제작
-    //// 새로운 비밀번호 이메일로 발송
-    //@PostMapping("/change-password")
-    //public void changePassword(){
-    //}
+    // 비밀번호 재발급 Email과 name의 일치여부를 check하는 컨트롤러
+    @ApiOperation(value = "토큰 재발급", response = Join.class)
+    @GetMapping("/check/findPw")
+    public @ResponseBody Map<String, Boolean> pw_find(@RequestParam String email, @RequestParam String nickName){
+        Map<String,Boolean> json = new HashMap<>();
+        boolean pwFindCheck = userService.userEmailCheck(email, nickName);
+        System.out.println(pwFindCheck);
+        json.put("check", pwFindCheck);
+        return json;
+    }
+
+    // 새로운 비밀번호 이메일로 발송
+    @PostMapping("/check/findPw/sendEmail")
+    public void sendMail(@RequestBody SendMailRequestDto requestDto){
+        MailDto dto = userService.createMailAndChangePassword(requestDto.getEmail(), requestDto.getNickName());
+        userService.sendMail(dto);
+    }
 }
