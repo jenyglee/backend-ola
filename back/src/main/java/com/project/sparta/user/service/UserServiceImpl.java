@@ -57,8 +57,6 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder encoder;
     private final JavaMailSender javaMailSender;
-    private final EntityManager em;
-    private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
 
 
     //회원가입
