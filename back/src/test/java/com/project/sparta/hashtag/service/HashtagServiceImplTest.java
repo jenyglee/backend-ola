@@ -1,22 +1,15 @@
 package com.project.sparta.hashtag.service;
 import com.project.sparta.common.dto.PageResponseDto;
-import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.dto.HashtagResponseDto;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
-import com.project.sparta.noticeBoard.dto.NoticeBoardResponseDto;
-import com.project.sparta.noticeBoard.entity.NoticeCategoryEnum;
 import com.project.sparta.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
-import static com.project.sparta.exception.api.Status.INVALID_HASHTAG_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 
