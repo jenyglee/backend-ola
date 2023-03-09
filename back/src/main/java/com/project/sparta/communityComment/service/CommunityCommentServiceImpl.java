@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CommunityCommentServiceImpl implements CommunityCommentService {
-
   private final CommentRepository commentRepository;
   private final BoardRepository boardRepository;
   private final LikeCommentRepository likeCommentRepository;
 
+  // 댓글 생성
   @Override
   @Transactional
   public CommentResponseDto createCommunityComments(Long boardId, CommunityRequestDto communityRequestDto,

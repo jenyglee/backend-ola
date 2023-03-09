@@ -20,8 +20,6 @@ public interface CommunityBoardService {
     void deleteCommunityBoard(Long boardId, User user);
 
     CommunityBoardOneResponseDto getCommunityBoard(Long boardId, int commentPage, int commentSize, String nickname);
-    PageResponseDto<List<CommunityBoardAllResponseDto>> getCacheAllCommunityBoard(int page, int size,
-        String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort);
     PageResponseDto<List<CommunityBoardAllResponseDto>> getAllCommunityBoard(int page, int size,
         String titleCond, String contentsCond, String nicknameCond, Long hashtagId, String chatStatus, String sort);
 
