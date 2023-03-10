@@ -16,22 +16,17 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityBoard.repository.BoardRepositoryImpl;
 import com.project.sparta.communityBoard.repository.CommunityBoardImgRepository;
 import com.project.sparta.communityBoard.repository.CommunityTagRepository;
-import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
 import com.project.sparta.exception.api.Status;
-import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserGradeEnum.Authority;
 import com.project.sparta.user.repository.UserRepository;
-import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -43,7 +38,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommunityBoardServiceImpl implements CommunityBoardService {
-
     private final BoardRepository boardRepository;
     private final HashtagRepository hashtagRepository;
     private final CommunityTagRepository communityTagRepository;
@@ -61,7 +55,7 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public CommunityBoard createCommunityBoard(CommunityBoardRequestDto requestDto, User user) {
-        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
+        // TODO 에러 추가 : Title, Contents 중 ""인 경우
 
         // 1. 커뮤니티 보드를 생성하고 DB에 저장
         CommunityBoard communityBoard = new CommunityBoard().builder()

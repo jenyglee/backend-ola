@@ -53,7 +53,7 @@ public class ChatRoomController {
             Status.NOT_FOUND_POST));
 
         //1. 채팅방 처음 만들때는 N -> Y (채팅방 새로 만들어야 함)
-        if(board.getChatStatus().equals("L")){
+        if(board.validateChatStatus("L")){
            chatServiceMain.createChatRoom(chatRequestDto.getRoomId(), chatRequestDto.getTitle(),
                 chatRequestDto.getChatMemCnt(), userDetails.getUser().getNickName());
         } //2. 채팅방 Y -> N으로 변경할 때는 채팅방 수정해야함

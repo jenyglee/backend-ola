@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.project.sparta.exception.api.Status.*;
 
@@ -26,6 +27,7 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 추가
     @Override
+    @Transactional
     public Hashtag createHashtag(String name, User user) {
         // 에러1: 이름이 ""인 경우
         if (name.isBlank()) {
@@ -44,6 +46,7 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 삭제
     @Override
+    @Transactional
     public void deleteHashtag(Long id, User user) {
         Hashtag hashtag = hashtagRepository.findById(id).orElseThrow(
             () -> new CustomException(NOT_FOUND_HASHTAG));
@@ -52,6 +55,7 @@ public class HashtagServiceImpl implements HashtagService {
 
     //해시태그 전체 조회
     @Override
+    @Transactional(readOnly = true)
     public PageResponseDto<List<HashtagResponseDto>> getHashtagList(int offset, int limit,
         String name) {
         // 1. name을 포함하여 전체 조회
@@ -67,6 +71,7 @@ public class HashtagServiceImpl implements HashtagService {
 
     //디폴트 해시태그 전체 조회
     @Override
+    @Transactional(readOnly = true)
     public List<HashtagResponseDto> getFixedHashtagList() {
         // 1. 전체 해시태그 조회
         List<Hashtag> hashtagList = hashtagRepository.findAll();
