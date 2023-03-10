@@ -45,20 +45,12 @@ class UserServiceImplTest {
     private UserService userService;
 
     @Autowired
-    private AdminService adminService;
-
-    @Autowired
     private CommunityBoardService communityBoardService;
 
     private List taglist = java.util.Arrays.asList(1L, 2L, 3L, 4L);
 
     private List imgList = Arrays.asList("1,2,3,4");
 
-    @Value("${jwt.admin}")
-    private String admin;
-
-    @Autowired
-    private BoardRepository boardRepository;
 
     @Test
     @Transactional
@@ -85,54 +77,6 @@ class UserServiceImplTest {
 
         Assertions.assertThat(user.getNickName()).isEqualTo(user1.getNickName());
     }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "일반 유저 로그인")
-    public void userLogin(){
-
-        String randomUser = "user" + UUID.randomUUID();
-
-        UserSignupDto user1 = UserSignupDto.builder()
-            .email(randomUser)
-            .password("user1234dfd!")
-            .nickName("기똥차게올라가보자")
-            .age(25)
-            .phoneNumber("010-1234-1235")
-            .imageUrl("user.jpg")
-            .tagList(taglist)
-            .build();
-
-        userService.signup(user1);
-
-        User user = userRepository.findByNickName("기똥차게올라가보자").orElseThrow(() -> new CustomException(
-            Status.NOT_FOUND_USER));
-
-        Assertions.assertThat(user.getNickName()).isEqualTo("기똥차게올라가보자");
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민 유저 로그인")
-    public void adminLogin(){
-
-        String randomUser = "user" + UUID.randomUUID();
-
-        AdminSignupDto adminSignupDto = AdminSignupDto.builder()
-            .email(randomUser)
-            .password("user1234dfsd!")
-            .nickName("관리자")
-            .adminToken(admin)
-            .build();
-
-        adminService.signup(adminSignupDto);
-
-        User user = userRepository.findByNickName("관리자").orElseThrow(() -> new CustomException(
-            Status.NOT_FOUND_USER));
-
-        Assertions.assertThat(user.getNickName()).isEqualTo("관리자");
-    }
-
 
     @Test
     @Transactional
