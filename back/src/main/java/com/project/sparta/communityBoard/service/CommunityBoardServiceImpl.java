@@ -4,6 +4,7 @@ import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
 
+import static com.project.sparta.exception.api.Status.INVALID_CONTENT;
 import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
 
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
@@ -213,8 +214,10 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
     @Override
     @Transactional
     public void adminUpdateCommunityBoard(Long boardId, CommunityBoardRequestDto requestDto) {
-        // TODO 익셉션 추가 : Title, Contents 중 ""인 경우
 
+        if(requestDto.getContents().isBlank() || requestDto.getTitle().isBlank()){
+            throw new CustomException(INVALID_CONTENT);
+        }
         CommunityBoard communityBoard = boardRepository.findById(boardId)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
 
