@@ -32,7 +32,7 @@
                 width: 1200px;
                 /*height: 1000px;*/
                 padding: 0;
-                margin-top: 100px;
+                margin-top: 50px;
                 /* background-color: #fffbf4; */
             }
 
@@ -180,6 +180,9 @@
     </header>
         <main class="container">
             <div class="post-slider">
+                <div style="width: 1200px;">
+                    <img src="static/img/kakao_error.png" style="width: 100%; margin-bottom: 80px" />
+                </div>
                 <div class="top-area">
                     <h1 class="sider-title">현재 모집중인 크루</h1>
                     <div style="display: flex; align-items: center">
@@ -283,8 +286,7 @@
 
             function checkLogin(){
                 const nickname = localStorage.getItem("nickname")
-
-                if(nickname!=null){
+                if(nickname!=null  && nickname != ""){
                     const result = `<div class="friend">
                                 <div class="icon-friend" onclick="handleToggleFriendDropBox()">
                                     <img class="img" src="./../static/img/icon_friends.png"/>
