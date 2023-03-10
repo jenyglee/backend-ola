@@ -265,7 +265,11 @@
                 //     console.log("accessToken : ", accessToken)
                 //     window.location.href = "./template/b-1_login.html"
                 // }
-
+                var kakaoCode = document.location.href.split("?")[1];
+                console.log("kakaoCode : ", kakaoCode)
+                if(kakaoCode) {
+                    callback(kakaoCode);
+                }
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
@@ -283,6 +287,26 @@
                 $(".friend-dropbox").hide()
                 $(".bell-dropbox").hide()
             })
+
+            function callback(kakaoCode) {
+
+                console.log(kakaoCode+": kakao code");
+                var settings = {
+
+                    "url": "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/login/kakao?" + kakaoCode,
+                    // "url": "http://localhost:8080/auth/login/kakao?" + kakaoCode,
+                    "method": "GET",
+                    "timeout": 0,
+                };
+
+                $.ajax(settings).done(function (response, status, xhr) {
+                    console.log("성공은 해?")
+                    // console.log("response : " , response)
+                    // console.log("xhr.getResponseHeader('Authorization') : ", xhr.getResponseHeader('Authorization'));
+                    // localStorage.setItem('accessToken', xhr.getResponseHeader('Authorization'));
+                    // location.href=""
+                });
+            }
 
             function checkLogin(){
                 const nickname = localStorage.getItem("nickname")

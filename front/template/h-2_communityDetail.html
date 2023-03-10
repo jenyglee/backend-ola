@@ -653,6 +653,9 @@
         $("#comment-wrap").empty();
 
         for (let i = 0; i < response.commentList.length; i++) {
+
+
+
           var tempComment = `
                 <div class="comment-read-box">
                 <!-- 프로필 -->
@@ -1127,7 +1130,7 @@
         xlr.setRequestHeader("Authorization", accessToken);
       },
       success: function () {
-        window.open('./h-4_chat.html?roomId=' + communityId, 'name',
+        window.open('./h-4_chat.html?roomId=' + communityId, '_blank',
             "left=100,top=100,width=740,height=700")
       }
     })

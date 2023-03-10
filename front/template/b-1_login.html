@@ -165,7 +165,7 @@
                 <div class=lastmain">
                     <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn" style="margin-bottom: 10px">
                         <button class="btn_2" type="button" style="border-radius: 5px;"
-                            onclick="kakaoLogin()"
+                        onclick="kakaoLogin()"
                         ><b>카카오 로그인</b></button>
                     </div>
                     <a href="c-1_signup.html" style="text-decoration: none">
@@ -239,7 +239,7 @@
     }
 
     function kakaoLogin(code){
-        location.href = "https://kauth.kakao.com/oauth/authorize?client_id=caa41730845bebbbdfd06ada0309e628&redirect_uri=http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/index.html&response_type=code'"
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=caa41730845bebbbdfd06ada0309e628&redirect_uri=http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/&response_type=code"
     }
 
     // function kakaoLogin(code){
