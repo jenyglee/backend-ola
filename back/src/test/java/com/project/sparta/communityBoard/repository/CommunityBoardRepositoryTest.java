@@ -142,12 +142,23 @@ public class CommunityBoardRepositoryTest {
         .chatStatus("Y")
         .build();
 
+    CommunityBoardRequestDto afterRequestDto3 = CommunityBoardRequestDto
+        .builder()
+        .title("")
+        .chatMemCnt(0)
+        .contents("")
+        .tagList(taglistOne)
+        .imgList(imgListOne)
+        .chatStatus("Y")
+        .build();
+
     Long boardIda = 19999L;
     Long boardId =1L;
 
     //when, then
     assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardIda, afterRequestDto, user1));
     assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardId, afterRequestDto2, user1));
+    assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardId, afterRequestDto3, user1));
   }
 
   @Test
