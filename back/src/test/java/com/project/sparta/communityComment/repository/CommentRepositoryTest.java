@@ -1,12 +1,12 @@
 package com.project.sparta.communityComment.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-//import com.project.sparta.communityComment.controller.CommunityCommnetController;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.service.CommunityCommentService;
-import com.project.sparta.security.UserDetailsImpl;
-import com.project.sparta.user.entity.UserRoleEnum;
+import com.project.sparta.exception.CustomException;
+import com.project.sparta.user.entity.User;
+import com.project.sparta.user.repository.UserRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,32 +14,83 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
+
 public class CommentRepositoryTest {
-    // TODO 테스트코드 추가 : 코멘트 작성시/수정시 Contents가 ""인 경우(세인)
-    //TODO 테스트코드 추가 : 댓글 찾을 수 없을 경우(세인)
-//   @Autowired
-//   CommunityCommentService commentService;
-//   @Autowired
-//   CommentRepository commentRepository; // 방금추가
-//
-//
-//  @Test
-//  @DisplayName("보드를 생성하지 않은 경우")
-//  public void createCommunityComment() {
-//
-//    Long userId = 1L;
-//    Long boardId = 1L;
-//    User user1 = new User("1234", "이재원", 10, "010-1234-1234", "user1@naver.com", UserRoleEnum.USER, "user1.jpg",USER_REGISTERED);
-//    User user2 = new User("1234", "한세인", 20, "010-1234-1235", "user2@naver.com", UserRoleEnum.USER, "user2.jpg",USER_REGISTERED);
-//
-//    CommunityRequestDto communityRequestDto = new CommunityRequestDto("하이");
-//    UserDetailsImpl UserDetailsImpl = new UserDetailsImpl(user1);
-//    CommunityResponseDto communityResponseDto = commentService.createCommunityComments(boardId, communityRequestDto,
-//        UserDetailsImpl.getUser());
-//    assertThat(communityResponseDto.getNickName()).isEqualTo("이재원");
-//    System.out.println(communityResponseDto);
-//  }
+
+    @Autowired
+    CommunityCommentService commentService;
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Test
+    @DisplayName("게시글이 존재하지 않을 경우")
+    @Transactional
+    public void createCommunityComment() {
+        String randomUser1 = "user" + UUID.randomUUID();
+
+        User user = User.userBuilder()
+            .email(randomUser1)
+            .password("user1234!")
+            .nickName("내일은매니아")
+            .age(25)
+            .phoneNumber("010-1234-1235")
+            .build();
+        User u = userRepository.save(user);
+
+        CommunityRequestDto communityRequestDto =CommunityRequestDto.builder()
+            .contents("굿굿")
+            .build();
+
+        assertThrows(CustomException.class, ()-> commentService.createCommunityComments(12345677775L, communityRequestDto, u));
+    }
 
 
+    @Test
+    @DisplayName("댓글이 존재하지 않을 경우")
+    @Transactional
+    public void notFoundCommunityComment() {
+        String randomUser1 = "user" + UUID.randomUUID();
+
+        User user = User.userBuilder()
+            .email(randomUser1)
+            .password("user1234!")
+            .nickName("내일은매니아")
+            .age(25)
+            .phoneNumber("010-1234-1235")
+            .build();
+        User u = userRepository.save(user);
+
+        CommunityRequestDto communityRequestDto =CommunityRequestDto.builder()
+            .contents("굿굿")
+            .build();
+
+        assertThrows(CustomException.class, ()-> commentService.updateCommunityComments(12345677775L, communityRequestDto, u));
+        assertThrows(CustomException.class, ()-> commentService.deleteCommunityComments(12345677775L, u));
+    }
+
+    @Test
+    @DisplayName("댓글 내용이 비어있을 경우")
+    @Transactional
+    public void contentsIsEmpty() {
+        String randomUser1 = "user" + UUID.randomUUID();
+
+        User user = User.userBuilder()
+            .email(randomUser1)
+            .password("user1234!")
+            .nickName("내일은매니아")
+            .age(25)
+            .phoneNumber("010-1234-1235")
+            .build();
+        User u = userRepository.save(user);
+
+        CommunityRequestDto communityRequestDto =CommunityRequestDto.builder()
+            .contents("")
+            .build();
+
+        assertThrows(CustomException.class, ()-> commentService.createCommunityComments(12345677775L, communityRequestDto, u));
+        assertThrows(CustomException.class, ()-> commentService.updateCommunityComments(12345677775L, communityRequestDto, u));
+    }
 }
