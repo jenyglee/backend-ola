@@ -84,7 +84,7 @@ class LikeCommentRepositoryTest {
         assertThrows(CustomException.class, ()->  commentLikeService.likeComment(comment, createBoardAndCommentLikeUser));
     }
     @Test
-    @DisplayName("내가 누른 댓글좋아요만 삭제")
+    @DisplayName("다른 좋아요를 삭제했을 때 에러")
     @Transactional
     void likeCommentClickUserCheckError() {
         //given
