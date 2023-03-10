@@ -60,7 +60,7 @@ public class AdminRecommandBoardTest {
 
 
   @Test
-  @DisplayName("어드민 추천코스 게시글 전체조회")
+  @DisplayName("추천코스 게시글 전체조회")
   void allRecommendCourseBoard() {
     //given
     int page = 0;
@@ -75,8 +75,9 @@ public class AdminRecommandBoardTest {
     PageResponseDto<List<RecommendResponseDto>> listPageResponseDto = recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, sort);
 
     //then
-    assertThat(listPageResponseDto.getTotalCount()).isEqualTo(5);
+    assertThat(listPageResponseDto.getData().get(0).getTitle()).isEqualTo("관악산 정주");
   }
+
 
   @Test
   @DisplayName("어드민 코스 수정")
