@@ -33,11 +33,12 @@ public class UserRepositoryTest {
 
     @Test
     @DisplayName("이메일 or 닉네임 중복확인")
+    @Transactional
     void duplicationCheck(){
         User user1 = User.userBuilder()
             .email(randomUser)
             .password("user1234!")
-            .nickName("내일은매니아")
+            .nickName("나나나나솨")
             .age(25)
             .phoneNumber("010-1234-1235")
             .build();
@@ -45,7 +46,9 @@ public class UserRepositoryTest {
         userRepository.save(user1);
 
         ValidateEmailDto emailDto = new ValidateEmailDto(randomUser);
-        ValidateNickNameDto nickNameDto = new ValidateNickNameDto("내일은매니아");
+
+        ValidateNickNameDto nickNameDto = new ValidateNickNameDto("나나나나솨");
+
 
         assertThrows(CustomException.class, ()-> userService.validateEmail(emailDto));
         assertThrows(CustomException.class, ()-> userService.validateNickName(nickNameDto));

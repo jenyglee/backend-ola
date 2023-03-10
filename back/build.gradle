@@ -91,7 +91,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testCompileOnly 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
