@@ -21,9 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class UserRepositoryTest {
-    //TODO 테스트코드 추가 : 회원가입 시 이미 존재하는 email/nickName인 경우
-    //TODO 테스트코드 추가 : 로그인 시 email, password 중 ""인 경우
-    //TODO 테스트코드 추가 : 로그인 시 password가 틀린 경우
+    //TODO 테스트코드 추가 : 로그인 시 email, password 중 ""인 경우(세인)
+    //TODO 테스트코드 추가 : 로그인 시 password가 틀린 경우(세인)
 
     @Autowired
     private UserServiceImpl userService;
@@ -47,7 +46,9 @@ public class UserRepositoryTest {
         userRepository.save(user1);
 
         ValidateEmailDto emailDto = new ValidateEmailDto(randomUser);
+
         ValidateNickNameDto nickNameDto = new ValidateNickNameDto("나나나나솨");
+
 
         assertThrows(CustomException.class, ()-> userService.validateEmail(emailDto));
         assertThrows(CustomException.class, ()-> userService.validateNickName(nickNameDto));
