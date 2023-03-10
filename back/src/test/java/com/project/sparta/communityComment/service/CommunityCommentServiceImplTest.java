@@ -13,16 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-
-
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
-
 
 @SpringBootTest
 public class CommunityCommentServiceImplTest {
@@ -56,20 +50,16 @@ public class CommunityCommentServiceImplTest {
                 .userImageUrl("sdf.jpg")
                 .build();
 
-
-
         userRepository.save(user1);
         CommunityBoardRequestDto communityBoardRequestDto = new CommunityBoardRequestDto("dd","gd","Y",14,taglist,imgList);
         CommunityBoard communityBoard = communityBoardService.createCommunityBoard(communityBoardRequestDto,user1);
         boardRepository.save(communityBoard);
 
-
         CommunityRequestDto communityRequestDto =CommunityRequestDto.builder()
                 .contents("굿굿")
                 .build();
-        //when
+
         CommentResponseDto communityComment = communityCommentService.createCommunityComments(communityBoard.getId(),communityRequestDto,user1);
-        //then
         assertThat(communityComment.getContents().equals("굿굿"));
 
     }
@@ -98,23 +88,19 @@ public class CommunityCommentServiceImplTest {
                 .contents("굿굿")
                 .build();
        CommentResponseDto commentResponseDto=communityCommentService.createCommunityComments(communityBoard.getId(),communityRequestDto,user1);
-       //when
+       
        CommunityRequestDto communityRequestDto1 = CommunityRequestDto.builder()
-               .contents("안녕하셍")
+               .contents("안녕하세요")
                .build();
 
        communityCommentService.updateCommunityComments(commentResponseDto.getId(),communityRequestDto1,user1);
 
-
-
-       //then
-       assertThat(commentResponseDto.getContents().equals("안녕하셍"));
+       assertThat(commentResponseDto.getContents().equals("안녕하세요"));
     }
 
     @Test
     @Transactional
     void deleteCommunityComments() {
-        //given
         String randomUser = "user"+ UUID.randomUUID();
         User user1 = User
                 .userBuilder()
@@ -136,18 +122,11 @@ public class CommunityCommentServiceImplTest {
                 .build();
         CommentResponseDto communityComment = communityCommentService.createCommunityComments(communityBoard.getId(),communityRequestDto,user1);
 
-        //when
-
-        //commentDelete 하기 전 commentSize
-
         Long beforeCommentSize= commentRepository.count();
 
         communityCommentService.deleteCommunityComments(communityComment.getId(),user1);
 
-        //boardDelete 하고 나서 commentSize
-
         Long afterCommentSize= commentRepository.count();
-        //then
         assertThat(afterCommentSize).isLessThan(beforeCommentSize);
 
     }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.project.sparta.admin.dto.UserGradeDto;
 import com.project.sparta.admin.dto.UserStatusDto;
 import com.project.sparta.exception.CustomException;
+import com.project.sparta.user.dto.LoginRequestDto;
 import com.project.sparta.user.dto.UpgradeRequestDto;
 import com.project.sparta.user.dto.ValidateEmailDto;
 import com.project.sparta.user.dto.ValidateNickNameDto;
@@ -21,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class UserRepositoryTest {
-    //TODO 테스트코드 추가 : 로그인 시 email, password 중 ""인 경우(세인)
-    //TODO 테스트코드 추가 : 로그인 시 password가 틀린 경우(세인)
 
     @Autowired
     private UserServiceImpl userService;
@@ -46,9 +45,7 @@ public class UserRepositoryTest {
         userRepository.save(user1);
 
         ValidateEmailDto emailDto = new ValidateEmailDto(randomUser);
-
         ValidateNickNameDto nickNameDto = new ValidateNickNameDto("나나나나솨");
-
 
         assertThrows(CustomException.class, ()-> userService.validateEmail(emailDto));
         assertThrows(CustomException.class, ()-> userService.validateNickName(nickNameDto));
@@ -66,5 +63,32 @@ public class UserRepositoryTest {
         assertThrows(CustomException.class, ()-> userService.getUser(1234567891000000L));
         assertThrows(CustomException.class, ()-> userService.changeGrade(gradeDto, 1234567891000000L));
         assertThrows(CustomException.class, ()-> userService.changeStatus(statusDto, 1234567891000000L));
+    }
+
+    @Test
+    @DisplayName("email, password 빈값으로 들어올 경우")
+    @Transactional
+    public void loginValueIsBlank(){
+        LoginRequestDto loginRequestDto = new LoginRequestDto("", "");
+
+        assertThrows(CustomException.class, ()-> userService.login(loginRequestDto));
+    }
+
+    @Test
+    @DisplayName("password가 틀렸을 경우")
+    @Transactional
+    public void notEqualsPassword(){
+        User user1 = User.userBuilder()
+            .email(randomUser)
+            .password("user1234!")
+            .nickName("나나나나솨")
+            .age(25)
+            .phoneNumber("010-1234-1235")
+            .build();
+
+        userRepository.save(user1);
+        LoginRequestDto loginRequestDto = new LoginRequestDto(user1.getEmail(), "password01");
+
+        assertThrows(CustomException.class, ()-> userService.login(loginRequestDto));
     }
 }

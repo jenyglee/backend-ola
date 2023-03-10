@@ -92,7 +92,10 @@ public class UserServiceImpl implements UserService {
     //로그인
     @Override
     public ResponseEntity<TokenDto> login(LoginRequestDto requestDto) {
-        // TODO email, password 중 ""인 경우
+
+        if (requestDto.getEmail().isBlank() || requestDto.getPassword().isBlank()){
+            throw new CustomException(INVALID_CONTENT);
+        }
 
         User user = userRepository.findByEmail(requestDto.getEmail())
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));

@@ -1,5 +1,7 @@
 package com.project.sparta.communityComment.service;
 
+import static com.project.sparta.exception.api.Status.INVALID_CONTENT;
+
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
@@ -27,7 +29,10 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     @Transactional
     public CommentResponseDto createCommunityComments(Long boardId,
         CommunityRequestDto communityRequestDto, User user) {
-        // TODO 익셉션 추가 : Contents가 ""인 경우
+
+        if(communityRequestDto.getContents().isBlank()){
+            throw new CustomException(INVALID_CONTENT);
+        }
 
         CommunityBoard communityBoard = boardRepository.findById(boardId)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_BOARD));
@@ -50,7 +55,11 @@ public class CommunityCommentServiceImpl implements CommunityCommentService {
     @Transactional
     public void updateCommunityComments(Long commentId, CommunityRequestDto requestDto,
         User user) {
-        // TODO 익셉션 추가 : 내용이 ""인 경우
+
+        if(requestDto.getContents().isBlank()){
+            throw new CustomException(INVALID_CONTENT);
+        }
+
         CommunityComment communityComment = commentRepository.findByIdAndNickName(commentId,
                 user.getNickName())
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_COMMUNITY_COMMENT));
