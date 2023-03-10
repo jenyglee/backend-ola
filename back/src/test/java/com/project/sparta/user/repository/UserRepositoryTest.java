@@ -32,25 +32,26 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    //@Test
-    //@DisplayName("이메일 or 닉네임 중복확인")
-    //void duplicationCheck(){
-    //    User user1 = User.userBuilder()
-    //        .email(randomUser)
-    //        .password("user1234!")
-    //        .nickName("내일은매니아")
-    //        .age(25)
-    //        .phoneNumber("010-1234-1235")
-    //        .build();
-    //
-    //    userRepository.save(user1);
-    //
-    //    ValidateEmailDto emailDto = new ValidateEmailDto(randomUser);
-    //    ValidateNickNameDto nickNameDto = new ValidateNickNameDto("내일은매니아");
-    //
-    //    assertThrows(CustomException.class, ()-> userService.validateEmail(emailDto));
-    //    assertThrows(CustomException.class, ()-> userService.validateNickName(nickNameDto));
-    //}
+    @Test
+    @DisplayName("이메일 or 닉네임 중복확인")
+    @Transactional
+    void duplicationCheck(){
+        User user1 = User.userBuilder()
+            .email(randomUser)
+            .password("user1234!")
+            .nickName("나나나나솨")
+            .age(25)
+            .phoneNumber("010-1234-1235")
+            .build();
+
+        userRepository.save(user1);
+
+        ValidateEmailDto emailDto = new ValidateEmailDto(randomUser);
+        ValidateNickNameDto nickNameDto = new ValidateNickNameDto("나나나나솨");
+
+        assertThrows(CustomException.class, ()-> userService.validateEmail(emailDto));
+        assertThrows(CustomException.class, ()-> userService.validateNickName(nickNameDto));
+    }
 
     @Test
     @DisplayName("회원 정보를 찾을 수 없는 경우")
