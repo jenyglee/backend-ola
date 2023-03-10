@@ -1130,8 +1130,8 @@
         xlr.setRequestHeader("Authorization", accessToken);
       },
       success: function () {
-        window.open('./h-4_chat.html?roomId=' + communityId, '_blank',
-            "left=100,top=100,width=740,height=700")
+        window.open('./h-4_chat.html?roomId=' + communityId, 'name',
+            "left=100,top=100,width=740,height=700, target=_blank")
       }
     })
   }
