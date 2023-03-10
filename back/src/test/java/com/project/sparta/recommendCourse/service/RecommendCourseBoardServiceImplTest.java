@@ -120,7 +120,6 @@ class RecommendCourseBoardServiceImplTest {
                 .imgList(imageList)
                 .build();
 
-
         //글작성
         RecommendCourseBoard board1 = createBoard(user);
         RecommendCourseBoard board2 = createBoard(admin1);
