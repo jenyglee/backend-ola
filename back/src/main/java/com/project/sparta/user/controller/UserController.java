@@ -14,6 +14,7 @@ import com.project.sparta.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
@@ -62,8 +63,9 @@ public class UserController {
     //카카오 로그인(redirect-uri)
     @ApiOperation(value = "카카오 로그인", response = Join.class)
     @GetMapping("/login/kakao")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestParam String code) throws JsonProcessingException {
-        return kakaoService.kakaoLogin(code);
+    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+        kakaoService.kakaoLogin(code, response);
+        return "로그인 완료";
     }
 
     //로그아웃

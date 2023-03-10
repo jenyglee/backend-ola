@@ -39,23 +39,24 @@ public class KakaoServiceImpl implements KakaoService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public ResponseEntity<TokenDto> kakaoLogin(String code)
+    public String kakaoLogin(String code, HttpServletResponse response)
         throws JsonProcessingException {
         //1. '인가 코드'로 Access Token 요청
-        String accessToken = getToken(code);
+        String kakaoAccessToken = getToken(code);
 
         //2. 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
-        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(accessToken);
+        KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(kakaoAccessToken);
 
         //3. 필요시에 회원가입
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfoDto);
+
         //4. JWT 토큰 반환
+        String accessToken = jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(), kakaoUser.getGradeEnum(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl());
         String refreshToken = jwtUtil.generateRefreshToken(kakaoUser.getEmail(),
             kakaoUser.getRole());
-        //System.out.println("refreshToken = " + refreshToken);
+
         TokenDto tokenDto = new TokenDto(
-            jwtUtil.generateAccessToken(kakaoUser.getEmail(), kakaoUser.getRole(),
-                kakaoUser.getGradeEnum(), kakaoUser.getNickName(), kakaoUser.getUserImageUrl()),
+            accessToken,
             refreshToken,
             kakaoUser.getNickName()
         );
@@ -69,7 +70,10 @@ public class KakaoServiceImpl implements KakaoService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
 
-        return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+        //HttpHeaders httpHeaders = new HttpHeaders();
+        //httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
+
+        return "로그인 완료";
     }
 
     // '인가 코드'로 Access Token 요청
@@ -83,7 +87,7 @@ public class KakaoServiceImpl implements KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "d47fdedf288092701f880cf868e90d47");
-        body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/");
+        body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/index.html");
         body.add("code", code);
 
         // HTTP 요청 보내기

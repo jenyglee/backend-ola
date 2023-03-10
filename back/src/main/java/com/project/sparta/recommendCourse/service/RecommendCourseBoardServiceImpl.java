@@ -37,13 +37,19 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     @Override
     @Transactional
     public Long creatRecommendCourseBoard(RecommendRequestDto requestDto, Long userId) {
-        // 에러1: Title, Season, Contents, Region 중 ""가 포함된 경우
-        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
-            || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
+        // 에러1: 숫자가 null인 경우
+        if (requestDto.getScore() == 0 || requestDto.getAltitude() == 0) {
             throw new CustomException(INVALID_CONTENT);
         }
-        // 에러2: 숫자가 null인 경우
-        if (requestDto.getScore() == 0 || requestDto.getAltitude() == 0) {
+        // 에러2: 컨텐츠가 null인 경우
+        if (requestDto.getTitle() == null || requestDto.getSeason() == null ||
+                requestDto.getContents() == null || requestDto.getRegion() == null) {
+            throw new CustomException(INVALID_CONTENT);
+        }
+
+        // 에러3: Title, Season, Contents, Region 중 ""가 포함된 경우
+        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
+                || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
             throw new CustomException(INVALID_CONTENT);
         }
         // 1. 코스추천 글 저장
@@ -71,15 +77,24 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
     @Override
     @Transactional
     public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
-        // 에러1: Title, Season, Contents, Region 중 ""가 포함된 경우
-        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
-            || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
-            throw new CustomException(INVALID_CONTENT);
-        }
-        // 에러2: 숫자가 null인 경우
+
+
+        // 에러1: 숫자가 null인 경우
         if (requestDto.getScore() == 0 || requestDto.getAltitude() == 0) {
             throw new CustomException(INVALID_CONTENT);
         }
+        // 에러2: 컨텐츠가 null인 경우
+        if (requestDto.getTitle() == null || requestDto.getSeason() == null ||
+                requestDto.getContents() == null || requestDto.getRegion() == null) {
+            throw new CustomException(INVALID_CONTENT);
+        }
+
+        // 에러3: Title, Season, Contents, Region 중 ""가 포함된 경우
+        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
+                || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
+            throw new CustomException(INVALID_CONTENT);
+        }
+
 
         RecommendCourseBoard recommendBoard = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
