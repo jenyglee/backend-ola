@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 public class CommentRepositoryTest {
+    // TODO 테스트코드 추가 : 코멘트 작성시/수정시 Contents가 ""인 경우(세인)
+    //TODO 테스트코드 추가 : 댓글 찾을 수 없을 경우(세인)
 //   @Autowired
 //   CommunityCommentService commentService;
 //   @Autowired

@@ -77,7 +77,7 @@ class LikeRecommendRepositoryTest {
     }
 
     @Test
-    @DisplayName("내가 누른 좋아요만 삭제")
+    @DisplayName("다른 좋아요를 삭제했을 때 에러")
     @Transactional
     void likeClickUserCheckError() {
         //내가 누른 좋아요가 아닌데도 삭제가 되나..?

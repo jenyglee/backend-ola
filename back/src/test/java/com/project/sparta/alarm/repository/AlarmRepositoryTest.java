@@ -64,8 +64,6 @@ public class AlarmRepositoryTest {
         ArrayList<Alarm> alarms = alarmRespository.findByBoardId(communityBoard.getId());
 
         assertThrows(CustomException.class, ()-> alarmService.createAlarm(alarmRequetDto, userList.get(1).getNickName()));
-
-        // TODO 따로분리
         assertThrows(CustomException.class, ()-> alarmService.updateAlarmStatus(1234567899L, 5555888888L));
     }
     

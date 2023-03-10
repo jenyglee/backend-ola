@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class HashtagRepositoryTest {
-     // TODO 테스트코드 추가 : 해시태그 삭제 시 찾을 수 없는 경우
+     // TODO 테스트코드 추가 : 해시태그 삭제 시 찾을 수 없는 경우(재원)
      @Autowired
      HashtagService hashtagService;
      @Autowired

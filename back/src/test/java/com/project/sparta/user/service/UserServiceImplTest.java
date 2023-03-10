@@ -14,13 +14,8 @@ import com.project.sparta.user.dto.InfoResponseDto;
 import com.project.sparta.user.dto.UserListResponseDto;
 import com.project.sparta.user.dto.UserOneResponseDto;
 import com.project.sparta.user.dto.UserSignupDto;
-import com.project.sparta.user.entity.StatusEnum;
 import com.project.sparta.user.entity.User;
-import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.repository.UserRepository;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,19 +27,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.project.sparta.user.entity.StatusEnum.USER_WITHDRAWAL;
 import static com.project.sparta.user.entity.UserGradeEnum.MOUNTAIN_GOD;
 import static com.project.sparta.user.entity.UserGradeEnum.MOUNTAIN_MANIA;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 
 @SpringBootTest
@@ -52,36 +39,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 class UserServiceImplTest {
 
     @Autowired
-    MockMvc mockMvc;
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private AdminService adminService;
-
-    @Autowired
     private CommunityBoardService communityBoardService;
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    public @interface WithAdminUser {}
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @WithMockUser(username = "han151", roles = "USER")
-    public @interface WithUser {}
 
     private List taglist = java.util.Arrays.asList(1L, 2L, 3L, 4L);
 
     private List imgList = Arrays.asList("1,2,3,4");
 
-    @Value("${jwt.admin}")
-    private String admin;
-
-    @Autowired
-    private BoardRepository boardRepository;
 
     @Test
     @Transactional
@@ -108,76 +77,6 @@ class UserServiceImplTest {
 
         Assertions.assertThat(user.getNickName()).isEqualTo(user1.getNickName());
     }
-
-    //@Test
-    //@Transactional
-    //@DisplayName(value = "일반 유저 로그인")
-    //public void userLogin() throws Exception{
-    //
-    //    String randomUser = "user" + UUID.randomUUID();
-    //
-    //    UserSignupDto user1 = UserSignupDto.builder()
-    //        .email(randomUser)
-    //        .password("user1234dfd!")
-    //        .nickName("기똥차게올라가보자")
-    //        .age(25)
-    //        .phoneNumber("010-1234-1235")
-    //        .imageUrl("user.jpg")
-    //        .tagList(taglist)
-    //        .build();
-    //
-    //    userService.signup(user1);
-    //
-    //    User user = userRepository.findByNickName("기똥차게올라가보자").orElseThrow(() -> new CustomException(
-    //        Status.NOT_FOUND_USER));
-    //
-    //    // 성공 TEST
-    //    mockMvc.perform(post("/login").with(user(user.getNickName()).roles(user.getPassword())))
-    //        .andDo(print())
-    //        .andExpect(authenticated());
-    //}
-    //
-    //@Test
-    //@Transactional
-    //@DisplayName(value = "어드민 유저 로그인")
-    //public void adminLogin() throws Exception{
-    //
-    //    String randomUser = "user" + UUID.randomUUID();
-    //
-    //    AdminSignupDto adminSignupDto = AdminSignupDto.builder()
-    //        .email(randomUser)
-    //        .password("user1234dfsd!")
-    //        .nickName("관리자")
-    //        .adminToken(admin)
-    //        .build();
-    //
-    //    adminService.signup(adminSignupDto);
-    //    // 성공 TEST
-    //    mockMvc.perform(post("/auth/signup/admin").with(user(adminSignupDto.getNickName()).roles(adminSignupDto.getPassword())))
-    //        .andDo(print())
-    //        .andExpect(authenticated());
-    //}
-    //
-
-    //@Test
-    //@WithUser
-    //@DisplayName(value = "유저 로그아웃")
-    //void userLogout() throws Exception{
-    //    mockMvc.perform(post("/logout").with(csrf()))
-    //        .andDo(print())
-    //        .andExpect(unauthenticated())
-    //        .andReturn();
-    //}
-    //
-    //@Test
-    //@WithAdminUser
-    //@DisplayName(value = "어드민 로그아웃")
-    //void adminLogout() throws Exception{
-    //    mockMvc.perform(post("/logout").with(csrf()))
-    //        .andDo(print())
-    //        .andExpect(unauthenticated())
-    //        .andReturn();
-    //}
 
     @Test
     @Transactional
