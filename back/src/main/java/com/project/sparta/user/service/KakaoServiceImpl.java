@@ -86,7 +86,7 @@ public class KakaoServiceImpl implements KakaoService {
         //HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "d47fdedf288092701f880cf868e90d47");
+        body.add("client_id", "caa41730845bebbbdfd06ada0309e628");
         body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/index.html");
         body.add("code", code);
 

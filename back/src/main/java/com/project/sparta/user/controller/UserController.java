@@ -64,6 +64,7 @@ public class UserController {
     @ApiOperation(value = "카카오 로그인", response = Join.class)
     @GetMapping("/login/kakao")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws IOException {
+        System.out.println("code = " + code);
         kakaoService.kakaoLogin(code, response);
         return "로그인 완료";
     }

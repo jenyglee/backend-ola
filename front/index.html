@@ -257,11 +257,11 @@
             ]
             $(document).ready(function () {
                 var accessToken = localStorage.getItem("accessToken")
-
-                if (accessToken == null) {
-                    console.log("accessToken : ", accessToken)
-                    window.location.href = "./template/b-1_login.html"
-                }
+                console.log("accessToken : ", accessToken)
+                // if (accessToken == null) {
+                //     console.log("accessToken : ", accessToken)
+                //     window.location.href = "./template/b-1_login.html"
+                // }
 
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
