@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
 class HashtagRepositoryTest {
      @Autowired
      HashtagService hashtagService;
@@ -22,14 +21,16 @@ class HashtagRepositoryTest {
 
      @Test
      @DisplayName("빈 값 전달 에러")
-     public void createHashTagError01(){
+     @Transactional
+     public void emptyCondition(){
          User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
          assertThrows(CustomException.class, ()-> hashtagService.createHashtag("", user1));
      }
 
      @Test
      @DisplayName("중복된 이름이 있는경우 에러")
-     public void createHashTagError02(){
+     @Transactional
+     public void duplicationTagName(){
 
          hashtagRepository.save(new Hashtag("야호"));
 

@@ -8,13 +8,9 @@ import com.project.sparta.alarm.repository.AlarmRespository;
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
 import com.project.sparta.communityBoard.repository.BoardRepository;
-import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.exception.CustomException;
-import com.project.sparta.exception.api.Status;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,20 +21,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class AlarmServiceImplTest {
-
-    @Autowired
-    EntityManager em;
-    JPAQueryFactory queryFactory;
-
-    @BeforeEach
-    public void before() {
-        queryFactory = new JPAQueryFactory(em);
-    }
 
     @Autowired
     private AlarmService alarmService;

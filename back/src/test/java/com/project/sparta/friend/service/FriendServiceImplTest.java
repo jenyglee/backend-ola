@@ -29,23 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 class FriendServiceImplTest {
 
     @Autowired
-    EntityManager em;
-    JPAQueryFactory queryFactory;
-
-    @BeforeEach
-    public void before() {
-        queryFactory = new JPAQueryFactory(em);
-    }
-
-    @Autowired
-    private FriendService friendService;
-
-    @Autowired
     private UserRepository userRepository;
     @Autowired
     private FriendRepository friendRepository;
     @Autowired
     private HashtagRepository hashtagRepository;
+    @Autowired
+    private FriendService friendService;
 
     @Test
     @Transactional
@@ -56,7 +46,7 @@ class FriendServiceImplTest {
         String randomUser2 = "user" + UUID.randomUUID();
 
         //user 생성
-        User user = User.userBuilder()
+        User user1 = User.userBuilder()
             .email(randomUser1)
             .password("user1234!")
             .nickName("내일은매니아")
@@ -65,7 +55,7 @@ class FriendServiceImplTest {
             .build();
 
         //친구 생성
-        User friend = User.userBuilder()
+        User user2 = User.userBuilder()
             .email(randomUser2)
             .password("user1234!")
             .nickName("내일은등산왕")
@@ -73,13 +63,13 @@ class FriendServiceImplTest {
             .phoneNumber("010-1234-1234")
             .build();
 
-        User user1 = userRepository.save(user);
-        User friend1 = userRepository.save(friend);
+        User user = userRepository.save(user1);
+        User friend = userRepository.save(user2);
 
-        friendService.addFriend(user1.getId(), friend1.getId());
-        List<Friend> friedList = friendRepository.findByUserId(user1.getId());
+        friendService.addFriend(user.getId(), friend.getId());
+        List<Friend> friedList = friendRepository.findByUserId(user.getId());
 
-        Assertions.assertThat(friedList.get(0).getTargetId()).isEqualTo(friend1.getId());
+        Assertions.assertThat(friedList.get(0).getTargetId()).isEqualTo(friend.getId());
     }
 
     @Test
@@ -92,7 +82,7 @@ class FriendServiceImplTest {
         String uniqueNickName = "user" + UUID.randomUUID();
 
         //user 생성
-        User user = User.userBuilder()
+        User user1 = User.userBuilder()
             .email(randomUser1)
             .password("user1234!")
             .nickName("내일은매니아")
@@ -101,7 +91,7 @@ class FriendServiceImplTest {
             .build();
 
         //친구 생성
-        User friend = User.userBuilder()
+        User user2 = User.userBuilder()
             .email(randomUser2)
             .password("user1234!")
             .nickName(uniqueNickName)
@@ -109,12 +99,12 @@ class FriendServiceImplTest {
             .phoneNumber("010-1234-1234")
             .build();
 
-        User user1 = userRepository.save(user);
-        User friend1 = userRepository.save(friend);
+        User user = userRepository.save(user1);
+        User friend = userRepository.save(user2);
 
-        friendService.addFriend(user1.getId(), friend1.getId());
+        friendService.addFriend(user.getId(), friend.getId());
 
-        PageResponseDto result = friendService.searchFriend(0, 5, friend1.getNickName());
+        PageResponseDto result = friendService.searchFriend(0, 5, friend.getNickName());
         Assertions.assertThat(result.getTotalCount()).isEqualTo(1);
     }
 
@@ -128,7 +118,7 @@ class FriendServiceImplTest {
         String randomUser3 = "user" + UUID.randomUUID();
 
         //user 생성
-        User user = User.userBuilder()
+        User user1 = User.userBuilder()
             .email(randomUser1)
             .password("user1234!")
             .nickName("내일은매니아")
@@ -137,7 +127,7 @@ class FriendServiceImplTest {
             .build();
 
         //친구 생성
-        User friend = User.userBuilder()
+        User user2 = User.userBuilder()
             .email(randomUser2)
             .password("user1234!")
             .nickName("내일은등산왕")
@@ -146,7 +136,7 @@ class FriendServiceImplTest {
             .build();
 
         //친구 생성
-        User friend2 = User.userBuilder()
+        User user3 = User.userBuilder()
             .email(randomUser3)
             .password("user1234!")
             .nickName("등린이탈출하자")
@@ -154,9 +144,9 @@ class FriendServiceImplTest {
             .phoneNumber("010-1234-1237")
             .build();
 
-        User u1 = userRepository.save(user);
-        User u2 = userRepository.save(friend);
-        User u3 = userRepository.save(friend2);
+        User u1 = userRepository.save(user1);
+        User u2 = userRepository.save(user2);
+        User u3 = userRepository.save(user3);
 
         friendService.addFriend(u1.getId(), u2.getId());
         friendService.addFriend(u1.getId(), u3.getId());

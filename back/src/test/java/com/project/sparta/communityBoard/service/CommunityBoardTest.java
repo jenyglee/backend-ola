@@ -1,51 +1,31 @@
 package com.project.sparta.communityBoard.service;
-
-import static com.project.sparta.exception.api.Status.NOT_FOUND_COMMUNITY_BOARD;
-import static com.project.sparta.exception.api.Status.NOT_FOUND_HASHTAG;
-
-
 import com.project.sparta.common.dto.PageResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardAllResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardOneResponseDto;
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
-import com.project.sparta.communityBoard.dto.CommunitySearchCondition;
 import com.project.sparta.communityBoard.entity.CommunityBoard;
-import com.project.sparta.communityBoard.entity.CommunityBoardImg;
-import com.project.sparta.communityBoard.entity.CommunityTag;
 import com.project.sparta.communityBoard.repository.BoardRepository;
-import com.project.sparta.communityBoard.repository.BoardRepositoryImpl;
 import com.project.sparta.communityBoard.repository.CommunityBoardImgRepository;
 import com.project.sparta.communityBoard.repository.CommunityTagRepository;
 import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.exception.CustomException;
-import com.project.sparta.exception.api.Status;
-import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.repository.HashtagRepository;
 import com.project.sparta.like.repository.LikeBoardRepository;
 import com.project.sparta.like.repository.LikeCommentRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityManager;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
-public class CommunityBoardImpl {
-
+public class CommunityBoardTest {
   @Autowired
   BoardRepository boardRepository;
   @Autowired
@@ -62,13 +42,10 @@ public class CommunityBoardImpl {
   LikeCommentRepository likeCommentRepository;
   @Autowired
   LikeBoardRepository likeBoardRepository;
-
   @Autowired
   UserRepository userRepository;
-
   @Autowired
   EntityManager em;
-
 
   String randomUser = "user"+ UUID.randomUUID() +"@naver.com";
   List taglist = Arrays.asList(1L, 2L, 3L, 4L);

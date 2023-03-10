@@ -16,7 +16,6 @@ import com.project.sparta.security.jwt.JwtUtil;
 import com.project.sparta.user.dto.*;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.entity.UserGradeEnum;
-import com.project.sparta.user.entity.UserRoleEnum;
 import com.project.sparta.user.entity.UserTag;
 import com.project.sparta.user.repository.UserRepository;
 import com.project.sparta.user.repository.UserTagRepository;
@@ -58,8 +57,6 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder encoder;
     private final JavaMailSender javaMailSender;
-    private final EntityManager em;
-    private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
 
 
     //회원가입
@@ -225,6 +222,7 @@ public class UserServiceImpl implements UserService {
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(),
                 user.getRole());
+
             TokenDto new_tokenDto = new TokenDto(
                 jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
                     user.getNickName(), user.getUserImageUrl()),
@@ -249,6 +247,7 @@ public class UserServiceImpl implements UserService {
 
     //자동 등업
     @Override
+    @Transactional
     public void upgrade(UpgradeRequestDto requestDto, Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));

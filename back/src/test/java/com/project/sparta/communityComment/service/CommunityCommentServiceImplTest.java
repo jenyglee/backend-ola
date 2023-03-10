@@ -6,10 +6,7 @@ import com.project.sparta.communityBoard.repository.BoardRepository;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.communityComment.dto.CommentResponseDto;
 import com.project.sparta.communityComment.dto.CommunityRequestDto;
-import com.project.sparta.communityComment.entity.CommunityComment;
 import com.project.sparta.communityComment.repository.CommentRepository;
-import com.project.sparta.like.repository.LikeCommentRepository;
-import com.project.sparta.recommendCourse.entity.RecommendCourseBoard;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 

@@ -35,14 +35,7 @@ public class Alarm extends Timestamped {
     @Column
     private String readStatus;
 
-    public void update(Long id,String message, Long userId, String userNickName, Long boardId,
-        String readStatus, String writerNickName){
-        this.id = id;
-        this.message = message;
-        this.userId = userId;
-        this.userNickName = userNickName;
-        this.boardId = boardId;
+    public void updateReadStatus(String readStatus){
         this.readStatus = readStatus;
-        this.writerNickName = writerNickName;
     }
 }
