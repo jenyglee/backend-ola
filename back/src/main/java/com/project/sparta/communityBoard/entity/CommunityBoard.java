@@ -2,6 +2,7 @@ package com.project.sparta.communityBoard.entity;
 
 import com.project.sparta.common.entity.Timestamped;
 import com.project.sparta.communityComment.entity.CommunityComment;
+import com.project.sparta.exception.CustomException;
 import com.project.sparta.user.entity.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,15 +88,16 @@ public class CommunityBoard extends Timestamped {
         this.chatMemCnt = chatMemCnt;
     }
 
-    public void updateCurrentMemCnt(int currentMemCnt){
-        this.currentMemCnt = currentMemCnt;
-    }
-    public void set_maniaResponse(int maniaResponse){
+    public void updateMania(int maniaResponse){
         this.maniaResponse = maniaResponse;
     }
 
-    public void set_godResponse(int godResponse) {
+    public void updateGod(int godResponse) {
         this.godResponse = godResponse;
     }
 
+
+    public boolean validateChatStatus(String statusL) {
+        return this.chatStatus.equals(statusL);
+    }
 }

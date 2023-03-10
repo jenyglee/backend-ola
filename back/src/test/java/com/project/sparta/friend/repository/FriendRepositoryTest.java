@@ -32,14 +32,6 @@ class FriendRepositoryTest {
      @Autowired
      UserRepository userRepository;
 
-     @Autowired
-     EntityManager em;
-     JPAQueryFactory queryFactory;
-     @BeforeEach
-     public void before() {
-         queryFactory = new JPAQueryFactory(em);
-     }
-
      @Test
      @DisplayName("중복된 친구 추가")
      @Transactional

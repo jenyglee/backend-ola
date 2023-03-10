@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Rollback(false)
 public class CommentServiceTest {
+  // TODO 테스트코드 추가 : 코멘트 작성시/수정시 Contents가 ""인 경우
   // @Autowired
   // CommunityCommentService commentService;
   // @Autowired

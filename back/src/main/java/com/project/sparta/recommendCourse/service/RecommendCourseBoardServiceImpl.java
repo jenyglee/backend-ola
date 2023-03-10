@@ -27,141 +27,123 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardService {
 
     private final RecommendCourseBoardRepository recommendCourseBoardRepository;
-
     private final RecommendCourseBoardImgRepository recommendCourseBoardImgRepository;
-
     private final LikeRecommendRepository likeRecommendRepository;
-    /**
-     * 추천코스 게시글 등록 메서드
-     *
-     * @param requestPostDto:(String title,int score,String season,int altitude,String contents)
-     * @return 이미지경로 URL 리턴
-     * @throws IOException
-     */
-    @Override
-    public Long creatRecommendCourseBoard(RecommendRequestDto requestPostDto, Long userId) {
 
-        // 에러1: 타이틀이 ""인 경우
-        if(requestPostDto.getTitle().isBlank()||requestPostDto.getSeason().isBlank()||requestPostDto.getContents().isBlank()||requestPostDto.getRegion().isBlank()){
+    // 코스추천 작성
+    @Override
+    @Transactional
+    public Long creatRecommendCourseBoard(RecommendRequestDto requestDto, Long userId) {
+        // 에러1: Title, Season, Contents, Region 중 ""가 포함된 경우
+        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
+            || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
             throw new CustomException(INVALID_CONTENT);
         }
-        // 숫자가 null인 경우
-        if(requestPostDto.getScore() == 0 || requestPostDto.getAltitude() == 0){
-            throw  new CustomException(INVALID_CONTENT);
+        // 에러2: 숫자가 null인 경우
+        if (requestDto.getScore() == 0 || requestDto.getAltitude() == 0) {
+            throw new CustomException(INVALID_CONTENT);
         }
+        // 1. 코스추천 글 저장
+        RecommendCourseBoard recommendBoard = RecommendCourseBoard.builder()
+            .score(requestDto.getScore())
+            .title(requestDto.getTitle())
+            .season(requestDto.getSeason())
+            .altitude(requestDto.getAltitude())
+            .contents(requestDto.getContents())
+            .region(requestDto.getRegion())
+            .userId(userId)
+            .postStatus(VAILABLE)
+            .build();
+        recommendCourseBoardRepository.save(recommendBoard);
 
-        RecommendCourseBoard board = RecommendCourseBoard.builder()
-                                            .score(requestPostDto.getScore())
-                                            .title(requestPostDto.getTitle())
-                                            .season(requestPostDto.getSeason())
-                                            .altitude(requestPostDto.getAltitude())
-                                            .contents(requestPostDto.getContents())
-                                            .region(requestPostDto.getRegion())
-                                            .userId(userId)
-                                            .postStatus(VAILABLE)
-                                            .build();
+        // 2. 코스추천의 이미지 리스트를 DB에 저장
+        requestDto.getImgList().stream().forEach(imgUrl ->
+            recommendCourseBoardImgRepository.save(new RecommendCourseImg(imgUrl, recommendBoard)));
 
-        recommendCourseBoardRepository.save(board);
-
-        for (String imgUrl : requestPostDto.getImgList()) {
-            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, board);
-            recommendCourseBoardImgRepository.save(courseImg);
-        }
-
-        return board.getId();
-
+        return recommendBoard.getId();
     }
 
 
-    /**
-     * 코스추천 글수정 메서드
-     *
-     * @param id : 선택한 게시글 id값 // * @param recommendRequestDto : 타이틀, 컨텐츠
-     * @return 이미지 리스트 URL 리턴함
-     * @throws IOException
-     */
-
-    //코스 수정
+    // 코스추천 수정
     @Override
+    @Transactional
     public void modifyRecommendCourseBoard(Long id, RecommendRequestDto requestDto, Long userId) {
-
-        //TODO 이걸 표본으로 전체 적용
-        //수정하고자 하는 board 있는지 확인
-        RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
-
-        //TODO if문 validateOwner() 사용(예시 -> checkBoard.validateOwner(userId))
-        //TODO .get() 하는 부분은 찾아서 엔티티에 객체지향적으로 수정
-        if (!checkBoard.getUserId().equals(userId)) {
-            throw new CustomException(Status.NO_PERMISSIONS_POST);
+        // 에러1: Title, Season, Contents, Region 중 ""가 포함된 경우
+        if (requestDto.getTitle().isBlank() || requestDto.getSeason().isBlank()
+            || requestDto.getContents().isBlank() || requestDto.getRegion().isBlank()) {
+            throw new CustomException(INVALID_CONTENT);
+        }
+        // 에러2: 숫자가 null인 경우
+        if (requestDto.getScore() == 0 || requestDto.getAltitude() == 0) {
+            throw new CustomException(INVALID_CONTENT);
         }
 
-        //기존에 이미지 삭제
+        RecommendCourseBoard recommendBoard = recommendCourseBoardRepository.findById(id)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
+
+        // 에러3: 내가 작성한 글이 아닌 경우
+        recommendBoard.validateOwner(userId);
+
+        // 1. 기존 이미지 삭제 후 새로운 이미지 리스트를 저장
         recommendCourseBoardImgRepository.deleteBoard(id);
+        requestDto.getImgList().stream().forEach(imgUrl ->
+            recommendCourseBoardImgRepository.save(new RecommendCourseImg(imgUrl, recommendBoard)));
 
-        //새로운 이미지 추가
-        for (String imgUrl : requestDto.getImgList()) {
-            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, checkBoard);
-            recommendCourseBoardImgRepository.save(courseImg);
-        }
-        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), userId);
-
-        //게시글 다시 등록
-        recommendCourseBoardRepository.save(checkBoard);
+        // 2. 코스추천 내용 업데이트 후 저장
+        recommendBoard.update(requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(),
+            requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion());
+        recommendCourseBoardRepository.save(recommendBoard);
     }
 
-    /**
-     * 코스추천 삭제 메서드
-     *
-     * @param id : 삭제할 게시글 아이디
-     */
-
-    //코스추천 삭제
+    // 코스추천 삭제
     @Override
+    @Transactional
     public void deleteRecommendCourseBoard(Long id, Long userId) {
-        //삭제하려는 board 있는지 확인
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
+        // 에러1: 내가 작성한 글이 아닌 경우
         if (!post.getUserId().equals(userId)) {
             throw new CustomException(Status.NO_PERMISSIONS_POST);
         }
 
-        //게시글 이미지 삭제
+        // 1. 코스추천 이미지, 좋아요 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
-
-        //게시글 좋아요 삭제
         likeRecommendRepository.deleteLikeAllByInRecommendId(id);
 
-        //게시글 삭제
+        // 2. 코스추천 게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());
     }
 
-    //단건 코스 조회
+    // 코스추천 단건 조회
     @Override
+    @Transactional(readOnly = true)
     public RecommendDetailResponseDto oneSelectRecommendCourseBoard(Long boardId, String nickName) {
         return recommendCourseBoardRepository.getCourseBoard(boardId, VAILABLE, nickName);
     }
 
-    //코스 추천 전체 조회
+    // 코스추천 전체 조회
     @Override
+    @Transactional(readOnly = true)
     public PageResponseDto<List<RecommendResponseDto>> allRecommendCourseBoard(int page, int size,
         int score, String season, int altitude, String region, String sort) {
-
-        if(season == null){
+        // 1. 쿼리문에 적용을 위해 null값 정제화
+        if (season == null) {
             season = "all";
         }
-        if(region == null){
+        if (region == null) {
             region = "all";
         }
-        if(sort==null){
+        if (sort == null) {
             sort = "boardIdDesc";
         }
 
-        RecommendCondition condition = new RecommendCondition(score, season, altitude, region, sort);
+        // 검색조건 포함하여 전체조회
+        RecommendCondition condition = new RecommendCondition(score, season, altitude, region,
+            sort);
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<RecommendResponseDto> courseAllList = recommendCourseBoardRepository.allRecommendBoardList(
             pageRequest, VAILABLE, condition);
@@ -172,12 +154,15 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         return new PageResponseDto<>(page, totalCount, content);
     }
 
-    //내가 쓴 코스 추천 조회
+    // 내가 쓴 코스 추천 조회
     @Override
-    public PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size, User user) {
-
+    @Transactional(readOnly = true)
+    public PageResponseDto<List<RecommendResponseDto>> getMyRecommendCourseBoard(int page, int size,
+        User user) {
+        // user ID 포함하여 전체 조회
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<RecommendResponseDto> myCourseBoardList = recommendCourseBoardRepository.myRecommendBoardList(pageRequest, VAILABLE, user.getId());
+        Page<RecommendResponseDto> myCourseBoardList = recommendCourseBoardRepository.myRecommendBoardList(
+            pageRequest, VAILABLE, user.getId());
 
         List<RecommendResponseDto> content = myCourseBoardList.getContent();
         long totalCount = myCourseBoardList.getTotalElements();
@@ -185,42 +170,37 @@ public class RecommendCourseBoardServiceImpl implements RecommendCourseBoardServ
         return new PageResponseDto<>(page, totalCount, content);
     }
 
-    //어드민 코스 수정
+    // 어드민 코스추천 수정
     @Override
+    @Transactional
     public void adminRecommendBoardUpdate(Long id, RecommendRequestDto requestDto) {
         //수정하고자 하는 board 있는지 확인
-        RecommendCourseBoard checkBoard = recommendCourseBoardRepository.findById(id).orElseThrow(()-> new CustomException(Status.NOT_FOUND_POST));
+        RecommendCourseBoard recommendBoard = recommendCourseBoardRepository.findById(id)
+            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
-        //기존에 이미지 삭제
+        // 1. 기존 이미지 삭제 후 새로운 이미지 리스트를 저장
         recommendCourseBoardImgRepository.deleteBoard(id);
+        requestDto.getImgList().stream().forEach(imgUrl ->
+            recommendCourseBoardImgRepository.save(new RecommendCourseImg(imgUrl, recommendBoard)));
 
-        //새로운 이미지 추가
-        for (String imgUrl : requestDto.getImgList()) {
-            RecommendCourseImg courseImg = new RecommendCourseImg(imgUrl, checkBoard);
-            recommendCourseBoardImgRepository.save(courseImg);
-        }
-        checkBoard.update(id, requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(), requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion(), checkBoard.getUserId());
-
-        //게시글 다시 등록
-        recommendCourseBoardRepository.save(checkBoard);
+        // 2. 코스추천 내용 업데이트 후 저장
+        recommendBoard.update(requestDto.getScore(), requestDto.getTitle(), requestDto.getSeason(),
+            requestDto.getAltitude(), requestDto.getContents(), requestDto.getRegion());
+        recommendCourseBoardRepository.save(recommendBoard);
     }
 
-    /**
-     * 코스추천 삭제 메서드
-     * @param id : 삭제할 게시글 아이디
-     */
-
-    //어드민 코스 삭제
+    //어드민 코스추천 삭제
     @Override
+    @Transactional
     public void adminRecommendBoardDelete(Long id) {
-        //삭제하려는 board 있는지 확인
         RecommendCourseBoard post = recommendCourseBoardRepository.findById(id)
             .orElseThrow(() -> new CustomException(Status.NOT_FOUND_POST));
 
-        //게시글 이미지 삭제
+        // 1. 코스추천 이미지, 좋아요 삭제
         recommendCourseBoardImgRepository.deleteBoard(id);
+        likeRecommendRepository.deleteLikeAllByInRecommendId(id);
 
-        //게시글 삭제
+        // 2. 코스추천 게시글 삭제
         recommendCourseBoardRepository.deleteById(post.getId());
     }
 

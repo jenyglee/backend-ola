@@ -1,7 +1,11 @@
-package com.project.sparta.communityBoard.repository;
+package com.project.sparta.admin.repository;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.project.sparta.communityBoard.dto.CommunityBoardRequestDto;
+import com.project.sparta.communityBoard.repository.BoardRepository;
+import com.project.sparta.communityBoard.repository.CommunityBoardImgRepository;
+import com.project.sparta.communityBoard.repository.CommunityTagRepository;
 import com.project.sparta.communityBoard.service.CommunityBoardService;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.exception.CustomException;
@@ -20,10 +24,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 @SpringBootTest
-public class CommunityBoardRepositoryTest {
-  // TODO 테스트코드 추가 : 게시글 작성시/수정시 Title, Contents 중 ""인 경우
+public class AdminCommunityBoardRepositoryTest {
+  // TODO 테스트코드 추가 : 게시글 수정 시 Title, Contents 중 ""인 경우
   @Autowired
   BoardRepository boardRepository;
   @Autowired
@@ -78,37 +81,6 @@ public class CommunityBoardRepositoryTest {
       .build();
 
 
-  @Test
-  @Transactional
-  @DisplayName("커뮤니티 보드 생성 (notFound, nullPointer)")
-  public void communityBoardCreate() {
-    //given
-    User user1 = userRepository.findById(globalUserId).orElseThrow();
-
-    List notFoundTaglist = Arrays.asList(199L, 299L, 399L, 499L);
-    CommunityBoardRequestDto notFoundException = CommunityBoardRequestDto
-        .builder()
-        .chatMemCnt(0)
-        .title("첫번째 컨텐츠")
-        .contents("첫번쨰 컨텐츠")
-        .imgList(imgList)
-        .tagList(notFoundTaglist)
-        .chatStatus("Y")
-        .build();
-
-    CommunityBoardRequestDto noTagList = CommunityBoardRequestDto
-        .builder()
-        .chatMemCnt(0)
-        .title("첫번째 컨텐츠")
-        .contents("첫번쨰 컨텐츠")
-        .imgList(imgList)
-        .chatStatus("Y")
-        .build();
-
-    //when, then
-    assertThrows(CustomException.class, ()-> communityBoardService.createCommunityBoard(notFoundException, user1));
-    assertThrows(NullPointerException.class, ()-> communityBoardService.createCommunityBoard(noTagList, user1));
-  }
 
   @Test
   @Transactional
@@ -146,8 +118,8 @@ public class CommunityBoardRepositoryTest {
     Long boardId =1L;
 
     //when, then
-    assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardIda, afterRequestDto, user1));
-    assertThrows(CustomException.class, ()-> communityBoardService.updateCommunityBoard(boardId, afterRequestDto2, user1));
+    assertThrows(CustomException.class, ()-> communityBoardService.adminUpdateCommunityBoard(boardIda, afterRequestDto));
+    assertThrows(CustomException.class, ()-> communityBoardService.adminUpdateCommunityBoard(boardId, afterRequestDto2));
   }
 
   @Test
@@ -156,10 +128,9 @@ public class CommunityBoardRepositoryTest {
   public void deleteCommunityBoard() {
     //given
     Long boardIda = 19999L;
-    User user1 = userRepository.findById(globalUserId).orElseThrow();
 
     //when, then
-    assertThrows(CustomException.class, ()-> communityBoardService.deleteCommunityBoard(boardIda, user1));
+    assertThrows(CustomException.class, ()-> communityBoardService.adminDeleteCommunityBoard(boardIda));
   }
   @Test
   @Transactional
@@ -183,4 +154,5 @@ public class CommunityBoardRepositoryTest {
     //when, then
     assertThrows(NullPointerException.class, ()->communityBoardService.getMyCommunityBoard(page, size, nullUser));
   }
+
 }

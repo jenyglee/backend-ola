@@ -1,4 +1,4 @@
-package com.project.sparta.admin.service.impl;
+package com.project.sparta.admin.service;
 
 import static com.project.sparta.exception.api.Status.*;
 
@@ -23,18 +23,19 @@ public class AdminServiceImpl implements AdminService {
     // 어드민 회원가입
     private final PasswordEncoder encoder;
     // 어드민 회원가입
+
     @Override
-    public void signup(AdminSignupDto adminRequestSignupDto) {
-        // 관리자 비밀번호 잘못 입력
+    public Long signup(AdminSignupDto adminRequestSignupDto) {
+        // 에러1: 관리자 비밀번호 잘못 입력
         if(!adminRequestSignupDto.getAdminToken().equals(ADMIN_TOKEN)){
             throw new CustomException(INVALID_ADMIN_TOKEN);
         }
-        // 이미 존재하는 이메일
+        // 에러2: 이미 존재하는 이메일
         Optional<User> sameEmail = userRepository.findByEmail(adminRequestSignupDto.getEmail());
         if(sameEmail.isPresent()){
             throw new CustomException(CONFLICT_EMAIL);
         }
-        //이미 존재하는 닉네임
+        // 에러3: 이미 존재하는 닉네임
         Optional<User> sameNickname = userRepository.findByNickName(
             adminRequestSignupDto.getNickName());
         if(sameNickname.isPresent()){
@@ -47,6 +48,7 @@ public class AdminServiceImpl implements AdminService {
             .nickName(adminRequestSignupDto.getNickName())
             .build();
         userRepository.save(admin);
+        return admin.getId();
     }
 }
 

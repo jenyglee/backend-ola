@@ -46,7 +46,6 @@ import static com.project.sparta.exception.api.Status.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final HashtagRepository hashtagRepository;
@@ -57,14 +56,11 @@ public class UserServiceImpl implements UserService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder encoder;
     private final JavaMailSender javaMailSender;
-    private final EntityManager em;
-    private static final String FROM_ADDRESS = "본인의 이메일 주소를 입력하세요!";
-
-
+    
     //회원가입
     @Override
     public void signup(UserSignupDto signupDto) {
-        // 1. User를 생성해서 repository에 저장한다.
+        // 1. User를 생성 및 저장
         String encodedPassword = passwordEncoder.encode(signupDto.getPassword());
         User user = User.userBuilder()
             .email(signupDto.getEmail())
@@ -74,58 +70,59 @@ public class UserServiceImpl implements UserService {
             .phoneNumber(signupDto.getPhoneNumber())
             .userImageUrl(signupDto.getImageUrl())
             .build();
+        userRepository.save(user);
 
-        User saveUser = userRepository.save(user);
-
-        System.out.println(signupDto.getEmail());
-        System.out.println(signupDto.getPassword());
-        System.out.println(signupDto.getNickName());
-        System.out.println(signupDto.getPhoneNumber());
-
-        // 2. 선택한 hashtag를 각각 Usertag로 테이블에 저장한다.
+        // 2. hashtag의 ID 리스트를 각각 Usertag로 변환하여 저장
         List<Long> longList = signupDto.getTagList();
         List<UserTag> userTagList = new ArrayList<>();
-
         if (longList != null) {
-            for (Long along : longList) {
-                Hashtag hashtag = hashtagRepository.findById(along)
+            longList.stream().forEach(tagId -> {
+                Hashtag hashtag = hashtagRepository.findById(tagId)
                     .orElseThrow(() -> new CustomException(NOT_FOUND_HASHTAG));
-                UserTag userTag = new UserTag(saveUser, hashtag);
+                UserTag userTag = new UserTag(user, hashtag);
                 userTagRepository.save(userTag);
                 userTagList.add(userTag);
-            }
+            });
         }
 
-        // 3. User에 List<UserTag>를 넣어준다.
-        saveUser.updateUserTags(userTagList);
+        // 3. User에 태그 리스트를 저장
+        user.updateUserTags(userTagList);
     }
 
     //로그인
     @Override
     public ResponseEntity<TokenDto> login(LoginRequestDto requestDto) {
+        // TODO email, password 중 ""인 경우
 
         User user = userRepository.findByEmail(requestDto.getEmail())
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+
+        //에러2: 비밀번호가 틀렸을 경우
         if (!passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
             throw new CustomException(NOT_MATCH_PASSWORD);
         }
 
-        String refresh_token = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
+        // 1. access/refresh token 재발급
+        String accessToken = jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
+            user.getNickName(), user.getUserImageUrl());
+        String refreshToken = jwtUtil.generateRefreshToken(user.getEmail(), user.getRole());
 
+        // 2. 응답할 DTO에 token과 nickName 추가
         TokenDto tokenDto = new TokenDto(
-            jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
-                user.getNickName(), user.getUserImageUrl()),
-            refresh_token,
+            accessToken,
+            refreshToken,
             user.getNickName()
         );
 
+        // 3. 레디스 저장소에 refresh token 저장
         redisTemplate.opsForValue().set(
             user.getEmail(),
-            refresh_token,
+            refreshToken,
             JwtUtil.REFRESH_TOKEN_TIME,
             TimeUnit.MILLISECONDS
         );
 
+        // 4. 응답 시 헤더에 'Authorization'을 access token으로 세팅
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
         return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
@@ -135,17 +132,18 @@ public class UserServiceImpl implements UserService {
     //로그아웃
     @Transactional
     public void logout(TokenDto tokenRequestDto) {
-
+        // 1. token을 검증
         String resultToekn = tokenRequestDto.getAccessToken();
         jwtUtil.validateToken(resultToekn);
-        Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
 
+        // 2. 레디스 저장소에 있는 token을 제거
+        Authentication authentication = jwtUtil.getAuthenticationByAccessToken(resultToekn);
         if (redisTemplate.opsForValue().get(authentication.getName()) != null) {
             redisTemplate.delete(authentication.getName());
         }
 
+        //3. 토큰을 만료
         Long expiration = jwtUtil.getExpiration(resultToekn);
-
         redisTemplate.opsForValue()
             .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
     }
@@ -201,16 +199,12 @@ public class UserServiceImpl implements UserService {
             .build();
     }
 
+    // 토큰 재발급
     @Override
     public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto tokenDto) {
         String changeToken = tokenDto.getRefreshToken();
-        System.out.println("changeToken = " + changeToken);
         try {
             jwtUtil.validateRefreshToken(changeToken);
-            //if (!jwtUtil.validateRefreshToken(changeToken)) {
-            //    throw new CustomException(INVALID_TOKEN);
-            //}
-
             Authentication authentication = jwtUtil.getAuthenticationByRefreshToken(changeToken);
 
             String refreshToken = redisTemplate.opsForValue().get(authentication.getName());
@@ -224,6 +218,7 @@ public class UserServiceImpl implements UserService {
 
             String new_refresh_token = jwtUtil.generateRefreshToken(user.getEmail(),
                 user.getRole());
+
             TokenDto new_tokenDto = new TokenDto(
                 jwtUtil.generateAccessToken(user.getEmail(), user.getRole(), user.getGradeEnum(),
                     user.getNickName(), user.getUserImageUrl()),
@@ -262,15 +257,12 @@ public class UserServiceImpl implements UserService {
     //(어드민용) 회원 전체조회
     @Override
     public PageResponseDto<List<UserListResponseDto>> getUserList(int page, int size) {
-        // 1. 페이징으로 요청해서 조회
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<User> results = userRepository.findAll(pageRequest);
 
-        // 2. 데이터, 전체 개수 추출
         List<User> userList = results.getContent();
         long totalElements = results.getTotalElements();
 
-        //3. 엔티티를 DTO로 변환
         List<UserListResponseDto> userResponseDtoList = new ArrayList<>();
         for (User user : userList) {
             UserListResponseDto userResponseDto = UserListResponseDto.builder()
@@ -285,7 +277,6 @@ public class UserServiceImpl implements UserService {
             userResponseDtoList.add(userResponseDto);
         }
 
-        //4. 클라이언트에 응답(현재페이지, 전체 건수, 데이터 포함)
         return new PageResponseDto<>(page, totalElements, userResponseDtoList);
     }
 
@@ -336,46 +327,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // 새로운 비밀번호를 이메일로 전송
     @Override
     public void sendMail(MailDto mailDto) {
-        System.out.println("이멜 전송 완료!");
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailDto.getAddress()); // 받는사람 주소
-        //message.setFrom(UserServiceImpl.FROM_ADDRESS); // 보내는 사람 주소
         message.setFrom("jenyglee30@gmail.com"); // 보내는 사람 주소
         message.setSubject(mailDto.getTitle()); // 메일 제목
         message.setText(mailDto.getMessage()); // 메일 내용
 
         javaMailSender.send(message);
-
-        //SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        //// 1. 메일 수신자 설정
-        //String[] receiveList = {"jenyglee_30@naver.com", "wodnjs3062@gmail.com"};
-        //
-        //// ArrayLis의 경우 배열로 변환이 필요함
-        ///*
-        //ArrayList<String> receiveList = new ArrayList<>();
-        //receiveList.add("test@naver.com");
-        //receiveList.add("test@gmail.com");
-        //
-        //String[] receiveList = (String[]) receiveList.toArray(new String[receiveList.size()]);
-        //*/
-        //
-        //simpleMailMessage.setTo(receiveList);
-        //
-        //
-        //// 2. 메일 제목 설정
-        //simpleMailMessage.setSubject("test_title");
-        //
-        //// 3. 메일 내용 설정
-        //simpleMailMessage.setText("test_content");
-        //
-        //// 4. 메일 전송
-        //javaMailSender.send(simpleMailMessage);
-
     }
 
-
+    // 이메일과 닉네임 일치여부 확인
     @Override
     public boolean userEmailCheck(String userEmail, String userName) {
         User user = userRepository.findByEmail(userEmail)
@@ -387,6 +351,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // 이메일로 전달할 내용 폼 DTO로 반환
     @Override
     public MailDto createMailAndChangePassword(String userEmail, String userName) {
         String str = getTempPassword();
@@ -400,14 +365,13 @@ public class UserServiceImpl implements UserService {
         return dto;
     }
 
+    // 임시 비밀번호로 변환
     public void updatePassword(String str, String userEmail) {
         String pw = encoder.encode(str);
         User user = userRepository.findByEmail(userEmail)
             .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
-        System.out.println("user.getEmail() = " + user.getEmail());
         user.updateUserPassword(pw);
         userRepository.save(user);
-        //em.flush();
     }
 
     public String getTempPassword() {
