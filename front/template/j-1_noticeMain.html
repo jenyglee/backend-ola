@@ -272,7 +272,7 @@
 
             $(".right").append(result);
         }else{
-            const result = `<div class="my-profile-wrap">
+            const result = `<div class="my-profile-wrap" onclick="moveLoginPage()">
                                     <div class="img-wrap">
                                         <img class="img" src="./../static/img/icon_profile_default.png " />
                                     </div>
@@ -362,11 +362,11 @@
 
     function moveNoticeDetail(id){
         const accessToken = localStorage.getItem("accessToken");
-        if(accessToken != ""){
+        if(accessToken == "" || accessToken == null){
+            alert("로그인 한 이용자만 확인할 수 있습니다.")
+        }else{
             localStorage.setItem("noticeId", id);
             window.location.href = "j-2_noticeDetail.html"
-        }else{
-            alert("로그인 한 이용자만 확인할 수 있습니다.")
         }
     }
 
@@ -727,6 +727,9 @@
     }
     function moveMainPage() {
         window.location = "./../index.html"
+    }
+    function moveLoginPage(){
+        window.location.href = "b-1_login.html"
     }
 </script>
 </body>
