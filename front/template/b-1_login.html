@@ -87,29 +87,29 @@
         }
     </style>
     <script>
-        var kakaoCode = ""
-        $(document).ready(function () {
-			const urlParams = new URL(location.href).searchParams; // 
-			const code = urlParams.get('code');
-            const beforeCode = localStorage.getItem("code");
-            if(code != beforeCode){
-                localStorage.setItem("code", code);
-                // kakaoCode = code;
-                kakaoLogin(code);
-            }
-            
-            
-			// if (code) {
-			// 	setCookie('code', code);
-			// 	kakaoLogin();
-			// }
-            // console.log("getCookie('accessToken') : ", getCookie('accessToken'))
-            // console.log("getCookie('refreshToken') : ", getCookie('refreshToken'))
-			// if (getCookie('accessToken') && getCookie('refreshToken')) {
-			// 	alert("이미 로그인되어 있습니다.")
-			// 	location.href = "http://" + window.location.hostname + ":5500/template/f-1_myPage.html";
-			// }
-		});
+    //     var kakaoCode = ""
+    //     $(document).ready(function () {
+		// 	const urlParams = new URL(location.href).searchParams; //
+		// 	const code = urlParams.get('code');
+    //         const beforeCode = localStorage.getItem("code");
+    //         if(code != beforeCode){
+    //             localStorage.setItem("code", code);
+    //             // kakaoCode = code;
+    //             kakaoLogin(code);
+    //         }
+    //
+    //
+		// 	// if (code) {
+		// 	// 	setCookie('code', code);
+		// 	// 	kakaoLogin();
+		// 	// }
+    //         // console.log("getCookie('accessToken') : ", getCookie('accessToken'))
+    //         // console.log("getCookie('refreshToken') : ", getCookie('refreshToken'))
+		// 	// if (getCookie('accessToken') && getCookie('refreshToken')) {
+		// 	// 	alert("이미 로그인되어 있습니다.")
+		// 	// 	location.href = "http://" + window.location.hostname + ":5500/template/f-1_myPage.html";
+		// 	// }
+		// });
     </script>
 </head>
 <body>
@@ -165,7 +165,7 @@
                 <div class=lastmain">
                     <div class="d-grid gap-2 col-6 mx-auto" id="kakaologinbtn" style="margin-bottom: 10px">
                         <button class="btn_2" type="button" style="border-radius: 5px;"
-                            onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/&response_type=code'"
+                            onclick="kakaoLogin()"
                         ><b>카카오 로그인</b></button>
                     </div>
                     <a href="c-1_signup.html" style="text-decoration: none">
@@ -237,39 +237,44 @@
             alert("로그인 실패")
         });
     }
-    
+
     function kakaoLogin(code){
-        console.log("code : ", code)
-        // console.log("getCookie : ", getCookie("code"));
-        var settings = {
-            "url": "http://" + window.location.hostname + ":8080/auth/login/kakao?code=" + code ,
-            "method": "GET",
-            "timeout": 0,
-        };
-        
-        $.ajax(settings).done(function (response,status,xhr) {
-            console.log("성공", response);
-            localStorage.setItem('accessToken', response.accessToken)
-            localStorage.setItem("refreshToken", response.refreshToken)
-            // // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
-            var get_token = response.accessToken
-            var remove_bearer = get_token.toString().substring(6,get_token.length)
-            var result = decodeJWT(remove_bearer)
-            localStorage.setItem("menuProfile", JSON.stringify(result.payload));
-            // clearCookie('code');
-            // alert("로그인 성공")
-            if(result.payload.role=="USER") {
-                window.location.href = "./../index.html";
-            } else {
-                window.location.href = "k-1_manageUser.html";
-            }
-            
-        }).fail(function (response){
-            console.log("실패 : ", response);
-            // alert("로그인 실패")
-            // clearCookie('code');
-        })
+        // location.href = "https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/&response_type=code'"
+        location.href = "https://kauth.kakao.com/oauth/authorize?client_id=d47fdedf288092701f880cf868e90d47&redirect_uri=http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/index.html&response_type=code'"
     }
+
+    // function kakaoLogin(code){
+    //     console.log("code : ", code)
+    //     // console.log("getCookie : ", getCookie("code"));
+    //     var settings = {
+    //         "url": "http://" + window.location.hostname + ":8080/auth/login/kakao?code=" + code ,
+    //         "method": "GET",
+    //         "timeout": 0,
+    //     };
+    //
+    //     $.ajax(settings).done(function (response,status,xhr) {
+    //         console.log("성공", response);
+    //         localStorage.setItem('accessToken', response.accessToken)
+    //         localStorage.setItem("refreshToken", response.refreshToken)
+    //         // // 로그인 시 role을 확인하여 유저일 경우 메인페이지, 어드민일 경우 어드민페이지로 이동
+    //         var get_token = response.accessToken
+    //         var remove_bearer = get_token.toString().substring(6,get_token.length)
+    //         var result = decodeJWT(remove_bearer)
+    //         localStorage.setItem("menuProfile", JSON.stringify(result.payload));
+    //         // clearCookie('code');
+    //         // alert("로그인 성공")
+    //         if(result.payload.role=="USER") {
+    //             window.location.href = "./../index.html";
+    //         } else {
+    //             window.location.href = "k-1_manageUser.html";
+    //         }
+    //
+    //     }).fail(function (response){
+    //         console.log("실패 : ", response);
+    //         // alert("로그인 실패")
+    //         // clearCookie('code');
+    //     })
+    // }
     function moveMainPage(){
         window.location = "./../index.html"
     }
