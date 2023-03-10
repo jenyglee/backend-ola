@@ -36,10 +36,14 @@ class HashtagServiceImplTest {
                  .userImageUrl("sdf.jpg")
                  .build();
          //when
-         Hashtag hashtag = hashtagService.createHashtag("등린이44", user1);
+
+         Hashtag hashtag = hashtagService.createHashtag("김",user1);
 
          //then
-         assertThat(hashtag.getName()).isEqualTo("등린이44");
+
+         assertThat(hashtag.getName()).isEqualTo("김");
+
+
 
      }
 
