@@ -198,7 +198,7 @@ class RecommendCourseBoardServiceImplTest {
         PageResponseDto<List<RecommendResponseDto>> listPageResponseDto = recommendCourseBoardService.allRecommendCourseBoard(page, size, score, season, altitude, region, sort);
 
         //then
-        assertThat(listPageResponseDto.getTotalCount()).isEqualTo(5);
+        assertThat(listPageResponseDto.getData().get(0).getTitle()).isEqualTo("관악산 정주");
     }
 
     @Test
