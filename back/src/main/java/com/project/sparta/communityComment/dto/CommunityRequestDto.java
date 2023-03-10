@@ -14,6 +14,7 @@ public class CommunityRequestDto {
   private String contents;
 
   public CommunityRequestDto(String contents) {
+
     this.contents = contents;
   }
 
