@@ -6,6 +6,7 @@ import com.project.sparta.exception.CustomException;
 import com.project.sparta.hashtag.entity.Hashtag;
 import com.project.sparta.hashtag.service.HashtagService;
 import com.project.sparta.user.entity.User;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,13 @@ class HashtagRepositoryTest {
          User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
          assertThrows(CustomException.class, ()-> hashtagService.createHashtag("야호", user1));
      }
+
+    @Test
+    @DisplayName("태그를 찾을 수 없는 경우")
+    @Transactional
+    public void notFoundTag(){
+        hashtagRepository.save(new Hashtag("야호"));
+        User user1 = new User("user1@naver.com","1234", "이재원", 10,"010-1234-1234","sdf.jpg");
+        assertThrows(CustomException.class, ()-> hashtagService.deleteHashtag(99999999L, user1));
+    }
 }
