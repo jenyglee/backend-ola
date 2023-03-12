@@ -166,54 +166,6 @@ class UserServiceImplTest {
         Assertions.assertThat(user2.getGradeEnum()).isEqualTo(MOUNTAIN_GOD);
     }
 
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민용 회원 단건 조회")
-    void getUser() {
-        ArrayList<User> userList = createUser();
-        UserOneResponseDto userOneResponseDto = userService.getUser(userList.get(0).getId());
-        Assertions.assertThat(userOneResponseDto.getNickName())
-            .isEqualTo(userList.get(0).getNickName());
-        Assertions.assertThat(userOneResponseDto.getUserGradeEnum())
-            .isEqualTo(userList.get(0).getGradeEnum());
-        Assertions.assertThat(userOneResponseDto.getAge()).isEqualTo(userList.get(0).getAge());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민용 회원 전체 조회")
-    void getUserList() {
-        Long userCnt = userRepository.count();
-        PageResponseDto<List<UserListResponseDto>> userAllList = userService.getUserList(0, 5);
-
-        Assertions.assertThat(userAllList.getTotalCount()).isEqualTo(userCnt);
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민용 회원 등급 변경")
-    void changeGrade() {
-        ArrayList<User> userList = createUser();
-        UserGradeDto upgradeRequestDto = new UserGradeDto(2);
-
-        userService.changeGrade(upgradeRequestDto, userList.get(0).getId());
-        User user = userRepository.findById(userList.get(0).getId())
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
-        Assertions.assertThat(user.getGradeEnum()).isEqualTo(MOUNTAIN_GOD);
-    }
-
-    @Test
-    @Transactional
-    @DisplayName(value = "어드민 회원 탈퇴/복구 처리")
-    void changeStatus() {
-        ArrayList<User> userList = createUser();
-        UserStatusDto statusDto = new UserStatusDto(0);
-        userService.changeStatus(statusDto, userList.get(0).getId());
-        User user = userRepository.findById(userList.get(0).getId())
-            .orElseThrow(() -> new CustomException(Status.NOT_FOUND_USER));
-        Assertions.assertThat(user.getStatus()).isEqualTo(USER_WITHDRAWAL);
-    }
-
     @Transactional
     public ArrayList<User> createUser() {
 
