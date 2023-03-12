@@ -43,7 +43,6 @@ public class KakaoServiceImpl implements KakaoService {
         throws JsonProcessingException {
         //1. '인가 코드'로 Access Token 요청
         String kakaoAccessToken = getToken(code);
-
         //2. 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
         KakaoUserInfoDto kakaoUserInfoDto = getKakaoUserInfo(kakaoAccessToken);
 
@@ -70,9 +69,6 @@ public class KakaoServiceImpl implements KakaoService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
 
-        //HttpHeaders httpHeaders = new HttpHeaders();
-        //httpHeaders.add(JwtUtil.AUTHORIZATION_HEADER, tokenDto.getAccessToken());
-
         return "로그인 완료";
     }
 
@@ -86,8 +82,8 @@ public class KakaoServiceImpl implements KakaoService {
         //HTTP Body 생성
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
-        body.add("client_id", "d47fdedf288092701f880cf868e90d47");
-        body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/index.html");
+        body.add("client_id", "caa41730845bebbbdfd06ada0309e628");
+        body.add("redirect_uri", "http://sparta-ola-website.s3-website.ap-northeast-2.amazonaws.com/");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -109,6 +105,7 @@ public class KakaoServiceImpl implements KakaoService {
 
     // 토큰으로 카카오 API 호출 : Access Token으로 카카오 사용자 정보 가져오기
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
+        System.out.println("accessToken = " + accessToken);
         //Http Header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -126,12 +123,20 @@ public class KakaoServiceImpl implements KakaoService {
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
-        // TODO  age, phoneNumber, userImageUrl 는 어떻게 가져와야하는지 알아보기(재원)
+        //  age, phoneNumber, userImageUrl 는 어떻게 가져와야하는지 알아보기(재원)
+
         long id = jsonNode.get("id").asLong();
+        System.out.println("responseBody id = " + id);
+
         String nickname = jsonNode.get("properties")
             .get("nickname").asText();
+        System.out.println("nickname = " + nickname);
+
+        // 🔥이메일 수집을 동의 안해놓은 상태로 테스트로 내 계정(리재워니)로 카카오로그인을 해버렸고, 이후 동의창이 새로 떠줘야 하는데 뜨질 않아서 이메일 정보를 가져올 수 없게되었다.
+        // 🔥엎친데 덮친격으로 DB에 가입된 회원을 삭제하면 될 줄 알았는데 DB에서는 사라졌으나 동의창이 여전히 뜨지 않고 메인화면으로 이동해버린다.
         String email = jsonNode.get("kakao_account")
             .get("email").asText();
+        System.out.println("email = " + email);
 
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
 

@@ -32,7 +32,7 @@
                 width: 1200px;
                 /*height: 1000px;*/
                 padding: 0;
-                margin-top: 100px;
+                margin-top: 50px;
                 /* background-color: #fffbf4; */
             }
 
@@ -180,6 +180,9 @@
     </header>
         <main class="container">
             <div class="post-slider">
+                <div style="width: 1200px;">
+                    <img src="static/img/kakao_error.png" style="width: 100%; margin-bottom: 80px" />
+                </div>
                 <div class="top-area">
                     <h1 class="sider-title">현재 모집중인 크루</h1>
                     <div style="display: flex; align-items: center">
@@ -257,12 +260,16 @@
             ]
             $(document).ready(function () {
                 var accessToken = localStorage.getItem("accessToken")
-
-                if (accessToken == null) {
-                    console.log("accessToken : ", accessToken)
-                    window.location.href = "./template/b-1_login.html"
+                console.log("accessToken : ", accessToken)
+                // if (accessToken == null) {
+                //     console.log("accessToken : ", accessToken)
+                //     window.location.href = "./template/b-1_login.html"
+                // }
+                var kakaoCode = document.location.href.split("?")[1];
+                console.log("kakaoCode : ", kakaoCode)
+                if(kakaoCode) {
+                    callback(kakaoCode);
                 }
-
                 for (let i = 0; i < list.length; i++) {
                     var temp = `
                         <input type="checkbox" class="btn-check" id="btncheck${i}" autoComplete="off">
@@ -281,10 +288,29 @@
                 $(".bell-dropbox").hide()
             })
 
+            function callback(kakaoCode) {
+
+                console.log(kakaoCode+": kakao code");
+                var settings = {
+
+                    "url": "http://ec2-3-36-247-109.ap-northeast-2.compute.amazonaws.com:8080/auth/login/kakao?" + kakaoCode,
+                    // "url": "http://localhost:8080/auth/login/kakao?" + kakaoCode,
+                    "method": "GET",
+                    "timeout": 0,
+                };
+
+                $.ajax(settings).done(function (response, status, xhr) {
+                    console.log("성공은 해?")
+                    // console.log("response : " , response)
+                    // console.log("xhr.getResponseHeader('Authorization') : ", xhr.getResponseHeader('Authorization'));
+                    // localStorage.setItem('accessToken', xhr.getResponseHeader('Authorization'));
+                    // location.href=""
+                });
+            }
+
             function checkLogin(){
                 const nickname = localStorage.getItem("nickname")
-
-                if(nickname!=null){
+                if(nickname!=null  && nickname != ""){
                     const result = `<div class="friend">
                                 <div class="icon-friend" onclick="handleToggleFriendDropBox()">
                                     <img class="img" src="./../static/img/icon_friends.png"/>
@@ -335,7 +361,7 @@
 
                     $(".right").append(result);
                 }else{
-                    const result = `<div class="my-profile-wrap">
+                    const result = `<div class="my-profile-wrap" onclick="moveLoginPage()">
                                     <div class="img-wrap">
                                         <img class="img" src="./../static/img/icon_profile_default.png " />
                                     </div>
@@ -525,21 +551,21 @@
 
             function moveCommunityDetail(id) {
                 const accessToken = localStorage.getItem("accessToken")
-                if (accessToken != "") {
+                if (accessToken == "" || accessToken == null) {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                } else {
                     localStorage.setItem("communityId", id)
                     window.location = "template/h-2_communityDetail.html"
-                } else {
-                    alert("로그인 한 이용자만 확인할 수 있습니다.")
                 }
             }
 
             function moveRecommendDetail(id) {
                 const accessToken = localStorage.getItem("accessToken")
-                if (accessToken != "") {
+                if (accessToken == "" || accessToken == null) {
+                    alert("로그인 한 이용자만 확인할 수 있습니다.")
+                } else {
                     localStorage.setItem("recommendId", id)
                     window.location = "template/g-2_recommendDetail.html"
-                } else {
-                    alert("로그인 한 이용자만 확인할 수 있습니다.")
                 }
             }
 
@@ -570,10 +596,11 @@
 
             function moveCommunityCreate() {
                 var accessToken = localStorage.getItem("accessToken")
-                if (accessToken != "") {
-                    window.location = "./template/h-3_communityCreate.html"
-                } else {
+                console.log("accessToken?? : ", accessToken)
+                if (accessToken == "" || accessToken == null) {
                     alert("로그인 한 이용자만 확인할 수 있습니다.")
+                } else {
+                    window.location = "./template/h-3_communityCreate.html"
                 }
             }
 
@@ -918,6 +945,9 @@
             }
             function moveMainPage() {
                 window.location = "index.html"
+            }
+            function moveLoginPage(){
+                window.location.href = "./template/b-1_login.html"
             }
         </script>
     </body>
