@@ -653,7 +653,13 @@
         $("#comment-wrap").empty();
 
         for (let i = 0; i < response.commentList.length; i++) {
-
+          console.log("response.commentList[i] : ", response.commentList[i])
+          var imgUrl = "";
+          if (response.commentList[i].profileImage) {
+            imgUrl = await getImageURL(response.commentList[i].profileImage);
+          } else {
+            imgUrl = "/static/img/icon_profile_default.png"
+          }
 
 
           var tempComment = `
@@ -669,9 +675,7 @@
                       margin-right: 10px;
                     ">
                     <img
-                      src=${response.commentList[i].profileImage
-                                ? response.commentList[i].profileImage
-                                : "/static/img/icon_profile_default.png"}
+                      src=${imgUrl}
                       alt="프로필이미지"
                       style="width: 100%"
                     />
