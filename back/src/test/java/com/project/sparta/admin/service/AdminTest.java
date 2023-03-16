@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.project.sparta.admin.dto.AdminSignupDto;
 import com.project.sparta.user.repository.UserRepository;
+import java.util.HashMap;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,8 @@ public class AdminTest {
     //when
     Long adminId = adminService.signup(signupDto);
     User user1 = userRepository.findById(adminId).orElseThrow();
+
+
 
     //then
     assertThat(user1.getNickName()).isEqualTo("하이");

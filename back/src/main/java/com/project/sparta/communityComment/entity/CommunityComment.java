@@ -29,8 +29,6 @@ public class CommunityComment extends Timestamped {
   private String contents;
 //  private Long likeCount;
 
-
-
   //one to many 연관관계
 //  Board board;
   public CommunityComment(Long boardId, CommunityRequestDto communityRequestDto,
