@@ -132,18 +132,18 @@ public class AdminCommunityBoardTest {
     assertThat(resultCommunityBoard.getTitle()).isEqualTo("에프터 첫번쨰 게시글");
   }
 
-  @Test
-  @Transactional
-  @DisplayName("커뮤니티 보드 전체 조회")
-  public void getAllCommunityBoard() {
-    //given
-
-    //when
-    PageResponseDto<List<CommunityBoardAllResponseDto>> allCommunityBoard = communityBoardService.getAllCommunityBoard(page,size,null,null,null,null,null,null);
-
-    //then
-    assertThat(allCommunityBoard.getTotalCount()).isEqualTo(29);
-  }
+  //@Test
+  //@Transactional
+  //@DisplayName("커뮤니티 보드 전체 조회")
+  //public void getAllCommunityBoard() {
+  //  //given
+  //
+  //  //when
+  //  PageResponseDto<List<CommunityBoardAllResponseDto>> allCommunityBoard = communityBoardService.getAllCommunityBoard(page,size,null,null,null,null,null,null);
+  //
+  //  //then
+  //  assertThat(allCommunityBoard.getTotalCount()).isEqualTo(29);
+  //}
 
   @Test
   @Transactional

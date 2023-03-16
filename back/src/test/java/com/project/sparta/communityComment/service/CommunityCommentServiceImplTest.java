@@ -9,6 +9,7 @@ import com.project.sparta.communityComment.dto.CommunityRequestDto;
 import com.project.sparta.communityComment.repository.CommentRepository;
 import com.project.sparta.user.entity.User;
 import com.project.sparta.user.repository.UserRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,7 @@ public class CommunityCommentServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("커뮤니티 댓글 생성")
     void createCommunityComments() {
         //given
         String randomUser = "user"+ UUID.randomUUID();
@@ -66,6 +68,7 @@ public class CommunityCommentServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("커뮤니티 댓글 수정")
     void updateCommunityComments() {
         //given
         String randomUser = "user"+ UUID.randomUUID();
@@ -100,6 +103,7 @@ public class CommunityCommentServiceImplTest {
 
     @Test
     @Transactional
+    @DisplayName("커뮤니티 댓글 삭제")
     void deleteCommunityComments() {
         String randomUser = "user"+ UUID.randomUUID();
         User user1 = User

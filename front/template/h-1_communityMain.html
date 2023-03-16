@@ -264,7 +264,7 @@
       function checkLogin(){
         const nickname = localStorage.getItem("nickname")
 
-        if(nickname!=null){
+        if(nickname!=null  && nickname != ""){
           const result = `<div class="friend">
                                 <div class="icon-friend" onclick="handleToggleFriendDropBox()">
                                     <img class="img" src="./../static/img/icon_friends.png"/>
@@ -315,9 +315,9 @@
 
           $(".right").append(result);
         }else{
-          const result = `<div class="my-profile-wrap">
+          const result = `<div class="my-profile-wrap" onclick="moveLoginPage()">
                                     <div class="img-wrap">
-                                        <img class="img" src="./../static/img/icon_profile_default.png " />
+                                        <img class="img" src="./../static/img/icon_profile_default.png" />
                                     </div>
                                     <p class="text">로그인 해주세요</p>
                                 </div>`
@@ -585,12 +585,11 @@
 
       function moveCommunityDetail(id){
         const accessToken = localStorage.getItem("accessToken");
-        console.log("accessToken : ", accessToken)
-        if(accessToken != ""){
-            localStorage.setItem("communityId", id)
-            window.location.href="h-2_communityDetail.html"
+        if(accessToken == "" || accessToken == null){
+          alert("로그인 한 이용자만 확인할 수 있습니다.")
         }else{
-            alert("로그인 한 이용자만 확인할 수 있습니다.")
+          localStorage.setItem("communityId", id)
+          window.location.href="h-2_communityDetail.html"
         }
       }
 
@@ -926,6 +925,9 @@
         window.location = "./../index.html"
       }
 
+      function moveLoginPage(){
+        window.location.href = "b-1_login.html"
+      }
     </script>
   </body>
 </html>
